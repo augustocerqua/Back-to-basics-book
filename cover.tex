@@ -1,0 +1,14 @@
+\usepackage{eso-pic}
+
+\renewcommand{\maketitle}{%
+  \begin{titlepage}
+    \thispagestyle{empty}
+    \AddToShipoutPictureBG*{%
+      \AtPageLowerLeft{%
+        \includegraphics[width=\paperwidth,height=\paperheight]{images/book_cover_v2.png}%
+      }%
+    }%
+    \null
+  \end{titlepage}
+  \clearpage
+}

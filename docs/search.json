@@ -1,0 +1,1316 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "The Backbone of Impact Evaluation Methods",
+    "section": "",
+    "text": "Welcome\nThe Backbone of Impact Evaluation Methods – Back to Basics is an open textbook on the quantitative evaluation of public policies.\nThe book starts from a simple idea: policy evaluation is not primarily about applying sophisticated estimators. It is about constructing a credible counterfactual.\nThis book is intended for graduate students, applied researchers, policy analysts, and public officials who want to understand how impact evaluation methods work, when they are credible, and how their results should be interpreted.",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-read-this-book",
+    "href": "index.html#how-to-read-this-book",
+    "title": "The Backbone of Impact Evaluation Methods",
+    "section": "How to read this book",
+    "text": "How to read this book\nEach methodological chapter follows the same structure:\n\nThe evaluation problem.\nThe key intuition.\nIdentification assumptions.\nEstimation.\nDiagnostics and validity checks.\nCommon mistakes.\nA worked example.\nHow to report the results.",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "index.html#license",
+    "href": "index.html#license",
+    "title": "The Backbone of Impact Evaluation Methods",
+    "section": "License",
+    "text": "License\nThis is a draft open textbook. A license will be added before public release.",
+    "crumbs": [
+      "Welcome"
+    ]
+  },
+  {
+    "objectID": "chapters/preface.html",
+    "href": "chapters/preface.html",
+    "title": "Preface",
+    "section": "",
+    "text": "Transparency as the Guiding Principle of This Book\nThis book is not intended to be a comprehensive textbook on impact evaluation and causal inference. Many excellent books and articles already provide rigorous and detailed treatments of causal inference, program evaluation, and econometric methods for policy analysis.\nThe purpose of this book is different. It is to go back to basics and offer a simple and transparent way of looking at the core logic behind the most widely used impact evaluation methods.\nIn recent years, transparency has become central to the debate surrounding machine learning algorithms. Complex predictive models are often difficult to interpret, and it is not always clear how an algorithm transforms data into predictions. For this reason, researchers and practitioners increasingly ask for models that are not only accurate, but also interpretable and transparent. At the same time, much less attention is usually paid to transparency in the context of policy evaluation methods. It is often taken for granted that causal methods are transparent by nature. Yet, as discussed below, this is not necessarily true for some of the most commonly used impact evaluation methods.\nIn a successful randomized controlled trial (RCT), the golden standard of causal inference, the logic of the comparison is usually easy to understand. Random assignment makes treated and untreated units comparable before the intervention: on average, the two groups are similar in all respects except for the treatment they receive. As a result, the untreated group provides a natural benchmark for what would have happened to the treated group in the absence of the intervention.\nSimilarly, in a regression discontinuity (RD) design, the role of the comparison units is relatively intuitive. Units just below and just above the cutoff are compared because they are assumed to be similar, except for treatment assignment.\nThis clarity is often less immediate in other widely used methods. For instance, in matching approaches, it is not always obvious which untreated units are actually used to construct the counterfactual, how much weight each of them receives, whether they are sufficiently comparable to treated units, and whether all treated units are retained in the final matched sample.\nIn difference-in-differences designs, the comparison group is often described simply as “untreated,” but this label can hide considerable complexity. Applied studies do not always make clear which untreated units drive the comparison, whether not-yet-treated units are part of the control group, and how much the estimate depends on specific groups or time periods.\nThe same issue becomes even more complex in instrumental variable approaches, especially when the instrument is non-binary, when multiple instruments are used, or when the empirical specification includes several fixed effects, covariates, and trends.\nThe lesson from synthetic control methods. One of the reasons why the synthetic control method (SCM) has been so influential is that it makes a data-driven counterfactual construction more visible. SCM relies on an optimization algorithm to choose a weighted combination of untreated units, and this procedure is not necessarily transparent at first sight. However, the method reports the weights assigned to each control unit and usually presents graphs comparing the treated unit with its synthetic counterpart. This makes it possible to see which untreated units contributed to the counterfactual, how much they contributed, and whether the synthetic control provides a credible pre-treatment fit.\nThis feature is not only useful from a methodological point of view; it is also pedagogically powerful. It reminds us that most impact evaluation methods ultimately rely on a comparison between treated and untreated units. They are not magic formulas that automatically identify the causal effect of interest; they are structured ways of making comparisons credible under specific assumptions.\nThis point is particularly important because in observational studies, we do not observe a ground truth causal effect. We observe what happened after a policy was introduced, but we do not observe what would have happened to the same units, at the same time, in the absence of that policy. This makes it difficult to compare evaluation strategies as we often compare machine learning algorithms for prediction. In prediction problems, models can be assessed against observed outcomes, and their accuracy can be compared directly. In impact evaluation, instead, the counterfactual outcome is missing. We therefore cannot simply run a “horse race” among methods and declare which one is empirically more accurate. For this reason, the credibility of an impact evaluation strategy depends mainly on the plausibility of its identifying assumptions and on the transparency of the comparison it constructs.\nLastly, it is worth emphasizing that, although we will focus mainly on the most widely used impact evaluation methods, which rely on untreated units to construct the counterfactual and estimate causal effects, this book will later discuss forecasting-based counterfactual methods. These methods estimate causal effects without necessarily requiring untreated units in the data and rely on a very different set of identifying assumption (see Section XXX).",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "chapters/preface.html#the-aim-of-this-book",
+    "href": "chapters/preface.html#the-aim-of-this-book",
+    "title": "Preface",
+    "section": "The aim of this book",
+    "text": "The aim of this book\nIts aim is to explain impact evaluation methods by focusing on their backbone: the counterfactual logic, the role played by untreated units, the assumptions required for causal interpretation, and the reasons why apparently simple comparisons can be misleading.\nThe book is written for readers who want to understand the intuition behind impact evaluation methods before moving to technical details. It is intended for students, applied researchers, policy analysts, and practitioners who use causal methods or read studies based on them.\nFormal notation is kept to a minimum and postponed to the end of each chapter. The emphasis is on interpretation, design, credibility, and transparency.\nThroughout most of the book, we will focus on binary treatments, where units are either treated or untreated. This is the simplest and most common setup in impact evaluation, and many causal inference methods were originally developed with this structure in mind. Randomized experiments, matching, difference-in-differences, regression discontinuity designs, instrumental variables, and synthetic control methods are often introduced by asking whether exposure to a policy or shock changes an outcome relative to non-exposure. The binary framework also makes the counterfactual logic especially clear: for each unit, we compare the outcome under treatment with the outcome in the absence of treatment. Later in the book, we will extend this logic to the more challenging setting with continuous treatment, where the relevant question is not only whether a unit is treated, but also how much treatment it receives.\n\n\n\n\n\n\nImportantThe main message\n\n\n\nImpact evaluation is not primarily about applying sophisticated estimators. It is about constructing a credible counterfactual scenario\nDifferent methods provide different ways of approximating the missing counterfactual, and each of them relies on specific assumptions that should be assessed case by case, depending on the empirical setting, the available data, and the institutional context.\n\n\nThe book therefore does not try to cover every method, every extension, or every recent technical debate. Instead, it focuses on the basic logic of the main approaches and on the practical questions that arise when we use them to evaluate public policies.\nBefore taking the first steps in this journey, I would like to thank my mentor, Professor Guido Pellegrini, who taught me much of what I know about public policy evaluation. I am also grateful to my co-authors: through many discussions with them, I have refined my understanding of the discipline. Finally, I wish to thank the many curious students and public administration practitioners whose questions and insights have encouraged me to explain key concepts more clearly.",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "chapters/01-why-impact-evaluation.html",
+    "href": "chapters/01-why-impact-evaluation.html",
+    "title": "1  Why Impact Evaluation?",
+    "section": "",
+    "text": "1.1 An example: the opening of a nursery school\nDoes the opening of a nursery school in a neighborhood increase local employment? Do subsidies aimed at improving workplace safety actually reduce occupational injuries? Do higher salaries attract better candidates to run for mayor? How many people died because of the COVID-19 pandemic?\nThese are all causal questions. They ask whether a specific policy, intervention, or shock produced a change in an outcome of interest. In the language of impact evaluation, we usually refer to this policy, intervention, or shock more generally as the treatment. The treatment may be the opening of a nursery school, the provision of workplace-safety subsidies, an increase in politicians’ salaries, or an unexpected and large shock such as the COVID-19 pandemic. The outcome may be employment, occupational injuries, the quality of political candidates, or the number of excess deaths.\nBut how can we answer such questions in a credible way?\nConsider the first example. Suppose that, at time \\(t_0\\), a neighborhood has no nursery school. At time \\(t_1\\), a new nursery school opens. By time \\(t_2\\), we observe the employment status of parents of young children in that neighborhood.\nNursery schools may serve several purposes, from supporting child development to helping families manage care responsibilities. In this example, however, we focus on one specific mechanism: access to childcare may free up parents’ time and make it easier for them to participate in the labor market.\nHowever, simply observing what happens after the nursery school opens is not enough to know whether the nursery school caused a change in employment. To answer this question, we need to think in counterfactual terms.\nThis is the central difficulty of impact evaluation. We observe the employment status of parents in the treated neighborhood after the nursery school opens, but we cannot observe what their employment status would have been, at the same time, if the nursery school had not opened. The counterfactual is therefore missing. The goal of impact evaluation methods is to find a credible way to fill in this missing information.",
+    "crumbs": [
+      "Foundations",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Why Impact Evaluation?</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01-why-impact-evaluation.html#an-example-the-opening-of-a-nursery-school",
+    "href": "chapters/01-why-impact-evaluation.html#an-example-the-opening-of-a-nursery-school",
+    "title": "1  Why Impact Evaluation?",
+    "section": "",
+    "text": "NoteThe counterfactual question\n\n\n\nWhat would have happened to parents’ employment in the same neighborhood if the nursery school had not opened?",
+    "crumbs": [
+      "Foundations",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Why Impact Evaluation?</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01-why-impact-evaluation.html#three-intuitive-comparisons",
+    "href": "chapters/01-why-impact-evaluation.html#three-intuitive-comparisons",
+    "title": "1  Why Impact Evaluation?",
+    "section": "1.2 Three intuitive comparisons",
+    "text": "1.2 Three intuitive comparisons\nThere are several simple ways one might try to estimate the effect of the nursery school.\nOption A: We could use a before–after comparison. We could compare employment in the neighborhood before the nursery school opened, at \\(t_0\\), with employment after the opening, at \\(t_2\\).\nOption B: We could use a cross-sectional comparison. We could compare employment in the treated neighborhood after the nursery school opened, at \\(t_2\\), with employment in other neighborhoods where no nursery school opened during the same period.\nOption C: We could use a difference-in-differences comparison. We could compare the change in employment in the treated neighborhood between \\(t_0\\) and \\(t_2\\) with the change in employment over the same period in neighborhoods that did not receive a new nursery school.\nEach of these approaches is intuitive. Yet each can also be misleading.",
+    "crumbs": [
+      "Foundations",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Why Impact Evaluation?</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01-why-impact-evaluation.html#why-simple-comparisons-may-fail",
+    "href": "chapters/01-why-impact-evaluation.html#why-simple-comparisons-may-fail",
+    "title": "1  Why Impact Evaluation?",
+    "section": "1.3 Why simple comparisons may fail",
+    "text": "1.3 Why simple comparisons may fail\nOption A: A before–after comparison may confuse the effect of the nursery school with other changes occurring over time. Employment may have increased even without the new facility. For example, the local labor market may already have been improving before the nursery school opened. In that case, attributing the entire increase in employment to the nursery school would overstate its effect. Similarly, if an economic shock occurred between \\(t_1\\) and \\(t_2\\), we might wrongly attribute the consequences of that shock to the nursery school.\nOption B: A cross-sectional comparison may also lead to wrong conclusions. Neighborhoods with and without a new nursery school may differ in many ways even before the policy is introduced. They may have different income levels, demographic structures, education levels, labor-market opportunities, or demand for childcare. As these differences are usually related to employment, then comparing the two groups after the nursery school opens would not correctly identify the effect of the nursery school itself.\nOption C: A difference-in-differences comparison is the most sophisticated among these simple alternatives, but it still relies on an assumption that may not hold in this application. The key requirement is the parallel-trends assumption: if the nursery school had not opened, employment in the treated neighborhood would have evolved similarly to employment in the comparison neighborhoods. However, if employment was already evolving differently in the treated neighborhood before the opening, this assumption may fail. In that case, the estimated effect may still mix the impact of the nursery school with other pre-existing differences in employment trends.\n\n\n\n\n\n\nNoteIdentification issues with simple comparisons\n\n\n\n\n\n\nNote: This vignette illustrates why the simple comparisons discussed above may fail to identify the causal effect of interest. Before-after comparisons may confound treatment effects with underlying time trends; cross-sectional comparisons may compare inherently different groups; and difference-in-differences may be misleading when pre-treatment trends differ.\n\n\n\n\n\n\n\n\n\n\nImportantBack to basics\n\n\n\nThe question is not merely whether an outcome changed after a treatment. The question is whether the outcome changed because of that treatment.\nTo answer it, we need a credible counterfactual: a convincing approximation of what the outcome of treated units would have been in the absence of the treatment",
+    "crumbs": [
+      "Foundations",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Why Impact Evaluation?</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01-why-impact-evaluation.html#why-observational-data-are-challenging",
+    "href": "chapters/01-why-impact-evaluation.html#why-observational-data-are-challenging",
+    "title": "1  Why Impact Evaluation?",
+    "section": "1.4 Why observational data are challenging",
+    "text": "1.4 Why observational data are challenging\nConstructing a credible counterfactual is not easy, especially when working with observational data, as in the examples above. In observational settings, policies are not usually assigned at random. Nursery schools may open in neighborhoods with specific characteristics. Workplace-safety subsidies may be received by firms that are more proactive, more exposed to risk, or better informed about public programs. Salary increases for mayors may affect municipalities that differ in many other ways from those not affected.\nFor this reason, simply comparing treated and untreated units may not reveal the causal effect of the policy.",
+    "crumbs": [
+      "Foundations",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Why Impact Evaluation?</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01-why-impact-evaluation.html#why-randomized-controlled-trials-help",
+    "href": "chapters/01-why-impact-evaluation.html#why-randomized-controlled-trials-help",
+    "title": "1  Why Impact Evaluation?",
+    "section": "1.5 Why randomized controlled trials help",
+    "text": "1.5 Why randomized controlled trials help\nEstimating the causal effect would be easier in a randomized controlled trial. Suppose, for example, that a large number of similar neighborhoods applied to receive a new nursery school, but budget constraints allowed the government to build only some of them.\nIf the neighborhoods receiving the new facility were chosen at random, then, on average, the treated and untreated neighborhoods would be comparable before the policy. This is because random assignment breaks the link between treatment status and the pre-existing characteristics of neighborhoods: richer and poorer areas, neighborhoods with higher or lower employment, and places with stronger or weaker demand for childcare would all have the same probability of receiving the new nursery school.\nWith a sufficiently large number of neighborhoods, the law of large numbers helps ensure that these characteristics are balanced between the treated and untreated groups. In that case, the neighborhoods without a new facility would provide a credible approximation of what would have happened to the treated neighborhoods in the absence of the policy.\n\n\n\n\n\n\nNoteWhy randomization is powerful\n\n\n\nRandomization is powerful because it makes the comparison group credible by design. Differences observed after the intervention can then be more plausibly attributed to the policy itself, rather than to pre-existing differences between treated and untreated units.\nThis is why randomized controlled trials are often considered the benchmark for causal evaluation.",
+    "crumbs": [
+      "Foundations",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Why Impact Evaluation?</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01-why-impact-evaluation.html#back-to-impact-evaluation-methods",
+    "href": "chapters/01-why-impact-evaluation.html#back-to-impact-evaluation-methods",
+    "title": "1  Why Impact Evaluation?",
+    "section": "1.6 Back to impact evaluation methods",
+    "text": "1.6 Back to impact evaluation methods\nIn many policy contexts, however, randomization is not feasible. It may be too costly, politically unacceptable, ethically problematic, or simply impossible because the policy has already been implemented.\nMuch of impact evaluation therefore deals with a practical question:\n\n\n\n\n\n\nTipThe practical question\n\n\n\nHow can we construct a credible counterfactual when random assignment is not available?\n\n\nThe methods discussed in this book can be seen as different answers to this question. Each method tries, in its own way, to approximate the missing counterfactual. The key issue is not to choose the most sophisticated method, but to understand which assumptions make a given comparison credible in a specific empirical setting.",
+    "crumbs": [
+      "Foundations",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Why Impact Evaluation?</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/01-why-impact-evaluation.html#the-counterfactual-question-1",
+    "href": "chapters/01-why-impact-evaluation.html#the-counterfactual-question-1",
+    "title": "1  Why Impact Evaluation?",
+    "section": "1.7 The counterfactual question",
+    "text": "1.7 The counterfactual question\nFor each treated unit, we would like to know two outcomes:\n\nthe outcome observed under treatment;\nthe outcome that would have been observed without treatment.\n\nThe first is observed. The second is not. This missing outcome is the counterfactual.\nDifferent impact evaluation methods differ mainly in how they approximate this missing counterfactual outcome.\n\n\n\n\n\n\nImportantRCT thinking in observational studies\n\n\n\nDonald Rubin puts the point very sharply:\n\n“Valid frequentist causal inferences from an observational study can only be obtained if you embed the observational study within a hypothetical randomized experiment. […] Otherwise you are just looking at computer output and implied associations, and making up, generally silly, although sometimes interesting, stories.”\n\nThis statement captures a central lesson of impact evaluation: even when we cannot run a randomized controlled trial, we should still think as if we were trying to approximate one. This means asking what the corresponding randomized experiment would look like. Who would be eligible for treatment? What exactly is the treatment? When would it be assigned? What would be the control condition? Which units would be compared? And which variables would determine, or predict, treatment assignment?\nThis way of thinking is useful because it disciplines the design of observational studies. It forces the researcher to move beyond the mechanical application of an estimator and to make explicit the comparison that gives the causal estimate its meaning. In this sense, RCT thinking is not only relevant for randomized experiments. It is also a benchmark for observational studies: it helps clarify the target causal question, the assignment mechanism, the role of untreated units, and the assumptions needed to interpret an estimate causally.\nSource: Rubin (2022), Interview with Don Rubin.",
+    "crumbs": [
+      "Foundations",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Why Impact Evaluation?</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02-counterfactual-thinking.html",
+    "href": "chapters/02-counterfactual-thinking.html",
+    "title": "2  Counterfactual Thinking",
+    "section": "",
+    "text": "2.1 The fundamental question\nThe fundamental question in impact evaluation is not whether treated units improved after the policy. It is whether they improved more than they would have improved in the absence of the policy.\nThis distinction is the foundation of causal inference.",
+    "crumbs": [
+      "Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Counterfactual Thinking</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02-counterfactual-thinking.html#the-missing-comparison",
+    "href": "chapters/02-counterfactual-thinking.html#the-missing-comparison",
+    "title": "2  Counterfactual Thinking",
+    "section": "2.2 The missing comparison",
+    "text": "2.2 The missing comparison\nFor a treated unit, the untreated potential outcome is missing. For an untreated unit, the treated potential outcome is missing. Causal inference is difficult because we cannot observe the same unit simultaneously under treatment and under no treatment.\nThis is sometimes called the fundamental problem of causal inference.",
+    "crumbs": [
+      "Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Counterfactual Thinking</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02-counterfactual-thinking.html#credible-counterfactuals",
+    "href": "chapters/02-counterfactual-thinking.html#credible-counterfactuals",
+    "title": "2  Counterfactual Thinking",
+    "section": "2.3 Credible counterfactuals",
+    "text": "2.3 Credible counterfactuals\nA credible counterfactual should answer the following question:\n\nCan this comparison group plausibly represent what would have happened to the treated group without the policy?\n\nThe answer depends on the context, the institutional setting, the data, and the assumptions of the research design.",
+    "crumbs": [
+      "Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Counterfactual Thinking</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/02-counterfactual-thinking.html#design-before-estimation",
+    "href": "chapters/02-counterfactual-thinking.html#design-before-estimation",
+    "title": "2  Counterfactual Thinking",
+    "section": "2.4 Design before estimation",
+    "text": "2.4 Design before estimation\nA useful rule is: design first, estimation second.\nBefore estimating any model, the researcher should clarify:\n\nWho is treated?\nWho is untreated?\nWhen does treatment occur?\nWhat is the outcome?\nWhat is the comparison group?\nWhy is this comparison credible?",
+    "crumbs": [
+      "Foundations",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Counterfactual Thinking</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-potential-outcomes.html",
+    "href": "chapters/03-potential-outcomes.html",
+    "title": "3  The Potential Outcomes Framework",
+    "section": "",
+    "text": "3.1 Randomized Controlled Trials (RCTs)\nThe potential outcomes framework provides the basic language of modern causal inference. Its central idea is simple: to define a causal effect, we must compare what happens to the same unit under alternative treatment states.\nThe origins of this framework go back to the work of Jerzy Neyman on randomized agricultural experiments first published in 1927 (Neyman 1990). Neyman introduced the idea that each experimental unit has potential outcomes under different treatments, even though only one of them is observed. Later, Donald Rubin extended this logic beyond randomized experiments, turning it into a general framework for causal inference in both experimental and observational studies (Rubin 1974, 1978). For this reason, the approach is often called the Neyman–Rubin potential outcomes framework or the Rubin causal model.\nSuppose we are interested in the effect of a binary treatment \\(D_i\\) on an outcome \\(Y_i\\) for unit \\(i\\). In the simplest case,\n\\[\nD_i =\n\\begin{cases}\n1 & \\text{if unit } i \\text{ receives the treatment},\\\\\n0 & \\text{if unit } i \\text{ does not receive the treatment}.\n\\end{cases}\n\\]\nFor each unit, we define two potential outcomes:\n\\[\nY_i(1)\n\\quad \\text{and} \\quad\nY_i(0).\n\\]\nHere, \\(Y_i(1)\\) is the outcome that unit \\(i\\) would experience if treated, while \\(Y_i(0)\\) is the outcome that the same unit would experience if untreated. The individual treatment effect is therefore\n\\[\n\\Delta_i = Y_i(1)-Y_i(0).\n\\]\nThis definition captures the essence of causal inference: a causal effect is the difference between two potential states of the same unit. For example, if the treatment is receiving a public subsidy aimed at reducing workplace accidents, the causal effect for a given firm is the difference between the number of workplace accidents with the subsidy and the number of workplace accidents that the same firm would have experienced without the subsidy.\nThe problem is that we never observe both potential outcomes for the same unit. If the unit is treated, we observe \\(Y_i(1)\\) but not \\(Y_i(0)\\). If the unit is untreated, we observe \\(Y_i(0)\\) but not \\(Y_i(1)\\). The observed outcome can be written as\n\\[\nY_i^{obs} = D_iY_i(1) + (1-D_i)Y_i(0).\n\\]\nThis means that \\(Y_i^{obs}=Y_i(1)\\) for treated units, for which \\(D_i=1\\), and \\(Y_i^{obs}=Y_i(0)\\) for untreated units, for which \\(D_i=0\\). In other words, we observe only the potential outcome corresponding to the treatment status actually received.\nThe missing potential outcome is the counterfactual. This is why causal inference is fundamentally a missing-data problem: one potential outcome is observed, while the other must be inferred. Holland famously called this the fundamental problem of causal inference (Holland 1986).\nBecause individual treatment effects are generally impossible to observe, causal inference usually focuses on average treatment effects (discussed in Chapter 5).\nThe reason is that, although we cannot observe both potential outcomes for the same unit, we can observe different units under different treatment statuses. If treated and untreated units are comparable, the average outcome among untreated units can be used to approximate the missing counterfactual outcome for treated units, and vice versa. In this sense, causal inference replaces the impossible comparison of the same unit in two states of the world with a comparison between groups of units that are credible substitutes for one another.\nIn randomized experiments, treatment assignment is controlled by the researcher. In a successful RCT, treatment status is independent of the units’ potential outcomes. Formally, random assignment implies\n\\[\n(Y_i(1),Y_i(0)) \\perp D_i.\n\\]\nThis means that treated and control groups are comparable on average, not necessarily unit by unit. The logic of randomization is therefore statistical. By the law of large numbers, as the number of units increases, random assignment tends to balance both observed and unobserved characteristics across treatment and control groups.\nThis also clarifies why randomizing only two units, one treated and one untreated, is not enough to make the RCT logic convincing. Even if treatment is randomly assigned, the two units may still differ substantially for reasons unrelated to the treatment. With only two units, there is no averaging that washes out individual idiosyncrasies or pre-existing differences.\nWith larger samples, instead, the average outcome of the control group provides an estimate of what the treated group would have experienced without treatment. Similarly, the average outcome of the treated group provides information about outcomes under treatment. In formal terms,\n\\[\nE[Y_i(0)\\mid D_i=1] = E[Y_i(0)\\mid D_i=0].\n\\]\nRandomization does not reveal the missing counterfactual for each individual unit. It solves the counterfactual problem on average, by creating a credible comparison group that reveals the missing average counterfactual.\nThis is why average treatment effects can be estimated even though individual treatment effects cannot be directly observed. RCTs are therefore often considered the benchmark for causal inference: by design, they solve the counterfactual problem for average treatment effects (Neyman 1990; Rubin 1978).",
+    "crumbs": [
+      "Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>The Potential Outcomes Framework</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-potential-outcomes.html#observational-studies",
+    "href": "chapters/03-potential-outcomes.html#observational-studies",
+    "title": "3  The Potential Outcomes Framework",
+    "section": "3.2 Observational Studies",
+    "text": "3.2 Observational Studies\nIn many social science and policy settings, random assignment is not feasible. Individuals, firms, schools, or neighborhoods may select into treatment, or policymakers may target treatment to particular units.\nIn observational studies, treatment assignment is not controlled by the researcher. Treated and untreated units likely differ in observable and unobservable characteristics before the treatment occurs. These differences may affect the outcome and create selection bias. As a result, a simple post-treatment comparison of outcomes between treated and untreated units may capture not only the effect of the treatment, but also pre-existing differences between the two groups.\nRubin’s contribution was to show that the same potential outcomes logic can still be used in observational studies (Rubin 1974). The goal is to reconstruct, as closely as possible, the comparison that a randomized experiment would have produced. Different causal methods do this in different ways: matching, weighting, difference-in-differences, regression discontinuity, instrumental variables, and synthetic control all try to estimate credible counterfactual outcomes under different assumptions.",
+    "crumbs": [
+      "Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>The Potential Outcomes Framework</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-potential-outcomes.html#key-assumptions",
+    "href": "chapters/03-potential-outcomes.html#key-assumptions",
+    "title": "3  The Potential Outcomes Framework",
+    "section": "3.3 Key Assumptions",
+    "text": "3.3 Key Assumptions\nThe potential outcomes framework is not, by itself, an estimator. It defines causal effects and clarifies what must be observed or assumed in order to estimate them. In its basic version, several assumptions are especially important.\n\n3.3.1 Manipulable treatment\nThe treatment must correspond to a clear intervention that could, at least in principle, be assigned or manipulated. This idea is often summarized by the motto: no causation without manipulation.\nFor example, attending a training program, receiving a subsidy, or gaining access to a nursery school can be interpreted as treatments. By contrast, characteristics such as nationality at birth or age are not treatments in the same direct sense, because they cannot be assigned by an intervention.\n\n\n3.3.2 Consistency\nThe observed outcome must correspond to the potential outcome associated with the treatment actually received. That is,\n\\[\nY_i^{obs} = Y_i(1) \\quad \\text{if } D_i=1,\n\\]\nand\n\\[\nY_i^{obs} = Y_i(0) \\quad \\text{if } D_i=0.\n\\]\nConsistency connects the observed data to the potential outcomes. Without it, the notation \\(Y_i(1)\\) and \\(Y_i(0)\\) would not map clearly into the outcomes observed in the data.\n\n\n3.3.3 Stable Unit Treatment Value Assumption\nA central assumption of the basic framework is the Stable Unit Treatment Value Assumption, usually called SUTVA (Rubin 1980). This assumption allows us to write only two potential outcomes for each unit: \\(Y_i(1)\\) and \\(Y_i(0)\\).\nSUTVA has two main components.\nFirst, there should be no hidden versions of the treatment. The treatment must be sufficiently homogeneous across treated units. If some units receive a light version of the programme and others receive a much more intensive version, then the notation \\(Y_i(1)\\) is too vague. There is not one treatment, but several different treatments.\nSecond, there should be no interference between units. The potential outcome of one unit should depend only on that unit’s own treatment status, not on the treatment status of other units. This idea is often traced back to Cox’s discussion of interference between experimental units (Cox 1958).\nFormally, in the simple version of the framework, we write\n\\[\nY_i = Y_i(D_i).\n\\]\nThis assumes that unit \\(i\\)’s outcome depends only on \\(D_i\\). If instead unit \\(i\\)’s outcome also depends on whether other units are treated, the notation would need to be expanded.\n\n\n\n\n\n\nWarningWhen SUTVA may fail\n\n\n\nSUTVA may fail when the treatment has different versions or intensities, when treated units affect untreated units, or when there are spillovers, peer effects, displacement effects, or general equilibrium effects.\n\n\nSUTVA can fail in two main ways: i) Different treatment among treated units. Suppose that a school introduces a tutoring program for students with low test scores. Some students receive one-to-one tutoring, while others receive group tutoring. If we treat all participants as if they had received the same intervention, we are mixing different versions of the treatment. In this case, the estimated effect would not refer to a clearly defined program. ii) The treatment received by one unit may affect the outcomes of other units. Suppose that students who receive tutoring share materials, explain exercises, or study together with classmates who were not selected for the program. In this case, untreated students are no longer unaffected by the intervention: their outcomes may improve because of their interaction with treated students. This violates the no-interference component of SUTVA. The comparison between tutored and non-tutored students would therefore be contaminated: the control group is not simply untreated, but indirectly exposed to the treatment.\n\n\n3.3.4 Assignment mechanism\nTo estimate causal effects, we also need assumptions about how treatment is assigned. In randomized experiments, assignment is random:\n\\[\n(Y_i(1),Y_i(0)) \\perp D_i.\n\\]\nThis means that treatment status is independent of the potential outcomes. In other words, units with high or low values of \\(Y_i(1)\\) or \\(Y_i(0)\\) are not systematically more likely to be assigned to treatment. As a result, the treated and control groups are comparable on average, and the control group can be used to estimate the missing counterfactual outcome for the treated group.\nIn observational studies, this is usually not true. For instance, the key identifying assumption of matching methods is the conditional independence assumpion:\n\\[\n(Y_i(1),Y_i(0)) \\perp D_i \\mid X_i.\n\\]\nThis means that, after conditioning on observed covariates \\(X_i\\), treatment assignment is as good as random. Under this assumption, treated and untreated units with the same values of \\(X_i\\) can be compared to estimate causal effects.\nIt is important to recognize that this assumption should generally be considered quite strong. It requires that all variables affecting both treatment assignment and potential outcomes are observed and correctly accounted for.\nIn other words, after conditioning on \\(X_i\\), there should be no remaining systematic differences between treated and untreated units that are related to the outcome. This is demanding because, in observational studies, treatment assignment often depends on factors that are difficult to measure. For example, workers may enter a training program because they are more motivated, firms may apply for subsidies because they have better managers, and neighborhoods may receive a policy because policymakers expect them to respond more strongly.\nIf these factors are unobserved and also affect the outcome, then treated and untreated units are still not comparable after conditioning on \\(X_i\\). In that case, the Conditional Independence Assumption fails, and the estimated treatment effect may still reflect selection bias rather than the causal effect of the treatment.\n\n\n3.3.5 Overlap\nFinally, for comparisons to be meaningful, treated and untreated units must be comparable. This is the overlap or common support condition.\nThe idea is simple: for the kinds of units we want to compare, we must observe both treated and untreated cases. If a certain type of unit is always treated, then the data contain no untreated unit of that same type that can be used to approximate its counterfactual outcome. Similarly, if a certain type of unit is never treated, then we cannot learn what treatment would have done for that type of unit from the observed data.\nFor example, suppose a subsidy is given only to very large firms, while the control group contains only small and medium-sized firms. In that case, the treated firms have no comparable untreated firms. Any comparison between the two groups would mix the effect of the subsidy with pre-existing differences in firm size, resources, and growth prospects.\nOverlap therefore asks whether treated and untreated units occupy the same region of the covariate space. When this condition fails, causal inference becomes an extrapolation exercise rather than a comparison between similar units. A common response is to restrict the analysis to the region of common support, where treated and untreated units are actually comparable. However, this generally changes the causal parameter that can be retrieved.",
+    "crumbs": [
+      "Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>The Potential Outcomes Framework</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/03-potential-outcomes.html#summary",
+    "href": "chapters/03-potential-outcomes.html#summary",
+    "title": "3  The Potential Outcomes Framework",
+    "section": "3.4 Summary",
+    "text": "3.4 Summary\nThe potential outcomes framework defines causal effects by comparing potential outcomes under treatment and no treatment. Its main contribution is to make the counterfactual problem explicit.\nFor each unit, the individual treatment effect is\n\\[\n\\Delta_i = Y_i(1)-Y_i(0),\n\\]\nbut only one of these two outcomes is observed. This makes individual causal effects generally impossible to measure directly.\nRandomized experiments solve this problem by making treatment assignment independent of potential outcomes. Observational studies try to approximate this logic using assumptions and research designs that make treated and untreated units comparable.\nThe basic framework relies especially on SUTVA: the treatment must be well defined, and one unit’s outcome must not depend on the treatment status of other units. When these conditions fail, the simple notation \\(Y_i(1)\\) and \\(Y_i(0)\\) may no longer be sufficient, and the causal question must be reformulated more carefully.\n\n\n\n\n\n\nTipKey idea\n\n\n\nCausal inference is not just about comparing outcomes.\nIt is about comparing observed outcomes with credible counterfactual outcomes.\n\n\n\n\n\n\n\n\nNoteThe ladder of causality\n\n\n\nPearl and Mackenzie (2018) describe causal reasoning as a ladder of causality with three levels.\n\n\n\nNote: The ladder of causality distinguishes between observing associations, evaluating interventions, and reasoning about counterfactuals. The potential outcomes framework operates at the counterfactual level: it asks what would have happened to the same unit under a different treatment status.\n\n\nThe first level is association. At this level, we ask whether two variables move together. For example: are firms that receive public subsidies less likely to have workplace accidents? This is an associational question. It can be answered by comparing observed accident rates, but it does not tell us whether the subsidy caused the difference.\nThe second level is intervention. At this level, we ask what would happen if we actively changed something. For example: what would happen to workplace accidents if a firm received a public subsidy for safety investments? This is the level of causal effects and policy evaluation.\nThe third level is counterfactuals. At this level, we ask what would have happened under an alternative state of the world. For example: for a firm that received the subsidy, how many workplace accidents would have occurred if that same firm had not received it? This is the level of potential outcomes, because it compares the observed outcome with the missing counterfactual outcome.\nIn this sense, the potential outcomes framework works at the counterfactual level of the ladder. It defines causal effects by comparing what happened with what would have happened under a different treatment status.\n\n\n\n\n\n\n\n\nCox, David R. 1958. Planning of Experiments. John Wiley & Sons.\n\n\nHolland, Paul W. 1986. “Statistics and Causal Inference.” Journal of the American Statistical Association 81 (396): 945–60. https://doi.org/10.1080/01621459.1986.10478354.\n\n\nNeyman, Jerzy. 1990. “On the Application of Probability Theory to Agricultural Experiments: Essay on Principles. Section 9.” Statistical Science 5 (4): 465–72. https://doi.org/10.1214/ss/1177012031.\n\n\nPearl, Judea, and Dana Mackenzie. 2018. The Book of Why: The New Science of Cause and Effect. Basic Books.\n\n\nRubin, Donald B. 1974. “Estimating Causal Effects of Treatments in Randomized and Nonrandomized Studies.” Journal of Educational Psychology 66 (5): 688–701. https://doi.org/10.1037/h0037350.\n\n\nRubin, Donald B. 1978. “Bayesian Inference for Causal Effects: The Role of Randomization.” The Annals of Statistics 6 (1): 34–58. https://doi.org/10.1214/aos/1176344064.\n\n\nRubin, Donald B. 1980. “Comment on ‘Randomization Analysis of Experimental Data: The Fisher Randomization Test’.” Journal of the American Statistical Association 75 (371): 591–93.",
+    "crumbs": [
+      "Foundations",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>The Potential Outcomes Framework</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/04-causal-parameters.html",
+    "href": "chapters/04-causal-parameters.html",
+    "title": "4  Causal Parameters of Interest",
+    "section": "",
+    "text": "The starting point of causal inference is the idea that a treatment can modify an outcome for a given unit. Let \\(D_i\\) denote treatment status for unit \\(i\\), with \\(D_i=1\\) if the unit is treated and \\(D_i=0\\) otherwise. For each unit, we define two potential outcomes:\n\\[\nY_i(1) \\quad \\text{and} \\quad Y_i(0),\n\\]\nwhere \\(Y_i(1)\\) is the outcome that unit \\(i\\) would experience under treatment, and \\(Y_i(0)\\) is the outcome that the same unit would experience without treatment.\nThe individual treatment effect is therefore\n\\[\n\\Delta_i = Y_i(1) - Y_i(0).\n\\]\nThis is the most direct definition of a causal effect: it compares the same unit in two alternative states of the world. For example, it asks how the employment status of the same individual would differ if she attended a training program rather than not attending it.\nThe difficulty is that, for each unit, only one of the two potential outcomes is observed. If \\(D_i=1\\), we observe \\(Y_i(1)\\) but not \\(Y_i(0)\\). If \\(D_i=0\\), we observe \\(Y_i(0)\\) but not \\(Y_i(1)\\). The observed outcome can be written as\n\\[\nY_i^{obs} = D_iY_i(1) + (1-D_i)Y_i(0).\n\\]\nThe missing potential outcome is the counterfactual outcome. This is the fundamental problem of causal inference: it is generally impossible to observe the causal effect of treatment for a single unit.\n\n\n\n\n\n\nNoteThe fundamental problem\n\n\n\nFor each unit, we observe either \\(Y_i(1)\\) or \\(Y_i(0)\\), but never both.\nTherefore, the individual treatment effect \\(\\Delta_i\\) is not directly observable.\n\n\nBecause individual treatment effects are usually impossible to estimate, causal inference typically focuses on average causal effects. The most general parameter is the average treatment effect (ATE):\n\\[\nATE = E[\\Delta_i] = E[Y_i(1)-Y_i(0)].\n\\]\nEquivalently,\n\\[\nATE = E[Y_i(1)] - E[Y_i(0)].\n\\]\nThe ATE answers the question: what is the expected effect of the treatment for a randomly selected unit from the population?\nHowever, the ATE is usually not the most relevant parameter for policy evaluation. A program is generally designed for a specific group, rather than for the whole population. In that case, we are often more interested in the average treatment effect on the treated (ATT):\n\\[\nATT = E[\\Delta_i \\mid D_i=1].\n\\]\nEquivalently,\n\\[\nATT = E[Y_i(1) \\mid D_i=1] - E[Y_i(0) \\mid D_i=1].\n\\]\nThe ATT answers the question: what is the expected effect of the treatment for units that actually received the treatment? This parameter is especially useful when evaluating whether a program generated benefits for its participants.\nThe first component, \\(E[Y_i(1) \\mid D_i=1]\\), is observed in the data:\n\\[\nE[Y_i(1) \\mid D_i=1] = E[Y_i^{obs} \\mid D_i=1].\n\\]\nThe second component, \\(E[Y_i(0) \\mid D_i=1]\\), is not observed. It is the mean outcome that treated units would have experienced without treatment. Estimating this counterfactual is the central empirical challenge.\n\n\n\n\n\n\nWarningThe difficulties in estimating \\(E[Y_i(0) \\mid D_i=1]\\)\n\n\n\nA naive comparison between treated and untreated units estimates\n\\[\nDIM = E[Y_i^{obs} \\mid D_i=1] - E[Y_i^{obs} \\mid D_i=0].\n\\]\nBut, in general,\n\\[\nE[Y_i(0) \\mid D_i=1] \\neq E[Y_i(0) \\mid D_i=0].\n\\]\nThe difference\n\\[\nBias = E[Y_i(0) \\mid D_i=1] - E[Y_i(0) \\mid D_i=0]\n\\]\nis selection bias. Therefore,\n\\[\nDIM = ATT + Bias.\n\\]\nThis shows why a simple comparison between treated and untreated units does not necessarily identify the treatment effect.\n\n\n\n\n\n\n\n\nNoteOther causal parameters: LATE and ITT\n\n\n\nBesides the ATE and ATT, two other causal parameters are especially important in experimental and quasi-experimental settings: the local average treatment effect and the intention-to-treat effect.\nThe local average treatment effect (LATE) is the average treatment effect for the subset of units whose treatment status is changed by an instrument, assignment rule, or encouragement. These units are usually called compliers. In an instrumental variables setting, for example, the LATE is the effect of treatment for units who take the treatment when encouraged by the instrument and do not take it otherwise.\nThe LATE is important because many empirical designs do not identify the effect for the whole population. Instead, they identify the effect for the units whose behavior is shifted by the source of exogenous variation. This means that the estimated effect may depend on the specific instrument or assignment rule being used.\nThe intention-to-treat effect (ITT) measures the effect of being assigned or offered treatment, regardless of whether units actually receive or comply with the treatment. It is especially relevant in randomized experiments with imperfect compliance. For policy purposes, the ITT is often meaningful because it captures the effect of implementing an offer, eligibility rule, or assignment mechanism in the real world.\nIn short, the LATE focuses on the effect of receiving treatment for compliers, while the ITT focuses on the effect of being assigned or offered treatment.\n\n\nIn many applications, treatment effects may also vary across groups. We may then be interested in heterogeneous treatment effects, usually summarized by a conditional average treatment effect (CATE):\n\\[\nCATE(x) = E[Y_i(1)-Y_i(0) \\mid X_i=x].\n\\]\nFor example, a training program may be more effective for younger workers than for older workers, or a childcare policy may have stronger employment effects among mothers with young children.\nSimilarly, one can define a conditional ATT (CATT):\n\\[\nCATT(x) =\nE[Y_i(1)-Y_i(0) \\mid D_i=1, X_i=x].\n\\]\nThese conditional parameters are useful because they tell us not only whether a policy works on average, but also for whom it works best.",
+    "crumbs": [
+      "Foundations",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Causal Parameters of Interest</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05-randomized-experiments.html",
+    "href": "chapters/05-randomized-experiments.html",
+    "title": "5  Randomized Controlled Trials",
+    "section": "",
+    "text": "5.0.1 Random Assignment\nA randomized controlled trial is the benchmark research design for causal inference. Its logic is simple: if treatment is assigned randomly, treated and untreated units should be comparable on average before the intervention. Therefore, any systematic difference in outcomes after the intervention can be attributed to the treatment rather than to pre-existing differences between the two groups.\nIn the potential outcomes framework, each unit \\(i\\) has two potential outcomes:\n\\[\nY_i(1)\n\\quad \\text{and} \\quad\nY_i(0),\n\\]\nwhere \\(Y_i(1)\\) is the outcome under treatment and \\(Y_i(0)\\) is the outcome without treatment. The individual treatment effect is\n\\[\n\\Delta_i = Y_i(1)-Y_i(0).\n\\]\nAs discussed earlier, we cannot observe both potential outcomes for the same unit. Randomized experiments solve this problem statistically: they create a treated group and a control group that are comparable in expectation.\nLet \\(D_i\\) be the treatment indicator:\n\\[\nD_i =\n\\begin{cases}\n1 & \\text{if unit } i \\text{ is assigned to treatment},\\\\\n0 & \\text{if unit } i \\text{ is assigned to control}.\n\\end{cases}\n\\]\nIn a randomized experiment, \\(D_i\\) is assigned by chance. This implies that treatment status is independent of the potential outcomes:\n\\[\n(Y_i(1),Y_i(0)) \\perp D_i.\n\\]\nThis condition is crucial. It means that treated and control units do not differ systematically in terms of the outcomes they would have had under treatment or under control. Any difference between the two groups is due only to random sampling variation.\nAs a result,\n\\[\nE[Y_i(0)\\mid D_i=1] = E[Y_i(0)\\mid D_i=0],\n\\]\nand\n\\[\nE[Y_i(1)\\mid D_i=1] = E[Y_i(1)\\mid D_i=0].\n\\]\nThe control group can therefore be used to estimate the missing counterfactual outcome for the treated group.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Randomized Controlled Trials</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/05-randomized-experiments.html#ab-tests",
+    "href": "chapters/05-randomized-experiments.html#ab-tests",
+    "title": "5  Randomized Controlled Trials",
+    "section": "5.1 A/B Tests",
+    "text": "5.1 A/B Tests\n\n\n\n\n\n\nTipBox: A/B tests as randomized experiments\n\n\n\nAn A/B test is a simple form of randomized experiment, commonly used in digital platforms, marketing, and product design.\nUsers are randomly assigned to one of two versions of an intervention:\n\ngroup A sees the original version;\ngroup B sees a modified version.\n\nFor example, an online platform may randomly show two versions of a webpage. Version A has the original layout, while version B changes the color or position of a button. The outcome may be the click rate, conversion rate, purchase probability, or time spent on the page.\nBecause users are randomly assigned to A or B, the difference in average outcomes can be interpreted causally:\n\\[\n\\widehat{\\tau}_{AB}\n=\n\\overline{Y}^{obs}_{B}\n-\n\\overline{Y}^{obs}_{A}.\n\\]\nThe key point is that the two groups should be comparable before seeing the webpage. Therefore, if version B produces a higher conversion rate, the difference can be attributed to the change being tested, rather than to pre-existing differences between users.\nA/B tests are useful because they are fast, scalable, and relatively cheap. However, they still require careful design. The treatment must be well defined, users should be randomly assigned only once within the relevant experiment, outcomes must be measured consistently, and spillovers between users should be avoided.\n\n\n\n5.1.1 External Validity\nRCTs are strong on internal validity, but they do not automatically answer every policy question. An experiment may identify the causal effect for a particular population, period, and implementation setting. The effect may differ elsewhere.\nFor example, a training programme tested in one city may not have the same effect in another city with different labor-market conditions. A school intervention tested with motivated teachers may work less well when scaled up to a national programme.\nThis is the issue of external validity: whether the estimated effect generalizes beyond the experimental setting.\n\n\n5.1.2 Summary\nRandomized controlled trials provide the cleanest design for estimating causal effects. By randomly assigning units to treatment and control groups, they make treatment status independent of potential outcomes:\n\\[\n(Y_i(1),Y_i(0)) \\perp D_i.\n\\]\nThis allows the researcher to estimate the average treatment effect using a simple difference in mean outcomes:\n\\[\n\\widehat{\\tau}_{RCT}\n=\n\\overline{Y}^{obs}_{D=1}\n-\n\\overline{Y}^{obs}_{D=0}.\n\\]\nThe strength of RCTs is that they solve the selection problem by design. The limitation is that they can be difficult to implement in social science and policy settings, and they remain vulnerable to practical threats such as non-compliance, attrition, behavioral responses, and limited external validity.\n\n\n\n\n\n\nNoteKey idea\n\n\n\nAn RCT creates a credible counterfactual by random assignment.\nThe control group tells us what would have happened to the treated group, on average, in the absence of treatment.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Randomized Controlled Trials</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-selection-on-observables.html",
+    "href": "chapters/06-selection-on-observables.html",
+    "title": "6  Matching Methods",
+    "section": "",
+    "text": "6.1 The Logic of Matching\nMatching methods are among the most intuitive tools for causal inference with observational data. Their basic idea is simple: if treated and untreated units are similar in all relevant pre-treatment characteristics, then the untreated units can be used to approximate the counterfactual outcomes of the treated units.\nSuppose we want to evaluate the effect of a policy on an outcome \\(Y_i\\). Let \\(D_i=1\\) indicate that unit \\(i\\) receives the treatment, and \\(D_i=0\\) otherwise. As usual, each unit has two potential outcomes:\n\\[\nY_i(1)\n\\quad \\text{and} \\quad\nY_i(0).\n\\]\nFor policy evaluation, we are often interested in the average treatment effect on the treated:\n\\[\nATT =\nE[Y_i(1)-Y_i(0)\\mid D_i=1].\n\\]\nEquivalently,\n\\[\nATT =\nE[Y_i(1)\\mid D_i=1]\n-\nE[Y_i(0)\\mid D_i=1].\n\\]\nThe first term is observed:\n\\[\nE[Y_i(1)\\mid D_i=1]\n=\nE[Y_i^{obs}\\mid D_i=1].\n\\]\nThe second term is not observed. It is the average outcome that treated units would have experienced without treatment. Matching methods try to estimate this missing counterfactual by finding untreated units that are as similar as possible to the treated units before treatment.\nThe logic of matching is close to the logic of a randomized experiment. In a randomized controlled trial, treated and untreated units are comparable because treatment is randomly assigned. In an observational study, treatment is not randomly assigned. Units may select into treatment, or policymakers may select units for treatment, based on characteristics that also affect the outcome.\nMatching tries to make treated and untreated units comparable after the data have been collected. It does so by comparing treated units only with untreated units that have similar values of observed covariates \\(X_i\\).\nFor example, suppose we want to estimate the effect of a job training programme on earnings. Workers who attend the programme may differ from non-participants in age, education, previous earnings, motivation, or employment history. Matching would compare each treated worker with one or more untreated workers who are similar in terms of the observed pre-treatment variables.\nA classic example is the evaluation of training programmes studied by LaLonde (1986) and later by Dehejia and Wahba (1999). LaLonde showed that estimating credible treatment effects with non-experimental data is difficult. Dehejia and Wahba then showed that matching methods, when implemented carefully and with rich pre-treatment information, can recover estimates close to experimental benchmarks.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matching Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-selection-on-observables.html#conditional-independence-assumption",
+    "href": "chapters/06-selection-on-observables.html#conditional-independence-assumption",
+    "title": "6  Matching Methods",
+    "section": "6.2 Conditional Independence Assumption",
+    "text": "6.2 Conditional Independence Assumption\nMatching is based on a key identifying assumption: the Conditional Independence Assumption. This is also called selection on observables or unconfoundedness.\nFor the ATT, the assumption can be written as\n\\[\nY_i(0) \\perp D_i \\mid X_i.\n\\]\nThis means that, conditional on observed covariates \\(X_i\\), treatment assignment is independent of the untreated potential outcome. In words: once we compare units with the same observed characteristics, treated and untreated units would have had the same outcome in the absence of treatment.\nUnder this assumption,\n\\[\nE[Y_i(0)\\mid D_i=1, X_i=x]\n=\nE[Y_i(0)\\mid D_i=0, X_i=x].\n\\]\nSince untreated units reveal their untreated potential outcome,\n\\[\nY_i^{obs}=Y_i(0)\n\\quad \\text{when } D_i=0,\n\\]\nwe can estimate the missing counterfactual for treated units using the observed outcomes of comparable untreated units.\n\n\n\n\n\n\nWarningWhat matching can and cannot solve\n\n\n\nMatching can adjust for differences in observed pre-treatment characteristics.\nIt cannot remove bias due to unobserved variables that affect both treatment assignment and the outcome.\n\n\nThis is the crucial limitation of matching. If treated and untreated units differ in unobserved characteristics, such as motivation, ability, managerial quality, or political connections, and these characteristics affect the outcome, then matching on observed variables is not enough.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matching Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-selection-on-observables.html#common-support",
+    "href": "chapters/06-selection-on-observables.html#common-support",
+    "title": "6  Matching Methods",
+    "section": "6.3 Common Support",
+    "text": "6.3 Common Support\nA second key assumption is common support, also called overlap. For each relevant value of the covariates, there must be both treated and untreated units.\nFormally,\n\\[\n0 &lt; P(D_i=1\\mid X_i=x) &lt; 1.\n\\]\nThis condition means that, for units with characteristics \\(X_i=x\\), treatment is possible but not certain. If all units with a given set of characteristics are treated, there are no comparable untreated units. If all are untreated, there are no comparable treated units.\nFor the ATT, we mainly need untreated units that are comparable to treated units. If some treated units have no similar untreated units, matching cannot credibly estimate their counterfactual outcomes.\n\n\n\n\n\n\nNoteCommon support\n\n\n\nMatching requires treated and untreated units to overlap in terms of observed covariates.\nUnits outside the common support should not be used for causal comparisons.\n\n\nIn practice, lack of common support means that some units are too different to be matched. Dropping these units can improve credibility, but it also changes the population for which the treatment effect is estimated.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matching Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-selection-on-observables.html#exact-matching",
+    "href": "chapters/06-selection-on-observables.html#exact-matching",
+    "title": "6  Matching Methods",
+    "section": "6.4 Exact Matching",
+    "text": "6.4 Exact Matching\nIn the ideal case, each treated unit would be matched with untreated units that have exactly the same values of the covariates.\nSuppose \\(X_i\\) contains age, education, and previous earnings. Exact matching would compare a treated unit only with untreated units that have the same age, the same education level, and the same previous earnings.\nThe matching estimator for the ATT can be described in three steps:\n\nDivide the data into groups defined by values of \\(X_i\\).\nWithin each group, compute the difference between the average outcome of treated and untreated units.\nAverage these differences using the distribution of \\(X_i\\) among treated units.\n\nFormally, the ATT can be written as\n\\[\nATT =\nE_X\n\\left[\nE(Y_i\\mid D_i=1,X_i)\n-\nE(Y_i\\mid D_i=0,X_i)\n\\mid D_i=1\n\\right].\n\\]\nThis expression highlights the core idea of matching: compare treated and untreated units within comparable covariate cells, and then average over the treated population.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matching Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-selection-on-observables.html#the-curse-of-dimensionality",
+    "href": "chapters/06-selection-on-observables.html#the-curse-of-dimensionality",
+    "title": "6  Matching Methods",
+    "section": "6.5 The Curse of Dimensionality",
+    "text": "6.5 The Curse of Dimensionality\nExact matching becomes difficult when the number of covariates increases. This is known as the curse of dimensionality.\nIf \\(X_i\\) contains many variables, it becomes increasingly unlikely to find untreated units with exactly the same covariate values as treated units. With continuous variables, exact matches may be almost impossible. Even with binary covariates, the number of possible covariate profiles grows very quickly.\nFor example, with 20 binary covariates, there are\n\\[\n2^{20} = 1{,}048{,}576\n\\]\npossible covariate profiles.\nThis means that a very large dataset may be needed to find treated and untreated units in the same covariate cells. In practice, this makes exact matching infeasible in many applications.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matching Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-selection-on-observables.html#propensity-score-matching",
+    "href": "chapters/06-selection-on-observables.html#propensity-score-matching",
+    "title": "6  Matching Methods",
+    "section": "6.6 Propensity Score Matching",
+    "text": "6.6 Propensity Score Matching\nA major solution to the curse of dimensionality is propensity score matching, introduced by Rosenbaum and Rubin (1983).\nThe propensity score is the probability of receiving the treatment conditional on observed covariates:\n\\[\np(X_i) = P(D_i=1\\mid X_i).\n\\]\nInstead of matching units on all covariates \\(X_i\\), propensity score matching matches units on the scalar index \\(p(X_i)\\).\nRosenbaum and Rubin showed that, if treatment assignment is independent of potential outcomes conditional on \\(X_i\\), then it is also independent of potential outcomes conditional on the propensity score:\n\\[\n(Y_i(1),Y_i(0)) \\perp D_i \\mid X_i\n\\quad \\Rightarrow \\quad\n(Y_i(1),Y_i(0)) \\perp D_i \\mid p(X_i).\n\\]\nThis is the balancing property of the propensity score. Conditional on the propensity score, the distribution of observed covariates should be similar between treated and untreated units.\n\n\n\n\n\n\nTipWhy the propensity score is useful\n\n\n\nThe propensity score reduces a multidimensional matching problem to a one-dimensional one.\nInstead of matching on many covariates, we match on the probability of treatment.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matching Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-selection-on-observables.html#estimating-the-propensity-score",
+    "href": "chapters/06-selection-on-observables.html#estimating-the-propensity-score",
+    "title": "6  Matching Methods",
+    "section": "6.7 Estimating the Propensity Score",
+    "text": "6.7 Estimating the Propensity Score\nIn practice, the true propensity score is unknown and must be estimated. This is usually done by modelling treatment assignment as a function of pre-treatment covariates.\nCommon choices include:\n\\[\nP(D_i=1\\mid X_i)\n=\n\\beta_0 + X_i'\\beta\n\\]\nfor a linear probability model,\n\\[\nP(D_i=1\\mid X_i)\n=\n\\Phi(\\beta_0 + X_i'\\beta)\n\\]\nfor a probit model, and\n\\[\nP(D_i=1\\mid X_i)\n=\n\\frac{\\exp(\\beta_0+X_i'\\beta)}\n{1+\\exp(\\beta_0+X_i'\\beta)}\n\\]\nfor a logit model.\nThe covariates included in \\(X_i\\) should be chosen carefully. They should be pre-treatment variables that affect treatment assignment and are plausibly related to the outcome. If panel data are available, lagged outcomes can often be useful because they capture pre-treatment differences in outcome levels.\nImportantly, variables affected by the treatment should not be included in the propensity score model, because doing so would condition on post-treatment variables and may introduce bias.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matching Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-selection-on-observables.html#matching-rules",
+    "href": "chapters/06-selection-on-observables.html#matching-rules",
+    "title": "6  Matching Methods",
+    "section": "6.8 Matching Rules",
+    "text": "6.8 Matching Rules\nOnce the propensity score has been estimated, treated and untreated units can be matched using different rules. Different rules imply different trade-offs between bias and precision.\n\n6.8.1 Stratification Matching\nIn stratification matching, the range of the propensity score is divided into intervals, or strata. Within each stratum, treated and untreated units should have similar average propensity scores.\nThe treatment effect is estimated within each stratum as the difference in mean outcomes between treated and untreated units. These stratum-specific effects are then averaged, weighting by the number of treated units in each stratum.\nIf there are \\(S\\) strata, the estimator can be written as\n\\[\n\\widehat{ATT}_{strat}\n=\n\\sum_{s=1}^{S}\n\\frac{N_{1s}}{N_1}\n\\left(\n\\overline{Y}_{1s}\n-\n\\overline{Y}_{0s}\n\\right),\n\\]\nwhere \\(N_{1s}\\) is the number of treated units in stratum \\(s\\), \\(N_1\\) is the total number of treated units, and \\(\\overline{Y}_{1s}\\) and \\(\\overline{Y}_{0s}\\) are the average outcomes of treated and untreated units in that stratum.\n\n\n6.8.2 Nearest Neighbor Matching\nIn nearest neighbor matching, each treated unit is matched to the untreated unit with the closest propensity score.\nFor treated unit \\(i\\), the matched control is\n\\[\nj(i)\n=\n\\arg\\min_{j:D_j=0}\n\\left|\n\\widehat p(X_i)-\\widehat p(X_j)\n\\right|.\n\\]\nThe ATT is then estimated as the average difference between each treated unit and its matched control:\n\\[\n\\widehat{ATT}_{NN}\n=\n\\frac{1}{N_1}\n\\sum_{i:D_i=1}\n\\left[\nY_i\n-\nY_{j(i)}\n\\right].\n\\]\nNearest neighbor matching can be implemented with or without replacement. With replacement, the same untreated unit can be used as a match for multiple treated units. This often improves match quality but may increase variance.\nA common extension is \\(K\\)-nearest neighbor matching, where each treated unit is matched to the \\(K\\) closest untreated units.\n\n\n6.8.3 Radius Matching\nIn radius matching, each treated unit is matched to all untreated units whose propensity score lies within a fixed distance, or radius.\nFor treated unit \\(i\\), the set of matched controls is\n\\[\nC(i)\n=\n\\left\\{\nj:D_j=0,\n\\left|\n\\widehat p(X_i)-\\widehat p(X_j)\n\\right|\n\\le r\n\\right\\},\n\\]\nwhere \\(r\\) is the radius.\nThe choice of \\(r\\) involves a trade-off. A smaller radius improves comparability but may leave some treated units unmatched. A larger radius increases the number of matches but may include poorer matches, increasing bias.\n\n\n6.8.4 Kernel Matching\nIn kernel matching, all untreated units are used to construct the counterfactual outcome for each treated unit, but closer controls receive larger weights.\nFor treated unit \\(i\\), the counterfactual outcome is estimated as\n\\[\n\\widehat Y_i(0)\n=\n\\sum_{j:D_j=0}\nw_{ij}Y_j,\n\\]\nwhere the weights \\(w_{ij}\\) decrease with the distance between the propensity score of treated unit \\(i\\) and untreated unit \\(j\\).\nThe ATT is then\n\\[\n\\widehat{ATT}_{kernel}\n=\n\\frac{1}{N_1}\n\\sum_{i:D_i=1}\n\\left[\nY_i\n-\n\\widehat Y_i(0)\n\\right].\n\\]\nKernel matching uses more information than nearest neighbor matching, but it may also rely on controls that are relatively far from some treated units. The choice of bandwidth is therefore important.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matching Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-selection-on-observables.html#other-matching-and-weighting-approaches",
+    "href": "chapters/06-selection-on-observables.html#other-matching-and-weighting-approaches",
+    "title": "6  Matching Methods",
+    "section": "6.9 Other Matching and Weighting Approaches",
+    "text": "6.9 Other Matching and Weighting Approaches\nSeveral related methods follow the same broad logic of constructing credible comparisons based on observed characteristics.\nMahalanobis matching matches units using a multivariate distance measure based directly on the covariates. It is useful when the number of covariates is not too large.\nCoarsened exact matching first groups covariates into substantively meaningful bins and then performs exact matching within the coarsened covariate cells. This can improve transparency and reduce dependence on model specification.\nInverse probability weighting uses the propensity score to reweight observations rather than to form matched pairs. Technically, it is a weighting method rather than a matching method, but it is based on the same idea: use observed covariates to make treated and untreated groups comparable.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matching Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-selection-on-observables.html#assessing-match-quality",
+    "href": "chapters/06-selection-on-observables.html#assessing-match-quality",
+    "title": "6  Matching Methods",
+    "section": "6.10 Assessing Match Quality",
+    "text": "6.10 Assessing Match Quality\nMatching should not end after estimating the treatment effect. A crucial step is checking whether matching actually improved balance between treated and untreated units.\nThe goal is not to predict treatment as well as possible. The goal is to make the distribution of covariates similar across groups after matching.\nCommon diagnostics include:\n\ncomparing covariate means before and after matching;\nchecking standardized mean differences;\ninspecting the distribution of the propensity score;\nverifying common support;\nreporting how many treated units are unmatched or discarded.\n\nA matching estimator is credible only if treated and matched control units are sufficiently similar in pre-treatment characteristics.\n\n\n\n\n\n\nNoteBalance before effects\n\n\n\nBefore interpreting the estimated treatment effect, check whether matching has balanced the covariates.\nIf balance remains poor, the matched comparison group is not a credible counterfactual.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matching Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-selection-on-observables.html#what-bias-does-matching-remove",
+    "href": "chapters/06-selection-on-observables.html#what-bias-does-matching-remove",
+    "title": "6  Matching Methods",
+    "section": "6.11 What Bias Does Matching Remove?",
+    "text": "6.11 What Bias Does Matching Remove?\nMatching can address two important sources of bias.\nFirst, it can address lack of common support by excluding treated units that have no comparable untreated units. This avoids comparing units that are too different.\nSecond, it can address differences in the distribution of observed covariates by reweighting or selecting controls so that they resemble treated units.\nHowever, matching cannot address selection on unobservables. If treatment assignment depends on variables that are not observed and that also affect the outcome, matching estimates may still be biased.\nIn the notation used earlier, matching can help with bias due to observed differences between treated and untreated units, but not with bias due to unobserved differences.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matching Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-selection-on-observables.html#main-limitations",
+    "href": "chapters/06-selection-on-observables.html#main-limitations",
+    "title": "6  Matching Methods",
+    "section": "6.12 Main Limitations",
+    "text": "6.12 Main Limitations\nMatching methods are useful and intuitive, but they have important limitations.\nFirst, the Conditional Independence Assumption is often strong. In many observational studies, selection into treatment depends on unobserved factors. For example, firms receiving public subsidies may differ from non-recipient firms not only in observed characteristics, but also in managerial ability, expected profitability, or access to policy networks.\nSecond, common support may fail. Some treated units may be very different from all available untreated units. In such cases, the data do not contain enough information to construct credible counterfactuals for all treated units.\nThird, matching methods may require large datasets. As the number of covariates grows, finding comparable treated and untreated units becomes increasingly difficult.\nFourth, results may depend on implementation choices: which covariates are used, how the propensity score is estimated, which matching rule is selected, whether replacement is allowed, and how common support is imposed.\n\n\n\n\n\n\nWarningThe main caveat\n\n\n\nMatching makes observational data look more like experimental data only with respect to observed variables.\nIt does not make treatment random with respect to variables that are unobserved.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matching Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-selection-on-observables.html#empirical-illustration",
+    "href": "chapters/06-selection-on-observables.html#empirical-illustration",
+    "title": "6  Matching Methods",
+    "section": "6.13 Empirical Illustration",
+    "text": "6.13 Empirical Illustration\nAn example of matching in applied research is the study by Bovan et al. (2018) on the effect of natural disasters on voting behavior. The authors study whether voters punish politicians for events outside their control, focusing on floods in Croatia.\nFlooded and non-flooded areas may differ systematically. For example, they may differ in socioeconomic conditions, geography, political preferences, or previous voting behavior. A simple comparison between flooded and non-flooded areas may therefore be misleading.\nThe study uses matching to compare affected and non-affected areas with similar observed characteristics. Before matching, floods appeared to reduce support for incumbent politicians. After accounting for differences in control variables through matching, the estimated flood effect disappeared.\nThis example illustrates the core logic of matching: part of what looks like a treatment effect may actually reflect pre-existing differences between treated and untreated units.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matching Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/06-selection-on-observables.html#summary",
+    "href": "chapters/06-selection-on-observables.html#summary",
+    "title": "6  Matching Methods",
+    "section": "6.14 Summary",
+    "text": "6.14 Summary\nMatching methods estimate causal effects by comparing treated units with similar untreated units. They are especially useful when treatment is not randomly assigned but rich pre-treatment information is available.\nThe key assumptions are:\n\nConditional Independence Assumption: after conditioning on observed covariates, treatment assignment is as good as random.\nCommon support: treated units have comparable untreated units.\nSUTVA and consistency: treatment is well defined and observed outcomes correspond to the appropriate potential outcomes.\n\nMatching is attractive because it is intuitive, transparent, and closely connected to the logic of randomized experiments. Its main weakness is that it relies on selection on observables. If important unobserved factors affect both treatment assignment and outcomes, matching alone cannot solve the identification problem.\n\n\n\n\n\n\nTipKey idea\n\n\n\nMatching replaces an impossible comparison between treated units and their own missing counterfactuals with a comparison between treated units and similar untreated units.\n\n\n\n\n\n\n\n\nNoteExample: evaluating a training programme\n\n\n\nA classic application of matching methods is the evaluation of job training programmes. LaLonde showed that estimating the effect of training on earnings with non-experimental data can be difficult, because participants and non-participants may differ systematically before treatment (LaLonde 1986).\nDehejia and Wahba revisited this problem and showed that, under suitable data conditions and careful implementation, propensity score matching can recover estimates close to those obtained from an experimental benchmark (Dehejia and Wahba 1999). Their study became influential because it suggested that matching methods can help observational studies mimic some features of randomized experiments, provided that the relevant selection variables are observed.\n\n\n\n\n\n\n\n\nBovan, Kosta, Benjamin Banai, and Irena Pavela Banai. 2018. “Do Natural Disasters Affect Voting Behavior? Evidence from Croatian Floods.” PLOS Currents Disasters 10: ecurrents.dis.cbf57c8ac3b239ba51ccc801d3362c07. https://doi.org/10.1371/currents.dis.cbf57c8ac3b239ba51ccc801d3362c07.\n\n\nDehejia, Rajeev H., and Sadek Wahba. 1999. “Causal Effects in Nonexperimental Studies: Reevaluating the Evaluation of Training Programs.” Journal of the American Statistical Association 94 (448): 1053–62. https://doi.org/10.1080/01621459.1999.10473858.\n\n\nLaLonde, Robert J. 1986. “Evaluating the Econometric Evaluations of Training Programs with Experimental Data.” The American Economic Review 76 (4): 604–20. https://www.jstor.org/stable/1806062.\n\n\nRosenbaum, Paul R., and Donald B. Rubin. 1983. “The Central Role of the Propensity Score in Observational Studies for Causal Effects.” Biometrika 70 (1): 41–55. https://doi.org/10.1093/biomet/70.1.41.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Matching Methods</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07-difference-in-differences.html",
+    "href": "chapters/07-difference-in-differences.html",
+    "title": "7  Difference in differences",
+    "section": "",
+    "text": "7.1 The evaluation problem",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Difference in differences</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07-difference-in-differences.html#key-intuition",
+    "href": "chapters/07-difference-in-differences.html#key-intuition",
+    "title": "7  Difference in differences",
+    "section": "7.2 Key intuition",
+    "text": "7.2 Key intuition",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Difference in differences</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07-difference-in-differences.html#identification-assumptions",
+    "href": "chapters/07-difference-in-differences.html#identification-assumptions",
+    "title": "7  Difference in differences",
+    "section": "7.3 Identification assumptions",
+    "text": "7.3 Identification assumptions",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Difference in differences</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07-difference-in-differences.html#estimation",
+    "href": "chapters/07-difference-in-differences.html#estimation",
+    "title": "7  Difference in differences",
+    "section": "7.4 Estimation",
+    "text": "7.4 Estimation",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Difference in differences</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07-difference-in-differences.html#diagnostics-and-validity-checks",
+    "href": "chapters/07-difference-in-differences.html#diagnostics-and-validity-checks",
+    "title": "7  Difference in differences",
+    "section": "7.5 Diagnostics and validity checks",
+    "text": "7.5 Diagnostics and validity checks",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Difference in differences</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07-difference-in-differences.html#common-mistakes",
+    "href": "chapters/07-difference-in-differences.html#common-mistakes",
+    "title": "7  Difference in differences",
+    "section": "7.6 Common mistakes",
+    "text": "7.6 Common mistakes",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Difference in differences</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07-difference-in-differences.html#worked-example",
+    "href": "chapters/07-difference-in-differences.html#worked-example",
+    "title": "7  Difference in differences",
+    "section": "7.7 Worked example",
+    "text": "7.7 Worked example",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Difference in differences</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/07-difference-in-differences.html#how-to-report-the-results",
+    "href": "chapters/07-difference-in-differences.html#how-to-report-the-results",
+    "title": "7  Difference in differences",
+    "section": "7.8 How to report the results",
+    "text": "7.8 How to report the results",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Difference in differences</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08-event-studies.html",
+    "href": "chapters/08-event-studies.html",
+    "title": "8  Event studies",
+    "section": "",
+    "text": "8.1 The evaluation problem",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Event studies</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08-event-studies.html#key-intuition",
+    "href": "chapters/08-event-studies.html#key-intuition",
+    "title": "8  Event studies",
+    "section": "8.2 Key intuition",
+    "text": "8.2 Key intuition",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Event studies</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08-event-studies.html#identification-assumptions",
+    "href": "chapters/08-event-studies.html#identification-assumptions",
+    "title": "8  Event studies",
+    "section": "8.3 Identification assumptions",
+    "text": "8.3 Identification assumptions",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Event studies</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08-event-studies.html#estimation",
+    "href": "chapters/08-event-studies.html#estimation",
+    "title": "8  Event studies",
+    "section": "8.4 Estimation",
+    "text": "8.4 Estimation",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Event studies</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08-event-studies.html#diagnostics-and-validity-checks",
+    "href": "chapters/08-event-studies.html#diagnostics-and-validity-checks",
+    "title": "8  Event studies",
+    "section": "8.5 Diagnostics and validity checks",
+    "text": "8.5 Diagnostics and validity checks",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Event studies</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08-event-studies.html#common-mistakes",
+    "href": "chapters/08-event-studies.html#common-mistakes",
+    "title": "8  Event studies",
+    "section": "8.6 Common mistakes",
+    "text": "8.6 Common mistakes",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Event studies</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08-event-studies.html#worked-example",
+    "href": "chapters/08-event-studies.html#worked-example",
+    "title": "8  Event studies",
+    "section": "8.7 Worked example",
+    "text": "8.7 Worked example",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Event studies</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/08-event-studies.html#how-to-report-the-results",
+    "href": "chapters/08-event-studies.html#how-to-report-the-results",
+    "title": "8  Event studies",
+    "section": "8.8 How to report the results",
+    "text": "8.8 How to report the results",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Event studies</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/09-regression-discontinuity.html",
+    "href": "chapters/09-regression-discontinuity.html",
+    "title": "9  Regression Discontinuity Design",
+    "section": "",
+    "text": "9.1 The Basic Setup\nA regression discontinuity design (RDD) is used when treatment assignment depends on whether an observed pre-treatment variable crosses a known threshold. This variable is usually called the running variable, forcing variable, or score.\nThe key idea is intuitive. Units just below and just above the threshold are likely to be very similar, except that units on one side receive the treatment while units on the other side do not. If this is true, a discontinuous jump in the outcome at the threshold can be interpreted as the causal effect of the treatment.\nFor example, a public subsidy may be assigned only to firms whose eligibility score exceeds a given cutoff. Firms just above and just below the cutoff may be very similar in terms of size, productivity, sector, and investment plans. However, firms just above the cutoff receive the subsidy, while firms just below do not. The RDD compares these two groups locally around the cutoff.\nLet \\(S_i\\) denote the running variable for unit \\(i\\), and let \\(c\\) denote the cutoff. Treatment status is denoted by \\(D_i\\).\nIn a sharp RDD, treatment assignment is completely determined by the running variable:\n\\[\nD_i =\n\\begin{cases}\n1 & \\text{if } S_i \\ge c,\\\\\n0 & \\text{if } S_i &lt; c.\n\\end{cases}\n\\]\nIn this case, crossing the threshold changes treatment status from 0 to 1 with probability one.\nThe parameter of interest is the treatment effect at the cutoff:\n\\[\n\\tau_{SRD}\n=\n\\lim_{s \\downarrow c} E[Y_i \\mid S_i=s]\n-\n\\lim_{s \\uparrow c} E[Y_i \\mid S_i=s].\n\\]\nThis is a local causal effect. It applies to units at, or very close to, the cutoff. It should not automatically be interpreted as the average treatment effect for all units.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Regression Discontinuity Design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/09-regression-discontinuity.html#sharp-and-fuzzy-rdd",
+    "href": "chapters/09-regression-discontinuity.html#sharp-and-fuzzy-rdd",
+    "title": "9  Regression Discontinuity Design",
+    "section": "9.2 Sharp and Fuzzy RDD",
+    "text": "9.2 Sharp and Fuzzy RDD\nThere are two main types of RDD: sharp and fuzzy.\nIn a sharp RDD, treatment status changes deterministically at the cutoff. All units above the cutoff are treated, and all units below are untreated.\nIn a fuzzy RDD, crossing the cutoff changes the probability of treatment, but does not perfectly determine treatment status. Some units above the cutoff may not receive the treatment, and some units below may receive it.\nFormally, in a fuzzy RDD,\n\\[\n\\lim_{s \\downarrow c} P(D_i=1 \\mid S_i=s)\n-\n\\lim_{s \\uparrow c} P(D_i=1 \\mid S_i=s)\n\\neq 0,\n\\]\nbut this discontinuity is smaller than one.\nThe fuzzy RDD estimand is a ratio of two discontinuities:\n\\[\n\\tau_{FRD}\n=\n\\frac{\n\\lim_{s \\downarrow c} E[Y_i \\mid S_i=s]\n-\n\\lim_{s \\uparrow c} E[Y_i \\mid S_i=s]\n}{\n\\lim_{s \\downarrow c} E[D_i \\mid S_i=s]\n-\n\\lim_{s \\uparrow c} E[D_i \\mid S_i=s]\n}.\n\\]\nThe numerator measures the jump in the outcome at the cutoff. The denominator measures the jump in the probability of treatment at the cutoff. For this reason, fuzzy RDD is closely related to instrumental variables: crossing the cutoff acts as an instrument for treatment receipt.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Regression Discontinuity Design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/09-regression-discontinuity.html#identification",
+    "href": "chapters/09-regression-discontinuity.html#identification",
+    "title": "9  Regression Discontinuity Design",
+    "section": "9.3 Identification",
+    "text": "9.3 Identification\nThe central identifying assumption in RDD is that potential outcomes are continuous at the cutoff. In the absence of treatment, the expected outcome should not jump exactly at the threshold.\nFormally, the functions\n\\[\nE[Y_i(0)\\mid S_i=s]\n\\quad \\text{and} \\quad\nE[Y_i(1)\\mid S_i=s]\n\\]\nshould be continuous at \\(s=c\\).\nIf this condition holds, any discontinuity in the observed outcome at the cutoff can be attributed to the discontinuous change in treatment status.\nA second key assumption is that units cannot precisely manipulate the running variable around the cutoff. If units can sort just above or below the threshold, then units on the two sides may no longer be comparable.\n\n\n\n\n\n\nWarningThe key threat\n\n\n\nRDD is credible only if units just below and just above the cutoff are comparable.\nIf units can precisely manipulate the running variable, this local comparison may fail.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Regression Discontinuity Design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/09-regression-discontinuity.html#why-rdd-is-local",
+    "href": "chapters/09-regression-discontinuity.html#why-rdd-is-local",
+    "title": "9  Regression Discontinuity Design",
+    "section": "9.4 Why RDD Is Local",
+    "text": "9.4 Why RDD Is Local\nRDD does not compare all treated and untreated units. It compares units near the cutoff.\nThis is important because units far from the cutoff may be very different. A firm with a very high eligibility score may not be comparable to a firm with a very low score. However, firms just above and just below the cutoff are more likely to be similar.\nThus, the RDD effect is usually interpreted as a local average treatment effect at the cutoff:\n\\[\n\\tau(c).\n\\]\nThe word “local” is essential. The estimate tells us the effect for marginal units whose treatment status changes because they are just above rather than just below the threshold.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Regression Discontinuity Design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/09-regression-discontinuity.html#estimation",
+    "href": "chapters/09-regression-discontinuity.html#estimation",
+    "title": "9  Regression Discontinuity Design",
+    "section": "9.5 Estimation",
+    "text": "9.5 Estimation\nRDD can be estimated using parametric or non-parametric methods.\nA simple parametric specification is\n\\[\nY_i\n=\n\\alpha\n+\n\\tau D_i\n+\nf(S_i-c)\n+\nD_i g(S_i-c)\n+\n\\varepsilon_i,\n\\]\nwhere \\(f(\\cdot)\\) and \\(g(\\cdot)\\) are functions of the running variable on the two sides of the cutoff. This model allows the relationship between the running variable and the outcome to differ below and above the threshold.\nIn modern applications, however, local polynomial methods are usually preferred. The idea is to use observations close to the cutoff and give more weight to observations nearest to it.\nA common local linear specification estimates separate lines on the two sides of the cutoff within a selected bandwidth:\n\\[\n|S_i-c| \\le h.\n\\]\nThe bandwidth \\(h\\) determines how close units must be to the cutoff to be included in the estimation.\n\n\n\n\n\n\nNoteBandwidth\n\n\n\nA small bandwidth compares units very close to the cutoff, reducing bias but increasing variance.\nA large bandwidth uses more observations, increasing precision but potentially comparing less similar units.\n\n\nThe choice of bandwidth is therefore central. Recent RDD practice often relies on robust bias-corrected methods and data-driven bandwidth selection, such as the approach proposed by Calonico, Cattaneo, and Titiunik (2014).",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Regression Discontinuity Design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/09-regression-discontinuity.html#kernels",
+    "href": "chapters/09-regression-discontinuity.html#kernels",
+    "title": "9  Regression Discontinuity Design",
+    "section": "9.6 Kernels",
+    "text": "9.6 Kernels\nLocal RDD estimators also require a kernel, which determines how observations are weighted within the bandwidth.\nObservations closer to the cutoff typically receive more weight, while observations farther away receive less weight. Common choices include triangular, uniform, and Epanechnikov kernels.\nThe triangular kernel is often used in applied work because it gives the largest weight to observations closest to the cutoff.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Regression Discontinuity Design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/09-regression-discontinuity.html#validity-checks",
+    "href": "chapters/09-regression-discontinuity.html#validity-checks",
+    "title": "9  Regression Discontinuity Design",
+    "section": "9.7 Validity Checks",
+    "text": "9.7 Validity Checks\nRDD is visually intuitive, but it requires careful diagnostic checks.\n\n9.7.1 No Manipulation of the Running Variable\nResearchers should check whether units appear to manipulate the running variable around the cutoff. If many units bunch just above or just below the threshold, this may indicate sorting.\nA standard diagnostic is a density test around the cutoff. If the density of the running variable jumps at the cutoff, the design may be invalid.\n\n\n9.7.2 Covariate Balance\nPre-treatment covariates should be smooth at the cutoff. If predetermined characteristics jump at the threshold, treated and untreated units near the cutoff may not be comparable.\nThe same RDD logic can therefore be applied to covariates:\n\\[\nX_i\n\\quad \\text{should not jump at } c.\n\\]\n\n\n9.7.3 Placebo Cutoffs\nResearchers can also test for discontinuities at placebo thresholds, where no treatment change occurs. If outcome jumps appear at arbitrary cutoffs, the estimated discontinuity at the true cutoff may not be causal.\n\n\n9.7.4 Sensitivity to Bandwidth\nResults should be checked using alternative bandwidths. If the estimate changes dramatically when the bandwidth changes, the conclusions may be fragile.\n\n\n\n\n\n\nTipGood RDD practice\n\n\n\nA credible RDD should report the main estimate, graphical evidence, bandwidth sensitivity, density checks, and covariate balance around the cutoff.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Regression Discontinuity Design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/09-regression-discontinuity.html#graphical-evidence",
+    "href": "chapters/09-regression-discontinuity.html#graphical-evidence",
+    "title": "9  Regression Discontinuity Design",
+    "section": "9.8 Graphical Evidence",
+    "text": "9.8 Graphical Evidence\nRDD is often presented using a figure that plots the outcome against the running variable. The graph usually shows:\n\nbinned averages of the outcome;\nthe cutoff;\nfitted curves or lines on each side of the cutoff;\nthe estimated jump at the threshold.\n\nThe visual evidence is not a substitute for formal estimation, but it is important. A convincing RDD should show a clear discontinuity in the outcome at the cutoff, without similar discontinuities in pre-treatment covariates.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Regression Discontinuity Design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/09-regression-discontinuity.html#empirical-example-incumbency-advantage",
+    "href": "chapters/09-regression-discontinuity.html#empirical-example-incumbency-advantage",
+    "title": "9  Regression Discontinuity Design",
+    "section": "9.9 Empirical Example: Incumbency Advantage",
+    "text": "9.9 Empirical Example: Incumbency Advantage\nA classic application is Lee’s study of incumbency advantage in U.S. House elections (Lee 2008). The running variable is the Democratic vote margin in an election. The cutoff is zero: candidates who barely win become incumbents, while candidates who barely lose do not.\nClose elections provide a compelling RDD setting. A party that barely wins and a party that barely loses are likely to be similar, but only the winner receives incumbency status.\nLee estimates the effect of party incumbency on the probability of winning the district in the next election. The study finds a substantial incumbency advantage: barely winning an election increases the probability of winning the next one.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Regression Discontinuity Design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/09-regression-discontinuity.html#spatial-rdd",
+    "href": "chapters/09-regression-discontinuity.html#spatial-rdd",
+    "title": "9  Regression Discontinuity Design",
+    "section": "9.10 Spatial RDD",
+    "text": "9.10 Spatial RDD\nA spatial regression discontinuity design applies the same logic to geographic boundaries. Treatment changes discontinuously at a border, and units close to the border on different sides are compared.\nFor example, a place-based policy may apply only to municipalities on one side of an administrative boundary. If locations near the boundary are similar in geography, climate, transport access, and local economic conditions, then differences in outcomes across the boundary can be attributed to the policy.\nIn spatial RDD, the running variable may be:\n\ndistance to the boundary;\nlatitude and longitude;\ndistance to the nearest border point;\ntravel distance to the boundary.\n\nSpatial RDD is attractive because nearby locations often share many unobserved characteristics. However, it has additional challenges.\nFirst, several policies may change at the same boundary. If many institutional rules differ across the border, the estimated discontinuity may not isolate the effect of the policy of interest. This is sometimes called a compound treatment problem.\nSecond, units may move in response to the policy. If firms, households, or workers relocate across the boundary, the no-sorting assumption may fail.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Regression Discontinuity Design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/09-regression-discontinuity.html#empirical-example-geographic-boundaries",
+    "href": "chapters/09-regression-discontinuity.html#empirical-example-geographic-boundaries",
+    "title": "9  Regression Discontinuity Design",
+    "section": "9.11 Empirical Example: Geographic Boundaries",
+    "text": "9.11 Empirical Example: Geographic Boundaries\nKeele and Titiunik (2015) use geographic boundaries as regression discontinuities to study the effect of political advertisements on voter turnout. Their design compares voters living close to media-market boundaries, where exposure to political advertisements changes discontinuously.\nAnother example is the study by von Ehrlich and Seidel (2018) on the persistent effects of place-based policy in the West-German Zonenrandgebiet. The study exploits a geographic boundary separating areas exposed to different policy regimes.\nThese examples illustrate how the RDD logic can be extended beyond one-dimensional thresholds to spatial settings.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Regression Discontinuity Design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/09-regression-discontinuity.html#main-strengths-and-limitations",
+    "href": "chapters/09-regression-discontinuity.html#main-strengths-and-limitations",
+    "title": "9  Regression Discontinuity Design",
+    "section": "9.12 Main Strengths and Limitations",
+    "text": "9.12 Main Strengths and Limitations\nRDD is powerful because it can provide credible causal evidence in settings where treatment assignment is not randomized but follows a known rule.\nIts strengths are:\n\ntransparent identification;\nstrong visual intuition;\nlimited extrapolation;\ncomparison of units close to the treatment threshold.\n\nIts limitations are:\n\nthe effect is local to the cutoff;\nthe design requires a clear and known threshold;\nmanipulation of the running variable can invalidate the design;\nresults may be sensitive to bandwidth choice;\nspatial RDD may confound the policy of interest with other boundary changes.\n\n\n\n\n\n\n\nWarningLocal does not mean weak\n\n\n\nRDD estimates are often highly credible near the cutoff.\nThe price of this credibility is that the estimate may not generalize to units far from the threshold.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Regression Discontinuity Design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/09-regression-discontinuity.html#summary",
+    "href": "chapters/09-regression-discontinuity.html#summary",
+    "title": "9  Regression Discontinuity Design",
+    "section": "9.13 Summary",
+    "text": "9.13 Summary\nRegression discontinuity design exploits a discontinuous treatment rule. If units cannot precisely manipulate the running variable and potential outcomes are smooth at the cutoff, units just below and just above the threshold provide a credible comparison.\nIn a sharp RDD, treatment changes deterministically at the cutoff. In a fuzzy RDD, the cutoff changes the probability of treatment, and the design is interpreted similarly to an instrumental variables strategy.\nThe core estimand is local:\n\\[\n\\tau(c)\n=\n\\lim_{s \\downarrow c} E[Y_i \\mid S_i=s]\n-\n\\lim_{s \\uparrow c} E[Y_i \\mid S_i=s].\n\\]\nRDD is therefore best understood as a design that estimates the causal effect for units close to the threshold.\n\n\n\n\n\n\nTipKey idea\n\n\n\nRDD compares units just below and just above a cutoff.\nIf nothing else changes discontinuously at the cutoff, the jump in the outcome can be interpreted as a causal effect.\n\n\n\n\n\n\n\n\nCalonico, Sebastian, Matias D. Cattaneo, and Rocío Titiunik. 2014. “Robust Nonparametric Confidence Intervals for Regression-Discontinuity Designs.” Econometrica 82 (6): 2295–326. https://doi.org/10.3982/ECTA11757.\n\n\nEhrlich, Maximilian von, and Tobias Seidel. 2018. “The Persistent Effects of Place-Based Policy: Evidence from the West-German Zonenrandgebiet.” American Economic Journal: Economic Policy 10 (4): 344–74. https://doi.org/10.1257/pol.20160395.\n\n\nKeele, Luke J., and Rocío Titiunik. 2015. “Geographic Boundaries as Regression Discontinuities.” Political Analysis 23 (1): 127–55. https://doi.org/10.1093/pan/mpu014.\n\n\nLee, David S. 2008. “Randomized Experiments from Non-Random Selection in U.S. House Elections.” Journal of Econometrics 142 (2): 675–97. https://doi.org/10.1016/j.jeconom.2007.05.004.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Regression Discontinuity Design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-instrumental-variables.html",
+    "href": "chapters/10-instrumental-variables.html",
+    "title": "10  Instrumental variables",
+    "section": "",
+    "text": "10.1 The Basic Idea\nInstrumental variables (IV) methods are used when treatment assignment is endogenous. In observational studies, treated and untreated units often differ in ways that are not fully observed by the researcher. If these unobserved factors affect both treatment participation and the outcome, a simple regression of the outcome on the treatment does not identify a causal effect.\nSuppose we want to estimate the effect of a treatment \\(D_i\\) on an outcome \\(Y_i\\) using the linear model\n\\[\nY_i = \\alpha + \\tau D_i + X_i'\\beta + u_i,\n\\]\nwhere \\(X_i\\) is a vector of observed covariates and \\(u_i\\) contains all unobserved determinants of the outcome.\nThe problem is that, in many applications,\n\\[\nCov(D_i,u_i) \\neq 0.\n\\]\nThis means that treatment status is correlated with unobserved determinants of the outcome. In that case, ordinary least squares does not recover the causal effect of \\(D_i\\) on \\(Y_i\\).\nFor example, suppose we want to estimate the effect of education on wages. More educated individuals tend to earn more, but they may also differ in unobserved ability, motivation, family background, or local opportunities. If these factors affect both schooling and wages, then the estimated relationship between schooling and wages combines the causal effect of education with selection bias.\nInstrumental variables provide a way to isolate a source of variation in treatment that is plausibly unrelated to these unobserved determinants of the outcome.\nAn instrument is usually denoted by \\(Z_i\\). A valid instrument must satisfy two key conditions.\nFirst, the instrument must affect the treatment. This is the relevance condition. In the education example, distance to college may affect whether a student attends college because living closer to a college reduces the cost of attending.\nSecond, the instrument must not affect the outcome directly. This is the exclusion restriction. Distance to college should affect wages only through its effect on education, not through other channels.\nThe IV logic can therefore be summarized as follows:\n\\[\nZ_i \\rightarrow D_i \\rightarrow Y_i.\n\\]\nThe instrument \\(Z_i\\) moves the treatment \\(D_i\\), and the treatment affects the outcome \\(Y_i\\). The crucial assumption is that there is no direct causal path from \\(Z_i\\) to \\(Y_i\\) that bypasses \\(D_i\\).",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Instrumental variables</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-instrumental-variables.html#the-basic-idea",
+    "href": "chapters/10-instrumental-variables.html#the-basic-idea",
+    "title": "10  Instrumental variables",
+    "section": "",
+    "text": "WarningThe exclusion restriction\n\n\n\nThe exclusion restriction is usually the most demanding IV assumption.\nIt cannot be directly tested with the data and must be justified using institutional knowledge, theory, or a credible natural experiment.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Instrumental variables</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-instrumental-variables.html#example-college-proximity-and-returns-to-schooling",
+    "href": "chapters/10-instrumental-variables.html#example-college-proximity-and-returns-to-schooling",
+    "title": "10  Instrumental variables",
+    "section": "10.2 Example: College Proximity and Returns to Schooling",
+    "text": "10.2 Example: College Proximity and Returns to Schooling\nA classic example is Card’s study of the returns to schooling (card1993?). The question is: how much does an additional year of education increase future wages?\nA simple comparison between more educated and less educated individuals may be biased because education is correlated with unobserved ability and family background. Card uses geographic proximity to college as an instrument for schooling.\nThe argument is that individuals who grow up closer to a college face lower costs of attending college and are therefore more likely to obtain more schooling. At the same time, distance to college should affect wages only through schooling, not through other direct channels.\nIn this setting:\n\n\\(Z_i\\) is proximity to college;\n\\(D_i\\) is years of schooling;\n\\(Y_i\\) is wages.\n\nThe instrument isolates variation in schooling that comes from geographic access to college rather than from unobserved ability.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Instrumental variables</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-instrumental-variables.html#the-two-main-iv-assumptions",
+    "href": "chapters/10-instrumental-variables.html#the-two-main-iv-assumptions",
+    "title": "10  Instrumental variables",
+    "section": "10.3 The Two Main IV Assumptions",
+    "text": "10.3 The Two Main IV Assumptions\n\n10.3.1 Relevance\nThe instrument must be correlated with the treatment, after controlling for covariates:\n\\[\nCov(Z_i,D_i\\mid X_i) \\neq 0.\n\\]\nIn practice, this means that changes in the instrument should generate changes in the probability or intensity of treatment.\nRelevance is empirically testable. We can estimate the first-stage relationship between the treatment and the instrument and check whether the instrument significantly predicts treatment.\n\n\n10.3.2 Exclusion Restriction\nThe instrument must affect the outcome only through the treatment. Conditional on covariates, the instrument should not be correlated with the unobserved determinants of the outcome.\nIn the linear model, this means that the instrument should not be correlated with the error term:\n\\[\nCov(Z_i,u_i\\mid X_i)=0.\n\\]\nUnlike relevance, the exclusion restriction is not directly testable. It is an identifying assumption. The credibility of an IV strategy therefore depends heavily on whether the researcher can provide a convincing argument that the instrument is as good as randomly assigned with respect to the outcome, except through treatment.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Instrumental variables</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-instrumental-variables.html#two-stage-least-squares",
+    "href": "chapters/10-instrumental-variables.html#two-stage-least-squares",
+    "title": "10  Instrumental variables",
+    "section": "10.4 Two-Stage Least Squares",
+    "text": "10.4 Two-Stage Least Squares\nThe most common IV estimator is two-stage least squares, or 2SLS.\nIn the first stage, the treatment is regressed on the instrument and the control variables:\n\\[\nD_i =\n\\pi_0\n+\n\\pi_1 Z_i\n+\nX_i'\\pi\n+\nv_i.\n\\]\nThis regression extracts the part of treatment variation that is predicted by the instrument. The fitted values are\n\\[\n\\widehat D_i.\n\\]\nIn the second stage, the outcome is regressed on the predicted treatment and the control variables:\n\\[\nY_i =\n\\alpha\n+\n\\tau \\widehat D_i\n+\nX_i'\\beta\n+\n\\varepsilon_i.\n\\]\nThe resulting coefficient \\(\\widehat \\tau\\) is the 2SLS estimate.\nThe intuition is simple: instead of using all variation in treatment, 2SLS uses only the variation in treatment that is generated by the instrument. If the instrument is valid, this variation is exogenous and can be used to estimate a causal effect.\n\n\n\n\n\n\nNoteWhy two stages?\n\n\n\nThe first stage isolates the part of treatment explained by the instrument.\nThe second stage relates the outcome to this instrument-induced variation in treatment.\n\n\nIn practice, standard errors must be computed using an IV estimator directly. It is not correct to manually run the two regressions and treat \\(\\widehat D_i\\) as if it were an observed variable without adjusting standard errors.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Instrumental variables</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-instrumental-variables.html#reduced-form-and-first-stage",
+    "href": "chapters/10-instrumental-variables.html#reduced-form-and-first-stage",
+    "title": "10  Instrumental variables",
+    "section": "10.5 Reduced Form and First Stage",
+    "text": "10.5 Reduced Form and First Stage\nWith a single instrument and a single endogenous treatment, the IV estimate can also be understood as a ratio.\nThe first stage measures how much the instrument changes the treatment:\n\\[\n\\text{First stage} =\n\\frac{\\text{Effect of } Z_i \\text{ on } D_i}{}\n.\n\\]\nThe reduced form measures how much the instrument changes the outcome:\n\\[\n\\text{Reduced form} =\n\\frac{\\text{Effect of } Z_i \\text{ on } Y_i}{}\n.\n\\]\nThe IV estimate is the ratio between these two quantities:\n\\[\n\\widehat \\tau_{IV}\n=\n\\frac{\\text{Reduced form effect of } Z_i \\text{ on } Y_i}\n{\\text{First-stage effect of } Z_i \\text{ on } D_i}.\n\\]\nThis ratio asks: how much does the outcome change per unit of treatment variation generated by the instrument?",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Instrumental variables</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-instrumental-variables.html#example-quarter-of-birth-and-education",
+    "href": "chapters/10-instrumental-variables.html#example-quarter-of-birth-and-education",
+    "title": "10  Instrumental variables",
+    "section": "10.6 Example: Quarter of Birth and Education",
+    "text": "10.6 Example: Quarter of Birth and Education\nAnother famous example is Angrist and Krueger’s study of compulsory schooling laws (angrist1991?). They use quarter of birth as an instrument for years of schooling.\nThe argument is based on school-entry rules and compulsory attendance laws in the United States. Children born early in the year enter school at a slightly older age. Since students are allowed to leave school when they reach a certain age, those born later in the year may end up with slightly more schooling.\nIn this setting:\n\n\\(Z_i\\) is quarter of birth;\n\\(D_i\\) is years of schooling;\n\\(Y_i\\) is wages.\n\nThe relevance condition requires that quarter of birth affects years of schooling. This can be tested in the first stage. For example, individuals born in the last quarter of the year may have slightly more education than those born earlier.\nThe exclusion restriction requires that quarter of birth affects wages only through schooling. This is a stronger assumption. It requires that quarter of birth is not related to ability, family background, health, parental characteristics, or other factors that directly affect wages.\nThe IV estimate can be interpreted by comparing the effect of quarter of birth on wages with the effect of quarter of birth on schooling. If being born in the last quarter increases schooling by about 0.10 years and increases wages by about 0.86 percent, the implied IV estimate is approximately\n\\[\n\\frac{0.0086}{0.10} \\approx 0.086.\n\\]\nThis suggests that an additional year of schooling increases wages by about 8.6 percent for the units whose schooling is affected by the instrument.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Instrumental variables</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-instrumental-variables.html#weak-instruments",
+    "href": "chapters/10-instrumental-variables.html#weak-instruments",
+    "title": "10  Instrumental variables",
+    "section": "10.7 Weak Instruments",
+    "text": "10.7 Weak Instruments\nA major practical concern in IV estimation is the problem of weak instruments. An instrument is weak when it is only weakly correlated with the treatment.\nWeak instruments are problematic because 2SLS uses the variation in treatment predicted by the instrument. If the instrument barely moves the treatment, then the predicted treatment contains little useful variation. The IV estimator becomes unstable and can have poor finite-sample properties.\nWork by Bound, Jaeger, and Baker (bound1995?) showed that weak instruments can make IV estimates and standard errors misleading, even in large samples. When instruments are weak:\n\n2SLS estimates can be biased toward OLS in finite samples;\nconfidence intervals may be unreliable;\nconventional t-tests may reject too often;\nsmall violations of the exclusion restriction can be amplified.\n\n\n\n\n\n\n\nWarningWeak instruments\n\n\n\nA valid but weak instrument is not enough.\nIf the instrument barely shifts treatment, IV estimates may be imprecise, biased, and misleading.\n\n\nA standard diagnostic is the first-stage F-statistic. A low first-stage F-statistic is a warning sign that the instrument may be weak. However, recent work emphasizes that conventional diagnostics can be misleading if standard errors are not adjusted correctly for heteroskedasticity, clustering, or serial correlation.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Instrumental variables</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-instrumental-variables.html#binary-instruments-and-late",
+    "href": "chapters/10-instrumental-variables.html#binary-instruments-and-late",
+    "title": "10  Instrumental variables",
+    "section": "10.8 Binary Instruments and LATE",
+    "text": "10.8 Binary Instruments and LATE\nWhen the instrument is binary, IV estimates are often interpreted using the local average treatment effect, or LATE, framework.\nSuppose \\(Z_i\\) takes two values: \\(Z_i=1\\) and \\(Z_i=0\\). Units can be classified according to how their treatment status responds to the instrument.\nThere are four types of units:\n\nCompliers: units that take the treatment when \\(Z_i=1\\) and do not take it when \\(Z_i=0\\).\nNever-takers: units that do not take the treatment regardless of the value of \\(Z_i\\).\nAlways-takers: units that take the treatment regardless of the value of \\(Z_i\\).\nDefiers: units that do the opposite of the instrument: they take the treatment when \\(Z_i=0\\) and do not take it when \\(Z_i=1\\).\n\nUnder the LATE assumptions, IV identifies the causal effect for compliers. These are the units whose treatment status is actually changed by the instrument.\nThis is important because IV does not generally identify the average treatment effect for the whole population. It identifies the effect for the subpopulation moved by the instrument.\n\n\n\n\n\n\nNoteWho are the compliers?\n\n\n\nCompliers are the units whose treatment status changes because of the instrument.\nDifferent instruments may move different groups of units, and therefore identify different LATEs.\n\n\nIf treatment effects are heterogeneous, different valid instruments can produce different estimates because they identify effects for different complier groups.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Instrumental variables</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-instrumental-variables.html#the-late-assumptions",
+    "href": "chapters/10-instrumental-variables.html#the-late-assumptions",
+    "title": "10  Instrumental variables",
+    "section": "10.9 The LATE Assumptions",
+    "text": "10.9 The LATE Assumptions\nFor a binary instrument, the LATE interpretation requires three main assumptions.\nFirst, the instrument must satisfy the exclusion restriction. It should affect potential outcomes only through treatment.\nSecond, the instrument must be relevant. It must affect treatment status for at least some units.\nThird, the instrument must satisfy monotonicity. This means that the instrument should push treatment in the same direction for all units. In other words, there should be no defiers.\nMonotonicity rules out the possibility that the instrument encourages treatment for some units but discourages it for others.\nUnder these assumptions, the LATE can be written as\n\\[\nLATE\n=\n\\frac{\nE[Y_i\\mid Z_i=1] - E[Y_i\\mid Z_i=0]\n}{\nE[D_i\\mid Z_i=1] - E[D_i\\mid Z_i=0]\n}.\n\\]\nThe numerator is the reduced-form effect of the instrument on the outcome. The denominator is the first-stage effect of the instrument on treatment.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Instrumental variables</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-instrumental-variables.html#example-vietnam-draft-lottery",
+    "href": "chapters/10-instrumental-variables.html#example-vietnam-draft-lottery",
+    "title": "10  Instrumental variables",
+    "section": "10.10 Example: Vietnam Draft Lottery",
+    "text": "10.10 Example: Vietnam Draft Lottery\nA classic LATE example is Angrist’s study of the effect of military service on later earnings (angrist1990?). During the Vietnam War, the United States used a draft lottery to determine who was at risk of being drafted.\nThe draft lottery can be interpreted as an instrument for military service:\n\n\\(Z_i\\) is draft eligibility;\n\\(D_i\\) is military service;\n\\(Y_i\\) is later earnings.\n\nNot everyone who was draft eligible served in the military, and some individuals who were not draft eligible may still have served. Therefore, the design is fuzzy rather than sharp.\nThe IV estimate identifies the effect of military service for compliers: individuals whose military service status was changed by draft eligibility. In this context, Angrist finds that military service reduced later earnings.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Instrumental variables</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-instrumental-variables.html#interpreting-iv-estimates",
+    "href": "chapters/10-instrumental-variables.html#interpreting-iv-estimates",
+    "title": "10  Instrumental variables",
+    "section": "10.11 Interpreting IV Estimates",
+    "text": "10.11 Interpreting IV Estimates\nInterpreting IV estimates requires care. The estimate depends on the instrument, because the instrument determines which units are shifted into treatment.\nFor example, college proximity may identify the return to schooling for individuals whose education decisions are affected by geographic access to college. Quarter of birth may identify the return to schooling for individuals whose schooling is affected by compulsory schooling laws. These are not necessarily the same people.\nThis means that IV estimates should not automatically be interpreted as average effects for everyone. They are often local effects for the units affected by the instrument.\nA useful empirical question is therefore: who are the compliers? Although individual complier status is not directly observed, researchers can sometimes describe the characteristics of compliers on average, such as whether they are more likely to come from lower-income families, rural areas, or specific educational backgrounds.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Instrumental variables</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-instrumental-variables.html#practical-concerns-in-applied-iv-work",
+    "href": "chapters/10-instrumental-variables.html#practical-concerns-in-applied-iv-work",
+    "title": "10  Instrumental variables",
+    "section": "10.12 Practical Concerns in Applied IV Work",
+    "text": "10.12 Practical Concerns in Applied IV Work\nRecent replication evidence raises concerns about how IV is used in practice. Lal et al. (lal2024?) replicate a set of recent political science papers using IV strategies and identify several recurring problems.\nFirst, some applications overstate instrument strength because first-stage diagnostics do not properly adjust standard errors for heteroskedasticity, serial correlation, or clustering.\nSecond, conventional t-tests based on 2SLS standard errors may understate uncertainty when instruments are weak.\nThird, IV estimates are often much larger than OLS estimates, especially when the first stage is weak. This pattern can be a warning sign of weak instruments, violations of the exclusion restriction, or both.\nThese concerns do not imply that IV should not be used. Rather, they reinforce the need for careful design, transparent reporting, and sensitivity analysis.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Instrumental variables</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-instrumental-variables.html#what-to-report",
+    "href": "chapters/10-instrumental-variables.html#what-to-report",
+    "title": "10  Instrumental variables",
+    "section": "10.13 What to Report",
+    "text": "10.13 What to Report\nA credible IV analysis should report:\n\nthe institutional or theoretical argument for the instrument;\nthe first-stage relationship between the instrument and treatment;\nthe first-stage F-statistic or other weak-instrument diagnostics;\nthe reduced-form effect of the instrument on the outcome;\nthe 2SLS estimate;\nthe set of covariates included in both stages;\nthe standard error procedure;\na discussion of the exclusion restriction;\nan interpretation of the complier population when the LATE framework applies.\n\n\n\n\n\n\n\nTipIV reporting logic\n\n\n\nDo not report only the second-stage estimate.\nAn IV design is credible only if the first stage, reduced form, exclusion restriction, and target population are all clearly discussed.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Instrumental variables</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-instrumental-variables.html#strengths-and-limitations",
+    "href": "chapters/10-instrumental-variables.html#strengths-and-limitations",
+    "title": "10  Instrumental variables",
+    "section": "10.14 Strengths and Limitations",
+    "text": "10.14 Strengths and Limitations\nInstrumental variables are powerful because they can address unobserved confounding. Unlike matching or regression adjustment, IV methods do not require all confounders to be observed. Instead, they require a valid source of exogenous variation in treatment.\nHowever, this strength comes at a cost. The exclusion restriction is often difficult to justify, weak instruments can make estimates unreliable, and the estimated effect is often local to compliers.\nThe main strengths of IV are:\n\nit can address selection on unobservables;\nit can exploit natural experiments or institutional rules;\nit provides a clear design-based logic when a strong instrument is available.\n\nThe main limitations are:\n\nthe exclusion restriction is not directly testable;\nweak instruments can produce misleading estimates;\nthe estimand may be a LATE rather than an ATE or ATT;\ndifferent instruments may identify different treatment effects;\ninterpretation depends heavily on the institutional context.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Instrumental variables</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/10-instrumental-variables.html#summary",
+    "href": "chapters/10-instrumental-variables.html#summary",
+    "title": "10  Instrumental variables",
+    "section": "10.15 Summary",
+    "text": "10.15 Summary\nInstrumental variables estimate causal effects by isolating variation in treatment that is induced by an external source of variation. A valid instrument must shift the treatment and affect the outcome only through that treatment.\nThe 2SLS estimator implements this logic in two steps: first, predict treatment using the instrument; second, estimate the effect of the predicted treatment on the outcome.\nWith binary instruments, IV often identifies a local average treatment effect for compliers. This makes IV powerful but also subtle: the estimate depends on who is moved by the instrument.\n\n\n\n\n\n\nNoteKey idea\n\n\n\nIV does not use all variation in treatment.\nIt uses only the variation in treatment generated by the instrument.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Instrumental variables</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/11-synthetic-control.html",
+    "href": "chapters/11-synthetic-control.html",
+    "title": "11  Synthetic Control Method",
+    "section": "",
+    "text": "11.1 The basic intuition\nWhen a policy affects only one unit, or a small number of aggregate units, constructing a credible counterfactual becomes especially challenging. Most impact evaluation methods rely on comparisons between many treated and untreated units. This logic is harder to apply when treatment is assigned to a single country, region, city, or municipality. In such settings, no individual untreated unit is likely to provide a fully convincing representation of what would have happened to the treated unit in the absence of the intervention. The synthetic control method (SCM) addresses this problem by constructing the counterfactual as a weighted combination of untreated units.\nThe idea is simple. Instead of comparing the treated unit with one untreated unit, SCM compares it with a weighted combination of untreated units.\nThe untreated units used to build this weighted combination are called the donor pool. Each unit in the donor pool receives a weight. In general, units that look more similar to the treated unit before the treatment receive larger weights, while units that are less useful for reproducing the treated unit receive smaller weights or no weight at all. The resulting weighted average is the synthetic control unit.\nThe goal is to construct a synthetic unit that closely reproduces the treated unit before the intervention. If the treated unit and the synthetic control follow similar trajectories before treatment, especially in terms of the key outcome variable, then the synthetic control can be interpreted as a credible approximation of what would have happened to the treated unit’s outcome in the absence of the intervention.\nAfter the treatment occurs, the causal effect is estimated by comparing the observed outcome of the treated unit with the outcome of its synthetic counterpart.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Synthetic Control Method</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/11-synthetic-control.html#the-basic-intuition",
+    "href": "chapters/11-synthetic-control.html#the-basic-intuition",
+    "title": "11  Synthetic Control Method",
+    "section": "",
+    "text": "NoteBack to basics\n\n\n\nSCM is based on a very transparent idea: the counterfactual is constructed as a weighted average of untreated units.\nThe key question is whether this weighted average reproduces the treated unit well before the treatment. If it does, any post-treatment divergence between the treated unit and the synthetic control can be interpreted as evidence of a treatment effect.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Synthetic Control Method</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/11-synthetic-control.html#why-not-use-a-single-untreated-unit-or-a-simple-average-of-untreated-units",
+    "href": "chapters/11-synthetic-control.html#why-not-use-a-single-untreated-unit-or-a-simple-average-of-untreated-units",
+    "title": "11  Synthetic Control Method",
+    "section": "11.2 Why not use a single untreated unit or a simple average of untreated units?",
+    "text": "11.2 Why not use a single untreated unit or a simple average of untreated units?\nA natural alternative would be to compare the treated unit with one untreated unit that looks reasonably similar. However, in many applications, no single unit provides a convincing counterfactual. One country, region, or city may resemble the treated unit in some respects, but differ in others. Relying on a single comparison unit can therefore make the estimate highly dependent on that specific choice.\nAnother possibility would be to compare the treated unit with the simple average of all untreated units. This is also often problematic. Untreated units may differ substantially from the treated unit in terms of economic structure, demographic characteristics, institutional setting, or pre-treatment outcome trends. A simple average may therefore provide a poor approximation of what would have happened to the treated unit in the absence of the treatment.\nSCM offers an intermediate solution. It does not rely on a single untreated unit, nor does it give the same importance to all untreated units. Instead, it constructs a weighted average of untreated units, giving more weight to those that help reproduce the treated unit before the intervention and little or no weight to those that do not.\nIn practice, the synthetic control is constructed in a data-driven way. The researcher starts from a pool of untreated units and defines the pre-treatment information that should be matched, typically including past values of the outcome variable and, when relevant, other predictors of the outcome. The weights assigned to the untreated units are then determined by an optimization procedure that searches for the weighted combination that best reproduces the treated unit before the intervention. Units that improve the pre-treatment fit receive positive weights, while units that do not contribute to reproducing the treated unit receive zero or very small weights. The resulting synthetic unit is therefore not selected subjectively, but built from the data to mimic the treated unit before treatment.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Synthetic Control Method</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/11-synthetic-control.html#the-donor-pool",
+    "href": "chapters/11-synthetic-control.html#the-donor-pool",
+    "title": "11  Synthetic Control Method",
+    "section": "11.3 The donor pool",
+    "text": "11.3 The donor pool\nThe choice of the donor pool is crucial. The donor pool should include untreated units that are potentially comparable to the treated unit.\nIncluding units that are very different from the treated unit can be problematic, even if they help improve the pre-treatment fit. With a very broad or poorly selected donor pool, the algorithm may find a combination of unrelated units that reproduces the treated unit before the intervention only by chance. This is a form of overfitting: the synthetic control may look good in the pre-treatment period, but it may not represent a credible counterfactual after the treatment.\nFor this reason, the donor pool should not be chosen mechanically. It should be restricted to units that, based on substantive knowledge of the empirical setting, could plausibly have followed a similar trajectory to the treated unit in the absence of the intervention. The goal is not simply to obtain the best possible pre-treatment fit, but to construct a counterfactual that is both empirically accurate and substantively credible.\n\n\n\n\n\n\nWarningCommon pitfall\n\n\n\nA large donor pool is not always better. Adding many untreated units may improve the pre-treatment fit, but if some units are not genuinely comparable, the synthetic control may simply overfit pre-treatment patterns.\nThe donor pool should include credible comparison units, not every untreated unit available in the data.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Synthetic Control Method</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/11-synthetic-control.html#pre-treatment-fit",
+    "href": "chapters/11-synthetic-control.html#pre-treatment-fit",
+    "title": "11  Synthetic Control Method",
+    "section": "11.4 Pre-treatment fit",
+    "text": "11.4 Pre-treatment fit\nThe credibility of SCM depends heavily on the quality of the pre-treatment fit.\nBefore the intervention, the treated unit and the synthetic control should display similar values of the outcome and relevant predictors. If the synthetic control cannot reproduce the treated unit before the treatment, it is difficult to trust it as a counterfactual after the treatment.\nThis is one of the strengths of SCM: the quality of the counterfactual can be visually inspected. Researchers usually show a graph comparing the treated unit and the synthetic control over time. If the two lines are close before the treatment and diverge only after the treatment, the result is easier to interpret. In addition, researchers can report a balance table, similar to those commonly used in matching applications, to assess whether the treated unit and its synthetic counterpart are similar before the intervention in terms of the outcome and other relevant predictors.\n\n\n\n\n\n\nImportantTransparency\n\n\n\nSCM is based on a data-driven algorithm, and the optimization procedure may not be fully transparent at first sight. However, the method produces two outputs that are highly informative:\n\nthe weights assigned to each untreated unit;\nthe graph comparing the treated unit with its synthetic counterpart.\n\nThese outputs make it possible to see which untreated units contributed to the counterfactual, how much they contributed, and whether the synthetic control provides a credible pre-treatment fit.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Synthetic Control Method</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/11-synthetic-control.html#estimating-the-effect",
+    "href": "chapters/11-synthetic-control.html#estimating-the-effect",
+    "title": "11  Synthetic Control Method",
+    "section": "11.5 Estimating the effect",
+    "text": "11.5 Estimating the effect\nOnce the synthetic control has been constructed, the treatment effect is obtained by comparing the treated unit with its synthetic counterpart after the intervention.\nIf the treated unit and the synthetic control were very similar before the treatment, but diverge after the treatment, this divergence can be interpreted as the estimated effect of the intervention.\nThe estimated effect can vary over time. This is particularly useful when the impact of a policy is not immediate, but gradually emerges in the post-treatment period.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Synthetic Control Method</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/11-synthetic-control.html#the-peculiarity-of-analyzing-a-single-treated-unit",
+    "href": "chapters/11-synthetic-control.html#the-peculiarity-of-analyzing-a-single-treated-unit",
+    "title": "11  Synthetic Control Method",
+    "section": "11.6 The peculiarity of analyzing a single treated unit",
+    "text": "11.6 The peculiarity of analyzing a single treated unit\nEstimating a causal effect is especially challenging when there is only one treated unit. In this setting, the estimate may be highly sensitive to the specific way in which the counterfactual is constructed, because there is no averaging across many treated units that can smooth out unit-specific shocks or idiosyncratic patterns.\nFor this reason, SCM applications require particular care. Having many pre-treatment periods can help reduce this volatility, because it allows the researcher to assess whether the synthetic control consistently reproduces the treated unit before the intervention. A long and informative pre-treatment period does not solve all problems, but it makes the comparison more credible and the post-treatment divergence easier to interpret.\nStatistical inference also differs from more conventional evaluation settings. Since SCM is often applied to one treated unit, traditional large-sample inference cannot be used to assess whether the estimated effect is statistically significant. A common solution is to rely on permutation or placebo tests. The same procedure is applied as if each untreated unit had been treated, generating a distribution of placebo effects. The effect estimated for the actual treated unit can then be compared with this distribution: if it is unusually large relative to the placebo effects, the evidence in favor of a genuine treatment effect is stronger.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Synthetic Control Method</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/11-synthetic-control.html#the-key-assumptions-behind-scm",
+    "href": "chapters/11-synthetic-control.html#the-key-assumptions-behind-scm",
+    "title": "11  Synthetic Control Method",
+    "section": "11.7 The key assumptions behind SCM",
+    "text": "11.7 The key assumptions behind SCM\nSCM is credible only if the synthetic control provides a convincing approximation of what would have happened to the treated unit in the absence of the treatment. This requires several conditions.\nFirst, the treated unit should be comparable to the units in the donor pool. If the treated unit is very different from all available untreated units, no weighted average of them is likely to provide a credible counterfactual.\nSecond, the synthetic control should reproduce the treated unit well before the intervention. A good pre-treatment fit is essential: if the synthetic unit does not behave like the treated unit before the treatment, it is difficult to believe that it represents what would have happened after the treatment.\nThird, the pre-treatment period should be sufficiently informative. SCM works best when we observe the treated and untreated units for several periods before the intervention, so that the algorithm has enough information to construct a credible synthetic counterpart.\nFinally, the donor pool should be chosen carefully. The goal is not only to find a combination of units that fits the treated unit before the intervention, but to build a counterfactual that is also substantively plausible.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Synthetic Control Method</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/11-synthetic-control.html#when-scm-is-useful",
+    "href": "chapters/11-synthetic-control.html#when-scm-is-useful",
+    "title": "11  Synthetic Control Method",
+    "section": "11.8 When SCM is useful",
+    "text": "11.8 When SCM is useful\nSCM is especially useful for evaluating aggregate interventions affecting one or a small number of aggregate units, such as countries, regions, cities, or municipalities.\nIt is most appropriate when:\n\nthere is one treated unit, or a small number of treated units;\na credible donor pool of untreated units is available;\ndata are available for several periods before treatment, so that the credibility of the synthetic unit as a valid counterfactual can be assessed;\ndata are available for several periods after treatment, so that the impact of the treatment can be evaluated some time after its onset;\nthe synthetic control reproduces the treated unit well before the intervention.\n\nSCM is less convincing when the treated unit is too different from all units in the donor pool, when the pre-treatment period is very short, or when the synthetic control fails to closely approximate the treated unit before treatment.\n\n\n\n\n\n\n\nTipPractical implication\n\n\n\nSCM should only be used when the synthetic control provides a credible approximation of the treated unit before the intervention.\nIf the pre-treatment fit is poor, the post-treatment gap is difficult to interpret as a causal effect.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Synthetic Control Method</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/11-synthetic-control.html#example-german-reunification-and-west-german-gdp",
+    "href": "chapters/11-synthetic-control.html#example-german-reunification-and-west-german-gdp",
+    "title": "11  Synthetic Control Method",
+    "section": "11.9 Example: German reunification and West German GDP",
+    "text": "11.9 Example: German reunification and West German GDP\n\n\n\n\n\n\nNoteApplication: the economic effects of German reunification\n\n\n\nA well-known application of SCM studies the economic effects of German reunification on West Germany (Abadie et al. 2015).\nThe treatment is German reunification, which took place in 1990. The treated unit is West Germany. The outcome of interest is GDP per capita. The goal is to estimate what would have happened to West German GDP per capita if reunification had not occurred.\nThe counterfactual cannot be observed directly. We observe West Germany after reunification, but we do not observe West Germany in a world where reunification did not take place. SCM addresses this problem by constructing a synthetic West Germany from a weighted combination of other OECD countries.\nThe donor pool initially consists of OECD countries that did not experience any reunification. However, not all countries are equally suitable for comparison. Some countries are excluded because they are too small, structurally different, or affected by major shocks during the sample period. The idea is to retain only countries that can plausibly help construct a credible counterfactual for West Germany.\nThe synthetic control is then built by assigning weights to countries in the donor pool. In this application, synthetic West Germany is mainly constructed from a combination of Austria, the United States, Japan, Switzerland, and the Netherlands.\nThe key diagnostic is the pre-treatment fit.\n\n\n\n\n\n\nFigure 11.1: Before reunification, actual West Germany and synthetic West Germany follow very similar trajectories. After 1990, the two lines diverge, suggesting a negative effect of reunification on West German GDP per capita. Source: author’s recreation based on Abadie, Diamond, and Hainmueller (2015).\n\n\n\nA simple average of OECD countries does not reproduce West Germany well before the treatment. By contrast, the synthetic control provides a much closer pre-treatment fit.\nThis matters because the post-treatment comparison is credible only if the synthetic control behaves like West Germany before reunification. Once this condition is satisfied, the divergence between actual West Germany and synthetic West Germany after reunification can be interpreted as the estimated effect of reunification.\nThe results suggest that German reunification did not have a large effect on West German GDP per capita in the first two years after reunification. However, from 1992 onward, the two trajectories diverge substantially. Over the period 1990–2003, West German GDP per capita was estimated to be lower than its synthetic counterfactual. By 2003, GDP per capita in synthetic West Germany was about 12% higher than observed GDP per capita in West Germany.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Synthetic Control Method</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/11-synthetic-control.html#recent-developments",
+    "href": "chapters/11-synthetic-control.html#recent-developments",
+    "title": "11  Synthetic Control Method",
+    "section": "11.10 Recent developments",
+    "text": "11.10 Recent developments\nThe synthetic control literature has evolved substantially in recent years. One important development is the synthetic difference-in-differences design (SDiD), which combines features of synthetic control methods and difference-in-differences (Arkhangelsky et al. 2021). Like SCM, it uses data-driven weighting to make treated and untreated units more comparable before the intervention. Like DiD, it relies on the idea that causal effects can be estimated by comparing changes over time between treated and untreated units. The key difference is that, rather than assuming parallel trends directly in the original data, SDiD uses weights to make pre-treatment trends more parallel, thereby improving the credibility of the DiD comparison.\nMoreover, the most recent extensions to SCM extend the synthetic control logic beyond the canonical case of a single treated unit. Recent synthetic-control-based estimators can accommodate multiple treated units, including settings in which treatment adoption is staggered, meaning that different units may become treated at different points in time (Cattaneo et al. 2025). This makes synthetic-control-inspired methods applicable to a broader range of policy evaluation settings, where several regions, municipalities, firms, or individuals may be exposed to the treatment either simultaneously or sequentially. The basic logic, however, remains the same: the goal is to construct credible counterfactual trajectories against which the observed post-treatment outcomes of treated units can be compared. In this sense, the event-study and synthetic-control literatures are increasingly converging toward a unified framework for estimating dynamic treatment effects in panel data settings.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Synthetic Control Method</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/11-synthetic-control.html#summing-up",
+    "href": "chapters/11-synthetic-control.html#summing-up",
+    "title": "11  Synthetic Control Method",
+    "section": "11.11 Summing up",
+    "text": "11.11 Summing up\nSCM is a powerful way to make counterfactual construction explicit. It is particularly useful when the treatment affects one aggregate unit and no single untreated unit provides a convincing comparison.\nIts main strengths are that it is basically the only method in the evaluator’s toolkit suitable for estimating causal effects when there is a single treated unit, and that it constructs the synthetic counterfactual in a transparent way. SCM shows which untreated units contribute to the counterfactual, how much weight they receive, and how well the resulting synthetic unit reproduces the treated unit before the intervention.\nAt the same time, SCM is not a magic formula. Its credibility depends on the quality of the donor pool, the length and informativeness of the pre-treatment period, the absence of spillovers (as for all control-based counterfactual methods), and the ability of the synthetic control to reproduce the treated unit before the treatment.\n\n\n\n\n\n\nNoteKey formulae\n\n\n\nLet unit \\(i=1\\) be treated, and units \\(i=2,\\ldots,J+1\\) be untreated donors.\nThe intervention starts after period \\(T_0\\).\nSCM chooses weights \\(\\widehat W=(\\widehat w_2,\\ldots,\\widehat w_{J+1})'\\) by solving\n\\[\n\\widehat W\n=\n\\arg\\min_W\n(X_1 - X_0 W)' V (X_1 - X_0 W),\n\\]\nsubject to\n\\[\nw_j \\ge 0\n\\quad \\text{for } j=2,\\ldots,J+1,\n\\qquad\n\\sum_{j=2}^{J+1} w_j = 1.\n\\]\nThe synthetic control outcome is\n\\[\n\\widehat Y_{1t}^{N}\n=\n\\sum_{j=2}^{J+1} \\widehat w_j Y_{jt}.\n\\]\nFor each post-treatment period \\(t&gt;T_0\\), the estimated treatment effect is\n\\[\n\\widehat \\tau_{1t}\n=\nY_{1t}\n-\n\\sum_{j=2}^{J+1} \\widehat w_j Y_{jt}.\n\\]\nThe average post-treatment effect is\n\\[\n\\widehat{ATT}\n=\n\\frac{1}{T-T_0}\n\\sum_{t=T_0+1}^{T}\n\\widehat \\tau_{1t}.\n\\]\n\n\n\n\n\n\n\n\nAbadie, Alberto, Alexis Diamond, and Jens Hainmueller. 2015. “Comparative Politics and the Synthetic Control Method.” American Journal of Political Science 59 (2): 495–510.\n\n\nArkhangelsky, Dmitry, Susan Athey, David A. Hirshberg, Guido W. Imbens, and Stefan Wager. 2021. “Synthetic Difference-in-Differences.” American Economic Review 111 (12): 4088–118. https://doi.org/10.1257/aer.20190159.\n\n\nCattaneo, Matias D., Yingjie Feng, Filippo Palomba, and Rocio Titiunik. 2025. “Uncertainty Quantification in Synthetic Controls with Staggered Treatment Adoption.” Review of Economics and Statistics, ahead of print. https://doi.org/10.1162/rest_a_01588.",
+    "crumbs": [
+      "Core Designs",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Synthetic Control Method</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/12-choosing-a-design.html",
+    "href": "chapters/12-choosing-a-design.html",
+    "title": "12  Choosing a design",
+    "section": "",
+    "text": "12.1 The evaluation problem",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Choosing a design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/12-choosing-a-design.html#key-intuition",
+    "href": "chapters/12-choosing-a-design.html#key-intuition",
+    "title": "12  Choosing a design",
+    "section": "12.2 Key intuition",
+    "text": "12.2 Key intuition",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Choosing a design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/12-choosing-a-design.html#identification-assumptions",
+    "href": "chapters/12-choosing-a-design.html#identification-assumptions",
+    "title": "12  Choosing a design",
+    "section": "12.3 Identification assumptions",
+    "text": "12.3 Identification assumptions",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Choosing a design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/12-choosing-a-design.html#estimation",
+    "href": "chapters/12-choosing-a-design.html#estimation",
+    "title": "12  Choosing a design",
+    "section": "12.4 Estimation",
+    "text": "12.4 Estimation",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Choosing a design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/12-choosing-a-design.html#diagnostics-and-validity-checks",
+    "href": "chapters/12-choosing-a-design.html#diagnostics-and-validity-checks",
+    "title": "12  Choosing a design",
+    "section": "12.5 Diagnostics and validity checks",
+    "text": "12.5 Diagnostics and validity checks",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Choosing a design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/12-choosing-a-design.html#common-mistakes",
+    "href": "chapters/12-choosing-a-design.html#common-mistakes",
+    "title": "12  Choosing a design",
+    "section": "12.6 Common mistakes",
+    "text": "12.6 Common mistakes",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Choosing a design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/12-choosing-a-design.html#worked-example",
+    "href": "chapters/12-choosing-a-design.html#worked-example",
+    "title": "12  Choosing a design",
+    "section": "12.7 Worked example",
+    "text": "12.7 Worked example",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Choosing a design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/12-choosing-a-design.html#how-to-report-the-results",
+    "href": "chapters/12-choosing-a-design.html#how-to-report-the-results",
+    "title": "12  Choosing a design",
+    "section": "12.8 How to report the results",
+    "text": "12.8 How to report the results",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Choosing a design</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/13-threats-to-identification.html",
+    "href": "chapters/13-threats-to-identification.html",
+    "title": "13  Threats to identification",
+    "section": "",
+    "text": "13.1 The evaluation problem",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Threats to identification</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/13-threats-to-identification.html#key-intuition",
+    "href": "chapters/13-threats-to-identification.html#key-intuition",
+    "title": "13  Threats to identification",
+    "section": "13.2 Key intuition",
+    "text": "13.2 Key intuition",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Threats to identification</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/13-threats-to-identification.html#identification-assumptions",
+    "href": "chapters/13-threats-to-identification.html#identification-assumptions",
+    "title": "13  Threats to identification",
+    "section": "13.3 Identification assumptions",
+    "text": "13.3 Identification assumptions",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Threats to identification</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/13-threats-to-identification.html#estimation",
+    "href": "chapters/13-threats-to-identification.html#estimation",
+    "title": "13  Threats to identification",
+    "section": "13.4 Estimation",
+    "text": "13.4 Estimation",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Threats to identification</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/13-threats-to-identification.html#diagnostics-and-validity-checks",
+    "href": "chapters/13-threats-to-identification.html#diagnostics-and-validity-checks",
+    "title": "13  Threats to identification",
+    "section": "13.5 Diagnostics and validity checks",
+    "text": "13.5 Diagnostics and validity checks",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Threats to identification</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/13-threats-to-identification.html#common-mistakes",
+    "href": "chapters/13-threats-to-identification.html#common-mistakes",
+    "title": "13  Threats to identification",
+    "section": "13.6 Common mistakes",
+    "text": "13.6 Common mistakes",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Threats to identification</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/13-threats-to-identification.html#worked-example",
+    "href": "chapters/13-threats-to-identification.html#worked-example",
+    "title": "13  Threats to identification",
+    "section": "13.7 Worked example",
+    "text": "13.7 Worked example",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Threats to identification</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/13-threats-to-identification.html#how-to-report-the-results",
+    "href": "chapters/13-threats-to-identification.html#how-to-report-the-results",
+    "title": "13  Threats to identification",
+    "section": "13.8 How to report the results",
+    "text": "13.8 How to report the results",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Threats to identification</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/14-communicating-results.html",
+    "href": "chapters/14-communicating-results.html",
+    "title": "14  Communicating results",
+    "section": "",
+    "text": "14.1 The evaluation problem",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Communicating results</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/14-communicating-results.html#key-intuition",
+    "href": "chapters/14-communicating-results.html#key-intuition",
+    "title": "14  Communicating results",
+    "section": "14.2 Key intuition",
+    "text": "14.2 Key intuition",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Communicating results</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/14-communicating-results.html#identification-assumptions",
+    "href": "chapters/14-communicating-results.html#identification-assumptions",
+    "title": "14  Communicating results",
+    "section": "14.3 Identification assumptions",
+    "text": "14.3 Identification assumptions",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Communicating results</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/14-communicating-results.html#estimation",
+    "href": "chapters/14-communicating-results.html#estimation",
+    "title": "14  Communicating results",
+    "section": "14.4 Estimation",
+    "text": "14.4 Estimation",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Communicating results</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/14-communicating-results.html#diagnostics-and-validity-checks",
+    "href": "chapters/14-communicating-results.html#diagnostics-and-validity-checks",
+    "title": "14  Communicating results",
+    "section": "14.5 Diagnostics and validity checks",
+    "text": "14.5 Diagnostics and validity checks",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Communicating results</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/14-communicating-results.html#common-mistakes",
+    "href": "chapters/14-communicating-results.html#common-mistakes",
+    "title": "14  Communicating results",
+    "section": "14.6 Common mistakes",
+    "text": "14.6 Common mistakes",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Communicating results</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/14-communicating-results.html#worked-example",
+    "href": "chapters/14-communicating-results.html#worked-example",
+    "title": "14  Communicating results",
+    "section": "14.7 Worked example",
+    "text": "14.7 Worked example",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Communicating results</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/14-communicating-results.html#how-to-report-the-results",
+    "href": "chapters/14-communicating-results.html#how-to-report-the-results",
+    "title": "14  Communicating results",
+    "section": "14.8 How to report the results",
+    "text": "14.8 How to report the results",
+    "crumbs": [
+      "Practice",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Communicating results</span>"
+    ]
+  },
+  {
+    "objectID": "chapters/references.html",
+    "href": "chapters/references.html",
+    "title": "References",
+    "section": "",
+    "text": "Abadie, Alberto, Alexis Diamond, and Jens Hainmueller. 2015.\n“Comparative Politics and the Synthetic Control Method.”\nAmerican Journal of Political Science 59 (2): 495–510.\n\n\nArkhangelsky, Dmitry, Susan Athey, David A. Hirshberg, Guido W. Imbens,\nand Stefan Wager. 2021. “Synthetic\nDifference-in-Differences.” American Economic Review 111\n(12): 4088–118. https://doi.org/10.1257/aer.20190159.\n\n\nBovan, Kosta, Benjamin Banai, and Irena Pavela Banai. 2018. “Do\nNatural Disasters Affect Voting Behavior? Evidence from Croatian\nFloods.” PLOS Currents Disasters 10:\necurrents.dis.cbf57c8ac3b239ba51ccc801d3362c07. https://doi.org/10.1371/currents.dis.cbf57c8ac3b239ba51ccc801d3362c07.\n\n\nCalonico, Sebastian, Matias D. Cattaneo, and Rocío Titiunik. 2014.\n“Robust Nonparametric Confidence Intervals for\nRegression-Discontinuity Designs.” Econometrica 82 (6):\n2295–326. https://doi.org/10.3982/ECTA11757.\n\n\nCattaneo, Matias D., Yingjie Feng, Filippo Palomba, and Rocio Titiunik.\n2025. “Uncertainty Quantification in Synthetic Controls with\nStaggered Treatment Adoption.” Review of Economics and\nStatistics, ahead of print. https://doi.org/10.1162/rest_a_01588.\n\n\nCox, David R. 1958. Planning of Experiments. John Wiley &\nSons.\n\n\nDehejia, Rajeev H., and Sadek Wahba. 1999. “Causal Effects in\nNonexperimental Studies: Reevaluating the Evaluation of Training\nPrograms.” Journal of the American Statistical\nAssociation 94 (448): 1053–62. https://doi.org/10.1080/01621459.1999.10473858.\n\n\nEhrlich, Maximilian von, and Tobias Seidel. 2018. “The Persistent\nEffects of Place-Based Policy: Evidence from the West-German\nZonenrandgebiet.” American Economic Journal: Economic\nPolicy 10 (4): 344–74. https://doi.org/10.1257/pol.20160395.\n\n\nHolland, Paul W. 1986. “Statistics and Causal Inference.”\nJournal of the American Statistical Association 81 (396):\n945–60. https://doi.org/10.1080/01621459.1986.10478354.\n\n\nKeele, Luke J., and Rocío Titiunik. 2015. “Geographic Boundaries\nas Regression Discontinuities.” Political Analysis 23\n(1): 127–55. https://doi.org/10.1093/pan/mpu014.\n\n\nLaLonde, Robert J. 1986. “Evaluating the Econometric Evaluations\nof Training Programs with Experimental Data.” The American\nEconomic Review 76 (4): 604–20. https://www.jstor.org/stable/1806062.\n\n\nLee, David S. 2008. “Randomized Experiments from Non-Random\nSelection in U.S. House Elections.” Journal of\nEconometrics 142 (2): 675–97. https://doi.org/10.1016/j.jeconom.2007.05.004.\n\n\nNeyman, Jerzy. 1990. “On the Application of Probability Theory to\nAgricultural Experiments: Essay on Principles. Section 9.”\nStatistical Science 5 (4): 465–72. https://doi.org/10.1214/ss/1177012031.\n\n\nPearl, Judea, and Dana Mackenzie. 2018. The Book of Why: The New\nScience of Cause and Effect. Basic Books.\n\n\nRosenbaum, Paul R., and Donald B. Rubin. 1983. “The Central Role\nof the Propensity Score in Observational Studies for Causal\nEffects.” Biometrika 70 (1): 41–55. https://doi.org/10.1093/biomet/70.1.41.\n\n\nRubin, Donald B. 1974. “Estimating Causal Effects of Treatments in\nRandomized and Nonrandomized Studies.” Journal of Educational\nPsychology 66 (5): 688–701. https://doi.org/10.1037/h0037350.\n\n\nRubin, Donald B. 1978. “Bayesian Inference for Causal Effects: The\nRole of Randomization.” The Annals of Statistics 6 (1):\n34–58. https://doi.org/10.1214/aos/1176344064.\n\n\nRubin, Donald B. 1980. “Comment on ‘Randomization Analysis\nof Experimental Data: The Fisher Randomization Test’.”\nJournal of the American Statistical Association 75 (371):\n591–93.",
+    "crumbs": [
+      "References"
+    ]
+  }
+]

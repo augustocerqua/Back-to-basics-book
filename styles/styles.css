@@ -1,0 +1,14 @@
+/* Custom styles for The Backbone of Impact Evaluation Methods */
+
+.title {
+  font-weight: 700;
+}
+
+blockquote {
+  font-size: 1.05em;
+}
+
+.callout-note {
+  margin-top: 1.2em;
+  margin-bottom: 1.2em;
+}

@@ -1,0 +1,370 @@
+# Instrumental variables
+
+::: {.callout-note}
+## IV in a figure
+
+![Instrumental variables use an external source of variation, the instrument $Z$, to shift treatment status $D$. If the instrument affects the outcome $Y$ only through the treatment, the variation in $D$ induced by $Z$ can be used to estimate a causal effect, even in the presence of unobserved confounders.](../images/instrumental-variables-lever.png)
+:::
+
+Instrumental variables (IV) methods are used when treatment assignment is endogenous. In observational studies, treated and untreated units often differ in ways that are not fully observed by the researcher. If these unobserved factors affect both treatment participation and the outcome, a simple regression of the outcome on the treatment does not identify a causal effect.
+
+Suppose we want to estimate the effect of a treatment $D_i$ on an outcome $Y_i$ using the linear model
+
+$$
+Y_i = \alpha + \tau D_i + X_i'\beta + u_i,
+$$
+
+where $X_i$ is a vector of observed covariates and $u_i$ contains all unobserved determinants of the outcome.
+
+The problem is that, in many applications,
+
+$$
+Cov(D_i,u_i) \neq 0.
+$$
+
+This means that treatment status is correlated with unobserved determinants of the outcome. In that case, ordinary least squares does not recover the causal effect of $D_i$ on $Y_i$.
+
+For example, suppose we want to estimate the effect of education on wages. More educated individuals tend to earn more, but they may also differ in unobserved ability, motivation, family background, or local opportunities. If these factors affect both schooling and wages, then the estimated relationship between schooling and wages combines the causal effect of education with selection bias.
+
+Instrumental variables provide a way to isolate a source of variation in treatment that is plausibly unrelated to these unobserved determinants of the outcome.
+
+::: {.callout-note appearance="simple"}
+### IV in one sentence
+
+An instrumental variable is a variable that shifts treatment status but affects the outcome only through the treatment.
+:::
+
+## The Basic Idea
+
+An instrument is usually denoted by $Z_i$. A valid instrument must satisfy two key conditions.
+
+First, the instrument must affect the treatment. This is the **relevance condition**. In the education example, distance to college may affect whether a student attends college because living closer to a college reduces the cost of attending.
+
+Second, the instrument must not affect the outcome directly. This is the **exclusion restriction**. Distance to college should affect wages only through its effect on education, not through other channels.
+
+The IV logic can therefore be summarized as follows:
+
+$$
+Z_i \rightarrow D_i \rightarrow Y_i.
+$$
+
+The instrument $Z_i$ moves the treatment $D_i$, and the treatment affects the outcome $Y_i$. The crucial assumption is that there is no direct causal path from $Z_i$ to $Y_i$ that bypasses $D_i$.
+
+::: {.callout-warning appearance="simple"}
+### The exclusion restriction
+
+The exclusion restriction is usually the most demanding IV assumption.  
+It cannot be directly tested with the data and must be justified using institutional knowledge, theory, or a credible natural experiment.
+:::
+
+## Example: College Proximity and Returns to Schooling
+
+A classic example is Card’s study of the returns to schooling [@card1993]. The question is: how much does an additional year of education increase future wages?
+
+A simple comparison between more educated and less educated individuals may be biased because education is correlated with unobserved ability and family background. Card uses geographic proximity to college as an instrument for schooling.
+
+The argument is that individuals who grow up closer to a college face lower costs of attending college and are therefore more likely to obtain more schooling. At the same time, distance to college should affect wages only through schooling, not through other direct channels.
+
+In this setting:
+
+- $Z_i$ is proximity to college;
+- $D_i$ is years of schooling;
+- $Y_i$ is wages.
+
+The instrument isolates variation in schooling that comes from geographic access to college rather than from unobserved ability.
+
+## The Two Main IV Assumptions
+
+### Relevance
+
+The instrument must be correlated with the treatment, after controlling for covariates:
+
+$$
+Cov(Z_i,D_i\mid X_i) \neq 0.
+$$
+
+In practice, this means that changes in the instrument should generate changes in the probability or intensity of treatment.
+
+Relevance is empirically testable. We can estimate the first-stage relationship between the treatment and the instrument and check whether the instrument significantly predicts treatment.
+
+### Exclusion Restriction
+
+The instrument must affect the outcome only through the treatment. Conditional on covariates, the instrument should not be correlated with the unobserved determinants of the outcome.
+
+In the linear model, this means that the instrument should not be correlated with the error term:
+
+$$
+Cov(Z_i,u_i\mid X_i)=0.
+$$
+
+Unlike relevance, the exclusion restriction is not directly testable. It is an identifying assumption. The credibility of an IV strategy therefore depends heavily on whether the researcher can provide a convincing argument that the instrument is as good as randomly assigned with respect to the outcome, except through treatment.
+
+## Two-Stage Least Squares
+
+The most common IV estimator is **two-stage least squares**, or **2SLS**.
+
+In the first stage, the treatment is regressed on the instrument and the control variables:
+
+$$
+D_i =
+\pi_0
++
+\pi_1 Z_i
++
+X_i'\pi
++
+v_i.
+$$
+
+This regression extracts the part of treatment variation that is predicted by the instrument. The fitted values are
+
+$$
+\widehat D_i.
+$$
+
+In the second stage, the outcome is regressed on the predicted treatment and the control variables:
+
+$$
+Y_i =
+\alpha
++
+\tau \widehat D_i
++
+X_i'\beta
++
+\varepsilon_i.
+$$
+
+The resulting coefficient $\widehat \tau$ is the 2SLS estimate.
+
+The intuition is simple: instead of using all variation in treatment, 2SLS uses only the variation in treatment that is generated by the instrument. If the instrument is valid, this variation is exogenous and can be used to estimate a causal effect.
+
+::: {.callout-note appearance="simple"}
+### Why two stages?
+
+The first stage isolates the part of treatment explained by the instrument.  
+The second stage relates the outcome to this instrument-induced variation in treatment.
+:::
+
+In practice, standard errors must be computed using an IV estimator directly. It is not correct to manually run the two regressions and treat $\widehat D_i$ as if it were an observed variable without adjusting standard errors.
+
+## Reduced Form and First Stage
+
+With a single instrument and a single endogenous treatment, the IV estimate can also be understood as a ratio.
+
+The **first stage** measures how much the instrument changes the treatment:
+
+$$
+\text{First stage} =
+\frac{\text{Effect of } Z_i \text{ on } D_i}{}
+.
+$$
+
+The **reduced form** measures how much the instrument changes the outcome:
+
+$$
+\text{Reduced form} =
+\frac{\text{Effect of } Z_i \text{ on } Y_i}{}
+.
+$$
+
+The IV estimate is the ratio between these two quantities:
+
+$$
+\widehat \tau_{IV}
+=
+\frac{\text{Reduced form effect of } Z_i \text{ on } Y_i}
+{\text{First-stage effect of } Z_i \text{ on } D_i}.
+$$
+
+This ratio asks: how much does the outcome change per unit of treatment variation generated by the instrument?
+
+## Example: Quarter of Birth and Education
+
+Another famous example is Angrist and Krueger’s study of compulsory schooling laws [@angrist1991]. They use quarter of birth as an instrument for years of schooling.
+
+The argument is based on school-entry rules and compulsory attendance laws in the United States. Children born early in the year enter school at a slightly older age. Since students are allowed to leave school when they reach a certain age, those born later in the year may end up with slightly more schooling.
+
+In this setting:
+
+- $Z_i$ is quarter of birth;
+- $D_i$ is years of schooling;
+- $Y_i$ is wages.
+
+The relevance condition requires that quarter of birth affects years of schooling. This can be tested in the first stage. For example, individuals born in the last quarter of the year may have slightly more education than those born earlier.
+
+The exclusion restriction requires that quarter of birth affects wages only through schooling. This is a stronger assumption. It requires that quarter of birth is not related to ability, family background, health, parental characteristics, or other factors that directly affect wages.
+
+The IV estimate can be interpreted by comparing the effect of quarter of birth on wages with the effect of quarter of birth on schooling. If being born in the last quarter increases schooling by about 0.10 years and increases wages by about 0.86 percent, the implied IV estimate is approximately
+
+$$
+\frac{0.0086}{0.10} \approx 0.086.
+$$
+
+This suggests that an additional year of schooling increases wages by about 8.6 percent for the units whose schooling is affected by the instrument.
+
+## Weak Instruments
+
+A major practical concern in IV estimation is the problem of **weak instruments**. An instrument is weak when it is only weakly correlated with the treatment.
+
+Weak instruments are problematic because 2SLS uses the variation in treatment predicted by the instrument. If the instrument barely moves the treatment, then the predicted treatment contains little useful variation. The IV estimator becomes unstable and can have poor finite-sample properties.
+
+Work by Bound, Jaeger, and Baker [-@bound1995] showed that weak instruments can make IV estimates and standard errors misleading, even in large samples. When instruments are weak:
+
+- 2SLS estimates can be biased toward OLS in finite samples;
+- confidence intervals may be unreliable;
+- conventional t-tests may reject too often;
+- small violations of the exclusion restriction can be amplified.
+
+::: {.callout-warning appearance="simple"}
+### Weak instruments
+
+A valid but weak instrument is not enough.  
+If the instrument barely shifts treatment, IV estimates may be imprecise, biased, and misleading.
+:::
+
+A standard diagnostic is the first-stage F-statistic. A low first-stage F-statistic is a warning sign that the instrument may be weak. However, recent work emphasizes that conventional diagnostics can be misleading if standard errors are not adjusted correctly for heteroskedasticity, clustering, or serial correlation.
+
+## Binary Instruments and LATE
+
+When the instrument is binary, IV estimates are often interpreted using the **local average treatment effect**, or **LATE**, framework.
+
+Suppose $Z_i$ takes two values: $Z_i=1$ and $Z_i=0$. Units can be classified according to how their treatment status responds to the instrument.
+
+There are four types of units:
+
+- **Compliers**: units that take the treatment when $Z_i=1$ and do not take it when $Z_i=0$.
+- **Never-takers**: units that do not take the treatment regardless of the value of $Z_i$.
+- **Always-takers**: units that take the treatment regardless of the value of $Z_i$.
+- **Defiers**: units that do the opposite of the instrument: they take the treatment when $Z_i=0$ and do not take it when $Z_i=1$.
+
+Under the LATE assumptions, IV identifies the causal effect for compliers. These are the units whose treatment status is actually changed by the instrument.
+
+This is important because IV does not generally identify the average treatment effect for the whole population. It identifies the effect for the subpopulation moved by the instrument.
+
+::: {.callout-note appearance="simple"}
+### Who are the compliers?
+
+Compliers are the units whose treatment status changes because of the instrument.  
+Different instruments may move different groups of units, and therefore identify different LATEs.
+:::
+
+If treatment effects are heterogeneous, different valid instruments can produce different estimates because they identify effects for different complier groups.
+
+## The LATE Assumptions
+
+For a binary instrument, the LATE interpretation requires three main assumptions.
+
+First, the instrument must satisfy the exclusion restriction. It should affect potential outcomes only through treatment.
+
+Second, the instrument must be relevant. It must affect treatment status for at least some units.
+
+Third, the instrument must satisfy **monotonicity**. This means that the instrument should push treatment in the same direction for all units. In other words, there should be no defiers.
+
+Monotonicity rules out the possibility that the instrument encourages treatment for some units but discourages it for others.
+
+Under these assumptions, the LATE can be written as
+
+$$
+LATE
+=
+\frac{
+E[Y_i\mid Z_i=1] - E[Y_i\mid Z_i=0]
+}{
+E[D_i\mid Z_i=1] - E[D_i\mid Z_i=0]
+}.
+$$
+
+The numerator is the reduced-form effect of the instrument on the outcome. The denominator is the first-stage effect of the instrument on treatment.
+
+## Example: Vietnam Draft Lottery
+
+A classic LATE example is Angrist’s study of the effect of military service on later earnings [@angrist1990]. During the Vietnam War, the United States used a draft lottery to determine who was at risk of being drafted.
+
+The draft lottery can be interpreted as an instrument for military service:
+
+- $Z_i$ is draft eligibility;
+- $D_i$ is military service;
+- $Y_i$ is later earnings.
+
+Not everyone who was draft eligible served in the military, and some individuals who were not draft eligible may still have served. Therefore, the design is fuzzy rather than sharp.
+
+The IV estimate identifies the effect of military service for compliers: individuals whose military service status was changed by draft eligibility. In this context, Angrist finds that military service reduced later earnings.
+
+## Interpreting IV Estimates
+
+Interpreting IV estimates requires care. The estimate depends on the instrument, because the instrument determines which units are shifted into treatment.
+
+For example, college proximity may identify the return to schooling for individuals whose education decisions are affected by geographic access to college. Quarter of birth may identify the return to schooling for individuals whose schooling is affected by compulsory schooling laws. These are not necessarily the same people.
+
+This means that IV estimates should not automatically be interpreted as average effects for everyone. They are often local effects for the units affected by the instrument.
+
+A useful empirical question is therefore: who are the compliers? Although individual complier status is not directly observed, researchers can sometimes describe the characteristics of compliers on average, such as whether they are more likely to come from lower-income families, rural areas, or specific educational backgrounds.
+
+## Practical Concerns in Applied IV Work
+
+Recent replication evidence raises concerns about how IV is used in practice. Lal et al. [-@lal2024] replicate a set of recent political science papers using IV strategies and identify several recurring problems.
+
+First, some applications overstate instrument strength because first-stage diagnostics do not properly adjust standard errors for heteroskedasticity, serial correlation, or clustering.
+
+Second, conventional t-tests based on 2SLS standard errors may understate uncertainty when instruments are weak.
+
+Third, IV estimates are often much larger than OLS estimates, especially when the first stage is weak. This pattern can be a warning sign of weak instruments, violations of the exclusion restriction, or both.
+
+These concerns do not imply that IV should not be used. Rather, they reinforce the need for careful design, transparent reporting, and sensitivity analysis.
+
+## What to Report
+
+A credible IV analysis should report:
+
+- the institutional or theoretical argument for the instrument;
+- the first-stage relationship between the instrument and treatment;
+- the first-stage F-statistic or other weak-instrument diagnostics;
+- the reduced-form effect of the instrument on the outcome;
+- the 2SLS estimate;
+- the set of covariates included in both stages;
+- the standard error procedure;
+- a discussion of the exclusion restriction;
+- an interpretation of the complier population when the LATE framework applies.
+
+::: {.callout-tip appearance="simple"}
+### IV reporting logic
+
+Do not report only the second-stage estimate.  
+An IV design is credible only if the first stage, reduced form, exclusion restriction, and target population are all clearly discussed.
+:::
+
+## Strengths and Limitations
+
+Instrumental variables are powerful because they can address unobserved confounding. Unlike matching or regression adjustment, IV methods do not require all confounders to be observed. Instead, they require a valid source of exogenous variation in treatment.
+
+However, this strength comes at a cost. The exclusion restriction is often difficult to justify, weak instruments can make estimates unreliable, and the estimated effect is often local to compliers.
+
+The main strengths of IV are:
+
+- it can address selection on unobservables;
+- it can exploit natural experiments or institutional rules;
+- it provides a clear design-based logic when a strong instrument is available.
+
+The main limitations are:
+
+- the exclusion restriction is not directly testable;
+- weak instruments can produce misleading estimates;
+- the estimand may be a LATE rather than an ATE or ATT;
+- different instruments may identify different treatment effects;
+- interpretation depends heavily on the institutional context.
+
+## Summary
+
+Instrumental variables estimate causal effects by isolating variation in treatment that is induced by an external source of variation. A valid instrument must shift the treatment and affect the outcome only through that treatment.
+
+The 2SLS estimator implements this logic in two steps: first, predict treatment using the instrument; second, estimate the effect of the predicted treatment on the outcome.
+
+With binary instruments, IV often identifies a local average treatment effect for compliers. This makes IV powerful but also subtle: the estimate depends on who is moved by the instrument.
+
+::: {.callout-note appearance="simple"}
+### Key idea
+
+IV does not use all variation in treatment.  
+It uses only the variation in treatment generated by the instrument.
+:::

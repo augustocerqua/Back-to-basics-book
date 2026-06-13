@@ -1,0 +1,129 @@
+## Causal Parameters of Interest
+
+The starting point of causal inference is the idea that a treatment can modify an outcome for a given unit. Let $D_i$ denote treatment status for unit $i$, with $D_i=1$ if the unit is treated and $D_i=0$ otherwise. For each unit, we define two potential outcomes:
+
+$$
+Y_i(1) \quad \text{and} \quad Y_i(0),
+$$
+
+where $Y_i(1)$ is the outcome that unit $i$ would experience under treatment, and $Y_i(0)$ is the outcome that the same unit would experience without treatment.
+
+The individual treatment effect is therefore
+
+$$
+\Delta_i = Y_i(1) - Y_i(0).
+$$
+
+This is the most direct definition of a causal effect: it compares the same unit in two alternative states of the world. For example, it asks how the employment status of the same individual would differ if she attended a training program rather than not attending it.
+
+The difficulty is that, for each unit, only one of the two potential outcomes is observed. If $D_i=1$, we observe $Y_i(1)$ but not $Y_i(0)$. If $D_i=0$, we observe $Y_i(0)$ but not $Y_i(1)$. The observed outcome can be written as
+
+$$
+Y_i^{obs} = D_iY_i(1) + (1-D_i)Y_i(0).
+$$
+
+The missing potential outcome is the counterfactual outcome. This is the fundamental problem of causal inference: it is generally impossible to observe the causal effect of treatment for a single unit.
+
+::: {.callout-note appearance="simple"}
+### The fundamental problem
+
+For each unit, we observe either $Y_i(1)$ or $Y_i(0)$, but never both.  
+Therefore, the individual treatment effect $\Delta_i$ is not directly observable.
+:::
+
+Because individual treatment effects are usually impossible to estimate, causal inference typically focuses on average causal effects. The most general parameter is the **average treatment effect (ATE)**:
+
+$$
+ATE = E[\Delta_i] = E[Y_i(1)-Y_i(0)].
+$$
+
+Equivalently,
+
+$$
+ATE = E[Y_i(1)] - E[Y_i(0)].
+$$
+
+The ATE answers the question: what is the expected effect of the treatment for a randomly selected unit from the population?
+
+However, the ATE is usually not the most relevant parameter for policy evaluation. A program is generally designed for a specific group, rather than for the whole population. In that case, we are often more interested in the **average treatment effect on the treated (ATT)**:
+
+$$
+ATT = E[\Delta_i \mid D_i=1].
+$$
+
+Equivalently,
+
+$$
+ATT = E[Y_i(1) \mid D_i=1] - E[Y_i(0) \mid D_i=1].
+$$
+
+The ATT answers the question: what is the expected effect of the treatment for units that actually received the treatment? This parameter is especially useful when evaluating whether a program generated benefits for its participants.
+
+The first component, $E[Y_i(1) \mid D_i=1]$, is observed in the data:
+
+$$
+E[Y_i(1) \mid D_i=1] = E[Y_i^{obs} \mid D_i=1].
+$$
+
+The second component, $E[Y_i(0) \mid D_i=1]$, is not observed. It is the mean outcome that treated units would have experienced without treatment. Estimating this counterfactual is the central empirical challenge.
+
+::: {.callout-warning appearance="simple"}
+### The difficulties in estimating $E[Y_i(0) \mid D_i=1]$
+
+A naive comparison between treated and untreated units estimates
+
+$$
+DIM = E[Y_i^{obs} \mid D_i=1] - E[Y_i^{obs} \mid D_i=0].
+$$
+
+But, in general,
+
+$$
+E[Y_i(0) \mid D_i=1] \neq E[Y_i(0) \mid D_i=0].
+$$
+
+The difference
+
+$$
+Bias = E[Y_i(0) \mid D_i=1] - E[Y_i(0) \mid D_i=0]
+$$
+
+is selection bias. Therefore,
+
+$$
+DIM = ATT + Bias.
+$$
+
+This shows why a simple comparison between treated and untreated units does not necessarily identify the treatment effect.
+:::
+
+::: {.callout-note appearance="simple"}
+### Other causal parameters: LATE and ITT
+
+Besides the ATE and ATT, two other causal parameters are especially important in experimental and quasi-experimental settings: the **local average treatment effect** and the **intention-to-treat effect**.
+
+The **local average treatment effect** (**LATE**) is the average treatment effect for the subset of units whose treatment status is changed by an instrument, assignment rule, or encouragement. These units are usually called **compliers**. In an instrumental variables setting, for example, the LATE is the effect of treatment for units who take the treatment when encouraged by the instrument and do not take it otherwise.
+
+The LATE is important because many empirical designs do not identify the effect for the whole population. Instead, they identify the effect for the units whose behavior is shifted by the source of exogenous variation. This means that the estimated effect may depend on the specific instrument or assignment rule being used.
+
+The **intention-to-treat effect** (**ITT**) measures the effect of being assigned or offered treatment, regardless of whether units actually receive or comply with the treatment. It is especially relevant in randomized experiments with imperfect compliance. For policy purposes, the ITT is often meaningful because it captures the effect of implementing an offer, eligibility rule, or assignment mechanism in the real world.
+
+In short, the LATE focuses on the effect of **receiving treatment for compliers**, while the ITT focuses on the effect of **being assigned or offered treatment**.
+:::
+
+In many applications, treatment effects may also vary across groups. We may then be interested in **heterogeneous treatment effects**, usually summarized by a conditional average treatment effect (CATE):
+
+$$
+CATE(x) = E[Y_i(1)-Y_i(0) \mid X_i=x].
+$$
+
+For example, a training program may be more effective for younger workers than for older workers, or a childcare policy may have stronger employment effects among mothers with young children.
+
+Similarly, one can define a conditional ATT (CATT):
+
+$$
+CATT(x) =
+E[Y_i(1)-Y_i(0) \mid D_i=1, X_i=x].
+$$
+
+These conditional parameters are useful because they tell us not only whether a policy works on average, but also for whom it works best.

@@ -1,0 +1,304 @@
+## Regression Discontinuity Design
+
+::: {.callout-note}
+## RDD in a figure
+
+![RDD builds the counterfactual by exploiting a discontinuity in treatment assignment. Units on one side of the cutoff receive the treatment, while units on the other side do not. The key idea is that units close to the cutoff are sufficiently similar, so untreated units just below the threshold can approximate what would have happened to treated units just above it in the absence of the treatment. This is the sharp version of the RDD.](../images/RDD_in_a_figure.png)
+:::
+
+A **regression discontinuity design** (RDD) is used when treatment assignment depends on whether an observed pre-treatment variable crosses a known threshold. This variable is usually called the **running variable**, **forcing variable**, or **score**.
+
+The key idea is intuitive. Units just below and just above the threshold are likely to be very similar, except that units on one side receive the treatment while units on the other side do not. If this is true, a discontinuous jump in the outcome at the threshold can be interpreted as the causal effect of the treatment.
+
+For example, a public subsidy may be assigned only to firms whose eligibility score exceeds a given cutoff. Firms just above and just below the cutoff may be very similar in terms of size, productivity, sector, and investment plans. However, firms just above the cutoff receive the subsidy, while firms just below do not. The RDD compares these two groups locally around the cutoff.
+
+::: {.callout-note appearance="simple"}
+### RDD in one sentence
+
+RDD estimates causal effects by comparing units that are very close to a treatment threshold, but fall on opposite sides of it.
+:::
+
+## The Basic Setup
+
+Let $S_i$ denote the running variable for unit $i$, and let $c$ denote the cutoff. Treatment status is denoted by $D_i$.
+
+In a **sharp RDD**, treatment assignment is completely determined by the running variable:
+
+$$
+D_i =
+\begin{cases}
+1 & \text{if } S_i \ge c,\\
+0 & \text{if } S_i < c.
+\end{cases}
+$$
+
+In this case, crossing the threshold changes treatment status from 0 to 1 with probability one.
+
+The parameter of interest is the treatment effect at the cutoff:
+
+$$
+\tau_{SRD}
+=
+\lim_{s \downarrow c} E[Y_i \mid S_i=s]
+-
+\lim_{s \uparrow c} E[Y_i \mid S_i=s].
+$$
+
+This is a **local** causal effect. It applies to units at, or very close to, the cutoff. It should not automatically be interpreted as the average treatment effect for all units.
+
+## Sharp and Fuzzy RDD
+
+There are two main types of RDD: **sharp** and **fuzzy**.
+
+In a sharp RDD, treatment status changes deterministically at the cutoff. All units above the cutoff are treated, and all units below are untreated.
+
+In a **fuzzy RDD**, crossing the cutoff changes the probability of treatment, but does not perfectly determine treatment status. Some units above the cutoff may not receive the treatment, and some units below may receive it.
+
+Formally, in a fuzzy RDD,
+
+$$
+\lim_{s \downarrow c} P(D_i=1 \mid S_i=s)
+-
+\lim_{s \uparrow c} P(D_i=1 \mid S_i=s)
+\neq 0,
+$$
+
+but this discontinuity is smaller than one.
+
+The fuzzy RDD estimand is a ratio of two discontinuities:
+
+$$
+\tau_{FRD}
+=
+\frac{
+\lim_{s \downarrow c} E[Y_i \mid S_i=s]
+-
+\lim_{s \uparrow c} E[Y_i \mid S_i=s]
+}{
+\lim_{s \downarrow c} E[D_i \mid S_i=s]
+-
+\lim_{s \uparrow c} E[D_i \mid S_i=s]
+}.
+$$
+
+The numerator measures the jump in the outcome at the cutoff. The denominator measures the jump in the probability of treatment at the cutoff. For this reason, fuzzy RDD is closely related to instrumental variables: crossing the cutoff acts as an instrument for treatment receipt.
+
+## Identification
+
+The central identifying assumption in RDD is that potential outcomes are continuous at the cutoff. In the absence of treatment, the expected outcome should not jump exactly at the threshold.
+
+Formally, the functions
+
+$$
+E[Y_i(0)\mid S_i=s]
+\quad \text{and} \quad
+E[Y_i(1)\mid S_i=s]
+$$
+
+should be continuous at $s=c$.
+
+If this condition holds, any discontinuity in the observed outcome at the cutoff can be attributed to the discontinuous change in treatment status.
+
+A second key assumption is that units cannot precisely manipulate the running variable around the cutoff. If units can sort just above or below the threshold, then units on the two sides may no longer be comparable.
+
+::: {.callout-warning appearance="simple"}
+### The key threat
+
+RDD is credible only if units just below and just above the cutoff are comparable.  
+If units can precisely manipulate the running variable, this local comparison may fail.
+:::
+
+## Why RDD Is Local
+
+RDD does not compare all treated and untreated units. It compares units near the cutoff.
+
+This is important because units far from the cutoff may be very different. A firm with a very high eligibility score may not be comparable to a firm with a very low score. However, firms just above and just below the cutoff are more likely to be similar.
+
+Thus, the RDD effect is usually interpreted as a **local average treatment effect** at the cutoff:
+
+$$
+\tau(c).
+$$
+
+The word “local” is essential. The estimate tells us the effect for marginal units whose treatment status changes because they are just above rather than just below the threshold.
+
+## Estimation
+
+RDD can be estimated using parametric or non-parametric methods.
+
+A simple parametric specification is
+
+$$
+Y_i
+=
+\alpha
++
+\tau D_i
++
+f(S_i-c)
++
+D_i g(S_i-c)
++
+\varepsilon_i,
+$$
+
+where $f(\cdot)$ and $g(\cdot)$ are functions of the running variable on the two sides of the cutoff. This model allows the relationship between the running variable and the outcome to differ below and above the threshold.
+
+In modern applications, however, local polynomial methods are usually preferred. The idea is to use observations close to the cutoff and give more weight to observations nearest to it.
+
+A common local linear specification estimates separate lines on the two sides of the cutoff within a selected bandwidth:
+
+$$
+|S_i-c| \le h.
+$$
+
+The bandwidth $h$ determines how close units must be to the cutoff to be included in the estimation.
+
+::: {.callout-note appearance="simple"}
+### Bandwidth
+
+A small bandwidth compares units very close to the cutoff, reducing bias but increasing variance.  
+A large bandwidth uses more observations, increasing precision but potentially comparing less similar units.
+:::
+
+The choice of bandwidth is therefore central. Recent RDD practice often relies on robust bias-corrected methods and data-driven bandwidth selection, such as the approach proposed by Calonico, Cattaneo, and Titiunik [-@calonico2014].
+
+## Kernels
+
+Local RDD estimators also require a **kernel**, which determines how observations are weighted within the bandwidth.
+
+Observations closer to the cutoff typically receive more weight, while observations farther away receive less weight. Common choices include triangular, uniform, and Epanechnikov kernels.
+
+The triangular kernel is often used in applied work because it gives the largest weight to observations closest to the cutoff.
+
+## Validity Checks
+
+RDD is visually intuitive, but it requires careful diagnostic checks.
+
+### No Manipulation of the Running Variable
+
+Researchers should check whether units appear to manipulate the running variable around the cutoff. If many units bunch just above or just below the threshold, this may indicate sorting.
+
+A standard diagnostic is a density test around the cutoff. If the density of the running variable jumps at the cutoff, the design may be invalid.
+
+### Covariate Balance
+
+Pre-treatment covariates should be smooth at the cutoff. If predetermined characteristics jump at the threshold, treated and untreated units near the cutoff may not be comparable.
+
+The same RDD logic can therefore be applied to covariates:
+
+$$
+X_i
+\quad \text{should not jump at } c.
+$$
+
+### Placebo Cutoffs
+
+Researchers can also test for discontinuities at placebo thresholds, where no treatment change occurs. If outcome jumps appear at arbitrary cutoffs, the estimated discontinuity at the true cutoff may not be causal.
+
+### Sensitivity to Bandwidth
+
+Results should be checked using alternative bandwidths. If the estimate changes dramatically when the bandwidth changes, the conclusions may be fragile.
+
+::: {.callout-tip appearance="simple"}
+### Good RDD practice
+
+A credible RDD should report the main estimate, graphical evidence, bandwidth sensitivity, density checks, and covariate balance around the cutoff.
+:::
+
+## Graphical Evidence
+
+RDD is often presented using a figure that plots the outcome against the running variable. The graph usually shows:
+
+- binned averages of the outcome;
+- the cutoff;
+- fitted curves or lines on each side of the cutoff;
+- the estimated jump at the threshold.
+
+The visual evidence is not a substitute for formal estimation, but it is important. A convincing RDD should show a clear discontinuity in the outcome at the cutoff, without similar discontinuities in pre-treatment covariates.
+
+## Empirical Example: Incumbency Advantage
+
+A classic application is Lee’s study of incumbency advantage in U.S. House elections [@lee2008]. The running variable is the Democratic vote margin in an election. The cutoff is zero: candidates who barely win become incumbents, while candidates who barely lose do not.
+
+Close elections provide a compelling RDD setting. A party that barely wins and a party that barely loses are likely to be similar, but only the winner receives incumbency status.
+
+Lee estimates the effect of party incumbency on the probability of winning the district in the next election. The study finds a substantial incumbency advantage: barely winning an election increases the probability of winning the next one.
+
+## Spatial RDD
+
+A spatial regression discontinuity design applies the same logic to geographic boundaries. Treatment changes discontinuously at a border, and units close to the border on different sides are compared.
+
+For example, a place-based policy may apply only to municipalities on one side of an administrative boundary. If locations near the boundary are similar in geography, climate, transport access, and local economic conditions, then differences in outcomes across the boundary can be attributed to the policy.
+
+In spatial RDD, the running variable may be:
+
+- distance to the boundary;
+- latitude and longitude;
+- distance to the nearest border point;
+- travel distance to the boundary.
+
+Spatial RDD is attractive because nearby locations often share many unobserved characteristics. However, it has additional challenges.
+
+First, several policies may change at the same boundary. If many institutional rules differ across the border, the estimated discontinuity may not isolate the effect of the policy of interest. This is sometimes called a **compound treatment** problem.
+
+Second, units may move in response to the policy. If firms, households, or workers relocate across the boundary, the no-sorting assumption may fail.
+
+## Empirical Example: Geographic Boundaries
+
+Keele and Titiunik [-@keele2015] use geographic boundaries as regression discontinuities to study the effect of political advertisements on voter turnout. Their design compares voters living close to media-market boundaries, where exposure to political advertisements changes discontinuously.
+
+Another example is the study by von Ehrlich and Seidel [-@vonehrlich2018] on the persistent effects of place-based policy in the West-German Zonenrandgebiet. The study exploits a geographic boundary separating areas exposed to different policy regimes.
+
+These examples illustrate how the RDD logic can be extended beyond one-dimensional thresholds to spatial settings.
+
+## Main Strengths and Limitations
+
+RDD is powerful because it can provide credible causal evidence in settings where treatment assignment is not randomized but follows a known rule.
+
+Its strengths are:
+
+- transparent identification;
+- strong visual intuition;
+- limited extrapolation;
+- comparison of units close to the treatment threshold.
+
+Its limitations are:
+
+- the effect is local to the cutoff;
+- the design requires a clear and known threshold;
+- manipulation of the running variable can invalidate the design;
+- results may be sensitive to bandwidth choice;
+- spatial RDD may confound the policy of interest with other boundary changes.
+
+::: {.callout-warning appearance="simple"}
+### Local does not mean weak
+
+RDD estimates are often highly credible near the cutoff.  
+The price of this credibility is that the estimate may not generalize to units far from the threshold.
+:::
+
+## Summary
+
+Regression discontinuity design exploits a discontinuous treatment rule. If units cannot precisely manipulate the running variable and potential outcomes are smooth at the cutoff, units just below and just above the threshold provide a credible comparison.
+
+In a sharp RDD, treatment changes deterministically at the cutoff. In a fuzzy RDD, the cutoff changes the probability of treatment, and the design is interpreted similarly to an instrumental variables strategy.
+
+The core estimand is local:
+
+$$
+\tau(c)
+=
+\lim_{s \downarrow c} E[Y_i \mid S_i=s]
+-
+\lim_{s \uparrow c} E[Y_i \mid S_i=s].
+$$
+
+RDD is therefore best understood as a design that estimates the causal effect for units close to the threshold.
+
+::: {.callout-tip appearance="simple"}
+### Key idea
+
+RDD compares units just below and just above a cutoff.  
+If nothing else changes discontinuously at the cutoff, the jump in the outcome can be interpreted as a causal effect.
+:::

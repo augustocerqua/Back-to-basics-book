@@ -1,0 +1,34 @@
+# Counterfactual Thinking
+
+## The fundamental question
+
+The fundamental question in impact evaluation is not whether treated units improved after the policy. It is whether they improved more than they would have improved in the absence of the policy.
+
+This distinction is the foundation of causal inference.
+
+## The missing comparison
+
+For a treated unit, the untreated potential outcome is missing. For an untreated unit, the treated potential outcome is missing. Causal inference is difficult because we cannot observe the same unit simultaneously under treatment and under no treatment.
+
+This is sometimes called the fundamental problem of causal inference.
+
+## Credible counterfactuals
+
+A credible counterfactual should answer the following question:
+
+> Can this comparison group plausibly represent what would have happened to the treated group without the policy?
+
+The answer depends on the context, the institutional setting, the data, and the assumptions of the research design.
+
+## Design before estimation
+
+A useful rule is: design first, estimation second.
+
+Before estimating any model, the researcher should clarify:
+
+1. Who is treated?
+2. Who is untreated?
+3. When does treatment occur?
+4. What is the outcome?
+5. What is the comparison group?
+6. Why is this comparison credible?

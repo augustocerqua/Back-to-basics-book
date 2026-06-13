@@ -1,0 +1,65 @@
+# Preface {.unnumbered}
+
+This book is not intended to be a comprehensive textbook on impact evaluation and causal inference. Many excellent books and articles already provide rigorous and detailed treatments of causal inference, program evaluation, and econometric methods for policy analysis.
+
+The purpose of this book is different. It is to go **back to basics** and offer a simple and transparent way of looking at the core logic behind the most widely used impact evaluation methods.
+
+::: {.callout-note}
+## Back to basics
+
+The central question of ex-post impact evaluation is simple: **What would have happened to the outcomes of interest in the absence of the treatment?**
+
+Every method discussed in this book can be seen as a different way of trying to answer this question. The aim is to uncover the **core logic** behind each method, make explicit the assumptions on which it relies, and explain how it works in practice, while avoiding formal technical details.
+:::
+
+### Transparency as the Guiding Principle of This Book
+
+In recent years, transparency has become central to the debate surrounding machine learning algorithms. Complex predictive models are often difficult to interpret, and it is not always clear how an algorithm transforms data into predictions. For this reason, researchers and practitioners increasingly ask for models that are not only accurate, but also **interpretable** and **transparent**. At the same time, much less attention is usually paid to transparency in the context of policy evaluation methods. It is often taken for granted that causal methods are transparent by nature. Yet, as discussed below, this is not necessarily true for some of the most commonly used impact evaluation methods.
+
+In a successful randomized controlled trial (RCT), the golden standard of causal inference, the logic of the comparison is usually easy to understand. Random assignment makes treated and untreated units comparable before the intervention: on average, the two groups are similar in all respects except for the treatment they receive. As a result, the untreated group provides a natural benchmark for what would have happened to the treated group in the absence of the intervention.
+
+Similarly, in a regression discontinuity (RD) design, the role of the comparison units is relatively intuitive. Units just below and just above the cutoff are compared because they are assumed to be similar, except for treatment assignment.
+
+This clarity is often less immediate in other widely used methods. For instance, in matching approaches, it is not always obvious **which untreated units** are actually used to construct the counterfactual, **how much weight** each of them receives, whether they are sufficiently comparable to treated units, and whether all treated units are retained in the final matched sample.
+
+In difference-in-differences designs, the comparison group is often described simply as “untreated,” but this label can hide considerable complexity. Applied studies do not always make clear **which untreated units drive the comparison**, whether not-yet-treated units are part of the control group, and how much the estimate depends on specific groups or time periods.
+
+The same issue becomes even more complex in instrumental variable approaches, especially when the instrument is non-binary, when multiple instruments are used, or when the empirical specification includes several fixed effects, covariates, and trends.
+
+::: {.callout-warning}
+## A common risk
+
+Impact evaluation methods may appear transparent at first sight. However, this apparent transparency can be misleading: the way in which they construct the counterfactual is not always clearly visible.
+
+Understanding who is being compared with whom, and under which assumptions, is essential for interpreting causal estimates.
+:::
+
+**The lesson from synthetic control methods.** One of the reasons why the synthetic control method (SCM) has been so influential is that it makes a data-driven counterfactual construction more visible. SCM relies on an optimization algorithm to choose a weighted combination of untreated units, and this procedure is not necessarily transparent at first sight. However, the method reports the weights assigned to each control unit and usually presents graphs comparing the treated unit with its synthetic counterpart. This makes it possible to see **which untreated units contributed to the counterfactual**, how much they contributed, and whether the synthetic control provides a credible pre-treatment fit.
+
+This feature is not only useful from a methodological point of view; it is also pedagogically powerful. It reminds us that most impact evaluation methods ultimately rely on a comparison between treated and untreated units. They are **not magic formulas** that automatically identify the causal effect of interest; they are structured ways of making comparisons credible under specific assumptions.
+
+This point is particularly important because in observational studies, we do not observe a **ground truth** causal effect. We observe what happened after a policy was introduced, but we do not observe what would have happened to the same units, at the same time, in the absence of that policy. This makes it difficult to compare evaluation strategies as we often compare machine learning algorithms for prediction. In prediction problems, models can be assessed against observed outcomes, and their accuracy can be compared directly. In impact evaluation, instead, the counterfactual outcome is missing. We therefore cannot simply run a “horse race” among methods and declare which one is empirically more accurate. For this reason, the credibility of an impact evaluation strategy depends mainly on the plausibility of its identifying assumptions and on the transparency of the comparison it constructs.
+
+Lastly, it is worth emphasizing that, although we will focus mainly on the most widely used impact evaluation methods, which rely on untreated units to construct the counterfactual and estimate causal effects, this book will later discuss **forecasting-based counterfactual methods**. These methods estimate causal effects without necessarily requiring untreated units in the data and rely on a very different set of identifying assumption (see Section XXX).
+
+## The aim of this book
+
+Its aim is to explain impact evaluation methods by focusing on their **backbone**: the counterfactual logic, the role played by untreated units, the assumptions required for causal interpretation, and the reasons why apparently simple comparisons can be misleading.
+
+The book is written for readers who want to understand the intuition behind impact evaluation methods before moving to technical details. It is intended for students, applied researchers, policy analysts, and practitioners who use causal methods or read studies based on them.
+
+Formal notation is kept to a minimum and postponed to the end of each chapter. The emphasis is on **interpretation**, **design**, **credibility**, and **transparency**.
+
+Throughout most of the book, we will focus on **binary treatments**, where units are either treated or untreated. This is the simplest and most common setup in impact evaluation, and many causal inference methods were originally developed with this structure in mind. Randomized experiments, matching, difference-in-differences, regression discontinuity designs, instrumental variables, and synthetic control methods are often introduced by asking whether exposure to a policy or shock changes an outcome relative to non-exposure. The binary framework also makes the counterfactual logic especially clear: for each unit, we compare the outcome under treatment with the outcome in the absence of treatment. Later in the book, we will extend this logic to the more challenging setting with **continuous treatment**, where the relevant question is not only whether a unit is treated, but also how much treatment it receives.
+
+::: {.callout-important}
+## The main message
+
+Impact evaluation is not primarily about applying sophisticated estimators. It is about constructing a credible counterfactual scenario
+
+Different methods provide different ways of approximating the missing counterfactual, and each of them relies on specific assumptions that should be assessed **case by case**, depending on the empirical setting, the available data, and the institutional context.
+:::
+
+The book therefore does not try to cover every method, every extension, or every recent technical debate. Instead, it focuses on the basic logic of the main approaches and on the practical questions that arise when we use them to evaluate public policies.
+
+Before taking the first steps in this journey, I would like to thank my mentor, Professor Guido Pellegrini, who taught me much of what I know about public policy evaluation. I am also grateful to my co-authors: through many discussions with them, I have refined my understanding of the discipline. Finally, I wish to thank the many curious students and public administration practitioners whose questions and insights have encouraged me to explain key concepts more clearly.

@@ -1,0 +1,21 @@
+# Choosing a design
+
+::: {.callout-note}
+This chapter is a placeholder. It will be expanded in the next drafting stage.
+:::
+
+## The evaluation problem
+
+## Key intuition
+
+## Identification assumptions
+
+## Estimation
+
+## Diagnostics and validity checks
+
+## Common mistakes
+
+## Worked example
+
+## How to report the results

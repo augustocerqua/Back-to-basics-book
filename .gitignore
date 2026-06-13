@@ -1,0 +1,13 @@
+.quarto/
+.Rproj.user/
+_book/
+
+.Rhistory
+.RData
+.Ruserdata
+
+*.log
+*.aux
+*.out
+*.toc
+*.synctex.gz

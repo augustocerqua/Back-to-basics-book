@@ -1,0 +1,24 @@
+# Welcome {.unnumbered}
+
+**The Backbone of Impact Evaluation Methods – Back to Basics** is an open textbook on the quantitative evaluation of public policies.
+
+The book starts from a simple idea: policy evaluation is not primarily about applying sophisticated estimators. It is about constructing a credible counterfactual.
+
+This book is intended for graduate students, applied researchers, policy analysts, and public officials who want to understand how impact evaluation methods work, when they are credible, and how their results should be interpreted.
+
+## How to read this book {.unnumbered}
+
+Each methodological chapter follows the same structure:
+
+1. The evaluation problem.
+2. The key intuition.
+3. Identification assumptions.
+4. Estimation.
+5. Diagnostics and validity checks.
+6. Common mistakes.
+7. A worked example.
+8. How to report the results.
+
+## License {.unnumbered}
+
+This is a draft open textbook. A license will be added before public release.
