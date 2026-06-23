@@ -3,7 +3,7 @@
 ::: {.callout-note}
 ## Difference-in-differences in a figure
 
-![DiD compares the change in outcomes for the **treated group** before and after the policy with the change in outcomes for the **control group** over the same period. The control group's trend is used to construct the treated group's **counterfactual** outcome. The **DiD estimate** is the gap between the treated group's observed post-policy outcome and this counterfactual outcome.](../images/DID_in_a_figure.png)
+![DiD compares the change in outcomes for the **treated group** before and after the policy with the change in outcomes for the **control group** over the same period. The control group's trend is used to construct the treated group's **counterfactual** outcome. The **DiD estimate** is the gap between the treated group's observed post-policy outcome and this counterfactual outcome.](../images/DiD_in_a_figure.png)
 :::
 
 Difference-in-differences (DiD), is one of the most widely used research designs in impact evaluation. It is useful when a policy affects one group of units but not another, and when we observe both groups before and after the treatment.

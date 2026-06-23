@@ -539,8 +539,7 @@ window.Quarto = {
   <li><a href="#diagnostics-and-validity-checks" id="toc-diagnostics-and-validity-checks" class="nav-link" data-scroll-target="#diagnostics-and-validity-checks"><span class="header-section-number">14.11</span> Diagnostics and Validity Checks</a></li>
   <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes"><span class="header-section-number">14.12</span> Common Mistakes</a></li>
   <li><a href="#worked-example" id="toc-worked-example" class="nav-link" data-scroll-target="#worked-example"><span class="header-section-number">14.13</span> Worked Example</a></li>
-  <li><a href="#how-to-report-the-results" id="toc-how-to-report-the-results" class="nav-link" data-scroll-target="#how-to-report-the-results"><span class="header-section-number">14.14</span> How to Report the Results</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">14.15</span> Summary</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">14.14</span> Summary</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/edit/main/chapters/14-continuous_treatment.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -811,24 +810,8 @@ E[Y_i \mid T_i=t, R_i=r].
 <p>If the dose-response function declines sharply at low subsidy levels and then flattens, this suggests that modest subsidies may generate most of the safety gains. If the function continues to decline at higher doses, larger subsidies may be justified. If the curve becomes flat or even increases, additional funding may be inefficient or targeted to firms with more severe baseline risks.</p>
 <p>The credibility of this analysis depends on whether firms receiving different subsidy amounts are comparable after conditioning on pre-treatment characteristics such as firm size, sector, baseline accident rate, investment capacity, and previous safety inspections.</p>
 </section>
-<section id="how-to-report-the-results" class="level2" data-number="14.14">
-<h2 data-number="14.14" class="anchored" data-anchor-id="how-to-report-the-results"><span class="header-section-number">14.14</span> How to Report the Results</h2>
-<p>A good continuous-treatment evaluation should report:</p>
-<ul>
-<li>why treatment intensity matters for the policy question;</li>
-<li>how treatment intensity is measured;</li>
-<li>the distribution of treatment intensity;</li>
-<li>the dose-response function and uncertainty bands;</li>
-<li>the identifying assumptions used to interpret the curve causally;</li>
-<li>how the treatment model or balancing procedure was estimated;</li>
-<li>covariate balance across treatment intensity;</li>
-<li>common support and any restrictions to the dose range;</li>
-<li>sensitivity to alternative specifications;</li>
-<li>the policy-relevant range of treatment intensity.</li>
-</ul>
-</section>
-<section id="summary" class="level2" data-number="14.15">
-<h2 data-number="14.15" class="anchored" data-anchor-id="summary"><span class="header-section-number">14.15</span> Summary</h2>
+<section id="summary" class="level2" data-number="14.14">
+<h2 data-number="14.14" class="anchored" data-anchor-id="summary"><span class="header-section-number">14.14</span> Summary</h2>
 <p>Continuous-treatment methods extend causal inference from the question of whether a unit is treated to the question of how much treatment it receives.</p>
 <p>The main object of interest is the dose-response function, which describes how expected outcomes change across treatment intensities. This is especially useful when policymakers need to decide not only whether to implement a policy, but also how intensely to implement it.</p>
 <p>The main difficulty is that treatment intensity is rarely randomly assigned. Units receiving different doses may differ systematically. Methods such as the generalized propensity score and newer balancing approaches can help address selection on observed covariates, but they require strong assumptions and careful diagnostics.</p>
@@ -1608,30 +1591,15 @@ Tübbicke, Stefan. 2022. <span>“Entropy Balancing for Continuous Treatments.�
 <span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a>The credibility of this analysis depends on whether firms receiving different subsidy amounts are comparable after conditioning on pre-treatment characteristics such as firm size, sector, baseline accident rate, investment capacity, and previous safety inspections.</span>
 <span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a><span class="fu">## How to Report the Results</span></span>
+<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
 <span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a>A good continuous-treatment evaluation should report:</span>
+<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a>Continuous-treatment methods extend causal inference from the question of whether a unit is treated to the question of how much treatment it receives.</span>
 <span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>why treatment intensity matters for the policy question;</span>
-<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>how treatment intensity is measured;</span>
-<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>the distribution of treatment intensity;</span>
-<span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>the dose-response function and uncertainty bands;</span>
-<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>the identifying assumptions used to interpret the curve causally;</span>
-<span id="cb1-279"><a href="#cb1-279" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>how the treatment model or balancing procedure was estimated;</span>
-<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>covariate balance across treatment intensity;</span>
-<span id="cb1-281"><a href="#cb1-281" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>common support and any restrictions to the dose range;</span>
-<span id="cb1-282"><a href="#cb1-282" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>sensitivity to alternative specifications;</span>
-<span id="cb1-283"><a href="#cb1-283" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>the policy-relevant range of treatment intensity.</span>
-<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-285"><a href="#cb1-285" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
-<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a>Continuous-treatment methods extend causal inference from the question of whether a unit is treated to the question of how much treatment it receives.</span>
-<span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a>The main object of interest is the dose-response function, which describes how expected outcomes change across treatment intensities. This is especially useful when policymakers need to decide not only whether to implement a policy, but also how intensely to implement it.</span>
-<span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-291"><a href="#cb1-291" aria-hidden="true" tabindex="-1"></a>The main difficulty is that treatment intensity is rarely randomly assigned. Units receiving different doses may differ systematically. Methods such as the generalized propensity score and newer balancing approaches can help address selection on observed covariates, but they require strong assumptions and careful diagnostics.</span>
-<span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-293"><a href="#cb1-293" aria-hidden="true" tabindex="-1"></a>The key message is simple: when treatment has a meaningful dose, the evaluation should not automatically collapse it into a binary variable. But estimating causal effects of treatment intensity requires credible variation in dose among comparable units.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a>The main object of interest is the dose-response function, which describes how expected outcomes change across treatment intensities. This is especially useful when policymakers need to decide not only whether to implement a policy, but also how intensely to implement it.</span>
+<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a>The main difficulty is that treatment intensity is rarely randomly assigned. Units receiving different doses may differ systematically. Methods such as the generalized propensity score and newer balancing approaches can help address selection on observed covariates, but they require strong assumptions and careful diagnostics.</span>
+<span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a>The key message is simple: when treatment has a meaningful dose, the evaluation should not automatically collapse it into a binary variable. But estimating causal effects of treatment intensity requires credible variation in dose among comparable units.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 <footer class="footer">
