@@ -23,41 +23,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -544,7 +509,7 @@ window.Quarto = {
   <li><a href="#empirical-example-the-west-german-zonenrandgebiet" id="toc-empirical-example-the-west-german-zonenrandgebiet" class="nav-link" data-scroll-target="#empirical-example-the-west-german-zonenrandgebiet"><span class="header-section-number">9.10</span> Empirical Example: The West-German <em>Zonenrandgebiet</em></a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">9.11</span> Summary</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/edit/main/chapters/09-regression-discontinuity.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -552,7 +517,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/04-randomized-experiments.html">Control-based Designs</a></li><li class="breadcrumb-item"><a href="../chapters/09-regression-discontinuity.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regression Discontinuity Design</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regression Discontinuity Design</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regression Discontinuity Design</span></h1>
 </div>
 
 
@@ -898,8 +863,6 @@ X_i
 </div>
 
 
-<!-- -->
-
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-calonico2014" class="csl-entry" role="listitem">
 Calonico, Sebastian, Matias D. Cattaneo, and Rocío Titiunik. 2014. <span>“Robust Nonparametric Confidence Intervals for Regression-Discontinuity Designs.”</span> <em>Econometrica</em> 82 (6): 2295–326. <a href="https://doi.org/10.3982/ECTA11757">https://doi.org/10.3982/ECTA11757</a>.
@@ -1000,57 +963,6 @@ Thistlethwaite, Donald L., and Donald T. Campbell. 1960. <span>“Regression-Dis
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
-    }
-    const viewSource = window.document.getElementById('quarto-view-source') ||
-                       window.document.getElementById('quarto-code-tools-source');
-    if (viewSource) {
-      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-      viewSource.addEventListener("click", function(e) {
-        if (sourceUrl) {
-          // rstudio viewer pane
-          if (/\bcapabilities=\b/.test(window.location)) {
-            window.open(sourceUrl);
-          } else {
-            window.location.href = sourceUrl;
-          }
-        } else {
-          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-          modal.show();
-        }
-        return false;
-      });
-    }
-    function toggleCodeHandler(show) {
-      return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
-          if (show) {
-            details.open = true;
-          } else {
-            details.removeAttribute("open");
-          }
-        }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-        const fromCls = show ? "hidden" : "unhidden";
-        const toCls = show ? "unhidden" : "hidden";
-        for (let i=0; i<cellCodeDivs.length; i++) {
-          const codeDiv = cellCodeDivs[i];
-          if (codeDiv.classList.contains(fromCls)) {
-            codeDiv.classList.remove(fromCls);
-            codeDiv.classList.add(toCls);
-          } 
-        }
-        return false;
-      }
-    }
-    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-    if (hideAllCode) {
-      hideAllCode.addEventListener("click", toggleCodeHandler(false));
-    }
-    const showAllCode = window.document.getElementById("quarto-show-all-code");
-    if (showAllCode) {
-      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -1392,318 +1304,7 @@ Thistlethwaite, Donald L., and Donald T. Campbell. 1960. <span>“Regression-Dis
         <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Synthetic Control Method</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Regression Discontinuity Design</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">## RD design in a figure</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="al">![RD design builds the counterfactual by exploiting a discontinuity in treatment assignment. Units on one side of the cutoff receive the treatment, while units on the other side do not. The key idea is that units close to the cutoff are sufficiently similar, so untreated units just below the threshold can approximate what would have happened to treated units just above it in the absence of the treatment. This is the sharp version of the RD design.](../images/RDD_in_a_figure.png)</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>A **regression discontinuity (RD)** design is used when treatment assignment depends on whether an observed pre-treatment variable crosses a known threshold. This variable is usually called the **running variable**, **forcing variable**, or **score**.</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>The key idea is intuitive. Units just below and just above the threshold are likely to be very similar, except that units on one side receive the treatment while units on the other side do not. If this is true, a discontinuous jump in the post-treatment outcome at the threshold can be interpreted as the causal effect of the treatment.</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>For example, a public subsidy may be assigned only to firms whose eligibility score exceeds a given cutoff. Firms just above and just below the cutoff may be very similar in terms of size, productivity, sector, and investment plans. However, firms just above the cutoff receive the subsidy, while firms just below do not. The RD design compares these two groups locally around the cutoff.</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">### RD design in one sentence</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>RD estimates causal effects by comparing the post-treatment outcomes of units that are very close to a treatment threshold but fall on opposite sides of it.</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## Historical Intuition</span></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>The RD design was introduced by Thistlethwaite and Campbell in their study of merit awards and subsequent academic outcomes <span class="co">[</span><span class="ot">@thistlethwaite1960</span><span class="co">]</span>. The key institutional feature was that students received an award if their test score crossed a known cutoff. Students just above the cutoff received the award, while students just below the cutoff did not.</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>The intuition is that students very close to the cutoff are likely to be similar in both observed and unobserved characteristics. A student barely above the threshold and a student barely below it may differ only because one happened to fall on the treated side of the rule. Therefore, any discontinuous jump in later outcomes at the cutoff can be interpreted as evidence of the causal effect of receiving the award.</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>The Thistlethwaite and Campbell example captures the core logic of RD well. A simple comparison between all award recipients and all non-recipients would be misleading, because students with higher test scores are likely to differ systematically from students with lower scores. RD avoids this broad comparison and focuses only on units near the threshold, where treatment assignment changes sharply but underlying characteristics are expected to evolve smoothly.</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Basic Setup</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>Let $S_i$ denote the running variable for unit $i$, and let $c$ denote the cutoff. Treatment status is denoted by $D_i$. In a **sharp RD**, treatment assignment is completely determined by the running variable:</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>D_i =</span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>\begin{cases}</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>1 &amp; \text{if } S_i \ge c,<span class="sc">\\</span></span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>0 &amp; \text{if } S_i &lt; c.</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>\end{cases}</span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>In this case, crossing the threshold changes treatment status from 0 to 1 with probability one.</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>The parameter of interest is the treatment effect at the cutoff:</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>\tau_{sharpRD}</span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>=</span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>\lim_{s \downarrow c} E<span class="co">[</span><span class="ot">Y_i \mid S_i=s</span><span class="co">]</span></span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>-</span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>\lim_{s \uparrow c} E<span class="co">[</span><span class="ot">Y_i \mid S_i=s</span><span class="co">]</span>.</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>$\tau_{sharpRD}$ identifies the average causal effect for units at, or very close to, the cutoff.</span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning appearance="simple"}</span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a><span class="fu">### Local does not mean weak</span></span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>RD estimates are often highly credible near the cutoff.  </span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>The price of this credibility is that the estimate may not generalize to units far from the threshold.</span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a><span class="fu">## Identification</span></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>The central identifying assumption in RD is that potential outcomes are continuous at the cutoff. In the absence of treatment, the expected outcome should not jump exactly at the threshold.</span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>Formally, the functions</span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>E<span class="co">[</span><span class="ot">Y_i(0)\mid S_i=s</span><span class="co">]</span></span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>\quad \text{and} \quad</span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>E<span class="co">[</span><span class="ot">Y_i(1)\mid S_i=s</span><span class="co">]</span></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>should be continuous at $s=c$.</span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>If this condition holds, any discontinuity in the observed post-treatment outcome at the cutoff can be attributed to the discontinuous change in treatment status.</span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>A second key assumption is that units cannot precisely manipulate the running variable around the cutoff. If units can sort just above or below the threshold, then units on the two sides may no longer be comparable.</span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!--::: {.callout-warning appearance="simple"}</span></span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a><span class="al">###</span><span class="co"> The key threat</span></span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a><span class="co">RD design is credible only if units just below and just above the cutoff are comparable.  </span></span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a><span class="co">If units can precisely manipulate the running variable, this local comparison may fail.</span></span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="co">:::</span></span>
-<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="co">--&gt;</span></span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning appearance="simple"}</span>
-<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="fu">## The manipulation threat</span></span>
-<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>The concern in RD is not that units respond to incentives in general. The problem arises when units or decision-makers can **precisely manipulate the running variable** in order to place units on the preferred side of the cutoff.</span>
-<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a>For example, in the Italian university system, students usually pass an exam with a grade of at least 18 out of 30. Suppose that passing the exam is the cutoff that determines access to a subsequent opportunity. Manipulation would be a concern if professors systematically adjusted borderline grades, giving many students an 18 and almost no students a 17. In this case, students just below and just above the cutoff may no longer be comparable. The cutoff would not separate students who are almost identical except for treatment status; it would separate students whose position around the threshold may have been affected by precise manipulation of the running variable.</span>
-<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a>RD design is therefore credible only if units cannot precisely control, or have their position precisely controlled, around the cutoff.</span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why RD Is Local</span></span>
-<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>RD does not compare all treated and untreated units. It compares units near the cutoff.</span>
-<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>This is important because units far from the cutoff may be very different. A student who obtains a very high exam grade may not be comparable to a student who clearly fails the exam. For example, a student receiving 28 out of 30 is likely to differ substantially from a student receiving 10 out of 30 in terms of preparation, ability, or effort.</span>
-<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>Thus, the RD effect is usually interpreted as a **local average treatment effect (LATE)** at the cutoff:</span>
-<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>\tau_{sharpRD}(c).</span>
-<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>The term **local** is essential. The estimate tells us the effect for marginal units whose treatment status changes because they are just above rather than just below the threshold.</span>
-<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a><span class="fu">## Estimation</span></span>
-<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>RD can be estimated using parametric or non-parametric methods.</span>
-<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>A simple **parametric** specification is</span>
-<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>Y_i</span>
-<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>=</span>
-<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>\alpha</span>
-<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a>+</span>
-<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>\tau_{sharpRD} D_i</span>
-<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a>+</span>
-<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a>f(S_i-c)</span>
-<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a>+</span>
-<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>D_i g(S_i-c)</span>
-<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a>+</span>
-<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>u_i,</span>
-<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a>where $f(\cdot)$ and $g(\cdot)$ are parametric functions of the running variable on the two sides of the cutoff. This model allows the relationship between the running variable and the outcome to differ below and above the threshold.</span>
-<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>In modern applications, however, **non-parametric** local polynomial methods are usually preferred. These methods focus on observations close to the cutoff and give greater weight to those nearest to it, so that identification comes from local comparisons around the threshold.</span>
-<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a>A common local linear specification estimates separate lines on the two sides of the cutoff within a selected bandwidth:</span>
-<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span>S_i-c<span class="pp">|</span> \le h.</span>
-<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>The bandwidth $h$ determines how close units must be to the cutoff to be included in the estimation.</span>
-<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>The choice of bandwidth is therefore central. Nowadays, RD practice often relies on robust bias-corrected methods and data-driven bandwidth selection, such as the approach proposed by Calonico, Cattaneo, and Titiunik <span class="co">[</span><span class="ot">-@calonico2014</span><span class="co">]</span>.</span>
-<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>Local RD estimators also require a **kernel**, which determines how observations are weighted within the bandwidth.</span>
-<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>Observations closer to the cutoff typically receive more weight, while observations farther away receive less weight. Common choices include triangular, uniform, and Epanechnikov kernels.</span>
-<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>The triangular kernel is often used in applied work because it gives the largest weight to observations closest to the cutoff.</span>
-<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
-<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a><span class="fu">### Bandwidth and kernel</span></span>
-<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a>A small bandwidth compares units very close to the cutoff, reducing bias but increasing variance.  </span>
-<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>A large bandwidth uses more observations, increasing precision but potentially comparing less similar units.</span>
-<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>The kernel determines how observations within the bandwidth are weighted. A common choice is the triangular kernel, which gives the highest weight to observations at the cutoff and then decreases the weight linearly as observations move farther away, reaching zero at the edge of the bandwidth.</span>
-<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a>Together, the bandwidth and the kernel define the local comparison used to estimate the LATE.</span>
-<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a><span class="fu">## Validity Checks</span></span>
-<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a>RD is visually intuitive, but it requires careful diagnostic checks.</span>
-<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="simple"}</span>
-<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a><span class="fu">### Good RD practice</span></span>
-<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a>A credible RD design should report the main estimate, graphical evidence, bandwidth sensitivity, density checks, and covariate balance around the cutoff.</span>
-<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a><span class="fu">### No Manipulation of the Running Variable</span></span>
-<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>Researchers should check whether units appear to manipulate the running variable around the cutoff. If many units bunch just above or just below the threshold, this may indicate sorting.</span>
-<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a>A standard diagnostic is a density test around the cutoff. If the density of the running variable jumps at the cutoff, the design may be invalid.</span>
-<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a><span class="fu">### Covariate Balance</span></span>
-<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>Pre-treatment covariates should be smooth at the cutoff. If predetermined characteristics jump at the threshold, treated and untreated units near the cutoff may not be comparable.</span>
-<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a>The same RD logic can therefore be applied to covariates:</span>
-<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a>X_i</span>
-<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a>\quad \text{should not jump at } c.</span>
-<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a><span class="fu">### Placebo Cutoffs</span></span>
-<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a>Researchers can also test for discontinuities at placebo thresholds, where no treatment change occurs. If outcome jumps appear at arbitrary cutoffs, the estimated discontinuity at the true cutoff may not be causal.</span>
-<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a><span class="fu">### Sensitivity to Bandwidth</span></span>
-<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a>Results should be checked using alternative bandwidths. If the estimate changes dramatically when the bandwidth changes, the conclusions may be fragile.</span>
-<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
-<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a><span class="fu">###  Graphical Evidence</span></span>
-<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a>RD is often presented using a figure that plots the outcome against the running variable. The graph usually shows:</span>
-<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>binned averages of the outcome, used to improve visual clarity. Binning means grouping observations into small intervals of the running variable and plotting the average outcome within each interval. For example, in a close-election RD design, the running variable may be the margin of victory in a mayoral election. The graph may show the average outcome for municipalities where the winning margin was between -1 and -0.5 percentage points, -0.5 and 0, 0 and 0.5, 0.5 and 1, and so on;</span>
-<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>the cutoff that determines treatment assignment;</span>
-<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>fitted curves or lines estimated separately on each side of the cutoff;</span>
-<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>the estimated jump in the outcome at the threshold.</span>
-<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a>The visual evidence is not a substitute for formal estimation, but it is important. A convincing RD should show a clear discontinuity in the outcome at the cutoff, without similar discontinuities in pre-treatment covariates.</span>
-<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a><span class="fu">## Empirical Example: Incumbency Advantage</span></span>
-<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a>A classic application is Lee’s study of incumbency advantage in U.S. House elections <span class="co">[</span><span class="ot">@lee2008</span><span class="co">]</span>. The running variable is the Democratic vote margin in an election. The cutoff is zero: candidates who barely win become incumbents, while candidates who barely lose do not.</span>
-<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a><span class="al">![Stylized representation of the RD appication reported in Lee (2008).](../images/sharp_RD_example_Lee.png)</span>{width=80%}</span>
-<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a>Close elections provide a compelling RD setting. A party that barely wins and a party that barely loses are likely to be similar, but only the winner receives incumbency status.</span>
-<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a>Lee estimates the effect of party incumbency on the probability of winning the district in the next election. The study finds a substantial incumbency advantage: barely winning an election increases the party’s probability of winning the district again.</span>
-<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a><span class="fu">## Fuzzy RD design</span></span>
-<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a>The discussion so far has focused on the simplest version of the design, known as **sharp RD**. In a sharp RD, treatment status changes deterministically at the cutoff: all units on one side of the threshold are treated, while all units on the other side are untreated. However, sharp RD is not the only possible version of the design. In many applications, crossing the cutoff changes the **probability** of receiving the treatment, but does not determine treatment status perfectly. This is known as **fuzzy RD**.</span>
-<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a>Formally, in a fuzzy RD,</span>
-<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a>\lim_{s \downarrow c} P(D_i=1 \mid S_i=s)</span>
-<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a>-</span>
-<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a>\lim_{s \uparrow c} P(D_i=1 \mid S_i=s)</span>
-<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a>\neq 0,</span>
-<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a>but this discontinuity is smaller than one.</span>
-<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a>The fuzzy RD estimand is a ratio of two discontinuities:</span>
-<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a>\tau_{fuzzyRD}</span>
-<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a>=</span>
-<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a>\frac{</span>
-<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a>\lim_{s \downarrow c} E<span class="co">[</span><span class="ot">Y_i \mid S_i=s</span><span class="co">]</span></span>
-<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a>-</span>
-<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a>\lim_{s \uparrow c} E<span class="co">[</span><span class="ot">Y_i \mid S_i=s</span><span class="co">]</span></span>
-<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a>}{</span>
-<span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a>\lim_{s \downarrow c} E<span class="co">[</span><span class="ot">D_i \mid S_i=s</span><span class="co">]</span></span>
-<span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a>-</span>
-<span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a>\lim_{s \uparrow c} E<span class="co">[</span><span class="ot">D_i \mid S_i=s</span><span class="co">]</span></span>
-<span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a>}.</span>
-<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a>The numerator measures the jump in the outcome at the cutoff. The denominator measures the jump in the probability of treatment at the cutoff. The fuzzy RD estimand is therefore a ratio: it scales the discontinuity in the outcome by the discontinuity in treatment receipt.</span>
-<span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a>For this reason, **fuzzy RD is closely related to instrumental variables**. In a fuzzy RD design, crossing the cutoff does not perfectly determine treatment status, but it changes the probability of receiving the treatment. The indicator for being above the cutoff can therefore be used as an instrument for actual treatment receipt. The logic is the same as in an IV design. The cutoff generates a source of exogenous variation in treatment: units just below and just above the threshold are assumed to be comparable, but those just above the cutoff are more likely to receive the treatment. Under the usual RD continuity assumptions, and under the IV assumptions of relevance, exclusion, and monotonicity, the fuzzy RD estimand identifies a **LATE** for units close to the cutoff whose treatment status is changed by crossing the threshold.</span>
-<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a>In other words, fuzzy RD estimates the treatment effect for **compliers near the cutoff**: units who receive the treatment because they are on the eligible side of the threshold, and who would not have received it otherwise.</span>
-<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a><span class="fu">## Spatial RD design</span></span>
-<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a>When treatment assignment is based on a geographic discontinuity, the same logic gives rise to a **spatial RD** design. In this case, treatment status changes discontinuously at a border, and units located close to that border are compared: treated units on one side and untreated units on the other.</span>
-<span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a>For example, a place-based policy may apply only to municipalities on one side of an administrative boundary. If locations near the boundary are similar in geography, climate, transport access, and local economic conditions, then differences in outcomes across the boundary can be attributed to the policy.</span>
-<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a>In spatial RD, the running variable may be:</span>
-<span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>distance to the boundary;</span>
-<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>latitude and longitude;</span>
-<span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>distance to the nearest border point;</span>
-<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>travel distance to the boundary.</span>
-<span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a>Spatial RD is attractive because nearby locations often share many unobserved characteristics. However, it has additional challenges.</span>
-<span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a>First, several policies may change at the same boundary. If many institutional rules differ across the border, the estimated discontinuity may not isolate the effect of the policy of interest. This is sometimes called a **compound treatment** problem.</span>
-<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a>Second, the no-interference assumption may be more fragile in spatial RD designs than in traditional RD designs. Units located on opposite sides of a geographic boundary are often close to one another and may interact through local labor markets, housing markets, commuting flows, or social networks. As a result, the treatment assigned on one side of the border may affect outcomes on the other side as well.</span>
-<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a><span class="fu">## Empirical Example: The West-German *Zonenrandgebiet*</span></span>
-<span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a>A useful example of a **spatial RD** design is the study by von Ehrlich and Seidel <span class="co">[</span><span class="ot">-@vonehrlich2018</span><span class="co">]</span> on the long-run effects of place-based policy in the West-German *Zonenrandgebiet*.</span>
-<span id="cb1-279"><a href="#cb1-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a>The policy targeted municipalities located within a certain distance of the inner-German border. This generated a geographic discontinuity in treatment assignment: municipalities just inside the eligible border zone received support, while nearby municipalities just outside did not. The key idea of the design is therefore simple. Municipalities located very close to the same boundary are likely to be similar in many respects, except for their eligibility status. This makes it possible to compare units on opposite sides of the border and interpret discontinuous differences in outcomes as evidence of a treatment effect.</span>
-<span id="cb1-281"><a href="#cb1-281" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-282"><a href="#cb1-282" aria-hidden="true" tabindex="-1"></a>The figure below illustrates the geographic discontinuity exploited in the study.</span>
-<span id="cb1-283"><a href="#cb1-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a><span class="al">![Stylized representation of the spatial discontinuity in the West-German *Zonenrandgebiet*. Municipalities just inside the eligible border zone were exposed to the policy, while nearby West-German municipalities just outside were not.](../images/spatial_RD_example_Seidel.png)</span>{width=80%}</span>
-<span id="cb1-285"><a href="#cb1-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
-<span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a>RD design exploits a discontinuous treatment rule. If units cannot precisely manipulate the running variable and potential outcomes are smooth at the cutoff, units just below and just above the threshold provide a credible comparison.</span>
-<span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a>In a sharp RD, treatment changes deterministically at the cutoff. In a fuzzy RD, the cutoff changes the probability of treatment, and the design is interpreted similarly to an instrumental variables strategy.</span>
-<span id="cb1-291"><a href="#cb1-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a>RD is best understood as a design that estimates the causal effect for units close to the threshold.</span>
-<span id="cb1-293"><a href="#cb1-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-294"><a href="#cb1-294" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
-<span id="cb1-295"><a href="#cb1-295" aria-hidden="true" tabindex="-1"></a><span class="fu">## Software packages</span></span>
-<span id="cb1-296"><a href="#cb1-296" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-297"><a href="#cb1-297" aria-hidden="true" tabindex="-1"></a>Several software packages can be used to implement regression discontinuity designs, including estimation, bandwidth selection, RD plots, manipulation tests, and power analysis.</span>
-<span id="cb1-298"><a href="#cb1-298" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-299"><a href="#cb1-299" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**R**</span>
-<span id="cb1-300"><a href="#cb1-300" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`rdrobust`</span><span class="co">](https://cran.r-project.org/package=rdrobust)</span>: the main package for sharp, fuzzy, and kink RD designs, with local-polynomial estimation, robust bias-corrected inference, bandwidth selection, and RD plots.</span>
-<span id="cb1-301"><a href="#cb1-301" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`rddensity`</span><span class="co">](https://cran.r-project.org/package=rddensity)</span>: implements density discontinuity tests to assess possible manipulation or sorting around the cutoff.</span>
-<span id="cb1-302"><a href="#cb1-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-303"><a href="#cb1-303" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Python**</span>
-<span id="cb1-304"><a href="#cb1-304" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`rdrobust`</span><span class="co">](https://pypi.org/project/rdrobust/)</span>: Python implementation of the <span class="in">`rdrobust`</span> tools for RD estimation, inference, bandwidth selection, and plotting.</span>
-<span id="cb1-305"><a href="#cb1-305" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`rddensity`</span><span class="co">](https://pypi.org/project/rddensity/)</span>: density discontinuity testing for manipulation around the cutoff.</span>
-<span id="cb1-306"><a href="#cb1-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-307"><a href="#cb1-307" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Stata**</span>
-<span id="cb1-308"><a href="#cb1-308" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`rdrobust`</span><span class="co">](https://ideas.repec.org/a/tsj/stataj/v17y2017i2p372-404.html)</span>: widely used Stata package for local-polynomial RD estimation, robust inference, bandwidth selection, and RD plots.</span>
-<span id="cb1-309"><a href="#cb1-309" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`rddensity`</span><span class="co">](https://github.com/rdpackages/rddensity)</span>: manipulation testing based on density discontinuities around the cutoff.</span>
-<span id="cb1-310"><a href="#cb1-310" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
-</div></div></div></div></div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
@@ -1712,7 +1313,7 @@ Thistlethwaite, Donald L., and Donald T. Campbell. 1960. <span>“Regression-Dis
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/edit/main/chapters/09-regression-discontinuity.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>

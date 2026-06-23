@@ -10,7 +10,7 @@ book:
   cover-image: images/book_cover_v2.png
   site-url: "https://augustocerqua.github.io/Back-to-basics-book/"
   repo-url: "https://github.com/augustocerqua/Back-to-basics-book"
-  repo-actions: [edit, issue]
+  repo-actions: [issue]
   sharing: [twitter, linkedin]
   page-footer:
     left: "© Augusto Cerqua"
@@ -52,8 +52,8 @@ format:
     toc: true
     toc-depth: 3
     number-sections: true
-    code-fold: true
-    code-tools: true
+    code-fold: false
+    code-tools: false
     fig-cap-location: bottom
     tbl-cap-location: top
 

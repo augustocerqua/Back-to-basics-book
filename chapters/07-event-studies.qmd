@@ -143,6 +143,18 @@ This family of estimators is useful because it emphasizes a practical lesson: wi
 
 In applications, these estimators often report dynamic effects, showing how the outcome changes in the periods following treatment.
 
+::: {.callout-note appearance="simple"}
+### Weighted DiD versus multiple DiD
+
+Both approaches address the same problem: with staggered adoption and heterogeneous treatment effects, TWFE regressions may use problematic comparisons, especially comparisons involving already-treated units.
+
+The **Callaway and Sant'Anna** approach is organized around **group-time treatment effects**, $ATT(g,t)$. Units are grouped by the period in which they first receive treatment, and the effect is estimated for each cohort $g$ and time period $t$, using never-treated or not-yet-treated units as controls. These $ATT(g,t)$ parameters can then be aggregated into overall effects or event-study effects using explicit weights.
+
+The **de Chaisemartin and D'Haultfoeuille** approach is organized more directly around **clean DiD comparisons**. The key idea is to compare units whose treatment status changes, called switchers, with units whose treatment status does not change over the same interval. This perspective is especially useful for understanding which comparisons identify the effect and for extending DiD logic beyond the simplest staggered binary-treatment setting.
+
+In short, Callaway and Sant'Anna start from cohort-time causal parameters and then aggregate them. de Chaisemartin and D'Haultfoeuille start from valid treatment-status changes and build the estimator from those clean comparisons.
+:::
+
 ## Matching DiD for Panel Data
 
 Another approach is to combine matching and DiD. The basic matching DiD estimator controls for observed differences through matching and for time-invariant unobserved differences through differencing [@heckman1997].
@@ -240,14 +252,13 @@ A credible event-study analysis should report:
 - which units are used as controls at each horizon;
 - whether never-treated or not-yet-treated units are used;
 - event-time plots with confidence intervals;
-- pre-treatment estimates;
-- sensitivity to alternative comparison groups;
-- sensitivity to alternative event windows;
 - whether treatment is absorbing or can turn on and off;
 - whether anticipation or carryover effects are plausible;
 - how group-time effects are aggregated.
 
 The treatment variation plot is often useful. It shows when units become treated and whether enough untreated or not-yet-treated units remain available as controls at each point in time.
+
+![Generic example of a treatment variation plot for a setting with staggered treatment adoption.](../images/treatment_variation_plot.png)
 
 ## Worked Example
 

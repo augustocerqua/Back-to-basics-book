@@ -23,41 +23,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -541,7 +506,7 @@ window.Quarto = {
   <li><a href="#practical-concerns-in-applied-iv-work" id="toc-practical-concerns-in-applied-iv-work" class="nav-link" data-scroll-target="#practical-concerns-in-applied-iv-work"><span class="header-section-number">8.9</span> Practical Concerns in Applied IV Work</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">8.10</span> Summary</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/edit/main/chapters/08-instrumental-variables.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -549,7 +514,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/04-randomized-experiments.html">Control-based Designs</a></li><li class="breadcrumb-item"><a href="../chapters/08-instrumental-variables.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Instrumental Variables</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Instrumental Variables</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Instrumental Variables</span></h1>
 </div>
 
 
@@ -980,8 +945,6 @@ E[D_i\mid Z_i=1] - E[D_i\mid Z_i=0]
 </div>
 
 
-<!-- -->
-
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-angrist1990" class="csl-entry" role="listitem">
 Angrist, Joshua D. 1990. <span>“Lifetime Earnings and the Vietnam Era Draft Lottery: Evidence from Social Security Administrative Records.”</span> <em>The American Economic Review</em> 80 (3): 313–36. <a href="https://www.jstor.org/stable/2006669">https://www.jstor.org/stable/2006669</a>.
@@ -1091,57 +1054,6 @@ Wright, Philip G. 1928. <em>The Tariff on Animal and Vegetable Oils</em>. Macmil
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
-    }
-    const viewSource = window.document.getElementById('quarto-view-source') ||
-                       window.document.getElementById('quarto-code-tools-source');
-    if (viewSource) {
-      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-      viewSource.addEventListener("click", function(e) {
-        if (sourceUrl) {
-          // rstudio viewer pane
-          if (/\bcapabilities=\b/.test(window.location)) {
-            window.open(sourceUrl);
-          } else {
-            window.location.href = sourceUrl;
-          }
-        } else {
-          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-          modal.show();
-        }
-        return false;
-      });
-    }
-    function toggleCodeHandler(show) {
-      return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
-          if (show) {
-            details.open = true;
-          } else {
-            details.removeAttribute("open");
-          }
-        }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-        const fromCls = show ? "hidden" : "unhidden";
-        const toCls = show ? "unhidden" : "hidden";
-        for (let i=0; i<cellCodeDivs.length; i++) {
-          const codeDiv = cellCodeDivs[i];
-          if (codeDiv.classList.contains(fromCls)) {
-            codeDiv.classList.remove(fromCls);
-            codeDiv.classList.add(toCls);
-          } 
-        }
-        return false;
-      }
-    }
-    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-    if (hideAllCode) {
-      hideAllCode.addEventListener("click", toggleCodeHandler(false));
-    }
-    const showAllCode = window.document.getElementById("quarto-show-all-code");
-    if (showAllCode) {
-      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -1483,368 +1395,7 @@ Wright, Philip G. 1928. <em>The Tariff on Animal and Vegetable Oils</em>. Macmil
         <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regression Discontinuity Design</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Instrumental Variables</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>**IV in a figure**</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="al">![Instrumental variables use an external source of variation, the instrument $Z$, to shift treatment status $D$. If the instrument affects the outcome $Y$ only through the treatment, the variation in $D$ induced by $Z$ can be used to estimate a causal effect, even in the presence of unobserved confounders.](../images/instrumental-variables-lever.png)</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>In observational studies, treated and untreated units often differ in ways that are not fully observed by the researcher. If these unobserved factors affect both treatment participation and the outcome, a simple regression of the outcome on the treatment does not identify a causal effect.</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>Suppose we want to estimate the effect of a treatment $D_i$ on a post-treatment outcome $Y_i$ using the linear model</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>Y_i = \alpha + \tau D_i + X_i'\beta + u_i,</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>where $X_i$ is a vector of observed covariates and $u_i$ contains all unobserved determinants of the outcome.</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>The problem is that, in many applications,</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>\operatorname{Cov}(D_i,u_i) \neq 0.</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>This means that treatment status is correlated with unobserved determinants of the outcome. In that case, ordinary least squares does not recover the causal effect of $D_i$ on $Y_i$.</span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>For example, suppose we want to estimate the effect of education on wages. More educated individuals tend to earn more, but they may also differ in unobserved ability, motivation, family background, or local opportunities. If these factors affect both schooling and wages, then the estimated relationship between schooling and wages combines the causal effect of education with selection bias.</span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>Instrumental variables (IV) provide a way to isolate a source of variation in treatment that is plausibly unrelated to these unobserved determinants of the outcome.</span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="fu">### IV in one sentence</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>An instrumental variable is a variable that shifts treatment status but affects the outcome only through the treatment. In other words, it should not have any direct effect on the outcome.</span>
-<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="fu">## Historical Intuition</span></span>
-<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>An early and influential example of IV logic appears in Philip G. Wright's analysis of supply and demand in agricultural commodity markets <span class="co">[</span><span class="ot">@wright1928</span><span class="co">]</span>. Wright studied the problem of estimating demand and supply relationships when price and quantity are jointly determined in equilibrium. A simple regression of quantity on price would not recover a demand curve, because observed prices and quantities reflect both demand shifts and supply shifts at the same time.</span>
-<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>The key insight was that some variables shift one side of the market without directly shifting the other. For example, weather conditions may affect supply by changing agricultural output, but they need not directly affect consumers' demand. Such variables create movements in price and quantity that can be used to trace out the demand curve. In modern language, weather-related supply shifters can serve as **instruments** for price.</span>
-<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>The Wright example captures the core logic of IV well. When the treatment is not randomly assigned, ordinary comparisons are misleading. An instrument provides a source of variation that moves the treatment but is otherwise unrelated to the outcome, except through the treatment. IV then uses only this externally induced variation to estimate a causal effect.</span>
-<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="fu">## Example: College Proximity and Returns to Schooling</span></span>
-<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>A classic example is Card's study of the returns to schooling <span class="co">[</span><span class="ot">@card1993</span><span class="co">]</span>. The question is: how much does an additional year of education increase future wages?</span>
-<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>A simple comparison between more educated and less educated individuals may be biased because education is correlated with unobserved ability and family background. Card uses geographic proximity to college as an instrument for schooling.</span>
-<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>The argument is that individuals who grow up closer to a college face lower costs of attending college and are therefore more likely to obtain more schooling. At the same time, distance to college should affect wages only through schooling, not through other direct channels.</span>
-<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>In this setting:</span>
-<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$Z_i$ is proximity to college;</span>
-<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$D_i$ is years of schooling;</span>
-<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$Y_i$ is wages.</span>
-<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>The instrument isolates variation in schooling that comes from geographic access to college rather than from unobserved ability.</span>
-<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Basic IV Logic and the Key Assumptions</span></span>
-<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>An instrument is usually denoted by $Z_i$. The core IV idea is that $Z_i$ shifts treatment status $D_i$, and this instrument-induced variation in treatment is then used to learn about the effect of $D_i$ on the outcome $Y_i$:</span>
-<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>Z_i \rightarrow D_i \rightarrow Y_i.</span>
-<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a>For this logic to identify a causal effect, the instrument must satisfy two conditions at the same time.</span>
-<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The instrument must affect the treatment. This is the **relevance condition**. After controlling for observed covariates $X_i$, the instrument must still be correlated with treatment status:</span>
-<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a>\operatorname{Cov}(Z_i,D_i\mid X_i) \neq 0.</span>
-<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="in">    In practice, this means that changes in the instrument should generate changes in the probability of receiving the treatment, in the case of a binary treatment. Relevance is empirically assessable: we can estimate the first-stage relationship between $D_i$ and $Z_i$ and check whether the instrument significantly predicts treatment.</span></span>
-<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>The instrument must affect the outcome only through the treatment. This is the **exclusion restriction**. Conditional on covariates, the instrument should not be correlated with the unobserved determinants of the outcome:</span>
-<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a>\operatorname{Cov}(Z_i,u_i\mid X_i)=0.</span>
-<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="in">    This condition rules out any direct causal path from $Z_i$ to $Y_i$ that bypasses $D_i$. Unlike relevance, the exclusion restriction is not directly testable. The credibility of an IV strategy therefore depends heavily on whether the researcher can argue, using institutional knowledge, theory, or a credible natural experiment, that the instrument is as good as randomly assigned with respect to the outcome, except through treatment.</span></span>
-<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning appearance="simple"}</span>
-<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a><span class="fu">### The exclusion restriction</span></span>
-<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a>The exclusion restriction is usually the most demanding IV assumption. A strong first stage is not enough: if the instrument affects the outcome through channels other than the treatment, the IV estimate is not causal.</span>
-<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a><span class="fu">## Two-Stage Least Squares and the IV Ratio</span></span>
-<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a>The most common IV estimator is **two-stage least squares**, or **2SLS**. The name reflects the way the estimator isolates the part of treatment variation that is generated by the instrument.</span>
-<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a>In the first stage, the treatment is regressed on the instrument and the control variables:</span>
-<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a>D_i =</span>
-<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a>\pi_0</span>
-<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a>+</span>
-<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a>\pi_1 Z_i</span>
-<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a>+</span>
-<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a>X_i'\pi</span>
-<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a>+</span>
-<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a>v_i.</span>
-<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a>The coefficient $\pi_1$ captures the effect of the instrument on treatment. This is the empirical counterpart of the relevance condition. The fitted values from this regression, $\widehat D_i,$ represent the component of treatment status that is predicted by the instrument and the covariates.</span>
-<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a>In the second stage, the outcome is regressed on the predicted treatment and the control variables:</span>
-<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a>Y_i =</span>
-<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a>\alpha</span>
-<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a>+</span>
-<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a>\tau_{\text{2SLS}} \widehat D_i</span>
-<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a>+</span>
-<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a>X_i'\beta</span>
-<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a>+</span>
-<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a>\varepsilon_i.</span>
-<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a>The estimated coefficient $\widehat{\tau}_{\text{2SLS}}$ is the IV estimate obtained by 2SLS. The intuition is simple: instead of using all variation in treatment, 2SLS uses only the variation in treatment that is generated by the instrument. If the instrument is valid, this variation can be interpreted as exogenous and used to estimate a causal effect.</span>
-<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
-<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a><span class="fu">### Why two stages?</span></span>
-<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a>The first stage isolates the part of treatment explained by the instrument.  </span>
-<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a>The second stage relates the outcome to this instrument-induced variation in treatment.</span>
-<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a>With a single instrument and a single treatment, the same idea can also be expressed as a ratio. The first stage measures how much the instrument changes the treatment, while the **reduced form** measures how much the instrument changes the outcome:</span>
-<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a>Y_i</span>
-<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a>=</span>
-<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a>\rho_0</span>
-<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a>+</span>
-<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a>\rho_1 Z_i</span>
-<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a>+</span>
-<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a>X_i'\rho</span>
-<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a>+</span>
-<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a>e_i.</span>
-<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a>Here, $\rho_1$ captures the effect of the instrument on the outcome. The IV estimate is the ratio between the reduced-form effect and the first-stage effect:</span>
-<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a>\widehat{\tau}_{\text{IV}}</span>
-<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a>=</span>
-<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a>\frac{\widehat{\rho}_1}{\widehat{\pi}_1}.</span>
-<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a>This ratio asks: how much does the outcome change per unit of treatment variation generated by the instrument?</span>
-<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning appearance="simple"}</span>
-<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a><span class="fu">### A practical note</span></span>
-<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a>In practice, 2SLS should be estimated using an IV routine. It is not correct to manually run the two regressions and treat $\widehat D_i$ as if it were an ordinary observed variable, because standard errors must account for the generated regressor.</span>
-<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a><span class="fu">## Example: Quarter of Birth and Education</span></span>
-<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a>Another famous example is Angrist and Krueger's study of compulsory schooling laws <span class="co">[</span><span class="ot">@angrist1991</span><span class="co">]</span>. They use quarter of birth as an instrument for years of schooling.</span>
-<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a>The argument is based on school-entry rules and compulsory attendance laws in the United States. Children born early in the year enter school at a slightly older age. Since students are allowed to leave school when they reach a certain age, those born later in the year may end up with slightly more schooling.</span>
-<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a>In this setting:</span>
-<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$Z_i$ is quarter of birth;</span>
-<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$D_i$ is years of schooling;</span>
-<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$Y_i$ is wages.</span>
-<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a>The relevance condition requires that quarter of birth affects years of schooling. This can be tested in the first stage. For example, individuals born in the last quarter of the year may have slightly more education than those born earlier.</span>
-<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a>The exclusion restriction requires that quarter of birth affects wages only through schooling. This is a stronger assumption. It requires that quarter of birth is not related to ability, family background, health, parental characteristics, or other factors that directly affect wages.</span>
-<span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a>The IV estimate can be interpreted by comparing the effect of quarter of birth on wages with the effect of quarter of birth on schooling. If being born in the last quarter increases schooling by about 0.10 years and increases wages by about 0.86 percent, the implied IV estimate is approximately</span>
-<span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a>\frac{0.0086}{0.10} \approx 0.086.</span>
-<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-186"><a href="#cb3-186" aria-hidden="true" tabindex="-1"></a>This suggests that an additional year of schooling increases wages by about 8.6% for the units whose schooling is affected by the instrument.</span>
-<span id="cb3-187"><a href="#cb3-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-188"><a href="#cb3-188" aria-hidden="true" tabindex="-1"></a><span class="fu">## Weak Instruments</span></span>
-<span id="cb3-189"><a href="#cb3-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-190"><a href="#cb3-190" aria-hidden="true" tabindex="-1"></a>A major practical concern in IV estimation is the problem of **weak instruments**. An instrument is weak when it is only weakly correlated with the treatment.</span>
-<span id="cb3-191"><a href="#cb3-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-192"><a href="#cb3-192" aria-hidden="true" tabindex="-1"></a>Weak instruments are problematic because 2SLS uses the variation in treatment predicted by the instrument. If the instrument barely moves the treatment, then the predicted treatment contains little useful variation. The IV estimator becomes unstable and can have poor finite-sample properties.</span>
-<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-194"><a href="#cb3-194" aria-hidden="true" tabindex="-1"></a>Work by Bound, Jaeger, and Baker <span class="co">[</span><span class="ot">-@bound1995</span><span class="co">]</span> showed that weak instruments can make IV estimates and standard errors misleading, even in large samples. When instruments are weak:</span>
-<span id="cb3-195"><a href="#cb3-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-196"><a href="#cb3-196" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>2SLS estimates can be biased toward OLS in finite samples;</span>
-<span id="cb3-197"><a href="#cb3-197" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>confidence intervals may be unreliable;</span>
-<span id="cb3-198"><a href="#cb3-198" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>conventional t-tests may reject too often;</span>
-<span id="cb3-199"><a href="#cb3-199" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>small violations of the exclusion restriction can be amplified.</span>
-<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning appearance="simple"}</span>
-<span id="cb3-202"><a href="#cb3-202" aria-hidden="true" tabindex="-1"></a><span class="fu">### Weak instruments</span></span>
-<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-204"><a href="#cb3-204" aria-hidden="true" tabindex="-1"></a>A valid but weak instrument is not enough.  </span>
-<span id="cb3-205"><a href="#cb3-205" aria-hidden="true" tabindex="-1"></a>If the instrument barely shifts treatment, IV estimates may be imprecise, biased, and misleading.</span>
-<span id="cb3-206"><a href="#cb3-206" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-207"><a href="#cb3-207" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-208"><a href="#cb3-208" aria-hidden="true" tabindex="-1"></a>A standard diagnostic is the first-stage F-statistic. A low first-stage F-statistic is a warning sign that the instrument may be weak. However, recent work emphasizes that conventional diagnostics can be misleading if standard errors are not adjusted correctly for heteroskedasticity, clustering, or serial correlation.</span>
-<span id="cb3-209"><a href="#cb3-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-210"><a href="#cb3-210" aria-hidden="true" tabindex="-1"></a><span class="fu">## Binary Instruments and LATE</span></span>
-<span id="cb3-211"><a href="#cb3-211" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-212"><a href="#cb3-212" aria-hidden="true" tabindex="-1"></a>When the instrument is binary, IV estimates are often interpreted as **local average treatment effect (LATE)** estimates.</span>
-<span id="cb3-213"><a href="#cb3-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-214"><a href="#cb3-214" aria-hidden="true" tabindex="-1"></a>Suppose $Z_i$ takes two values: $Z_i=1$ and $Z_i=0$. To describe the LATE interpretation, it is useful to define two potential treatment statuses:</span>
-<span id="cb3-215"><a href="#cb3-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-216"><a href="#cb3-216" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-217"><a href="#cb3-217" aria-hidden="true" tabindex="-1"></a>D_i(1)</span>
-<span id="cb3-218"><a href="#cb3-218" aria-hidden="true" tabindex="-1"></a>\quad \text{and} \quad</span>
-<span id="cb3-219"><a href="#cb3-219" aria-hidden="true" tabindex="-1"></a>D_i(0),</span>
-<span id="cb3-220"><a href="#cb3-220" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-221"><a href="#cb3-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a>where $D_i(1)$ is the treatment status that unit $i$ would have if exposed to the instrument, $Z_i=1$, and $D_i(0)$ is the treatment status that the same unit would have if not exposed to the instrument, $Z_i=0$. Units can then be classified according to how their treatment status responds to the instrument.</span>
-<span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-224"><a href="#cb3-224" aria-hidden="true" tabindex="-1"></a>There are four types of units:</span>
-<span id="cb3-225"><a href="#cb3-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-226"><a href="#cb3-226" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> Type <span class="pp">|</span> $D_i(0)$ <span class="pp">|</span> $D_i(1)$ <span class="pp">|</span> Interpretation <span class="pp">|</span></span>
-<span id="cb3-227"><a href="#cb3-227" aria-hidden="true" tabindex="-1"></a><span class="pp">|---|:---:|:---:|---|</span></span>
-<span id="cb3-228"><a href="#cb3-228" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Compliers** <span class="pp">|</span> 0 <span class="pp">|</span> 1 <span class="pp">|</span> They take the treatment only when exposed to the instrument. <span class="pp">|</span></span>
-<span id="cb3-229"><a href="#cb3-229" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Never-takers** <span class="pp">|</span> 0 <span class="pp">|</span> 0 <span class="pp">|</span> They do not take the treatment, regardless of the instrument. <span class="pp">|</span></span>
-<span id="cb3-230"><a href="#cb3-230" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Always-takers** <span class="pp">|</span> 1 <span class="pp">|</span> 1 <span class="pp">|</span> They take the treatment, regardless of the instrument. <span class="pp">|</span></span>
-<span id="cb3-231"><a href="#cb3-231" aria-hidden="true" tabindex="-1"></a><span class="pp">|</span> **Defiers** <span class="pp">|</span> 1 <span class="pp">|</span> 0 <span class="pp">|</span> They move in the opposite direction of the instrument. <span class="pp">|</span></span>
-<span id="cb3-232"><a href="#cb3-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-233"><a href="#cb3-233" aria-hidden="true" tabindex="-1"></a>Under the "LATE assumptions", IV identifies the causal effect for compliers. These are the units whose treatment status is actually changed by the instrument.</span>
-<span id="cb3-234"><a href="#cb3-234" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-235"><a href="#cb3-235" aria-hidden="true" tabindex="-1"></a>This is important because IV does not generally identify the ATT. It identifies the effect for the subpopulation moved by the instrument.</span>
-<span id="cb3-236"><a href="#cb3-236" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-237"><a href="#cb3-237" aria-hidden="true" tabindex="-1"></a>If treatment effects are heterogeneous, different valid instruments can produce different estimates because they identify effects for different complier groups.</span>
-<span id="cb3-238"><a href="#cb3-238" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-239"><a href="#cb3-239" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
-<span id="cb3-240"><a href="#cb3-240" aria-hidden="true" tabindex="-1"></a><span class="fu">### Who are the compliers?</span></span>
-<span id="cb3-241"><a href="#cb3-241" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-242"><a href="#cb3-242" aria-hidden="true" tabindex="-1"></a>Compliers are the units whose treatment status changes because of the instrument.  </span>
-<span id="cb3-243"><a href="#cb3-243" aria-hidden="true" tabindex="-1"></a>Different instruments may move different groups of units, and therefore identify different LATEs.</span>
-<span id="cb3-244"><a href="#cb3-244" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-245"><a href="#cb3-245" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-246"><a href="#cb3-246" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Identification Assumptions with a binary instrument</span></span>
-<span id="cb3-247"><a href="#cb3-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-248"><a href="#cb3-248" aria-hidden="true" tabindex="-1"></a>For a binary instrument, the LATE interpretation requires four main assumptions.</span>
-<span id="cb3-249"><a href="#cb3-249" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-250"><a href="#cb3-250" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>The instrument must be as good as randomly assigned, possibly after conditioning on pre-treatment covariates. In other words, the instrument should not be systematically related to the units' potential outcomes or potential treatment statuses.</span>
-<span id="cb3-251"><a href="#cb3-251" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-252"><a href="#cb3-252" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>The instrument must satisfy the exclusion restriction. It should affect potential outcomes only through treatment.</span>
-<span id="cb3-253"><a href="#cb3-253" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-254"><a href="#cb3-254" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>The instrument must be relevant: even after conditioning on pre-treatment covariates, variation in the instrument must generate variation in treatment status for at least some units.</span>
-<span id="cb3-255"><a href="#cb3-255" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-256"><a href="#cb3-256" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>The instrument must satisfy **monotonicity**. This means that the instrument should push treatment in the same direction for all units. In other words, there should be no defiers.</span>
-<span id="cb3-257"><a href="#cb3-257" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-258"><a href="#cb3-258" aria-hidden="true" tabindex="-1"></a>Under these assumptions, the LATE can be written as</span>
-<span id="cb3-259"><a href="#cb3-259" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-260"><a href="#cb3-260" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-261"><a href="#cb3-261" aria-hidden="true" tabindex="-1"></a>LATE</span>
-<span id="cb3-262"><a href="#cb3-262" aria-hidden="true" tabindex="-1"></a>=</span>
-<span id="cb3-263"><a href="#cb3-263" aria-hidden="true" tabindex="-1"></a>E<span class="co">[</span><span class="ot">Y_i(1)-Y_i(0)\mid D_i(1)&gt;D_i(0)</span><span class="co">]</span></span>
-<span id="cb3-264"><a href="#cb3-264" aria-hidden="true" tabindex="-1"></a>=</span>
-<span id="cb3-265"><a href="#cb3-265" aria-hidden="true" tabindex="-1"></a>\frac{</span>
-<span id="cb3-266"><a href="#cb3-266" aria-hidden="true" tabindex="-1"></a>E<span class="co">[</span><span class="ot">Y_i^{obs}\mid Z_i=1</span><span class="co">]</span> - E<span class="co">[</span><span class="ot">Y_i^{obs}\mid Z_i=0</span><span class="co">]</span></span>
-<span id="cb3-267"><a href="#cb3-267" aria-hidden="true" tabindex="-1"></a>}{</span>
-<span id="cb3-268"><a href="#cb3-268" aria-hidden="true" tabindex="-1"></a>E<span class="co">[</span><span class="ot">D_i\mid Z_i=1</span><span class="co">]</span> - E<span class="co">[</span><span class="ot">D_i\mid Z_i=0</span><span class="co">]</span></span>
-<span id="cb3-269"><a href="#cb3-269" aria-hidden="true" tabindex="-1"></a>}.</span>
-<span id="cb3-270"><a href="#cb3-270" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb3-271"><a href="#cb3-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-272"><a href="#cb3-272" aria-hidden="true" tabindex="-1"></a>The numerator is the reduced-form effect of the instrument on the outcome. The denominator is the first-stage effect of the instrument on treatment.</span>
-<span id="cb3-273"><a href="#cb3-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-274"><a href="#cb3-274" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example: Vietnam Draft Lottery</span></span>
-<span id="cb3-275"><a href="#cb3-275" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-276"><a href="#cb3-276" aria-hidden="true" tabindex="-1"></a>A classic LATE example is Angrist's study of the effect of military service on later earnings <span class="co">[</span><span class="ot">@angrist1990</span><span class="co">]</span>. During the Vietnam War, the United States used a draft lottery to determine who was at risk of being drafted.</span>
-<span id="cb3-277"><a href="#cb3-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-278"><a href="#cb3-278" aria-hidden="true" tabindex="-1"></a>The draft lottery can be interpreted as an instrument for military service:</span>
-<span id="cb3-279"><a href="#cb3-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-280"><a href="#cb3-280" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$Z_i$ is draft eligibility;</span>
-<span id="cb3-281"><a href="#cb3-281" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$D_i$ is military service;</span>
-<span id="cb3-282"><a href="#cb3-282" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>$Y_i$ is later earnings.</span>
-<span id="cb3-283"><a href="#cb3-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-284"><a href="#cb3-284" aria-hidden="true" tabindex="-1"></a>Not everyone who was draft-eligible served in the military, and some individuals who were not draft-eligible may still have served. The draft lottery therefore generated variation in military service, but did not perfectly determine it. As a result, the design includes compliers, always-takers, and never-takers.</span>
-<span id="cb3-285"><a href="#cb3-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-286"><a href="#cb3-286" aria-hidden="true" tabindex="-1"></a>The IV estimate identifies the effect of military service for compliers: individuals whose military service status was changed by draft eligibility. In this context, Angrist finds that military service reduced later earnings by approximately 15% for white veterans. This interpretation relies on the assumptions that there are no defiers, that is, no individuals who would serve if not draft-eligible but would avoid service if draft-eligible, and that draft eligibility affects later earnings only through military service.</span>
-<span id="cb3-287"><a href="#cb3-287" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-288"><a href="#cb3-288" aria-hidden="true" tabindex="-1"></a><span class="fu">## Interpreting IV Estimates</span></span>
-<span id="cb3-289"><a href="#cb3-289" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-290"><a href="#cb3-290" aria-hidden="true" tabindex="-1"></a>Interpreting IV estimates requires care. The estimate depends on the instrument, because the instrument determines which units are shifted into treatment.</span>
-<span id="cb3-291"><a href="#cb3-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-292"><a href="#cb3-292" aria-hidden="true" tabindex="-1"></a>For example, college proximity may identify the return to schooling for individuals whose education decisions are affected by geographic access to college. Quarter of birth may identify the return to schooling for individuals whose schooling is affected by compulsory schooling laws. These are not necessarily the same people.</span>
-<span id="cb3-293"><a href="#cb3-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-294"><a href="#cb3-294" aria-hidden="true" tabindex="-1"></a>This means that IV estimates should not automatically be interpreted as average effects for everyone. They are often local effects for the units affected by the instrument.</span>
-<span id="cb3-295"><a href="#cb3-295" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-296"><a href="#cb3-296" aria-hidden="true" tabindex="-1"></a>A limitation of the IV interpretation is that we usually do not know exactly **for whom** the causal effect is being estimated. The IV estimate identifies the effect for compliers, but individual complier status is not directly observed: we do not know which specific units would change their treatment status in response to the instrument. As a result, the LATE refers to a latent subpopulation whose members cannot be precisely identified. In some applications, researchers can describe compliers on average, for example by studying whether they are more likely to come from particular socioeconomic backgrounds or locations, but this does not remove the basic limitation: the estimated causal effect applies to a group that is only indirectly observed.</span>
-<span id="cb3-297"><a href="#cb3-297" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-298"><a href="#cb3-298" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning appearance="simple"}</span>
-<span id="cb3-299"><a href="#cb3-299" aria-hidden="true" tabindex="-1"></a><span class="fu">### Multiple instruments and interpretation</span></span>
-<span id="cb3-300"><a href="#cb3-300" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-301"><a href="#cb3-301" aria-hidden="true" tabindex="-1"></a>Using more than one instrument can improve predictive power, but it can also make the causal parameter harder to interpret. Each instrument may shift treatment for a different group of compliers. If treatment effects are heterogeneous, the IV estimate obtained with multiple instruments may combine several local effects, each attached to a different source of treatment variation.</span>
-<span id="cb3-302"><a href="#cb3-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-303"><a href="#cb3-303" aria-hidden="true" tabindex="-1"></a>For this reason, a stronger first stage is not the only criterion for a good IV design. Researchers should also ask which instruments are doing the identifying work, which units are likely to be moved by each instrument, and whether the resulting weighted average has a clear policy interpretation.</span>
-<span id="cb3-304"><a href="#cb3-304" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-305"><a href="#cb3-305" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-306"><a href="#cb3-306" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practical Concerns in Applied IV Work</span></span>
-<span id="cb3-307"><a href="#cb3-307" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-308"><a href="#cb3-308" aria-hidden="true" tabindex="-1"></a>Recent replication evidence raises concerns about how IV is used in practice. Lal et al. <span class="co">[</span><span class="ot">-@lal2024</span><span class="co">]</span> replicate a set of recent political science papers using IV strategies and identify several recurring problems.</span>
-<span id="cb3-309"><a href="#cb3-309" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-310"><a href="#cb3-310" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Some applications overstate instrument strength because first-stage diagnostics do not properly adjust standard errors for heteroskedasticity, serial correlation, or clustering.</span>
-<span id="cb3-311"><a href="#cb3-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-312"><a href="#cb3-312" aria-hidden="true" tabindex="-1"></a>2 Conventional t-tests based on 2SLS standard errors may understate uncertainty when instruments are weak.</span>
-<span id="cb3-313"><a href="#cb3-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-314"><a href="#cb3-314" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>IV estimates are often much larger than OLS estimates, especially when the first stage is weak. This pattern can be a warning sign of weak instruments, violations of the exclusion restriction, or both.</span>
-<span id="cb3-315"><a href="#cb3-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-316"><a href="#cb3-316" aria-hidden="true" tabindex="-1"></a>Another concern is interpretability under treatment-effect heterogeneity. Mogstad and Torgovitsky <span class="co">[</span><span class="ot">-@mogstad2024iv</span><span class="co">]</span> emphasize that IV applications often face **unobserved heterogeneity in treatment effects**. In that case, linear IV estimators may still be useful, but their interpretation is no longer the effect of treatment for a generic unit. The estimate may instead correspond to a local or weighted average effect for the units whose treatment status is shifted by the instrument.</span>
-<span id="cb3-317"><a href="#cb3-317" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-318"><a href="#cb3-318" aria-hidden="true" tabindex="-1"></a>These concerns do not imply that IV should not be used. Rather, they reinforce the need for careful design, transparent reporting, and sensitivity analysis. Applied IV work should report instrument strength, use inference procedures that are robust to weak instruments when needed, justify the exclusion restriction, and be explicit about the population and causal parameter to which the IV estimate refers.</span>
-<span id="cb3-319"><a href="#cb3-319" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-320"><a href="#cb3-320" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
-<span id="cb3-321"><a href="#cb3-321" aria-hidden="true" tabindex="-1"></a><span class="fu">### Shift-share instruments</span></span>
-<span id="cb3-322"><a href="#cb3-322" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-323"><a href="#cb3-323" aria-hidden="true" tabindex="-1"></a>A common IV strategy is based on **shift-share variation**, also known as a **Bartik instrument**. The idea is to combine pre-existing local exposure shares with aggregate shocks that are plausibly external to the local unit.</span>
-<span id="cb3-324"><a href="#cb3-324" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-325"><a href="#cb3-325" aria-hidden="true" tabindex="-1"></a>For example, suppose we want to estimate the effect of immigration on local wages. A shift-share instrument may predict immigration inflows into a city by combining the city’s historical immigrant composition with national inflows from each origin country. Cities that historically hosted more immigrants from countries experiencing larger national inflows are predicted to receive more immigrants.</span>
-<span id="cb3-326"><a href="#cb3-326" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-327"><a href="#cb3-327" aria-hidden="true" tabindex="-1"></a>The IV logic is that the predicted treatment variation comes from two components: predetermined local shares and external shocks. If the shocks are plausibly exogenous, and if the historical shares affect the outcome only through the treatment channel of interest, the shift-share variable can be used as an instrument.</span>
-<span id="cb3-328"><a href="#cb3-328" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-329"><a href="#cb3-329" aria-hidden="true" tabindex="-1"></a>However, the strategy requires care. Historical shares may be related to long-run local trends, and aggregate shocks may affect outcomes through channels other than the treatment. As in any IV design, the key questions are: what generates the variation in the instrument, why is it relevant, and why should it affect the outcome only through the treatment?</span>
-<span id="cb3-330"><a href="#cb3-330" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb3-331"><a href="#cb3-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-332"><a href="#cb3-332" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
-<span id="cb3-333"><a href="#cb3-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-334"><a href="#cb3-334" aria-hidden="true" tabindex="-1"></a>Instrumental variables estimate causal effects by isolating variation in treatment that is induced by an external source of variation. A valid instrument must shift the treatment and affect the outcome only through that treatment.</span>
-<span id="cb3-335"><a href="#cb3-335" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-336"><a href="#cb3-336" aria-hidden="true" tabindex="-1"></a>The 2SLS estimator implements this logic in two steps: first, predict treatment using the instrument; second, estimate the effect of the predicted treatment on the outcome.</span>
-<span id="cb3-337"><a href="#cb3-337" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-338"><a href="#cb3-338" aria-hidden="true" tabindex="-1"></a>With binary instruments, IV identifies the LATE for compliers. This makes IV powerful but also subtle: the estimate depends on who is moved by the instrument.</span>
-<span id="cb3-339"><a href="#cb3-339" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-340"><a href="#cb3-340" aria-hidden="true" tabindex="-1"></a>Let me conclude by stressing that a valid instrument must satisfy the **exclusion restriction**: it must affect the outcome only through the treatment. In practice, this condition is often difficult to justify convincingly. Many variables that shift treatment status may also affect the outcome through other channels, making the IV interpretation fragile and potentially misleading.</span>
-<span id="cb3-341"><a href="#cb3-341" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-342"><a href="#cb3-342" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
-<span id="cb3-343"><a href="#cb3-343" aria-hidden="true" tabindex="-1"></a><span class="fu">## Software packages</span></span>
-<span id="cb3-344"><a href="#cb3-344" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-345"><a href="#cb3-345" aria-hidden="true" tabindex="-1"></a>Several software packages can be used to estimate instrumental-variables models, usually through two-stage least squares (2SLS), limited-information maximum likelihood (LIML), or related GMM estimators.</span>
-<span id="cb3-346"><a href="#cb3-346" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-347"><a href="#cb3-347" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**R**</span>
-<span id="cb3-348"><a href="#cb3-348" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`ivreg`</span><span class="co">](https://cran.r-project.org/package=ivreg)</span>: a dedicated package for instrumental-variables regression, with 2SLS estimation and diagnostic tools.</span>
-<span id="cb3-349"><a href="#cb3-349" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`fixest`</span><span class="co">](https://lrberge.github.io/fixest/reference/feols.html)</span>: supports IV estimation with high-dimensional fixed effects through <span class="in">`feols()`</span>.</span>
-<span id="cb3-350"><a href="#cb3-350" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`estimatr`</span><span class="co">](https://search.r-project.org/CRAN/refmans/estimatr/help/iv_robust.html)</span>: provides <span class="in">`iv_robust()`</span> for 2SLS with robust and clustered standard errors.</span>
-<span id="cb3-351"><a href="#cb3-351" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-352"><a href="#cb3-352" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Python**</span>
-<span id="cb3-353"><a href="#cb3-353" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`linearmodels`</span><span class="co">](https://bashtage.github.io/linearmodels/iv/iv/linearmodels.iv.model.IV2SLS.html)</span>: includes IV estimators such as 2SLS, LIML, GMM, and continuously updated GMM.</span>
-<span id="cb3-354"><a href="#cb3-354" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`pyfixest`</span><span class="co">](https://pyfixest.org/quickstart.html)</span>: supports IV estimation with syntax inspired by the R package <span class="in">`fixest`</span>.</span>
-<span id="cb3-355"><a href="#cb3-355" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-356"><a href="#cb3-356" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Stata**</span>
-<span id="cb3-357"><a href="#cb3-357" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`ivregress`</span><span class="co">](https://www.stata.com/manuals/rivregress.pdf)</span>: official Stata command for single-equation IV regression, including 2SLS, LIML, and GMM.</span>
-<span id="cb3-358"><a href="#cb3-358" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`ivreg2`</span><span class="co">](https://ideas.repec.org/c/boc/bocode/s425401.html)</span>: widely used user-written command with extensive diagnostics for IV estimation.</span>
-<span id="cb3-359"><a href="#cb3-359" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`weakiv`</span><span class="co">](https://ideas.repec.org/c/boc/bocode/s457684.html)</span>: weak-instrument-robust tests for IV models.</span>
-<span id="cb3-360"><a href="#cb3-360" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
-</div></div></div></div></div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
@@ -1853,7 +1404,7 @@ Wright, Philip G. 1928. <em>The Tariff on Animal and Vegetable Oils</em>. Macmil
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/edit/main/chapters/08-instrumental-variables.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>

@@ -23,41 +23,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -504,7 +469,7 @@ div.csl-indent {
   <li><a href="#qualitative-ex-post-analyses" id="toc-qualitative-ex-post-analyses" class="nav-link" data-scroll-target="#qualitative-ex-post-analyses"><span class="header-section-number">15.5</span> Qualitative Ex-Post Analyses</a></li>
   <li><a href="#other-types-of-evaluations" id="toc-other-types-of-evaluations" class="nav-link" data-scroll-target="#other-types-of-evaluations"><span class="header-section-number">15.6</span> Other Types of Evaluations</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/edit/main/chapters/15-miscellanea.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -512,7 +477,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/11-forecast-based-designs.html">Other topics</a></li><li class="breadcrumb-item"><a href="../chapters/15-miscellanea.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Miscellanea</span></a></li></ol></nav>
 <div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Miscellanea</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Miscellanea</span></h1>
 </div>
 
 
@@ -630,8 +595,6 @@ div.csl-indent {
 <p>These approaches are complementary with ex-post impact evaluation. Ex-ante evaluation helps design the policy; monitoring follows its implementation; process evaluation explains how the intervention unfolded; and impact evaluation estimates whether it worked. Confusing these goals can lead to misleading conclusions. A well-monitored program is not necessarily effective, and an effective program may still be inefficient, poorly targeted, or difficult to scale.</p>
 
 
-<!-- -->
-
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-bueno2019" class="csl-entry" role="listitem">
 Bueno, Matheus, and Marica Valente. 2019. <span>“The Effects of Pricing Waste Generation: A Synthetic Control Approach.”</span> <em>Journal of Environmental Economics and Management</em> 96: 274–85. <a href="https://doi.org/10.1016/j.jeem.2019.06.004">https://doi.org/10.1016/j.jeem.2019.06.004</a>.
@@ -729,57 +692,6 @@ Knaus, Michael C. 2022. <span>“Double Machine Learning-Based Programme Evaluat
         container: window.document.getElementById('quarto-embedded-source-code-modal')
       });
       clipboardModal.on('success', onCopySuccess);
-    }
-    const viewSource = window.document.getElementById('quarto-view-source') ||
-                       window.document.getElementById('quarto-code-tools-source');
-    if (viewSource) {
-      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
-      viewSource.addEventListener("click", function(e) {
-        if (sourceUrl) {
-          // rstudio viewer pane
-          if (/\bcapabilities=\b/.test(window.location)) {
-            window.open(sourceUrl);
-          } else {
-            window.location.href = sourceUrl;
-          }
-        } else {
-          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
-          modal.show();
-        }
-        return false;
-      });
-    }
-    function toggleCodeHandler(show) {
-      return function(e) {
-        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
-        for (let i=0; i<detailsSrc.length; i++) {
-          const details = detailsSrc[i].parentElement;
-          if (show) {
-            details.open = true;
-          } else {
-            details.removeAttribute("open");
-          }
-        }
-        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
-        const fromCls = show ? "hidden" : "unhidden";
-        const toCls = show ? "unhidden" : "hidden";
-        for (let i=0; i<cellCodeDivs.length; i++) {
-          const codeDiv = cellCodeDivs[i];
-          if (codeDiv.classList.contains(fromCls)) {
-            codeDiv.classList.remove(fromCls);
-            codeDiv.classList.add(toCls);
-          } 
-        }
-        return false;
-      }
-    }
-    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
-    if (hideAllCode) {
-      hideAllCode.addEventListener("click", toggleCodeHandler(false));
-    }
-    const showAllCode = window.document.getElementById("quarto-show-all-code");
-    if (showAllCode) {
-      showAllCode.addEventListener("click", toggleCodeHandler(true));
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
@@ -1121,128 +1033,7 @@ Knaus, Michael C. 2022. <span>“Double Machine Learning-Based Programme Evaluat
         <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
-</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Miscellanea</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>This chapter discusses several important topics that do not fit neatly into each of the previous chapters, but are highly relevant for understanding modern causal analysis. The book has mainly focused on how to estimate causal effects using research designs such as RCTs, DiD, RDD, IV, matching, synthetic control and FBCMs. These methods are powerful because they make the counterfactual comparison explicit.</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>However, causal inference does not end with estimating one average effect. Researchers often want to understand why an effect occurs, how flexible prediction tools can help causal analysis, and what role theory should play. The topics in this chapter provide a bridge between the basic logic of impact evaluation and broader approaches to causal research.</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## Causal Mechanisms</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>Estimating a causal effect tells us whether an intervention changes an outcome. It does not necessarily tell us why that change occurs. Causal mechanisms concern the channels through which a treatment affects an outcome.</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>For example, suppose a training program increases employment. This effect may arise because participants acquire new skills, because they receive a certificate that signals ability to employers, because they expand their job-search network, or because the program changes their motivation. These are different mechanisms, even if the final outcome is the same.</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>Mechanisms matter because they help interpret results and assess external validity. If we know why a policy works, we can better understand whether it is likely to work in another setting. A training program based on local employer connections may not travel easily to places where those connections are absent.</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>At the same time, mechanism analysis is demanding. Intermediate outcomes are often themselves affected by the treatment, so conditioning on them can introduce bias. For this reason, mechanisms should not be studied by simply “controlling for” post-treatment variables. They require a clear causal model and additional assumptions.</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="fu">## Mechanisms matter: the PAYT policy in Trento</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>Bueno and Valente <span class="co">[</span><span class="ot">-@bueno2019</span><span class="co">]</span> study the introduction of a **pay-as-you-throw (PAYT)** policy in Trento, Italy, using the SCM. The policy made households pay according to the amount of **unsorted waste** they produced. The main effect is clear: unsorted waste fell substantially after the policy. However, this reduced-form effect does not by itself reveal the mechanism behind the change. Households may have responded in different ways. They may have recycled more, reduced overall waste generation, changed purchasing habits, reused more goods, or, in a less desirable scenario, disposed of waste illegally to avoid paying the fee.</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>This distinction is crucial for policy interpretation. If the policy mainly shifts waste from the unsorted stream to recycling, then its effect works through **waste sorting**. If instead total waste also declines, the policy may be encouraging **waste avoidance**, for example through less packaging, more reuse, or different consumption choices. If the reduction were driven by illegal dumping, the apparent success of the policy would be much less reassuring. The evidence in Bueno and Valente <span class="co">[</span><span class="ot">-@bueno2019</span><span class="co">]</span> points mainly toward waste avoidance. </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>This example shows why causal mechanisms matter. Estimating that a policy has an effect is only the first step. Understanding **how** that effect arises is essential for deciding whether the policy should be expanded, redesigned, or accompanied by complementary measures.</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">## Causal Machine Learning</span></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>Causal machine learning uses flexible statistical and computational tools to support causal inference. Its goal is not simply to predict outcomes well, but to estimate causal quantities more accurately, flexibly, or heterogeneously (the latter is discussed in <span class="co">[</span><span class="ot">Chapter 12</span><span class="co">](../chapters/12-heterogeneous_treatment_effects.qmd)</span>).</span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>One important use of causal machine learning is the estimation of **nuisance components**. These are objects that are not the final causal parameter of interest, but are needed to estimate it. Examples include the probability of receiving treatment conditional on covariates, namely the **propensity score**, and the expected outcome conditional on covariates, known as the **outcome regression**.</span>
-<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>Machine learning is attractive in this setting because these nuisance components may be complex. Treatment assignment may depend on many variables and nonlinear relationships among them. Outcomes may also depend on covariates in flexible ways. Instead of imposing a simple linear specification, researchers can use flexible algorithms such as random forests, boosting, regularized regression, or neural networks to estimate these relationships.</span>
-<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>However, using machine learning naively can create problems for causal inference. Machine learning methods are designed primarily for prediction, not for unbiased estimation of causal parameters. They often involve regularization, variable selection, or tuning choices that can introduce bias. If this prediction error enters directly into the causal effect estimator, standard inference may become invalid. **Double/debiased machine learning** addresses this problem by combining flexible prediction tools with two key ideas:</span>
-<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>i) **Orthogonalization**: the estimator is constructed so that small errors in the nuisance functions have only a second-order effect on the estimated causal parameter.</span>
-<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>ii) **sample splitting** or **cross-fitting**: one part of the data is used to estimate the nuisance components, and another part is used to estimate the causal effect. This reduces overfitting bias because the same observations are not used both to learn the prediction functions and to evaluate the causal moment.</span>
-<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>The intuition is simple. Machine learning is used where flexibility is useful, namely in modeling treatment assignment and outcome prediction. But the final causal estimate is protected from the most direct consequences of prediction error. In this way, double/debiased machine learning allows researchers to use rich covariate information while still targeting a clearly defined causal estimand.</span>
-<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>This approach is especially useful in settings with many control variables, nonlinear relationships, or high-dimensional data. Yet it does not solve identification by itself. It still requires a credible causal assumption, such as conditional independence, and sufficient overlap between treated and untreated units.</span>
-<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>The key point for this book is that machine learning does not replace identification. A highly accurate prediction model cannot by itself solve confounding, selection bias, or violations of parallel trends. Causal machine learning is most useful when combined with a credible causal design.</span>
-<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
-<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a><span class="fu">### Empirical example: active labour market policies in Switzerland</span></span>
-<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>A recent application of **Double Machine Learning (DML)** is Knaus <span class="co">[</span><span class="ot">-@knaus2022dml</span><span class="co">]</span>, who studies active labour market programmes in Switzerland.</span>
-<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>The empirical question is whether participation in different labour market programmes improves later employment outcomes. This is a typical observational-policy setting: unemployed individuals are not randomly assigned to programmes, and participants may differ from non-participants in many observed characteristics, such as age, education, employment history, unemployment duration, occupation, and local labour-market conditions.</span>
-<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>DML is useful in this setting because it allows the researcher to flexibly control for a rich set of observed confounders. Machine learning methods are used to predict both treatment participation and potential outcomes from pre-treatment covariates. The debiasing step then combines these predictions in a way that reduces the sensitivity of the final treatment-effect estimate to regularization and prediction errors.</span>
-<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>This example illustrates the main role of DML in policy evaluation. Machine learning is not used to replace an identification strategy. The causal interpretation still relies on the assumption that, conditional on observed pre-treatment characteristics, programme participation is as good as random. Rather, machine learning helps implement this strategy in a flexible way when the number of covariates is large and their relationship with treatment and outcomes may be complex.</span>
-<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>The application also shows that DML can go beyond estimating a single average effect: it can be used to study heterogeneous effects and to explore how programme assignment could be improved.</span>
-<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="fu">## Structural Models</span></span>
-<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>Structural models use economic theory to describe how individuals, firms, or institutions make decisions. Unlike reduced-form causal designs, which often focus on estimating a specific treatment effect, structural models aim to recover deeper behavioral parameters.</span>
-<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>For example, a reduced-form evaluation may estimate whether a subsidy increases firm investment. A structural model may try to model firms’ investment decisions, expectations, constraints, and responses to alternative subsidy schemes. This can allow researchers to simulate policies that have not yet been observed.</span>
-<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>Structural models are useful when the question is not only “what was the effect of this policy?” but also “what would happen under a different policy design?” They can therefore be powerful for counterfactual simulations and welfare analysis.</span>
-<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>The cost is that structural models usually require stronger modeling assumptions. Their credibility depends on whether the behavioral model is plausible and whether the data are informative enough to discipline it. For this reason, structural and design-based approaches should be seen as complements rather than substitutes.</span>
-<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>The broader lesson is that empirical strategies often involve a trade-off: **the more ambitious the causal question, the more demanding the assumptions needed to answer it credibly**.</span>
-<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>Recently, several studies have tried to bridge these two traditions by using credible design-based estimates as moments to estimate or discipline structural models.</span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
-<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="fu">### Design-based moments in structural estimation</span></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>A growing literature combines design-based causal evidence with structural modeling. The idea is to use credible causal estimates not only as final results, but also as empirical moments that help discipline the parameters of a structural model.</span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>A useful example is Flores <span class="co">[</span><span class="ot">-@flores2026cashtransfers</span><span class="co">]</span>, who studies Mexico's *Oportunidades* conditional cash transfer program. The paper exploits exogenous variation in the program to estimate how transfers affect household time allocation and consumption choices. These quasi-experimental responses are then used as moments in the estimation of a structural collective household model.</span>
-<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>This approach illustrates a productive bridge between design-based and structural methods. The design-based part provides credible empirical variation; the structural model gives the estimates an economic interpretation and allows the researcher to study mechanisms, welfare, and counterfactual policies that go beyond the original treatment comparison.</span>
-<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>The key lesson is that structural modeling is not necessarily in competition with counterfactual methods; it can build on them.</span>
-<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="fu">## Parametric vs. Non-Parametric Estimation</span></span>
-<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>A parametric approach imposes a specific functional form on the relationship between variables. For example, a linear regression assumes that the conditional expectation of the outcome changes linearly with covariates, unless interactions or nonlinear terms are added.</span>
-<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>A non-parametric approach imposes fewer functional-form restrictions. It allows the data to speak more flexibly, often by estimating relationships locally or using flexible functions. Matching, local polynomial regression in RDD, and some machine-learning methods can be seen as moving in this direction.</span>
-<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>The distinction matters because causal conclusions may be sensitive to functional-form assumptions. A parametric model can be efficient and easy to interpret when correctly specified, but misleading when the specification is wrong. A non-parametric method can be more flexible, but may require more data and can be less precise.</span>
-<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>For this book, the key lesson is practical: identification and estimation are different problems. A credible research design tells us which comparison can identify a causal effect. The estimation method determines how that comparison is implemented in the data.</span>
-<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>When possible, this comparison should remain as transparent as possible. Strong parametric assumptions may sometimes be useful, but they can also obscure the source of identification and make it harder to understand who is being compared with whom. For this reason, the emphasis of the book is on empirical strategies that make the construction of the counterfactual explicit and the assumptions behind the comparison clearly visible.</span>
-<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a><span class="fu">## Qualitative Ex-Post Analyses</span></span>
-<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>Not all useful evaluation evidence is quantitative. After a policy has been implemented, qualitative ex-post analyses can provide important information on how the intervention worked, how it was perceived, and why its effects may have differed across contexts.</span>
-<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>Qualitative evidence may come from interviews, focus groups, administrative reports, field observations, case studies, or document analysis. These sources are especially useful for understanding implementation details that are often invisible in the data. For example, a program may have a small estimated average effect because it was poorly implemented, because take-up was low, because local actors resisted it, or because the target population interpreted the incentives differently from what policymakers expected.</span>
-<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>In the logic of this book, qualitative analysis is particularly valuable for studying **causal mechanisms**. Quantitative methods may estimate whether a policy changed an outcome, but qualitative work can help explain how that change occurred. It can reveal behavioral responses, institutional constraints, unintended consequences, and contextual factors that shape the effect of the intervention.</span>
-<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>Qualitative ex-post analysis should not be seen as a substitute for credible causal identification when the goal is to estimate treatment effects. Rather, it is a complement. It can help interpret estimated effects, assess external validity, generate hypotheses for further analysis, and improve the design of future policies.</span>
-<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>A careful evaluation often benefits from combining both perspectives: quantitative methods to estimate whether and how much a policy changed outcomes, and qualitative evidence to understand why those changes occurred.</span>
-<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a><span class="fu">## Other Types of Evaluations</span></span>
-<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>This book focuses mainly on **ex-post impact evaluation**, that is, on methods designed to estimate causal effects. However, ex-post impact evaluation is only one part of a broader evaluation toolkit. Different policy questions require different evaluation approaches, and different goals should be pursued with different instruments.</span>
-<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>**Ex-ante evaluation** takes place before a policy is implemented. Its purpose is to assess whether an intervention is desirable, feasible, and likely to produce benefits larger than its costs. Ex-ante analyses may rely on theory, simulations, cost-benefit analysis, previous evidence, pilot studies, or forecasts. They are especially useful when policymakers must decide whether to introduce a policy, how to design it, or which alternative intervention to choose.</span>
-<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>**Monitoring** takes place while a policy is being implemented. Its goal is not usually to estimate causal effects, but to verify whether the program is operating as intended. Monitoring systems track inputs, activities, outputs, timelines, spending, take-up, and coverage. For example, they can show whether funds have been disbursed, whether beneficiaries have received the service, or whether implementation is delayed.</span>
-<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>A useful example is the monitoring of spending under **NextGenerationEU (NGEU)**. Monitoring can track whether resources are being committed and spent according to schedule, whether projects are progressing as planned, and whether implementation milestones are being met. This information is essential for accountability and program management, but it does not, by itself, tell us what effects the funded projects have produced.</span>
-<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>**Process evaluation** focuses on how the policy is implemented. It asks whether the intervention reached the intended target population, whether local actors followed the planned procedures, and whether implementation barriers emerged. This type of evaluation is crucial because a policy may fail not because its underlying theory is wrong, but because it was not implemented properly.</span>
-<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>These approaches are complementary with ex-post impact evaluation. Ex-ante evaluation helps design the policy; monitoring follows its implementation; process evaluation explains how the intervention unfolded; and impact evaluation estimates whether it worked. Confusing these goals can lead to misleading conclusions. A well-monitored program is not necessarily effective, and an effective program may still be inefficient, poorly targeted, or difficult to scale.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
-</div></div></div></div></div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
@@ -1251,7 +1042,7 @@ Knaus, Michael C. 2022. <span>“Double Machine Learning-Based Programme Evaluat
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/edit/main/chapters/15-miscellanea.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>
