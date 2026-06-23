@@ -52,9 +52,9 @@ Continuous-treatment analysis is therefore useful when the policy question conce
 
 ## The Dose-Response Function
 
-The central object in continuous-treatment analysis is the **dose-response function**. It describes how the expected potential outcome changes with treatment intensity.
+The central object in continuous-treatment analysis is the **average dose-response function (ADRF)**. It describes how the expected potential outcome changes with treatment intensity.
 
-The average dose-response function is
+The ADRF is
 
 $$
 \mu(t)=E[Y_i(t)].
@@ -77,13 +77,19 @@ $$
 This derivative describes how the expected outcome changes for a small increase in the dose.
 
 ::: {.callout-note appearance="simple"}
-### Dose-response function
+### ADRF
 
-The dose-response function answers the question:  
+The average dose-response function (ADRF) answers the question:  
 What would the average outcome be if all units received a given level of treatment intensity?
 :::
 
-A dose-response function may be increasing, decreasing, flat, or nonlinear. For example, subsidies may increase firm employment at low levels of support but have little additional effect after a certain threshold. In that case, the policy may have diminishing returns.
+An ADRF may be increasing, decreasing, flat, or nonlinear. For example, subsidies may increase firm employment at low levels of support but have little additional effect after a certain threshold. In that case, the policy may have diminishing returns.
+
+::: {.callout-note}
+## ADRF estimation in a figure
+
+![Stylized example of medical treatment to patients that show the process behind ADRF estimation.](../images/ADRF_example_v2.png)
+:::
 
 ## The Policy Question
 

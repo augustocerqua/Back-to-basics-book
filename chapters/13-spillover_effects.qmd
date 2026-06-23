@@ -16,6 +16,12 @@ Spillovers are not a technical nuisance only. In many policy settings, they are 
 
 When these indirect effects exist, treatment effect estimates obtained by comparing treated and untreated units may be biased. They may also fail to capture the indirect effects of the treatment on untreated units.
 
+::: {.callout-note}
+## Spillovers in a figure
+
+![Stylized example of public subsidies to shops that spill over some of the untreated shops.](../images/spillover-effects-in-a-figure.png)
+:::
+
 ## Why Spillovers Matter
 
 Suppose a training program improves the job prospects of treated workers. If treated workers obtain jobs that would otherwise have gone to untreated workers, the program generates a **substitution effect**. The treated group benefits, but part of the gain comes at the expense of the untreated group.
