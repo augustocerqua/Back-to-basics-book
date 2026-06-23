@@ -12,6 +12,7 @@ When a policy affects only one unit, or a small number of aggregate units, const
 ::: {.callout-note}
 ## SCM in a figure (alternative version)
 
+![In this example, SCM constructs a **synthetic control** by taking a weighted average of untreated donor units. The weights are chosen so that the synthetic control resembles the treated unit before the intervention, in terms of relevant pre-treatment characteristics such as age, wage, and years of education. The treated unit is then compared with this synthetic counterpart after the intervention to estimate the treatment effect.](../images/SCM_in_a_figure_version3.png){width="80%"}
 :::
 
 ## The basic intuition
