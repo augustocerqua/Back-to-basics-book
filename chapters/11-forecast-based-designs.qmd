@@ -1,0 +1,306 @@
+# Forecast-Based Counterfactual Methods
+
+The methods discussed so far rely on the availability of untreated units that can be used to construct a counterfactual. However, in many policy settings, such units may not provide a credible control group. For instance:
+
+i) **The treatment affects all units at the same time.** This may happen in the case of nationwide reforms, macroeconomic shocks, pandemics, or policies implemented everywhere simultaneously. In these settings, there may be no untreated units left in the data.
+
+ii) **Untreated units are indirectly affected by the treatment.** This may happen when a policy changes labor-market conditions, prices, commuting flows, local competition, or social interactions. In such cases, untreated units no longer represent what would have happened to treated units in the absence of the policy, because they are themselves affected by it. This violates the no-interference assumption [@cox1958].
+
+In these cases, control-based evaluation strategies cannot be leveraged to recover the causal effects of interest. To overcome such a limitation, a possible solution would be to use evaluation strategies that do not rely on the post-treatment values of the untreated units to recover the causal estimands of interest. In particular, in this chapter, we will focus on the **methods that leverage pre-treatment information to forecast the counterfactual scenario $E[Y_i(0)\mid D_i=1]$**.
+
+::: {.callout-note appearance="simple"}
+### Key idea
+
+Forecast-based counterfactual methods estimate what would have happened after the intervention by projecting the pre-treatment behavior of the treated units into the post-treatment period.
+:::
+
+The logic is simple: if no credible control group is available, we can use the pre-treatment information of the treated units themselves to forecast the missing counterfactual.
+
+This approach estimates causal effects by comparing the observed post-treatment outcomes of the treated units with the outcomes forecasted for the same units in the absence of the treatment, using only their pre-treatment data. The counterfactual is therefore constructed through a forecasting model rather than through a comparison with untreated units.
+
+## The Evaluation Problem
+
+Consider a unit observed over time. Let $t=1,\ldots,T_0$ denote the pre-treatment period and $t=T_0+1,\ldots,T$ denote the post-treatment period. The intervention starts after $T_0$.
+
+For each post-treatment period, the observed outcome is
+
+$$
+Y_t^{obs}=Y_t(1),
+$$
+
+while the missing counterfactual is
+
+$$
+Y_t(0).
+$$
+
+The individual treatment effect (ITE) at time $t$ is
+
+$$
+\tau_t = Y_t(1) - Y_t(0), \qquad t > T_0.
+$$
+
+Since $Y_t(0)$ is not observed after the intervention, forecast-based methods replace it with a prediction:
+
+$$
+\widehat{\tau}_t = Y_t^{obs}-\widehat{Y}_t(0).
+$$
+
+The crucial step is therefore the construction of $\widehat{Y}_t(0)$.
+
+
+::: {.callout-warning appearance="simple"}
+### No control does not mean no assumptions
+
+Forecast-based methods replace cross-sectional comparison with time-series prediction. This avoids the need for untreated units, but it requires a set of different assumptions about the stability and predictability of the untreated outcome path.
+:::
+
+## Counterfactual Forecasting
+
+The construction of the counterfactual can be seen as a prediction problem [@varian2014; @varian2016]. Forecast-based designs use pre-treatment information to predict what the post-treatment outcome would have been in the absence of treatment.
+
+In its most compact form, a forecast-based estimator can be written as
+
+$$
+\widehat{Y}_t(0)=\widehat{f}(\mathcal{H}_{T_0}),
+$$
+
+where $\mathcal{H}_{T_0}$ is the information available before treatment. This information may include past values of the outcome, lagged covariates, seasonal patterns, trends, and other pre-treatment predictors.
+
+The treatment effect is then the gap between the observed post-treatment outcome and the predicted untreated path.
+
+This logic is intuitive. Suppose employment in a region was increasing steadily before a reform. If, after the reform, employment rises substantially more than predicted by its pre-treatment trend, the additional increase may be interpreted as evidence of a treatment effect.
+
+The same reasoning applies to excess mortality. If, during a pandemic, mortality in a municipality is much higher than its expected baseline---estimated using only pre-pandemic values---the difference can be interpreted as excess mortality.
+
+However, this difference can be interpreted causally only if the forecasted counterfactual is credible.
+
+## Simple Forecasting Methods
+
+A first family of methods uses very simple forecasting methods. These methods are useful because they make the core intuition of forecast-based designs transparent.
+
+::: {.callout-tip appearance="simple"}
+### Why start with simple forecasting methods?
+
+Simple forecasting rules are rarely enough for a final evaluation, but they are useful benchmarks. A more sophisticated method should usually improve on them in pre-treatment placebo forecasting exercises.
+:::
+
+### Mean Method
+
+The mean method uses the average pre-treatment outcome as the counterfactual forecast:
+
+$$
+\widehat{Y}_{T_0+h}(0)=\frac{1}{T_0}\sum_{t=1}^{T_0}Y_t.
+$$
+
+This approach is reasonable only if the untreated outcome is approximately stable over time. It is often too crude when there are trends, cycles, or seasonality.
+
+### Naive Method
+
+The naive method uses the last pre-treatment observation as the forecast:
+
+$$
+\widehat{Y}_{T_0+h}(0)=Y_{T_0}.
+$$
+
+This can be useful when the best short-run prediction is the most recent value. But it fails when outcomes were already trending before the intervention.
+
+### Drift Method
+
+The drift method extends the pre-treatment trend linearly:
+
+$$
+\widehat{Y}_{T_0+h}(0)=Y_{T_0}+h\frac{Y_{T_0}-Y_1}{T_0-1}.
+$$
+
+This method allows for a linear trend, but it remains simplistic. If the untreated outcome follows nonlinear dynamics, seasonal patterns, or sudden changes unrelated to the policy, the forecast may be inaccurate.
+
+::: {.callout-note}
+## Simple Forecast-based methods Rules
+
+![In this example, we show the working logic of three simple forecast-based designs.](../images/forecast-simple-methods-in-a-figure.png)
+:::
+
+## From Forecast Error to Treatment Effect
+
+Once a counterfactual forecast is available, several causal parameters can be constructed.
+
+The point effect at post-treatment time $t$ is
+
+$$
+\widehat{\tau}_t=Y_t^{obs}-\widehat{Y}_t(0).
+$$
+
+The cumulative effect up to period $t$ is
+
+$$
+\widehat{\Delta}_t=\sum_{s=T_0+1}^{t}\widehat{\tau}_s.
+$$
+
+The temporal average effect is
+
+$$
+\widehat{\bar{\tau}}_t=
+\frac{1}{t-T_0}\sum_{s=T_0+1}^{t}\widehat{\tau}_s.
+$$
+
+With several treated units, the researcher can also average across units:
+
+$$
+\widehat{ATT}_t=
+\frac{1}{N}\sum_{i=1}^{N}
+\left(Y_{it}^{obs}-\widehat{Y}_{it}(0)\right).
+$$
+
+The same logic can be used to study heterogeneity, by comparing estimated effects across units or groups of units.
+
+## Interrupted Time-Series Designs
+
+::: {.callout-note appearance="simple"}
+### Interrupted time series
+
+An interrupted time-series design compares the observed post-intervention outcome with the continuation of the pre-intervention time-series pattern.
+:::
+
+Interrupted time-series (ITS) designs are among the most common approaches when a long pre-treatment time series is available. The idea is to model the pre-treatment dynamics of the outcome and then extrapolate them into the post-treatment period.
+
+A simple ITS model can be written as
+
+$$
+Y_t=\alpha+\beta t+\gamma Post_t+\delta(t-T_0)Post_t+u_t,
+$$
+
+where $Post_t$ equals one after the intervention. In this specification, $\gamma$ captures an immediate level change and $\delta$ captures a change in trend after the intervention.
+
+This representation is useful pedagogically, but real applications often require more careful modeling. Outcomes may be autocorrelated, seasonal, volatile, or affected by calendar effects. For this reason, interrupted time-series analysis is often combined with time-series models such as ARIMA.
+
+The counterfactual is the predicted path that would have occurred after $T_0$ if the pre-treatment dynamics had continued without the intervention.
+
+::: {.callout-note}
+## Application: the Italian smoking ban
+
+In January 2005, Italy introduced a regulation banning smoking in indoor public places. Suppose we want to study whether this policy reduced hospital admissions for acute coronary events, as in @cesaroni2008. A randomized experiment is clearly not available: the smoking ban was introduced nationally, and all Italian regions were exposed to the policy at the same time.
+
+![ITS logic applied to the Italian smoking ban. The post-policy effect is estimated by comparing observed hospital admissions with a forecasted counterfactual trajectory based on pre-policy data.](../images/italian-smoking-ban-its-stylized.png)
+
+This makes the use of control-based methods difficult. Since all units in Italy were treated simultaneously, there is no obvious untreated group within the country that can be used to construct the counterfactual. One possibility would be to use similar data from other countries that did not introduce the same policy at the same time. However, this strategy would require these countries to provide a credible counterfactual for Italy.
+
+For this reason, an ITS design offers a natural alternative. Instead of relying on untreated units, it uses the pre-policy trajectory of hospital admissions in Italy to forecast what would have happened after January 2005 in the absence of the smoking ban.
+
+If post-ban admissions fall below what would have been expected from the pre-ban trend, this difference can be interpreted as evidence consistent with a policy effect, provided that the forecasted counterfactual is credible and that no other simultaneous event explains the change.
+:::
+
+ITS designs work best when the number of pre-treatment periods is large. With few pre-treatment observations, it is difficult to learn the untreated dynamics, distinguish signal from noise, and assess whether the post-treatment deviation is unusual.
+
+::: {.callout-note appearance="simple"}
+## Causal ARIMA
+
+Causal ARIMA extends the ITS logic by combining ARIMA models with the potential outcomes framework [@menchetti2023]. It is designed for settings in which no control series is available and the researcher has a sufficiently long pre-treatment time series.
+
+The key contribution is not simply the use of ARIMA. The important point is that the method defines causal estimands in a potential outcomes framework, clarifies the assumptions required to attribute deviations from the forecast to the intervention, and provides a way to conduct inference.
+
+The basic idea is:
+
+- estimate the untreated time-series process using pre-treatment data;
+- forecast the untreated post-treatment path;
+- compare the observed post-treatment path with the forecast;
+- quantify uncertainty around the estimated effects.
+
+For example, Causal ARIMA has been used by [@menchetti2023] to estimate the effect of a permanent price reduction in a retail store when only the treated product series is available. The treatment effect is the difference between actual post-treatment sales and the sales that would have been predicted under the no-policy scenario.
+:::
+
+## Machine Learning Control Method
+
+The Machine Learning Control Method (MLCM) generalizes the forecast-based logic to richer panel settings with many treated units and no credible control group [@cerqua2023mlcm].
+
+The central idea is to use supervised machine learning algorithms to learn how outcomes evolve in the absence of treatment, using only pre-treatment information. The model is then used to predict post-treatment counterfactual outcomes for treated units.
+
+In this framework, a generic counterfactual forecast can be written as
+
+$$
+\widehat{Y}_{it}(0)=\widehat{f}(X_i,\mathcal{H}_{i,T_0},t),
+$$
+
+where $X_i$ denotes pre-treatment characteristics and $\mathcal{H}_{i,T_0}$ denotes the pre-treatment history of unit $i$.
+
+Compared with simple time-series methods, MLCM can exploit many predictors and flexible nonlinear relationships. It is particularly useful when the researcher observes many treated units, such as municipalities, firms, or schools, but cannot rely on untreated units as controls.
+
+<!--Applications include local excess-mortality estimation during the COVID-19 pandemic [@cerqua2021mortality], and the local economic impact of the COVID-19 crisis [@cerqua2022local].
+-->
+::: {.callout-warning appearance="simple"}
+### Machine learning does not remove the causal problem
+
+Machine learning can improve prediction, but causal interpretation still depends on assumptions. A very accurate forecasting model may still produce a misleading causal estimate if the post-treatment period contains other shocks that are unrelated to the treatment.
+:::
+
+## Identification Assumptions
+
+Forecast-based counterfactual methods require assumptions that are different from those used in control-group designs.
+
+The first assumption is stability of the untreated outcome process. In the absence of treatment, the relationship learned from pre-treatment data should continue to hold in the post-treatment period. If the data-generating process changes for reasons unrelated to the policy, the forecast error may capture those changes rather than the treatment effect.
+
+The second assumption is no anticipation. Units should not change behavior before the official start of the intervention because they expect the treatment to occur. Anticipation contaminates the pre-treatment period and makes the estimated untreated trajectory unreliable. This assumption is behind also most control-based counterfactual methods.
+
+The third assumption is correct timing. The researcher must know when the intervention starts. If the intervention is gradual, announced before implementation, or adopted with delays, the distinction between pre-treatment and post-treatment periods becomes blurred.
+
+The fourth assumption is absence of other simultaneous shocks. If another event occurs at the same time as the treatment, it may be impossible to distinguish the effect of the treatment from the effect of the other event.
+
+The fifth assumption is sufficient pre-treatment information. Forecasting requires enough historical data to learn the relevant pattern. This is especially important for methods that model seasonality, autocorrelation, or nonlinear dynamics.
+
+## Diagnostics and Validation
+
+Because these methods rely heavily on prediction, validation is central.
+
+A useful diagnostic is a pre-treatment forecasting exercise. The researcher can pretend that treatment occurred earlier, estimate the model using only data before that placebo date, and test how well the method predicts the held-out pre-treatment observations.
+
+If the model cannot predict the pre-treatment period, it is difficult to trust its post-treatment counterfactual forecast.
+
+Other useful checks include:
+
+- comparing the main method with simple benchmarks such as the mean, naive, and drift methods;
+- inspecting forecast errors in the pre-treatment period;
+- testing sensitivity to alternative intervention dates;
+- checking whether results depend on a few unusual periods;
+- reporting prediction intervals or uncertainty bands;
+- examining whether other shocks occurred around the intervention date.
+
+::: {.callout-note appearance="simple"}
+### A practical rule
+
+Before interpreting a post-treatment gap as a causal effect, ask whether the method would have predicted the pre-treatment path reasonably well.
+:::
+
+## Common Mistakes
+
+The first common mistake is to treat any deviation from a forecast as causal. A forecast error is not automatically a treatment effect. It becomes a causal effect only under assumptions that rule out other explanations.
+
+The second mistake is to use too little pre-treatment data. With a short history, even sophisticated models may simply extrapolate noise.
+
+The third mistake is to ignore uncertainty. Forecasts are estimates, not known counterfactuals. The gap between observed and predicted outcomes should be interpreted together with uncertainty around the forecast.
+
+The fourth mistake is to use black-box models without validation. Flexible models may fit pre-treatment data well but extrapolate poorly after treatment. Predictive performance should be assessed out of sample whenever possible.
+
+The fifth mistake is to overlook structural breaks. If the outcome process was already changing before the intervention, the post-treatment forecast may be unreliable.
+
+## Worked Example
+
+Suppose a national reform introduces a new workplace-safety regulation for all firms at the same time. The goal is to reduce workplace accidents. Because the reform is implemented nationwide, there is no contemporaneous untreated group of comparable firms within the country.
+
+For each firm, we observe monthly accident rates for several years before the reform and after the reform. A forecast-based approach would proceed as follows:
+
+1. Use pre-reform accident rates to model the expected accident path in the absence of the new regulation.
+2. Forecast the post-reform counterfactual accident rate.
+3. Compare observed post-reform accident rates with the predicted no-reform path.
+4. Average the estimated gaps across firms to obtain an average effect.
+5. Examine whether the effect differs by firm size, sector, or baseline accident risk.
+
+If observed accidents fall below the predicted counterfactual path after the reform, this is consistent with a beneficial effect. But the interpretation depends on whether other factors changed at the same time, such as new enforcement rules, reporting requirements, or macroeconomic conditions.
+
+## Summary
+
+Forecast-based counterfactual methods are useful when no credible control group exists. Instead of comparing treated and untreated units, they compare observed post-treatment outcomes with predicted untreated outcomes.
+
+The simplest versions use mean, naive, or drift forecasts. More sophisticated approaches include interrupted time-series designs, Causal ARIMA, and machine-learning-based counterfactual forecasting.
+
+The strength of these methods is that they can be applied in settings where standard comparison-based methods fail. Their weakness is that causal interpretation relies heavily on the credibility of the forecasted counterfactual. The central question is always the same: would the predicted path really have occurred in the absence of the intervention?
+

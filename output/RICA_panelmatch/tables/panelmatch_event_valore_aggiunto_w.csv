@@ -1,0 +1,6 @@
+"event_time","estimate","std_error","period_type","conf_low","conf_high","outcome","lag","lead_max","refinement_method","se_method","n_matched_sets"
+-2,-2360.94113475177,4894.83964952502,"Pre-treatment placebo",-11954.8268478208,7232.94457831727,"valore_aggiunto_w",2,2,"ps.match","unconditional",94
+-1,0,0,"Baseline",0,0,"valore_aggiunto_w",2,2,"ps.match","unconditional",94
+0,-9945.38354609929,5538.63279166502,"Post-treatment",-20801.1038177627,910.336725564139,"valore_aggiunto_w",2,2,"ps.match","unconditional",94
+1,-8924.4504964539,5770.08960939343,"Post-treatment",-20233.826130865,2384.92513795722,"valore_aggiunto_w",2,2,"ps.match","unconditional",94
+2,9874.18836879433,5999.41947356021,"Post-treatment",-1884.67379938369,21633.0505369723,"valore_aggiunto_w",2,2,"ps.match","unconditional",94

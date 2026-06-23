@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; Event Studies – The Backbone of Impact Evaluation Methods</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/08-instrumental-variables.html" rel="next">
+<link href="../chapters/06-difference-in-differences.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-9e3e5b9121e68b3f077afb32f2c64d95.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-acff971833d9769290026d534105daaa.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-9e3e5b9121e68b3f077afb32f2c64d95.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles/styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/04-randomized-experiments.html">Control-based Designs</a></li><li class="breadcrumb-item"><a href="../chapters/07-event-studies.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Event Studies</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">The Backbone of Impact Evaluation Methods</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/augustocerqua/backbone-impact-evaluation" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../The-Backbone-of-Impact-Evaluation-Methods.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../The-Backbone-of-Impact-Evaluation-Methods.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-why-impact-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why Impact Evaluation?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-potential-outcomes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Potential Outcomes Framework</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-causal-parameters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Causal Parameters of Interest</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Control-based Designs</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-randomized-experiments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Randomized Controlled Trials</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-selection-on-observables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-difference-in-differences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Difference-in-Differences</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-event-studies.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Event Studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-instrumental-variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Instrumental Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-regression-discontinuity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regression Discontinuity Design</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-synthetic-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Synthetic Control Method</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Other topics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-forecast-based-designs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Forecast-Based Counterfactual Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-heterogeneous_treatment_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Heterogeneous Treatment Effects</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-spillover_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Spillover Effects</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-continuous_treatment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Continuous Treatments</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-miscellanea.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Miscellanea</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-evaluation-problem" id="toc-the-evaluation-problem" class="nav-link active" data-scroll-target="#the-evaluation-problem"><span class="header-section-number">7.1</span> The Evaluation Problem</a></li>
+  <li><a href="#event-time" id="toc-event-time" class="nav-link" data-scroll-target="#event-time"><span class="header-section-number">7.2</span> Event Time</a></li>
+  <li><a href="#why-not-just-use-twfe" id="toc-why-not-just-use-twfe" class="nav-link" data-scroll-target="#why-not-just-use-twfe"><span class="header-section-number">7.3</span> Why Not Just Use TWFE?</a></li>
+  <li><a href="#clean-comparisons" id="toc-clean-comparisons" class="nav-link" data-scroll-target="#clean-comparisons"><span class="header-section-number">7.4</span> Clean Comparisons</a></li>
+  <li><a href="#weighted-difference-in-differences" id="toc-weighted-difference-in-differences" class="nav-link" data-scroll-target="#weighted-difference-in-differences"><span class="header-section-number">7.5</span> Weighted Difference-in-Differences</a></li>
+  <li><a href="#multiple-difference-in-differences" id="toc-multiple-difference-in-differences" class="nav-link" data-scroll-target="#multiple-difference-in-differences"><span class="header-section-number">7.6</span> Multiple Difference-in-Differences</a></li>
+  <li><a href="#matching-did-for-panel-data" id="toc-matching-did-for-panel-data" class="nav-link" data-scroll-target="#matching-did-for-panel-data"><span class="header-section-number">7.7</span> Matching DiD for Panel Data</a></li>
+  <li><a href="#dynamic-treatment-effects" id="toc-dynamic-treatment-effects" class="nav-link" data-scroll-target="#dynamic-treatment-effects"><span class="header-section-number">7.8</span> Dynamic Treatment Effects</a></li>
+  <li><a href="#pre-trends-and-anticipation" id="toc-pre-trends-and-anticipation" class="nav-link" data-scroll-target="#pre-trends-and-anticipation"><span class="header-section-number">7.9</span> Pre-Trends and Anticipation</a></li>
+  <li><a href="#choosing-the-baseline-period" id="toc-choosing-the-baseline-period" class="nav-link" data-scroll-target="#choosing-the-baseline-period"><span class="header-section-number">7.10</span> Choosing the Baseline Period</a></li>
+  <li><a href="#aggregation" id="toc-aggregation" class="nav-link" data-scroll-target="#aggregation"><span class="header-section-number">7.11</span> Aggregation</a></li>
+  <li><a href="#empirical-example" id="toc-empirical-example" class="nav-link" data-scroll-target="#empirical-example"><span class="header-section-number">7.12</span> Empirical Example</a></li>
+  <li><a href="#diagnostics-and-validity-checks" id="toc-diagnostics-and-validity-checks" class="nav-link" data-scroll-target="#diagnostics-and-validity-checks"><span class="header-section-number">7.13</span> Diagnostics and Validity Checks</a></li>
+  <li><a href="#worked-example" id="toc-worked-example" class="nav-link" data-scroll-target="#worked-example"><span class="header-section-number">7.14</span> Worked Example</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">7.15</span> Summary</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/augustocerqua/backbone-impact-evaluation/edit/main/chapters/07-event-studies.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/augustocerqua/backbone-impact-evaluation/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/04-randomized-experiments.html">Control-based Designs</a></li><li class="breadcrumb-item"><a href="../chapters/07-event-studies.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Event Studies</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Event Studies</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>The basic DiD design compares treated and control units before and after a policy. In the simplest case, there are two groups and two periods. But many real policy settings are richer. Units may be treated at different times, treatment effects may evolve gradually, and researchers may want to know not only whether a policy had an effect, but also <strong>when</strong> the effect appeared and how it changed over time.</p>
+<p>This is the main motivation for <strong>event-study designs</strong>. In this chapter, the term event study refers to modern DiD-based approaches that estimate treatment effects relative to the timing of an event, such as the adoption of a reform, the introduction of a policy, or the occurrence of a shock.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key idea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Event studies organize treatment effects in event time: periods before and after the treatment starts.</p>
+</div>
+</div>
+<p>Event studies are especially useful when treatment adoption is <strong>staggered</strong>. Some units receive treatment early, others later, and some may never be treated. Instead of estimating a single average treatment effect, event-study methods estimate dynamic effects at different horizons relative to treatment.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/event-study-working-logic_v2.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption>Event-study designs organize treatment effects in event time: periods before and after treatment starts.</figcaption>
+</figure>
+</div>
+<p>Recent econometric work has shown that standard TWFE event-study regressions can be misleading when treatment effects are heterogeneous across groups or over time. This chapter focuses on the logic of modern DiD event-study estimators, drawing on recent guides to the literature <span class="citation" data-cites="baker2026didguide dechaisemartin2026book roth2023">(<a href="references.html#ref-baker2026didguide" role="doc-biblioref">Baker et al. 2026</a>; <a href="references.html#ref-dechaisemartin2026book" role="doc-biblioref">Chaisemartin and D’Haultfœuille 2026</a>; <a href="references.html#ref-roth2023" role="doc-biblioref">Roth et al. 2023</a>)</span>.</p>
+<section id="the-evaluation-problem" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="the-evaluation-problem"><span class="header-section-number">7.1</span> The Evaluation Problem</h2>
+<p>Suppose we observe units <span class="math inline">\(i=1,\ldots,N\)</span> over periods <span class="math inline">\(t=1,\ldots,T\)</span>. Some units become treated at different times. Once treated, they remain treated in all later periods. This is the common case of <strong>staggered adoption</strong>.</p>
+<p>Let <span class="math inline">\(G_i\)</span> denote the first period in which unit <span class="math inline">\(i\)</span> is treated. For never-treated units, <span class="math inline">\(G_i=\infty\)</span>. Let <span class="math inline">\(t\)</span> denote calendar time. The treatment indicator is</p>
+<p><span class="math display">\[
+D_{it}=\mathbb{1}\{t\geq G_i\}.
+\]</span></p>
+<p>The central object is often a <strong>group-time average treatment effect</strong>:</p>
+<p><span class="math display">\[
+ATT(g,t)
+=
+E[Y_{it}(1)-Y_{it}(0)\mid G_i=g],
+\qquad t\geq g.
+\]</span></p>
+<p>This parameter measures the average effect at calendar time <span class="math inline">\(t\)</span> for units first treated in period <span class="math inline">\(g\)</span>. As in the previous chapters, <span class="math inline">\(Y_{it}(1)\)</span> is the potential outcome under treatment and <span class="math inline">\(Y_{it}(0)\)</span> is the potential outcome without treatment. For units in cohort <span class="math inline">\(g\)</span> and period <span class="math inline">\(t\geq g\)</span>, <span class="math inline">\(Y_{it}(1)\)</span> is observed, while <span class="math inline">\(Y_{it}(0)\)</span> is the missing counterfactual.</p>
+<p>Once we have group-time effects, we can aggregate them in different ways:</p>
+<ul>
+<li>by treatment cohort;</li>
+<li>by calendar period;</li>
+<li>by event time;</li>
+<li>into an overall average treatment effect on the treated.</li>
+</ul>
+<p>The key point is that the estimand must be explicit. A single coefficient can hide many different treatment effects.</p>
+</section>
+<section id="event-time" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="event-time"><span class="header-section-number">7.2</span> Event Time</h2>
+<p>Event time measures the distance from treatment:</p>
+<p><span class="math display">\[
+\ell = t-g.
+\]</span></p>
+<p>When <span class="math inline">\(\ell=0\)</span>, the unit is in its first treated period. When <span class="math inline">\(\ell=1\)</span>, it is one period after treatment. When <span class="math inline">\(\ell=-1\)</span>, it is one period before treatment.</p>
+<p>Event-study estimates are often plotted as a sequence of event-time coefficients:</p>
+<p><span class="math display">\[
+\tau_{\ell},
+\]</span></p>
+<p>where each point describes the average difference at event time <span class="math inline">\(\ell\)</span> relative to the omitted baseline period. For post-treatment horizons, these coefficients are interpreted as dynamic treatment effects. For pre-treatment horizons, they are mainly diagnostic. The corresponding estimate is denoted by <span class="math inline">\(\widehat{\tau}_{\ell}\)</span>.</p>
+<p>The pre-treatment coefficients are useful diagnostics. If treatment has not yet occurred, estimated effects should usually be close to zero, unless there is anticipation or treated units were already on different trends.</p>
+<p>The post-treatment coefficients describe treatment dynamics. The effect may appear immediately, grow over time, fade out, or change sign.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Event-time plot
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An event-study plot shows estimated effects before and after treatment, usually with confidence intervals and a vertical line at the treatment date.</p>
+</div>
+</div>
+</section>
+<section id="why-not-just-use-twfe" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="why-not-just-use-twfe"><span class="header-section-number">7.3</span> Why Not Just Use TWFE?</h2>
+<p>A traditional event-study regression is often written as</p>
+<p><span class="math display">\[
+Y_{it}
+=
+\alpha_i+\lambda_t
++
+\sum_{\ell\neq -1}\tau_{\ell}\mathbb{1}\{t-G_i=\ell\}
++
+u_{it}.
+\]</span></p>
+<p>Here, <span class="math inline">\(\alpha_i\)</span> are unit fixed effects, <span class="math inline">\(\lambda_t\)</span> are time fixed effects, and the period just before treatment, <span class="math inline">\(\ell=-1\)</span>, is omitted as the reference period. In this regression, the coefficients <span class="math inline">\(\tau_{\ell}\)</span> describe outcome differences at each event-time horizon relative to the omitted period.</p>
+<p>This specification is intuitive, but it can be problematic under staggered adoption as we have already seen at the end of <a href="../chapters/06-difference-in-differences.html">Chapter 6</a>. To avoid such identification issues, modern event-study methods construct comparisons more carefully.</p>
+</section>
+<section id="clean-comparisons" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="clean-comparisons"><span class="header-section-number">7.4</span> Clean Comparisons</h2>
+<p>The safest comparisons are usually those between newly treated units and units that are still untreated at the same calendar time, either because they will be treated later or because they are never treated in the analysis sample.</p>
+<p>Suppose one group is first treated in period <span class="math inline">\(g\)</span>. To estimate its effect at time <span class="math inline">\(t\)</span>, we compare the change in outcomes for this group with the change in outcomes for units that have not yet been treated by time <span class="math inline">\(t\)</span>.</p>
+<p>The identifying idea is a version of parallel trends:</p>
+<p><span class="math display">\[
+E[Y_{it}(0)-Y_{i,g-1}(0)\mid G_i=g]
+=
+E[Y_{it}(0)-Y_{i,g-1}(0)\mid C_{it}(g)=1],
+\]</span></p>
+<p>where <span class="math inline">\(C_{it}(g)=1\)</span> denotes units that form a valid comparison group for cohort <span class="math inline">\(g\)</span> at time <span class="math inline">\(t\)</span>, such as never-treated or not-yet-treated units.</p>
+<p>In words, absent treatment, the treated cohort and its comparison units would have experienced the same outcome change between the baseline period and time <span class="math inline">\(t\)</span>.</p>
+<p>This logic underlies several modern DiD estimators.</p>
+</section>
+<section id="weighted-difference-in-differences" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="weighted-difference-in-differences"><span class="header-section-number">7.5</span> Weighted Difference-in-Differences</h2>
+<p>Callaway and Sant’Anna propose a framework that estimates group-time treatment effects and then aggregates them <span class="citation" data-cites="callaway2021">(<a href="references.html#ref-callaway2021" role="doc-biblioref">Callaway and Sant’Anna 2021</a>)</span>. The first step is to estimate <span class="math inline">\(ATT(g,t)\)</span> for each treatment cohort <span class="math inline">\(g\)</span> and time period <span class="math inline">\(t\)</span>. The second step is to combine these effects using transparent weights.</p>
+<p>This approach makes clear which treated group is being compared with which control group, and how the final estimate is constructed.</p>
+<p>The comparison group can be defined in two main ways:</p>
+<ul>
+<li><strong>never-treated units</strong>, namely units that are never exposed to the treatment during the observation period;</li>
+<li><strong>not-yet-treated units</strong>, namely units that have not yet received the treatment at time <span class="math inline">\(t\)</span>, even if they will receive it later.</li>
+</ul>
+<p>In both cases, the comparison can also be adjusted for observed covariates. This means that treated units in cohort <span class="math inline">\(g\)</span> are compared with control units that are similar in terms of pre-treatment characteristics, rather than being compared mechanically with all available untreated units.</p>
+<p>Once the group-time effects have been estimated, they can be aggregated into event-time effects. This produces the event-study plot, but without relying on TWFE comparisons that may be contaminated by already-treated units.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Weighted DiD
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Estimate treatment effects separately by cohort and period, then aggregate them using explicit weights. In the Callaway and Sant’Anna framework, these weights are transparent and are typically linked to the number of treated units contributing to each group-time effect. This makes the final estimate easier to interpret than a single TWFE coefficient, because we can see which cohorts and time periods contribute to the aggregate effect, and how much they contribute.</p>
+</div>
+</div>
+</section>
+<section id="multiple-difference-in-differences" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="multiple-difference-in-differences"><span class="header-section-number">7.6</span> Multiple Difference-in-Differences</h2>
+<p>de Chaisemartin and D’Haultfoeuille develop related estimators that also avoid problematic TWFE comparisons <span class="citation" data-cites="dechaisemartin2020 dechaisemartin2026book">(<a href="references.html#ref-dechaisemartin2020" role="doc-biblioref">Chaisemartin and D’Haultfœuille 2020</a>, <a href="references.html#ref-dechaisemartin2026book" role="doc-biblioref">2026</a>)</span>.</p>
+<p>The broad idea is to build treatment-effect estimates from clean DiD comparisons. Rather than allowing the regression to implicitly choose comparisons and weights, the method constructs comparisons between units whose treatment status changes and appropriate control units whose treatment status does not change over the relevant interval.</p>
+<p>This family of estimators is useful because it emphasizes a practical lesson: with staggered adoption, the researcher should know which comparisons identify the effect.</p>
+<p>In applications, these estimators often report dynamic effects, showing how the outcome changes in the periods following treatment.</p>
+</section>
+<section id="matching-did-for-panel-data" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="matching-did-for-panel-data"><span class="header-section-number">7.7</span> Matching DiD for Panel Data</h2>
+<p>Another approach is to combine matching and DiD. The basic matching DiD estimator controls for observed differences through matching and for time-invariant unobserved differences through differencing <span class="citation" data-cites="heckman1997">(<a href="references.html#ref-heckman1997" role="doc-biblioref">Heckman et al. 1997</a>)</span>.</p>
+<p>Imai, Kim, and Wang extend this logic to time-series cross-sectional data through <strong>PanelMatch</strong> <span class="citation" data-cites="imai2023">(<a href="references.html#ref-imai2023" role="doc-biblioref">Imai et al. 2023</a>)</span>. The method constructs matched sets for treated observations using their pre-treatment histories.</p>
+<p>The procedure can be summarized in four steps:</p>
+<ol type="1">
+<li>Identify treated unit-periods.</li>
+<li>Match treated observations to control observations with similar pre-treatment histories.</li>
+<li>Use the matched controls to construct counterfactual outcomes.</li>
+<li>Estimate dynamic treatment effects over future horizons.</li>
+</ol>
+<p>This approach is attractive because it makes the construction of the control group transparent. It also allows researchers to inspect balance not only in baseline covariates, but also in lagged outcomes and covariate histories.</p>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>PanelMatch intuition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>PanelMatch asks: for each unit at the moment it becomes treated, can we find units that are still untreated and have a similar recent history in terms of treatment status, pre-treatment outcomes, and covariates?</p>
+</div>
+</div>
+</section>
+<section id="dynamic-treatment-effects" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="dynamic-treatment-effects"><span class="header-section-number">7.8</span> Dynamic Treatment Effects</h2>
+<p>Event studies are valuable because treatment effects may not be instantaneous.</p>
+<p>For example, a reform allowing election-day registration may affect turnout immediately. A labor-market shock may reduce employment quickly but generate longer-run adjustment. A mass layoff may affect local employment for many years. A democratization episode may affect economic growth gradually.</p>
+<p>For post-treatment horizons, dynamic treatment effects can be summarized by event-time effects:</p>
+<p><span class="math display">\[
+\tau_{\ell}
+=
+\sum_g \omega_{g\ell} ATT(g,g+\ell),
+\]</span></p>
+<p>where the weights <span class="math inline">\(\omega_{g\ell}\)</span> determine how much each cohort contributes to the event-time effect at horizon <span class="math inline">\(\ell\)</span>. The estimate reported in an event-study plot is usually denoted by <span class="math inline">\(\widehat{\tau}_{\ell}\)</span>.</p>
+<p>The event-study plot then becomes a compact visual summary of both pre-treatment diagnostics and post-treatment dynamics.</p>
+</section>
+<section id="pre-trends-and-anticipation" class="level2" data-number="7.9">
+<h2 data-number="7.9" class="anchored" data-anchor-id="pre-trends-and-anticipation"><span class="header-section-number">7.9</span> Pre-Trends and Anticipation</h2>
+<p>Pre-treatment event-time coefficients are often interpreted as tests of the parallel-trends assumption. This interpretation should be cautious.</p>
+<p>If estimates before treatment are far from zero, this is a warning sign. Treated units may have been on different trends, or the policy may have been anticipated before formal implementation.</p>
+<p>If pre-treatment coefficients are close to zero, this supports the design, but it does not prove parallel trends. The counterfactual post-treatment trend remains unobserved.</p>
+<p>Anticipation is especially important in event studies. If units change behavior before the treatment date because they expect the policy, then periods just before treatment are no longer untreated in a substantive sense.</p>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Pre-trends are not magic
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Flat pre-treatment coefficients make the design more credible, but they do not guarantee that post-treatment counterfactual trends are parallel.</p>
+</div>
+</div>
+</section>
+<section id="choosing-the-baseline-period" class="level2" data-number="7.10">
+<h2 data-number="7.10" class="anchored" data-anchor-id="choosing-the-baseline-period"><span class="header-section-number">7.10</span> Choosing the Baseline Period</h2>
+<p>Event studies require a reference period. A common choice is the period just before treatment, <span class="math inline">\(\ell=-1\)</span>.</p>
+<p>This choice is natural, but not automatic. If there is anticipation, the period immediately before treatment may already be affected. In that case, using <span class="math inline">\(\ell=-1\)</span> as the baseline can understate or distort treatment effects.</p>
+<p>Researchers should report the reference period clearly and explain why it is appropriate.</p>
+</section>
+<section id="aggregation" class="level2" data-number="7.11">
+<h2 data-number="7.11" class="anchored" data-anchor-id="aggregation"><span class="header-section-number">7.11</span> Aggregation</h2>
+<p>Modern DiD event-study methods often begin with many building blocks: effects by cohort, calendar time, and event time. The final estimate depends on how these building blocks are aggregated.</p>
+<p>Aggregation is not a purely technical detail. Different weights answer different questions.</p>
+<p>For example:</p>
+<ul>
+<li>equal weights across cohorts answer a cohort-balanced question;</li>
+<li>weights proportional to cohort size answer a population-weighted question;</li>
+<li>event-time weights describe the average effect at a given horizon after treatment;</li>
+<li>calendar-time weights describe the average effect in a given period.</li>
+</ul>
+<p>Baker et al.&nbsp;emphasize that applied researchers should be explicit about the target parameter and the weights used to construct it <span class="citation" data-cites="baker2026didguide">(<a href="references.html#ref-baker2026didguide" role="doc-biblioref">Baker et al. 2026</a>)</span>.</p>
+</section>
+<section id="empirical-example" class="level2" data-number="7.12">
+<h2 data-number="7.12" class="anchored" data-anchor-id="empirical-example"><span class="header-section-number">7.12</span> Empirical Example</h2>
+<p>A classic application of event-study methods is Wolfers’ analysis of unilateral divorce laws in the United States <span class="citation" data-cites="wolfers2006">(<a href="references.html#ref-wolfers2006" role="doc-biblioref">Wolfers 2006</a>)</span>. The empirical question is whether making divorce easier by allowing unilateral divorce changed divorce rates. The setting is well suited to an event-study design because U.S. states adopted unilateral divorce laws in different years. Some states changed their divorce laws early, others later, and some did not adopt them during the same period.</p>
+<p>This staggered timing makes it possible to compare the evolution of divorce rates before and after adoption across different groups of states. The event-study framework is especially useful because the effect of the reform need not be immediate or constant over time. Divorce rates may respond gradually after the law changes, and the effect may increase, decline, or disappear several years after adoption.</p>
+<p>The application also illustrates why modern DiD methods are needed in staggered-adoption settings. If treatment effects vary across cohorts or over time, a simple TWFE event-study regression may combine comparisons that are difficult to interpret, including comparisons between newly treated states and states that were already treated. Modern estimators instead make the comparison more explicit: they compare states adopting the reform at a given time with states that are not yet treated or never treated, and then aggregate the resulting cohort-time effects using transparent weights.</p>
+<p>This example is useful pedagogically because it shows the core purpose of event-study analysis: not only estimating whether a policy had an effect, but also tracing how that effect evolves before and after treatment adoption.</p>
+</section>
+<section id="diagnostics-and-validity-checks" class="level2" data-number="7.13">
+<h2 data-number="7.13" class="anchored" data-anchor-id="diagnostics-and-validity-checks"><span class="header-section-number">7.13</span> Diagnostics and Validity Checks</h2>
+<p>A credible event-study analysis should report:</p>
+<ul>
+<li>the timing of treatment adoption across units;</li>
+<li>which units are used as controls at each horizon;</li>
+<li>whether never-treated or not-yet-treated units are used;</li>
+<li>event-time plots with confidence intervals;</li>
+<li>pre-treatment estimates;</li>
+<li>sensitivity to alternative comparison groups;</li>
+<li>sensitivity to alternative event windows;</li>
+<li>whether treatment is absorbing or can turn on and off;</li>
+<li>whether anticipation or carryover effects are plausible;</li>
+<li>how group-time effects are aggregated.</li>
+</ul>
+<p>The treatment variation plot is often useful. It shows when units become treated and whether enough untreated or not-yet-treated units remain available as controls at each point in time.</p>
+</section>
+<section id="worked-example" class="level2" data-number="7.14">
+<h2 data-number="7.14" class="anchored" data-anchor-id="worked-example"><span class="header-section-number">7.14</span> Worked Example</h2>
+<p>Suppose some regions introduce a new active labor-market policy in different years. Once introduced, the policy remains in place. We observe employment rates for all regions over time.</p>
+<p>A simple TWFE regression would compare all treated and untreated observations while absorbing region and year fixed effects. But if early-treated regions are later used as controls for late-treated regions, and if the policy effect evolves over time, the estimate may be misleading.</p>
+<p>A modern event-study approach would instead proceed as follows:</p>
+<ol type="1">
+<li>Group regions by the year in which they first adopt the policy.</li>
+<li>For each treated cohort and each post-treatment year, compare the cohort with regions not yet treated or never treated.</li>
+<li>Estimate cohort-time effects.</li>
+<li>Aggregate these effects by event time.</li>
+<li>Plot the dynamic effects before and after adoption.</li>
+</ol>
+<p>If the pre-treatment estimates are close to zero and the post-treatment estimates rise gradually, the evidence would be consistent with a delayed positive employment effect. If pre-treatment estimates are already rising before adoption, the design would be less credible.</p>
+</section>
+<section id="summary" class="level2" data-number="7.15">
+<h2 data-number="7.15" class="anchored" data-anchor-id="summary"><span class="header-section-number">7.15</span> Summary</h2>
+<p>Event studies extend DiD by organizing effects around the timing of treatment. They are especially useful for staggered adoption and dynamic treatment effects.</p>
+<p>The modern lesson is that event-study plots should not be produced mechanically with TWFE regressions. When treatment effects are heterogeneous, TWFE may use problematic comparisons and implicit weights.</p>
+<p>Modern event-study estimators instead build effects from clearer comparisons, such as treated cohorts versus not-yet-treated or never-treated units, and then aggregate group-time effects transparently. The central questions are always: what is the comparison group, what is the target estimand, and how are the dynamic effects aggregated?</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Software packages
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Several software packages can be used to implement DiD and event study designs.</p>
+<ul>
+<li><strong>R</strong>
+<ul>
+<li><a href="https://bcallaway11.github.io/did/"><code>did</code></a>: implementation of Callaway and Sant’Anna-type DiD estimators for multiple periods and staggered treatment adoption.</li>
+<li><a href="https://cran.r-project.org/package=DIDmultiplegtDYN"><code>DIDmultiplegtDYN</code></a>: implementation of de Chaisemartin and D’Haultfoeuille-type DiD estimators for dynamic and potentially complex treatment designs.</li>
+<li><a href="https://github.com/asheshrambachan/HonestDiD"><code>HonestDiD</code></a>: sensitivity analysis for violations of parallel trends.</li>
+<li><a href="https://cran.r-project.org/package=PanelMatch"><code>PanelMatch</code></a>: tools for non-parametric DiD with comparison groups constructed on the basis of treatment histories and pre-treatment outcomes <span class="citation" data-cites="imai2023">(<a href="references.html#ref-imai2023" role="doc-biblioref">Imai et al. 2023</a>)</span>.</li>
+</ul></li>
+<li><strong>Python</strong>
+<ul>
+<li><a href="https://py-econometrics.github.io/pyfixest/"><code>pyfixest</code></a>: Python implementation inspired by <code>fixest</code>, useful for fixed-effects and event-study specifications.</li>
+<li><a href="https://pypi.org/project/differences/"><code>differences</code></a>: Python package implementing DiD estimators for multiple periods and staggered treatment adoption.</li>
+<li><a href="https://pypi.org/project/diff-diff/"><code>diff-diff</code></a>: Python library for difference-in-differences, event-study, and related DiD designs.</li>
+</ul></li>
+<li><strong>Stata</strong>
+<ul>
+<li><a href="https://ideas.repec.org/c/boc/bocode/s458976.html"><code>csdid</code></a>: Stata command implementing Callaway and Sant’Anna-type DiD estimators for multiple periods.</li>
+<li><a href="https://ideas.repec.org/c/boc/bocode/s459222.html"><code>did_multiplegt_dyn</code></a>: Stata command implementing de Chaisemartin and D’Haultfoeuille-type dynamic DiD estimators.
+<ul>
+<li><a href="https://ideas.repec.org/c/boc/bocode/s458978.html"><code>eventstudyinteract</code></a>: implements interaction-weighted event-study estimators.</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+
+<!-- -->
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-baker2026didguide" class="csl-entry" role="listitem">
+Baker, Andrew C., Brantly Callaway, Scott Cunningham, Andrew Goodman-Bacon, and Pedro H. C. Sant’Anna. 2026. <em>Difference-in-Differences Designs: A Practitioner’s Guide</em>. <a href="https://arxiv.org/abs/2503.13323">https://arxiv.org/abs/2503.13323</a>.
+</div>
+<div id="ref-callaway2021" class="csl-entry" role="listitem">
+Callaway, Brantly, and Pedro H. C. Sant’Anna. 2021. <span>“Difference-in-Differences with Multiple Time Periods.”</span> <em>Journal of Econometrics</em> 225 (2): 200–230. <a href="https://doi.org/10.1016/j.jeconom.2020.12.001">https://doi.org/10.1016/j.jeconom.2020.12.001</a>.
+</div>
+<div id="ref-dechaisemartin2020" class="csl-entry" role="listitem">
+Chaisemartin, Clément de, and Xavier D’Haultfœuille. 2020. <span>“Two-Way Fixed Effects Estimators with Heterogeneous Treatment Effects.”</span> <em>American Economic Review</em> 110 (9): 2964–96. <a href="https://doi.org/10.1257/aer.20181169">https://doi.org/10.1257/aer.20181169</a>.
+</div>
+<div id="ref-dechaisemartin2026book" class="csl-entry" role="listitem">
+Chaisemartin, Clément de, and Xavier D’Haultfœuille. 2026. <em>Difference-in-Differences for Natural Experiments</em>. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4487202">https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4487202</a>.
+</div>
+<div id="ref-heckman1997" class="csl-entry" role="listitem">
+Heckman, James J., Hidehiko Ichimura, and Petra E. Todd. 1997. <span>“Matching as an Econometric Evaluation Estimator: Evidence from Evaluating a Job Training Programme.”</span> <em>The Review of Economic Studies</em> 64 (4): 605–54. <a href="https://doi.org/10.2307/2971733">https://doi.org/10.2307/2971733</a>.
+</div>
+<div id="ref-imai2023" class="csl-entry" role="listitem">
+Imai, Kosuke, In Song Kim, and Erik H. Wang. 2023. <span>“Matching Methods for Causal Inference with Time-Series Cross-Sectional Data.”</span> <em>American Journal of Political Science</em> 67 (3): 587–605. <a href="https://doi.org/10.1111/ajps.12685">https://doi.org/10.1111/ajps.12685</a>.
+</div>
+<div id="ref-roth2023" class="csl-entry" role="listitem">
+Roth, Jonathan, Pedro H. C. Sant’Anna, Alyssa Bilinski, and John Poe. 2023. <span>“What’s Trending in Difference-in-Differences? A Synthesis of the Recent Econometrics Literature.”</span> <em>Journal of Econometrics</em> 235 (2): 2218–44. <a href="https://doi.org/10.1016/j.jeconom.2023.03.008">https://doi.org/10.1016/j.jeconom.2023.03.008</a>.
+</div>
+<div id="ref-wolfers2006" class="csl-entry" role="listitem">
+Wolfers, Justin. 2006. <span>“Did Unilateral Divorce Laws Raise Divorce Rates? A Reconciliation and New Results.”</span> <em>American Economic Review</em> 96 (5): 1802–20. <a href="https://doi.org/10.1257/aer.96.5.1802">https://doi.org/10.1257/aer.96.5.1802</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/augustocerqua\.github\.io\/backbone-impact-evaluation\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/06-difference-in-differences.html" class="pagination-link" aria-label="Difference-in-Differences">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Difference-in-Differences</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/08-instrumental-variables.html" class="pagination-link" aria-label="Instrumental Variables">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Instrumental Variables</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Event Studies</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>The basic DiD design compares treated and control units before and after a policy. In the simplest case, there are two groups and two periods. But many real policy settings are richer. Units may be treated at different times, treatment effects may evolve gradually, and researchers may want to know not only whether a policy had an effect, but also **when** the effect appeared and how it changed over time.</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>This is the main motivation for **event-study designs**. In this chapter, the term event study refers to modern DiD-based approaches that estimate treatment effects relative to the timing of an event, such as the adoption of a reform, the introduction of a policy, or the occurrence of a shock.</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">### Key idea</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>Event studies organize treatment effects in event time: periods before and after the treatment starts.</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>Event studies are especially useful when treatment adoption is **staggered**. Some units receive treatment early, others later, and some may never be treated. Instead of estimating a single average treatment effect, event-study methods estimate dynamic effects at different horizons relative to treatment.</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="al">![Event-study designs organize treatment effects in event time: periods before and after treatment starts.](../images/event-study-working-logic_v2.png)</span>{width="90%"}</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>Recent econometric work has shown that standard TWFE event-study regressions can be misleading when treatment effects are heterogeneous across groups or over time. This chapter focuses on the logic of modern DiD event-study estimators, drawing on recent guides to the literature <span class="co">[</span><span class="ot">@baker2026didguide; @dechaisemartin2026book; @roth2023</span><span class="co">]</span>.</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Evaluation Problem</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>Suppose we observe units $i=1,\ldots,N$ over periods $t=1,\ldots,T$. Some units become treated at different times. Once treated, they remain treated in all later periods. This is the common case of **staggered adoption**.</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>Let $G_i$ denote the first period in which unit $i$ is treated. For never-treated units, $G_i=\infty$. Let $t$ denote calendar time. The treatment indicator is</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>D_{it}=\mathbb{1}<span class="sc">\{</span>t\geq G_i<span class="sc">\}</span>.</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>The central object is often a **group-time average treatment effect**:</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>ATT(g,t)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>=</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>E<span class="co">[</span><span class="ot">Y_{it}(1)-Y_{it}(0)\mid G_i=g</span><span class="co">]</span>,</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>\qquad t\geq g.</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>This parameter measures the average effect at calendar time $t$ for units first treated in period $g$. As in the previous chapters, $Y_{it}(1)$ is the potential outcome under treatment and $Y_{it}(0)$ is the potential outcome without treatment. For units in cohort $g$ and period $t\geq g$, $Y_{it}(1)$ is observed, while $Y_{it}(0)$ is the missing counterfactual.</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>Once we have group-time effects, we can aggregate them in different ways:</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>by treatment cohort;</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>by calendar period;</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>by event time;</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>into an overall average treatment effect on the treated.</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>The key point is that the estimand must be explicit. A single coefficient can hide many different treatment effects.</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="fu">## Event Time</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>Event time measures the distance from treatment:</span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>\ell = t-g.</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>When $\ell=0$, the unit is in its first treated period. When $\ell=1$, it is one period after treatment. When $\ell=-1$, it is one period before treatment.</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>Event-study estimates are often plotted as a sequence of event-time coefficients:</span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a>\tau_{\ell},</span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a>where each point describes the average difference at event time $\ell$ relative to the omitted baseline period. For post-treatment horizons, these coefficients are interpreted as dynamic treatment effects. For pre-treatment horizons, they are mainly diagnostic. The corresponding estimate is denoted by $\widehat{\tau}_{\ell}$.</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a>The pre-treatment coefficients are useful diagnostics. If treatment has not yet occurred, estimated effects should usually be close to zero, unless there is anticipation or treated units were already on different trends.</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>The post-treatment coefficients describe treatment dynamics. The effect may appear immediately, grow over time, fade out, or change sign.</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="fu">### Event-time plot</span></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>An event-study plot shows estimated effects before and after treatment, usually with confidence intervals and a vertical line at the treatment date.</span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Not Just Use TWFE?</span></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a>A traditional event-study regression is often written as</span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>Y_{it}</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a>=</span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>\alpha_i+\lambda_t</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a>+</span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a>\sum_{\ell\neq -1}\tau_{\ell}\mathbb{1}<span class="sc">\{</span>t-G_i=\ell<span class="sc">\}</span></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>+</span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>u_{it}.</span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>Here, $\alpha_i$ are unit fixed effects, $\lambda_t$ are time fixed effects, and the period just before treatment, $\ell=-1$, is omitted as the reference period. In this regression, the coefficients $\tau_{\ell}$ describe outcome differences at each event-time horizon relative to the omitted period.</span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>This specification is intuitive, but it can be problematic under staggered adoption as we have already seen at the end of <span class="co">[</span><span class="ot">Chapter 6</span><span class="co">](../chapters/06-difference-in-differences.qmd)</span>. To avoid such identification issues, modern event-study methods construct comparisons more carefully.</span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="fu">## Clean Comparisons</span></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>The safest comparisons are usually those between newly treated units and units that are still untreated at the same calendar time, either because they will be treated later or because they are never treated in the analysis sample.</span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>Suppose one group is first treated in period $g$. To estimate its effect at time $t$, we compare the change in outcomes for this group with the change in outcomes for units that have not yet been treated by time $t$.</span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>The identifying idea is a version of parallel trends:</span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>E<span class="co">[</span><span class="ot">Y_{it}(0)-Y_{i,g-1}(0)\mid G_i=g</span><span class="co">]</span></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>=</span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>E<span class="co">[</span><span class="ot">Y_{it}(0)-Y_{i,g-1}(0)\mid C_{it}(g)=1</span><span class="co">]</span>,</span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>where $C_{it}(g)=1$ denotes units that form a valid comparison group for cohort $g$ at time $t$, such as never-treated or not-yet-treated units.</span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>In words, absent treatment, the treated cohort and its comparison units would have experienced the same outcome change between the baseline period and time $t$.</span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>This logic underlies several modern DiD estimators.</span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a><span class="fu">## Weighted Difference-in-Differences</span></span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>Callaway and Sant'Anna propose a framework that estimates group-time treatment effects and then aggregates them <span class="co">[</span><span class="ot">@callaway2021</span><span class="co">]</span>. The first step is to estimate $ATT(g,t)$ for each treatment cohort $g$ and time period $t$. The second step is to combine these effects using transparent weights.</span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a>This approach makes clear which treated group is being compared with which control group, and how the final estimate is constructed.</span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a>The comparison group can be defined in two main ways:</span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**never-treated units**, namely units that are never exposed to the treatment during the observation period;</span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**not-yet-treated units**, namely units that have not yet received the treatment at time $t$, even if they will receive it later.</span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>In both cases, the comparison can also be adjusted for observed covariates. This means that treated units in cohort $g$ are compared with control units that are similar in terms of pre-treatment characteristics, rather than being compared mechanically with all available untreated units.</span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>Once the group-time effects have been estimated, they can be aggregated into event-time effects. This produces the event-study plot, but without relying on TWFE comparisons that may be contaminated by already-treated units.</span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a><span class="fu">### Weighted DiD</span></span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a>Estimate treatment effects separately by cohort and period, then aggregate them using explicit weights. In the Callaway and Sant'Anna framework, these weights are transparent and are typically linked to the number of treated units contributing to each group-time effect. This makes the final estimate easier to interpret than a single TWFE coefficient, because we can see which cohorts and time periods contribute to the aggregate effect, and how much they contribute.</span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a><span class="fu">## Multiple Difference-in-Differences</span></span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a>de Chaisemartin and D'Haultfoeuille develop related estimators that also avoid problematic TWFE comparisons <span class="co">[</span><span class="ot">@dechaisemartin2020; @dechaisemartin2026book</span><span class="co">]</span>.</span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>The broad idea is to build treatment-effect estimates from clean DiD comparisons. Rather than allowing the regression to implicitly choose comparisons and weights, the method constructs comparisons between units whose treatment status changes and appropriate control units whose treatment status does not change over the relevant interval.</span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>This family of estimators is useful because it emphasizes a practical lesson: with staggered adoption, the researcher should know which comparisons identify the effect.</span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a>In applications, these estimators often report dynamic effects, showing how the outcome changes in the periods following treatment.</span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a><span class="fu">## Matching DiD for Panel Data</span></span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a>Another approach is to combine matching and DiD. The basic matching DiD estimator controls for observed differences through matching and for time-invariant unobserved differences through differencing <span class="co">[</span><span class="ot">@heckman1997</span><span class="co">]</span>.</span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a>Imai, Kim, and Wang extend this logic to time-series cross-sectional data through **PanelMatch** <span class="co">[</span><span class="ot">@imai2023</span><span class="co">]</span>. The method constructs matched sets for treated observations using their pre-treatment histories.</span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a>The procedure can be summarized in four steps:</span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Identify treated unit-periods.</span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>Match treated observations to control observations with similar pre-treatment histories.</span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Use the matched controls to construct counterfactual outcomes.</span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Estimate dynamic treatment effects over future horizons.</span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a>This approach is attractive because it makes the construction of the control group transparent. It also allows researchers to inspect balance not only in baseline covariates, but also in lagged outcomes and covariate histories.</span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="simple"}</span>
+<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a><span class="fu">### PanelMatch intuition</span></span>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a>PanelMatch asks: for each unit at the moment it becomes treated, can we find units that are still untreated and have a similar recent history in terms of treatment status, pre-treatment outcomes, and covariates?</span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a><span class="fu">## Dynamic Treatment Effects</span></span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a>Event studies are valuable because treatment effects may not be instantaneous.</span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>For example, a reform allowing election-day registration may affect turnout immediately. A labor-market shock may reduce employment quickly but generate longer-run adjustment. A mass layoff may affect local employment for many years. A democratization episode may affect economic growth gradually.</span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>For post-treatment horizons, dynamic treatment effects can be summarized by event-time effects:</span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a>\tau_{\ell}</span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a>=</span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>\sum_g \omega_{g\ell} ATT(g,g+\ell),</span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a>where the weights $\omega_{g\ell}$ determine how much each cohort contributes to the event-time effect at horizon $\ell$. The estimate reported in an event-study plot is usually denoted by $\widehat{\tau}_{\ell}$.</span>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>The event-study plot then becomes a compact visual summary of both pre-treatment diagnostics and post-treatment dynamics.</span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a><span class="fu">## Pre-Trends and Anticipation</span></span>
+<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a>Pre-treatment event-time coefficients are often interpreted as tests of the parallel-trends assumption. This interpretation should be cautious.</span>
+<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a>If estimates before treatment are far from zero, this is a warning sign. Treated units may have been on different trends, or the policy may have been anticipated before formal implementation.</span>
+<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a>If pre-treatment coefficients are close to zero, this supports the design, but it does not prove parallel trends. The counterfactual post-treatment trend remains unobserved.</span>
+<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a>Anticipation is especially important in event studies. If units change behavior before the treatment date because they expect the policy, then periods just before treatment are no longer untreated in a substantive sense.</span>
+<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning appearance="simple"}</span>
+<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a><span class="fu">### Pre-trends are not magic</span></span>
+<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a>Flat pre-treatment coefficients make the design more credible, but they do not guarantee that post-treatment counterfactual trends are parallel.</span>
+<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a><span class="fu">## Choosing the Baseline Period</span></span>
+<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a>Event studies require a reference period. A common choice is the period just before treatment, $\ell=-1$.</span>
+<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a>This choice is natural, but not automatic. If there is anticipation, the period immediately before treatment may already be affected. In that case, using $\ell=-1$ as the baseline can understate or distort treatment effects.</span>
+<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a>Researchers should report the reference period clearly and explain why it is appropriate.</span>
+<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a><span class="fu">## Aggregation</span></span>
+<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a>Modern DiD event-study methods often begin with many building blocks: effects by cohort, calendar time, and event time. The final estimate depends on how these building blocks are aggregated.</span>
+<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a>Aggregation is not a purely technical detail. Different weights answer different questions.</span>
+<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a>For example:</span>
+<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>equal weights across cohorts answer a cohort-balanced question;</span>
+<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>weights proportional to cohort size answer a population-weighted question;</span>
+<span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>event-time weights describe the average effect at a given horizon after treatment;</span>
+<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>calendar-time weights describe the average effect in a given period.</span>
+<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a>Baker et al. emphasize that applied researchers should be explicit about the target parameter and the weights used to construct it <span class="co">[</span><span class="ot">@baker2026didguide</span><span class="co">]</span>.</span>
+<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a><span class="fu">## Empirical Example</span></span>
+<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a>A classic application of event-study methods is Wolfers' analysis of unilateral divorce laws in the United States <span class="co">[</span><span class="ot">@wolfers2006</span><span class="co">]</span>. The empirical question is whether making divorce easier by allowing unilateral divorce changed divorce rates. The setting is well suited to an event-study design because U.S. states adopted unilateral divorce laws in different years. Some states changed their divorce laws early, others later, and some did not adopt them during the same period.</span>
+<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a>This staggered timing makes it possible to compare the evolution of divorce rates before and after adoption across different groups of states. The event-study framework is especially useful because the effect of the reform need not be immediate or constant over time. Divorce rates may respond gradually after the law changes, and the effect may increase, decline, or disappear several years after adoption.</span>
+<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a>The application also illustrates why modern DiD methods are needed in staggered-adoption settings. If treatment effects vary across cohorts or over time, a simple TWFE event-study regression may combine comparisons that are difficult to interpret, including comparisons between newly treated states and states that were already treated. Modern estimators instead make the comparison more explicit: they compare states adopting the reform at a given time with states that are not yet treated or never treated, and then aggregate the resulting cohort-time effects using transparent weights.</span>
+<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a>This example is useful pedagogically because it shows the core purpose of event-study analysis: not only estimating whether a policy had an effect, but also tracing how that effect evolves before and after treatment adoption.</span>
+<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a><span class="fu">## Diagnostics and Validity Checks</span></span>
+<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a>A credible event-study analysis should report:</span>
+<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>the timing of treatment adoption across units;</span>
+<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>which units are used as controls at each horizon;</span>
+<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>whether never-treated or not-yet-treated units are used;</span>
+<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>event-time plots with confidence intervals;</span>
+<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>pre-treatment estimates;</span>
+<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>sensitivity to alternative comparison groups;</span>
+<span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>sensitivity to alternative event windows;</span>
+<span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>whether treatment is absorbing or can turn on and off;</span>
+<span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>whether anticipation or carryover effects are plausible;</span>
+<span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>how group-time effects are aggregated.</span>
+<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a>The treatment variation plot is often useful. It shows when units become treated and whether enough untreated or not-yet-treated units remain available as controls at each point in time.</span>
+<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a><span class="fu">## Worked Example</span></span>
+<span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a>Suppose some regions introduce a new active labor-market policy in different years. Once introduced, the policy remains in place. We observe employment rates for all regions over time.</span>
+<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a>A simple TWFE regression would compare all treated and untreated observations while absorbing region and year fixed effects. But if early-treated regions are later used as controls for late-treated regions, and if the policy effect evolves over time, the estimate may be misleading.</span>
+<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a>A modern event-study approach would instead proceed as follows:</span>
+<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>Group regions by the year in which they first adopt the policy.</span>
+<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>For each treated cohort and each post-treatment year, compare the cohort with regions not yet treated or never treated.</span>
+<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Estimate cohort-time effects.</span>
+<span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Aggregate these effects by event time.</span>
+<span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a><span class="ss">5. </span>Plot the dynamic effects before and after adoption.</span>
+<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a>If the pre-treatment estimates are close to zero and the post-treatment estimates rise gradually, the evidence would be consistent with a delayed positive employment effect. If pre-treatment estimates are already rising before adoption, the design would be less credible.</span>
+<span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a>Event studies extend DiD by organizing effects around the timing of treatment. They are especially useful for staggered adoption and dynamic treatment effects.</span>
+<span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a>The modern lesson is that event-study plots should not be produced mechanically with TWFE regressions. When treatment effects are heterogeneous, TWFE may use problematic comparisons and implicit weights.</span>
+<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a>Modern event-study estimators instead build effects from clearer comparisons, such as treated cohorts versus not-yet-treated or never-treated units, and then aggregate group-time effects transparently. The central questions are always: what is the comparison group, what is the target estimand, and how are the dynamic effects aggregated?</span>
+<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
+<span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a><span class="fu">## Software packages</span></span>
+<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-279"><a href="#cb1-279" aria-hidden="true" tabindex="-1"></a>Several software packages can be used to implement DiD and event study designs.</span>
+<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-281"><a href="#cb1-281" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**R**</span>
+<span id="cb1-282"><a href="#cb1-282" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`did`</span><span class="co">](https://bcallaway11.github.io/did/)</span>: implementation of Callaway and Sant'Anna-type DiD estimators for multiple periods and staggered treatment adoption.</span>
+<span id="cb1-283"><a href="#cb1-283" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`DIDmultiplegtDYN`</span><span class="co">](https://cran.r-project.org/package=DIDmultiplegtDYN)</span>: implementation of de Chaisemartin and D'Haultfoeuille-type DiD estimators for dynamic and potentially complex treatment designs.</span>
+<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`HonestDiD`</span><span class="co">](https://github.com/asheshrambachan/HonestDiD)</span>: sensitivity analysis for violations of parallel trends.</span>
+<span id="cb1-285"><a href="#cb1-285" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`PanelMatch`</span><span class="co">](https://cran.r-project.org/package=PanelMatch)</span>: tools for non-parametric DiD with comparison groups constructed on the basis of treatment histories and pre-treatment outcomes <span class="co">[</span><span class="ot">@imai2023</span><span class="co">]</span>.</span>
+<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Python**</span>
+<span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`pyfixest`</span><span class="co">](https://py-econometrics.github.io/pyfixest/)</span>: Python implementation inspired by <span class="in">`fixest`</span>, useful for fixed-effects and event-study specifications.</span>
+<span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`differences`</span><span class="co">](https://pypi.org/project/differences/)</span>: Python package implementing DiD estimators for multiple periods and staggered treatment adoption.</span>
+<span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`diff-diff`</span><span class="co">](https://pypi.org/project/diff-diff/)</span>: Python library for difference-in-differences, event-study, and related DiD designs.</span>
+<span id="cb1-291"><a href="#cb1-291" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Stata**</span>
+<span id="cb1-293"><a href="#cb1-293" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`csdid`</span><span class="co">](https://ideas.repec.org/c/boc/bocode/s458976.html)</span>: Stata command implementing Callaway and Sant'Anna-type DiD estimators for multiple periods.</span>
+<span id="cb1-294"><a href="#cb1-294" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span><span class="co">[</span><span class="ot">`did_multiplegt_dyn`</span><span class="co">](https://ideas.repec.org/c/boc/bocode/s459222.html)</span>: Stata command implementing de Chaisemartin and D'Haultfoeuille-type dynamic DiD estimators.</span>
+<span id="cb1-295"><a href="#cb1-295" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="co">[</span><span class="ot">`eventstudyinteract`</span><span class="co">](https://ideas.repec.org/c/boc/bocode/s458978.html)</span>: implements interaction-weighted event-study estimators.</span>
+<span id="cb1-296"><a href="#cb1-296" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Augusto Cerqua</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/augustocerqua/backbone-impact-evaluation/edit/main/chapters/07-event-studies.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/augustocerqua/backbone-impact-evaluation/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Built with Quarto</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

@@ -1,0 +1,6 @@
+"event_time","estimate","std_error","period_type","conf_low","conf_high","outcome","lag","lead_max","model_label","model_tag","refinement_method","size_match","exact_match_variables","se_method","n_matched_sets"
+-2,0.0383141762452107,0.0396485441992739,"Pre-treatment placebo",-0.0393969703853661,0.116025322875788,"n_manodopera",2,2,"Mahalanobis - 3 neighbors","mahalanobis_n3","mahalanobis",3,"dummy_collina + dummy_piccole + dummy_cond_fam","unconditional",87
+-1,0,0,"Baseline",0,0,"n_manodopera",2,2,"Mahalanobis - 3 neighbors","mahalanobis_n3","mahalanobis",3,"dummy_collina + dummy_piccole + dummy_cond_fam","unconditional",87
+0,-0.0842911877394636,0.0587448125403436,"Post-treatment",-0.199431020318537,0.0308486448396098,"n_manodopera",2,2,"Mahalanobis - 3 neighbors","mahalanobis_n3","mahalanobis",3,"dummy_collina + dummy_piccole + dummy_cond_fam","unconditional",87
+1,-0.0727969348659004,0.0614034992641348,"Post-treatment",-0.193147793423604,0.0475539236918037,"n_manodopera",2,2,"Mahalanobis - 3 neighbors","mahalanobis_n3","mahalanobis",3,"dummy_collina + dummy_piccole + dummy_cond_fam","unconditional",87
+2,-0.0996168582375479,0.0808395791311412,"Post-treatment",-0.258062433334585,0.0588287168594889,"n_manodopera",2,2,"Mahalanobis - 3 neighbors","mahalanobis_n3","mahalanobis",3,"dummy_collina + dummy_piccole + dummy_cond_fam","unconditional",87

@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>12&nbsp; Heterogeneous Treatment Effects – The Backbone of Impact Evaluation Methods</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/13-spillover_effects.html" rel="next">
+<link href="../chapters/11-forecast-based-designs.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-9e3e5b9121e68b3f077afb32f2c64d95.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-acff971833d9769290026d534105daaa.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-9e3e5b9121e68b3f077afb32f2c64d95.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles/styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/11-forecast-based-designs.html">Other topics</a></li><li class="breadcrumb-item"><a href="../chapters/12-heterogeneous_treatment_effects.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Heterogeneous Treatment Effects</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">The Backbone of Impact Evaluation Methods</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/augustocerqua/Back-to-basics-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Download" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Download"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../The-Backbone-of-Impact-Evaluation-Methods.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Download PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="../The-Backbone-of-Impact-Evaluation-Methods.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Download ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-why-impact-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Why Impact Evaluation?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-potential-outcomes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Potential Outcomes Framework</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-causal-parameters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Causal Parameters of Interest</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Control-based Designs</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-randomized-experiments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Randomized Controlled Trials</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-selection-on-observables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-difference-in-differences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Difference-in-Differences</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-event-studies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Event Studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-instrumental-variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Instrumental Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-regression-discontinuity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regression Discontinuity Design</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-synthetic-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Synthetic Control Method</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Other topics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-forecast-based-designs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Forecast-Based Counterfactual Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-heterogeneous_treatment_effects.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Heterogeneous Treatment Effects</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-spillover_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Spillover Effects</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-continuous_treatment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Continuous Treatments</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-miscellanea.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Miscellanea</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#from-average-effects-to-htes" id="toc-from-average-effects-to-htes" class="nav-link active" data-scroll-target="#from-average-effects-to-htes"><span class="header-section-number">12.1</span> From Average Effects to HTEs</a></li>
+  <li><a href="#why-heterogeneity-matters" id="toc-why-heterogeneity-matters" class="nav-link" data-scroll-target="#why-heterogeneity-matters"><span class="header-section-number">12.2</span> Why Heterogeneity Matters</a></li>
+  <li><a href="#the-most-common-approach-for-estimating-htes" id="toc-the-most-common-approach-for-estimating-htes" class="nav-link" data-scroll-target="#the-most-common-approach-for-estimating-htes"><span class="header-section-number">12.3</span> The Most Common Approach for Estimating HTEs</a></li>
+  <li><a href="#data-driven-estimation-of-htes" id="toc-data-driven-estimation-of-htes" class="nav-link" data-scroll-target="#data-driven-estimation-of-htes"><span class="header-section-number">12.4</span> Data-driven estimation of HTEs</a>
+  <ul class="collapse">
+  <li><a href="#decision-trees-and-random-forests" id="toc-decision-trees-and-random-forests" class="nav-link" data-scroll-target="#decision-trees-and-random-forests"><span class="header-section-number">12.4.1</span> Decision Trees and Random Forests</a></li>
+  <li><a href="#why-standard-machine-learning-is-not-enough" id="toc-why-standard-machine-learning-is-not-enough" class="nav-link" data-scroll-target="#why-standard-machine-learning-is-not-enough"><span class="header-section-number">12.4.2</span> Why Standard Machine Learning Is Not Enough</a></li>
+  <li><a href="#causal-trees" id="toc-causal-trees" class="nav-link" data-scroll-target="#causal-trees"><span class="header-section-number">12.4.3</span> Causal Trees</a></li>
+  <li><a href="#honest-estimation" id="toc-honest-estimation" class="nav-link" data-scroll-target="#honest-estimation"><span class="header-section-number">12.4.4</span> Honest Estimation</a></li>
+  <li><a href="#causal-trees-in-observational-studies" id="toc-causal-trees-in-observational-studies" class="nav-link" data-scroll-target="#causal-trees-in-observational-studies"><span class="header-section-number">12.4.5</span> Causal Trees in Observational Studies</a></li>
+  <li><a href="#causal-forests" id="toc-causal-forests" class="nav-link" data-scroll-target="#causal-forests"><span class="header-section-number">12.4.6</span> Causal Forests</a></li>
+  <li><a href="#interpreting-causal-forests" id="toc-interpreting-causal-forests" class="nav-link" data-scroll-target="#interpreting-causal-forests"><span class="header-section-number">12.4.7</span> Interpreting Causal Forests</a></li>
+  </ul></li>
+  <li><a href="#practical-guidance-on-the-estimation-of-htes" id="toc-practical-guidance-on-the-estimation-of-htes" class="nav-link" data-scroll-target="#practical-guidance-on-the-estimation-of-htes"><span class="header-section-number">12.5</span> Practical Guidance on the estimation of HTEs</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">12.6</span> Summary</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/edit/main/chapters/12-heterogeneous_treatment_effects.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/11-forecast-based-designs.html">Other topics</a></li><li class="breadcrumb-item"><a href="../chapters/12-heterogeneous_treatment_effects.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Heterogeneous Treatment Effects</span></a></li></ol></nav>
+<div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Heterogeneous Treatment Effects</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key idea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A policy can work on average and still work very differently across units. Heterogeneous treatment effect analysis asks who benefits, who does not, and can provide insights into why the same policy may produce different effects for different units.</p>
+</div>
+</div>
+<p>Most impact evaluation methods are introduced by focusing on average effects. We often ask whether a policy works <strong>on average</strong>, and summarize its impact using parameters such as the average treatment effect on the treated (ATT), or the local average treatment effect (LATE).</p>
+<p>This is a natural starting point. Because of the fundamental problem of causal inference, we cannot observe both potential outcomes for the same unit <span class="citation" data-cites="holland1986 rubin1974">(<a href="references.html#ref-holland1986" role="doc-biblioref">Holland 1986</a>; <a href="references.html#ref-rubin1974" role="doc-biblioref">Rubin 1974</a>)</span>. We therefore usually move from individual-level causal effects to average causal effects.</p>
+<p>However, average effects may hide important variation. A policy may be highly effective for some units, ineffective for others, and even harmful for another group. In many policy settings, knowing the average effects of a policy change is not enough. We also want to know <strong>for whom</strong> it works, <strong>where</strong> it works, and <strong>under which conditions</strong> it works best.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key idea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Heterogeneous treatment effect (HTE) analysis asks whether the causal effect of a treatment varies across units, groups, or contexts.</p>
+</div>
+</div>
+<section id="from-average-effects-to-htes" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="from-average-effects-to-htes"><span class="header-section-number">12.1</span> From Average Effects to HTEs</h2>
+<p>Let <span class="math inline">\(Y_i(1)\)</span> and <span class="math inline">\(Y_i(0)\)</span> denote the potential outcomes of unit <span class="math inline">\(i\)</span> under treatment and no treatment. The individual treatment effect is</p>
+<p><span class="math display">\[
+\tau_i = Y_i(1)-Y_i(0).
+\]</span></p>
+<p>If treatment effects were the same for all units, then</p>
+<p><span class="math display">\[
+\tau_i = \tau
+\]</span></p>
+<p>for every unit <span class="math inline">\(i\)</span>. In that special case, ATE, ATT, and LATE would all coincide.</p>
+<p>In practice, this assumption is often unrealistic. Treatment effects may vary by age, gender, education, income, firm size, local labor-market conditions, political context, baseline risk, or many other pre-treatment characteristics.</p>
+<p>For example, a job-search assistance program may be more effective for workers with intermediate skills than for workers who are either very highly skilled or very weakly attached to the labor market. A subsidy to firms may have larger effects among small liquidity-constrained firms than among large firms. A drug may help some patients but harm others.</p>
+<p>The object of interest is often the <strong>conditional average treatment effect</strong>, or <strong>CATE</strong>:</p>
+<p><span class="math display">\[
+CATE(x) =
+E[Y_i(1)-Y_i(0)\mid X_i=x].
+\]</span></p>
+<p>The CATE measures the average treatment effect for units with characteristics <span class="math inline">\(X_i=x\)</span>.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>CATE
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The CATE answers the question:<br>
+What is the average treatment effect for units with a given set of pre-treatment characteristics?</p>
+</div>
+</div>
+<p>Sometimes researchers focus on a single characteristic, such as gender, age group, or firm size. In other cases, they are interested in richer combinations of covariates. The main challenge is that heterogeneity may be multidimensional and nonlinear.</p>
+</section>
+<section id="why-heterogeneity-matters" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="why-heterogeneity-matters"><span class="header-section-number">12.2</span> Why Heterogeneity Matters</h2>
+<p>HTEs matter for several reasons.</p>
+<ol type="1">
+<li><p>They improve interpretation. If the average effect is close to zero, this does not necessarily mean that the policy had no effect. It may mean that positive effects for some units were offset by negative effects for others.</p></li>
+<li><p>They matter for targeting. Policymakers often need to decide who should receive a program in the future. If the policy is costly, it may be useful to target it toward the units that benefit most.</p></li>
+<li><p>Heterogeneity can reveal causal mechanisms. If effects are larger for some groups than for others, this may help us understand why the policy works.</p></li>
+<li><p>Heterogeneity is important for equity. A policy that improves average outcomes may still increase inequality if its benefits are concentrated among already advantaged groups.</p></li>
+</ol>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Policy relevance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A policy evaluation should not only ask whether a program works on average.<br>
+It should also ask whether the program works better or worse for different types of units.</p>
+</div>
+</div>
+</section>
+<section id="the-most-common-approach-for-estimating-htes" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="the-most-common-approach-for-estimating-htes"><span class="header-section-number">12.3</span> The Most Common Approach for Estimating HTEs</h2>
+<p>Although there exist several ways to study HTEs, post-conditioning on relevant subgroups is by far the most adopted. This generally consists of estimating the ATT and then examine whether the effect differs across subgroups. For example, researchers may estimate separate effects by gender, age, education, income, region, or firm size. This is a <strong>top-down</strong> approach: the researcher chooses the relevant subgroups based on theory, institutional knowledge, or prior evidence. For example, in a study of the electoral effects of refugee reception centers, one may ask whether the effect differs across municipalities with different income levels, political histories, or demographic structures.</p>
+<p>The advantage of this approach is that it is easy to understand and communicate. Its main limitation is that the estimation process can easily become arbitrary and vulnerable to cherry-picking: researchers may try many subgroup definitions and report only those that produce statistically significant differences. This creates risks of multiple testing, selective reporting, and p-hacking <span class="citation" data-cites="brand2021">(<a href="references.html#ref-brand2021" role="doc-biblioref">Brand et al. 2021</a>)</span>.</p>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>The risk of subgroup fishing
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Subgroup analysis is most credible when the relevant groups are motivated before looking at the results.<br>
+If many subgroups are explored and only significant findings are reported, inference becomes unreliable.</p>
+<p>This is also a <strong>multiple testing</strong> problem: the more subgroup comparisons we try, the more likely it is that some statistically significant differences will appear simply by chance.</p>
+</div>
+</div>
+<p>A second limitation is that one-variable-at-a-time subgroup analysis may miss complex patterns. Treatment effects may vary not simply by income or education separately, but by combinations of characteristics.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>A bottom-up approach to heterogeneity
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An alternative approach is to estimate treatment effects at a very disaggregated level and then study which characteristics are associated with larger or smaller effects. This is a more <strong>bottom-up</strong> strategy: instead of starting from pre-defined subgroups, the researcher first explores how effects vary across units and then tries to explain this variation using observed covariates.</p>
+<p>This approach can be useful when rich data are available and when the relevant dimensions of heterogeneity are not fully known in advance. However, these estimates should be interpreted with caution. Individual treatment effects are often noisy and should not be considered precisely estimated individual causal effects. A practical consequence is that researchers may end up overinterpreting random variation as meaningful heterogeneity, identifying apparent “winners” and “losers” of the treatment even when these differences are largely driven by estimation noise.</p>
+</div>
+</div>
+</section>
+<section id="data-driven-estimation-of-htes" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="data-driven-estimation-of-htes"><span class="header-section-number">12.4</span> Data-driven estimation of HTEs</h2>
+<p>Another approach estimates treatment effects and their heterogeneity at the same time. This is the logic behind methods such as <strong>causal trees</strong> and <strong>causal forests</strong>.</p>
+<p>These methods are designed to discover subgroups with different treatment effects in a data-driven way. They are especially useful when the researcher has many potential moderators and does not know in advance which combinations of covariates define the most responsive groups.</p>
+<p>Compared with traditional subgroup analysis, these methods can reduce researcher discretion and help detect nonlinear interactions. However, they also require careful implementation and strong identifying assumptions, especially in observational studies.</p>
+<section id="decision-trees-and-random-forests" class="level3" data-number="12.4.1">
+<h3 data-number="12.4.1" class="anchored" data-anchor-id="decision-trees-and-random-forests"><span class="header-section-number">12.4.1</span> Decision Trees and Random Forests</h3>
+<p>Causal trees and causal forests build on machine learning methods originally designed for prediction.</p>
+<p>A <strong>decision tree</strong> partitions the covariate space into regions. In a regression tree, the goal is to predict an outcome <span class="math inline">\(Y_i\)</span>. The algorithm searches for splits of the covariates that create groups with similar outcome values.</p>
+<p>For example, a regression tree predicting wine quality may first split wines by alcohol content, then split one branch by acidity, and another by sulphates. Each final leaf contains observations with similar predicted outcomes.</p>
+<p>Decision trees are attractive because they are easy to interpret. However, they can be unstable: small changes in the data may generate a different tree.</p>
+<p>A <strong>random forest</strong> addresses this instability by estimating many trees and averaging their predictions. Each tree is built on a different sample and uses a random subset of covariates when choosing splits. This usually improves predictive accuracy, but the resulting model is less transparent than a single tree.</p>
+</section>
+<section id="why-standard-machine-learning-is-not-enough" class="level3" data-number="12.4.2">
+<h3 data-number="12.4.2" class="anchored" data-anchor-id="why-standard-machine-learning-is-not-enough"><span class="header-section-number">12.4.2</span> Why Standard Machine Learning Is Not Enough</h3>
+<p>Standard decision trees and random forests are designed to predict outcomes. But causal inference has a different goal: estimating treatment effects.</p>
+<p>A method that predicts <span class="math inline">\(Y_i\)</span> very well does not necessarily estimate causal effects well. Predicting outcomes and estimating unbiased treatment effects are different problems.</p>
+<p>For this reason, standard machine learning tools should not be used directly to estimate causal effects without modification. They must be adapted to the causal problem.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Prediction is not causation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A model can predict outcomes accurately and still fail to estimate causal effects.<br>
+Causal trees and causal forests modify tree-based methods so that they target treatment effect heterogeneity rather than outcome prediction.</p>
+</div>
+</div>
+</section>
+<section id="causal-trees" class="level3" data-number="12.4.3">
+<h3 data-number="12.4.3" class="anchored" data-anchor-id="causal-trees"><span class="header-section-number">12.4.3</span> Causal Trees</h3>
+<p><strong>Causal trees</strong>, introduced by Athey and Imbens, adapt decision trees to estimate heterogeneous treatment effects <span class="citation" data-cites="athey2016">(<a href="references.html#ref-athey2016" role="doc-biblioref">Athey and Imbens 2016</a>)</span>.</p>
+<p>Instead of splitting the data to improve prediction of <span class="math inline">\(Y_i\)</span>, causal trees split the data to find groups with different treatment effects. The goal is to create leaves where treatment effects are relatively homogeneous within each leaf but differ across leaves.</p>
+<p>Each terminal leaf of the tree contains an estimate of the treatment effect for units in that subgroup.</p>
+<p>For example, a causal tree may find that a training programme has a large effect for young workers with low previous earnings, a smaller effect for older workers, and no effect for workers with high baseline employment probabilities.</p>
+<p>The key challenge is that the true individual treatment effect is never observed. Unlike standard prediction problems, we do not have a ground-truth outcome equal to <span class="math inline">\(\tau_i\)</span> for each unit.</p>
+<p>Causal trees address this by using criteria that reward splits producing meaningful differences in estimated treatment effects while penalizing imprecise estimates.</p>
+</section>
+<section id="honest-estimation" class="level3" data-number="12.4.4">
+<h3 data-number="12.4.4" class="anchored" data-anchor-id="honest-estimation"><span class="header-section-number">12.4.4</span> Honest Estimation</h3>
+<p>A central idea in causal trees is <strong>honesty</strong>. The data are split into two parts:</p>
+<ul>
+<li>one part is used to build the tree;</li>
+<li>the other part is used to estimate treatment effects within the leaves.</li>
+</ul>
+<p>This helps reduce overfitting. If the same data are used both to choose the subgroups and to estimate the effects, the estimated heterogeneity may be exaggerated. Honest estimation separates discovery from estimation.</p>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Honest trees
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Honest causal trees use one part of the data to decide the tree structure and another part to estimate treatment effects within the leaves.</p>
+</div>
+</div>
+<p>The price is that each task uses less data. This can reduce precision, especially in small samples.</p>
+</section>
+<section id="causal-trees-in-observational-studies" class="level3" data-number="12.4.5">
+<h3 data-number="12.4.5" class="anchored" data-anchor-id="causal-trees-in-observational-studies"><span class="header-section-number">12.4.5</span> Causal Trees in Observational Studies</h3>
+<p>In randomized experiments, treatment assignment is independent of potential outcomes by design. In observational studies, this is not true. Causal trees must therefore rely on identifying assumptions, typically some version of <strong>unconfoundedness</strong>.</p>
+<p>The idea is that, after controlling for observed covariates, treatment assignment is as good as random. If this assumption is credible, causal trees can be combined with methods such as propensity score adjustment or inverse probability weighting.</p>
+<p>The important point is that causal trees do not automatically solve confounding. They help discover heterogeneity conditional on the assumptions that make causal identification possible.</p>
+</section>
+<section id="causal-forests" class="level3" data-number="12.4.6">
+<h3 data-number="12.4.6" class="anchored" data-anchor-id="causal-forests"><span class="header-section-number">12.4.6</span> Causal Forests</h3>
+<p>A single causal tree is interpretable but may be unstable. A <strong>causal forest</strong> extends the logic of random forests to treatment effect estimation.</p>
+<p>Instead of growing one causal tree, a causal forest grows many causal trees and combines their information to estimate conditional treatment effects <span class="citation" data-cites="wager2018">(<a href="references.html#ref-wager2018" role="doc-biblioref">Wager and Athey 2018</a>)</span>.</p>
+<p>Causal forests are less visually transparent than a single tree, but they are usually more stable and flexible. They can handle many covariates and complex interactions, and they can provide useful summaries of heterogeneity.</p>
+<p>Common outputs include:</p>
+<ul>
+<li>estimated CATEs for individual units or subgroups;</li>
+<li>tests for the presence of treatment effect heterogeneity;</li>
+<li>variable importance measures;</li>
+<li>subgroup summaries based on predicted treatment effects.</li>
+</ul>
+<p>For example, a causal forest may show that the effect of job displacement on earnings differs substantially across workers, establishments, and local labor markets <span class="citation" data-cites="athey2024">(<a href="references.html#ref-athey2024" role="doc-biblioref">Athey et al. 2024</a>)</span>.</p>
+</section>
+<section id="interpreting-causal-forests" class="level3" data-number="12.4.7">
+<h3 data-number="12.4.7" class="anchored" data-anchor-id="interpreting-causal-forests"><span class="header-section-number">12.4.7</span> Interpreting Causal Forests</h3>
+<p>Causal forests can be powerful, but they require careful interpretation.</p>
+<p>First, the estimates are not individual treatment effects observed in the data. They are predictions of conditional treatment effects based on patterns in the data.</p>
+<p>Second, the results depend on the identifying assumptions. If treatment assignment is confounded by unobserved variables, causal forests may discover heterogeneity in selection bias rather than heterogeneity in causal effects.</p>
+<p>Third, variable importance measures should not be interpreted mechanically. A variable may appear important because it helps define treatment effect heterogeneity, but the meaning of that heterogeneity still requires substantive interpretation.</p>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Be careful with causal forests
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Causal forests can be useful tools for exploring HTEs, but their unit-level predictions should not be interpreted as precisely estimated individual causal effects. These methods build on recursive partitioning, and the resulting estimates can be locally noisy, especially in sparse regions of the covariate space or when some leaves contain few observations.</p>
+<p>Recent theoretical results show that even causal trees based on standard splitting rules may perform poorly at the local level, even when average accuracy looks acceptable <span class="citation" data-cites="cattaneo2026accuracy">(<a href="references.html#ref-cattaneo2026accuracy" role="doc-biblioref">Cattaneo et al. 2026</a>)</span>. This means that a model may appear to work well overall while still producing unreliable effect estimates for specific units or small subgroups.</p>
+<p>For this reason, causal forests are best used as exploratory tools for detecting broad patterns of heterogeneity, not as automatic machines for identifying precisely which units benefit more or less from a policy.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="practical-guidance-on-the-estimation-of-htes" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="practical-guidance-on-the-estimation-of-htes"><span class="header-section-number">12.5</span> Practical Guidance on the estimation of HTEs</h2>
+<p>A credible analysis of heterogeneous treatment effects should report:</p>
+<ul>
+<li>why heterogeneity is substantively important;</li>
+<li>whether subgroup analyses were pre-specified or exploratory;</li>
+<li>which covariates are used to define heterogeneity;</li>
+<li>how multiple testing is handled;</li>
+<li>whether the analysis relies on unconfoundedness, randomization, IV, RDD, or another design;</li>
+<li>whether the estimated heterogeneity is statistically meaningful;</li>
+<li>how large the subgroups are;</li>
+<li>whether results are robust across alternative specifications or methods.</li>
+</ul>
+<p>When using causal trees or causal forests, it is also useful to report how the data were split, how tuning parameters were chosen, and which covariates are most important in explaining heterogeneity.</p>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Heterogeneity needs design too
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Flexible methods can find patterns, but they do not create causal identification by themselves.<br>
+The credibility of HTE analysis still depends on the underlying research design.</p>
+</div>
+</div>
+</section>
+<section id="summary" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="summary"><span class="header-section-number">12.6</span> Summary</h2>
+<p>Average treatment effects are useful, but they may hide important variation. Heterogeneous treatment effect analysis asks whether a policy works differently for different units.</p>
+<p>Traditional subgroup analysis is simple and transparent, but it can be vulnerable to multiple testing and selective reporting. More flexible approaches, such as causal trees and causal forests, can discover complex heterogeneity across many covariates, but they require careful implementation and interpretation.</p>
+<p>The main message is that heterogeneity analysis should not be treated as a purely technical exercise. It should be connected to theory, policy relevance, and the credibility of the underlying causal design.</p>
+
+
+<!-- -->
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-athey2016" class="csl-entry" role="listitem">
+Athey, Susan, and Guido Imbens. 2016. <span>“Recursive Partitioning for Heterogeneous Causal Effects.”</span> <em>Proceedings of the National Academy of Sciences</em> 113 (27): 7353–60. <a href="https://doi.org/10.1073/pnas.1510489113">https://doi.org/10.1073/pnas.1510489113</a>.
+</div>
+<div id="ref-athey2024" class="csl-entry" role="listitem">
+Athey, Susan, Lisa K. Simon, Oskar Nordström Skans, Johan Vikström, and Yaroslav Yakymovych. 2024. <em>The Heterogeneous Earnings Impact of Job Loss Across Workers, Establishments, and Markets</em>. IFAU Working Paper 2024:10. Institute for Evaluation of Labour Market; Education Policy. <a href="https://www.ifau.se/en/Press/Abstracts/the-heterogeneous-earnings-impact-of-job-lossacross-workers-establishments-and-markets/">https://www.ifau.se/en/Press/Abstracts/the-heterogeneous-earnings-impact-of-job-lossacross-workers-establishments-and-markets/</a>.
+</div>
+<div id="ref-brand2021" class="csl-entry" role="listitem">
+Brand, Jennie E., Jiahui Xu, Bernard Koch, and Pablo Geraldo. 2021. <span>“Uncovering Sociological Effect Heterogeneity Using Tree-Based Machine Learning.”</span> <em>Sociological Methodology</em> 51 (2): 189–223. <a href="https://doi.org/10.1177/0081175021993503">https://doi.org/10.1177/0081175021993503</a>.
+</div>
+<div id="ref-cattaneo2026accuracy" class="csl-entry" role="listitem">
+Cattaneo, Matias D., Jason M. Klusowski, and Ruiqi Rae Yu. 2026. <span>“Accuracy Limits of Causal Trees for Individualized Treatment Effects.”</span> <em>arXiv Preprint arXiv:2509.11381</em>, ahead of print. <a href="https://doi.org/10.48550/arXiv.2509.11381">https://doi.org/10.48550/arXiv.2509.11381</a>.
+</div>
+<div id="ref-holland1986" class="csl-entry" role="listitem">
+Holland, Paul W. 1986. <span>“Statistics and Causal Inference.”</span> <em>Journal of the American Statistical Association</em> 81 (396): 945–60. <a href="https://doi.org/10.1080/01621459.1986.10478354">https://doi.org/10.1080/01621459.1986.10478354</a>.
+</div>
+<div id="ref-rubin1974" class="csl-entry" role="listitem">
+Rubin, Donald B. 1974. <span>“Estimating Causal Effects of Treatments in Randomized and Nonrandomized Studies.”</span> <em>Journal of Educational Psychology</em> 66 (5): 688–701. <a href="https://doi.org/10.1037/h0037350">https://doi.org/10.1037/h0037350</a>.
+</div>
+<div id="ref-wager2018" class="csl-entry" role="listitem">
+Wager, Stefan, and Susan Athey. 2018. <span>“Estimation and Inference of Heterogeneous Treatment Effects Using Random Forests.”</span> <em>Journal of the American Statistical Association</em> 113 (523): 1228–42. <a href="https://doi.org/10.1080/01621459.2017.1319839">https://doi.org/10.1080/01621459.2017.1319839</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+    const viewSource = window.document.getElementById('quarto-view-source') ||
+                       window.document.getElementById('quarto-code-tools-source');
+    if (viewSource) {
+      const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+      viewSource.addEventListener("click", function(e) {
+        if (sourceUrl) {
+          // rstudio viewer pane
+          if (/\bcapabilities=\b/.test(window.location)) {
+            window.open(sourceUrl);
+          } else {
+            window.location.href = sourceUrl;
+          }
+        } else {
+          const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+          modal.show();
+        }
+        return false;
+      });
+    }
+    function toggleCodeHandler(show) {
+      return function(e) {
+        const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+        for (let i=0; i<detailsSrc.length; i++) {
+          const details = detailsSrc[i].parentElement;
+          if (show) {
+            details.open = true;
+          } else {
+            details.removeAttribute("open");
+          }
+        }
+        const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+        const fromCls = show ? "hidden" : "unhidden";
+        const toCls = show ? "unhidden" : "hidden";
+        for (let i=0; i<cellCodeDivs.length; i++) {
+          const codeDiv = cellCodeDivs[i];
+          if (codeDiv.classList.contains(fromCls)) {
+            codeDiv.classList.remove(fromCls);
+            codeDiv.classList.add(toCls);
+          } 
+        }
+        return false;
+      }
+    }
+    const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+    if (hideAllCode) {
+      hideAllCode.addEventListener("click", toggleCodeHandler(false));
+    }
+    const showAllCode = window.document.getElementById("quarto-show-all-code");
+    if (showAllCode) {
+      showAllCode.addEventListener("click", toggleCodeHandler(true));
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/augustocerqua\.github\.io\/Back-to-basics-book\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/11-forecast-based-designs.html" class="pagination-link" aria-label="Forecast-Based Counterfactual Methods">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Forecast-Based Counterfactual Methods</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/13-spillover_effects.html" class="pagination-link" aria-label="Spillover Effects">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Spillover Effects</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Heterogeneous Treatment Effects</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">### Key idea</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>A policy can work on average and still work very differently across units. Heterogeneous treatment effect analysis asks who benefits, who does not, and can provide insights into why the same policy may produce different effects for different units.</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>Most impact evaluation methods are introduced by focusing on average effects. We often ask whether a policy works **on average**, and summarize its impact using parameters such as the average treatment effect on the treated (ATT), or the local average treatment effect (LATE).</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>This is a natural starting point. Because of the fundamental problem of causal inference, we cannot observe both potential outcomes for the same unit <span class="co">[</span><span class="ot">@holland1986; @rubin1974</span><span class="co">]</span>. We therefore usually move from individual-level causal effects to average causal effects.</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>However, average effects may hide important variation. A policy may be highly effective for some units, ineffective for others, and even harmful for another group. In many policy settings, knowing the average effects of a policy change is not enough. We also want to know **for whom** it works, **where** it works, and **under which conditions** it works best.</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">### Key idea</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>Heterogeneous treatment effect (HTE) analysis asks whether the causal effect of a treatment varies across units, groups, or contexts.</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="fu">## From Average Effects to HTEs</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>Let $Y_i(1)$ and $Y_i(0)$ denote the potential outcomes of unit $i$ under treatment and no treatment. The individual treatment effect is</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>\tau_i = Y_i(1)-Y_i(0).</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>If treatment effects were the same for all units, then</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>\tau_i = \tau</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>for every unit $i$. In that special case, ATE, ATT, and LATE would all coincide.</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>In practice, this assumption is often unrealistic. Treatment effects may vary by age, gender, education, income, firm size, local labor-market conditions, political context, baseline risk, or many other pre-treatment characteristics.</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>For example, a job-search assistance program may be more effective for workers with intermediate skills than for workers who are either very highly skilled or very weakly attached to the labor market. A subsidy to firms may have larger effects among small liquidity-constrained firms than among large firms. A drug may help some patients but harm others.</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>The object of interest is often the **conditional average treatment effect**, or **CATE**:</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>CATE(x) =</span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>E<span class="co">[</span><span class="ot">Y_i(1)-Y_i(0)\mid X_i=x</span><span class="co">]</span>.</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>The CATE measures the average treatment effect for units with characteristics $X_i=x$.</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="fu">### CATE</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>The CATE answers the question:  </span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>What is the average treatment effect for units with a given set of pre-treatment characteristics?</span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>Sometimes researchers focus on a single characteristic, such as gender, age group, or firm size. In other cases, they are interested in richer combinations of covariates. The main challenge is that heterogeneity may be multidimensional and nonlinear.</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why Heterogeneity Matters</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a>HTEs matter for several reasons.</span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span>They improve interpretation. If the average effect is close to zero, this does not necessarily mean that the policy had no effect. It may mean that positive effects for some units were offset by negative effects for others.</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span>They matter for targeting. Policymakers often need to decide who should receive a program in the future. If the policy is costly, it may be useful to target it toward the units that benefit most.</span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span>Heterogeneity can reveal causal mechanisms. If effects are larger for some groups than for others, this may help us understand why the policy works.</span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a><span class="ss">4. </span>Heterogeneity is important for equity. A policy that improves average outcomes may still increase inequality if its benefits are concentrated among already advantaged groups.</span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="simple"}</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="fu">### Policy relevance</span></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a>A policy evaluation should not only ask whether a program works on average.  </span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>It should also ask whether the program works better or worse for different types of units.</span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a><span class="fu">## The Most Common Approach for Estimating HTEs</span></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a>Although there exist several ways to study HTEs, post-conditioning on relevant subgroups is by far the most adopted. This generally consists of estimating the ATT and then examine whether the effect differs across subgroups. For example, researchers may estimate separate effects by gender, age, education, income, region, or firm size. This is a **top-down** approach: the researcher chooses the relevant subgroups based on theory, institutional knowledge, or prior evidence. For example, in a study of the electoral effects of refugee reception centers, one may ask whether the effect differs across municipalities with different income levels, political histories, or demographic structures.</span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>The advantage of this approach is that it is easy to understand and communicate. Its main limitation is that the estimation process can easily become arbitrary and vulnerable to cherry-picking: researchers may try many subgroup definitions and report only those that produce statistically significant differences. This creates risks of multiple testing, selective reporting, and p-hacking <span class="co">[</span><span class="ot">@brand2021</span><span class="co">]</span>.</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning appearance="simple"}</span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true" tabindex="-1"></a><span class="fu">### The risk of subgroup fishing</span></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a>Subgroup analysis is most credible when the relevant groups are motivated before looking at the results.  </span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a>If many subgroups are explored and only significant findings are reported, inference becomes unreliable.</span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a>This is also a **multiple testing** problem: the more subgroup comparisons we try, the more likely it is that some statistically significant differences will appear simply by chance.</span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a>A second limitation is that one-variable-at-a-time subgroup analysis may miss complex patterns. Treatment effects may vary not simply by income or education separately, but by combinations of characteristics.</span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a><span class="fu">### A bottom-up approach to heterogeneity</span></span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>An alternative approach is to estimate treatment effects at a very disaggregated level and then study which characteristics are associated with larger or smaller effects. This is a more **bottom-up** strategy: instead of starting from pre-defined subgroups, the researcher first explores how effects vary across units and then tries to explain this variation using observed covariates.</span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>This approach can be useful when rich data are available and when the relevant dimensions of heterogeneity are not fully known in advance. However, these estimates should be interpreted with caution. Individual treatment effects are often noisy and should not be considered precisely estimated individual causal effects. A practical consequence is that researchers may end up overinterpreting random variation as meaningful heterogeneity, identifying apparent “winners” and “losers” of the treatment even when these differences are largely driven by estimation noise.</span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data-driven estimation of HTEs</span></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>Another approach estimates treatment effects and their heterogeneity at the same time. This is the logic behind methods such as **causal trees** and **causal forests**.</span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>These methods are designed to discover subgroups with different treatment effects in a data-driven way. They are especially useful when the researcher has many potential moderators and does not know in advance which combinations of covariates define the most responsive groups.</span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a>Compared with traditional subgroup analysis, these methods can reduce researcher discretion and help detect nonlinear interactions. However, they also require careful implementation and strong identifying assumptions, especially in observational studies.</span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a><span class="fu">### Decision Trees and Random Forests</span></span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>Causal trees and causal forests build on machine learning methods originally designed for prediction.</span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>A **decision tree** partitions the covariate space into regions. In a regression tree, the goal is to predict an outcome $Y_i$. The algorithm searches for splits of the covariates that create groups with similar outcome values.</span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>For example, a regression tree predicting wine quality may first split wines by alcohol content, then split one branch by acidity, and another by sulphates. Each final leaf contains observations with similar predicted outcomes.</span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a>Decision trees are attractive because they are easy to interpret. However, they can be unstable: small changes in the data may generate a different tree.</span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a>A **random forest** addresses this instability by estimating many trees and averaging their predictions. Each tree is built on a different sample and uses a random subset of covariates when choosing splits. This usually improves predictive accuracy, but the resulting model is less transparent than a single tree.</span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a><span class="fu">### Why Standard Machine Learning Is Not Enough</span></span>
+<span id="cb1-125"><a href="#cb1-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-126"><a href="#cb1-126" aria-hidden="true" tabindex="-1"></a>Standard decision trees and random forests are designed to predict outcomes. But causal inference has a different goal: estimating treatment effects.</span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a>A method that predicts $Y_i$ very well does not necessarily estimate causal effects well. Predicting outcomes and estimating unbiased treatment effects are different problems.</span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a>For this reason, standard machine learning tools should not be used directly to estimate causal effects without modification. They must be adapted to the causal problem.</span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="simple"}</span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a><span class="fu">### Prediction is not causation</span></span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a>A model can predict outcomes accurately and still fail to estimate causal effects.  </span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a>Causal trees and causal forests modify tree-based methods so that they target treatment effect heterogeneity rather than outcome prediction.</span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a><span class="fu">### Causal Trees</span></span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>**Causal trees**, introduced by Athey and Imbens, adapt decision trees to estimate heterogeneous treatment effects <span class="co">[</span><span class="ot">@athey2016</span><span class="co">]</span>.</span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>Instead of splitting the data to improve prediction of $Y_i$, causal trees split the data to find groups with different treatment effects. The goal is to create leaves where treatment effects are relatively homogeneous within each leaf but differ across leaves.</span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>Each terminal leaf of the tree contains an estimate of the treatment effect for units in that subgroup.</span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>For example, a causal tree may find that a training programme has a large effect for young workers with low previous earnings, a smaller effect for older workers, and no effect for workers with high baseline employment probabilities.</span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>The key challenge is that the true individual treatment effect is never observed. Unlike standard prediction problems, we do not have a ground-truth outcome equal to $\tau_i$ for each unit.</span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>Causal trees address this by using criteria that reward splits producing meaningful differences in estimated treatment effects while penalizing imprecise estimates.</span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a><span class="fu">### Honest Estimation</span></span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>A central idea in causal trees is **honesty**. The data are split into two parts:</span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>one part is used to build the tree;</span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>the other part is used to estimate treatment effects within the leaves.</span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a>This helps reduce overfitting. If the same data are used both to choose the subgroups and to estimate the effects, the estimated heterogeneity may be exaggerated. Honest estimation separates discovery from estimation.</span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a>::: {.callout-tip appearance="simple"}</span>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a><span class="fu">### Honest trees</span></span>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a>Honest causal trees use one part of the data to decide the tree structure and another part to estimate treatment effects within the leaves.</span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a>The price is that each task uses less data. This can reduce precision, especially in small samples.</span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a><span class="fu">### Causal Trees in Observational Studies</span></span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>In randomized experiments, treatment assignment is independent of potential outcomes by design. In observational studies, this is not true. Causal trees must therefore rely on identifying assumptions, typically some version of **unconfoundedness**.</span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>The idea is that, after controlling for observed covariates, treatment assignment is as good as random. If this assumption is credible, causal trees can be combined with methods such as propensity score adjustment or inverse probability weighting.</span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a>The important point is that causal trees do not automatically solve confounding. They help discover heterogeneity conditional on the assumptions that make causal identification possible.</span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a><span class="fu">### Causal Forests</span></span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a>A single causal tree is interpretable but may be unstable. A **causal forest** extends the logic of random forests to treatment effect estimation.</span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a>Instead of growing one causal tree, a causal forest grows many causal trees and combines their information to estimate conditional treatment effects <span class="co">[</span><span class="ot">@wager2018</span><span class="co">]</span>.</span>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a>Causal forests are less visually transparent than a single tree, but they are usually more stable and flexible. They can handle many covariates and complex interactions, and they can provide useful summaries of heterogeneity.</span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a>Common outputs include:</span>
+<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>estimated CATEs for individual units or subgroups;</span>
+<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>tests for the presence of treatment effect heterogeneity;</span>
+<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>variable importance measures;</span>
+<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>subgroup summaries based on predicted treatment effects.</span>
+<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a>For example, a causal forest may show that the effect of job displacement on earnings differs substantially across workers, establishments, and local labor markets <span class="co">[</span><span class="ot">@athey2024</span><span class="co">]</span>.</span>
+<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a><span class="fu">### Interpreting Causal Forests</span></span>
+<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a>Causal forests can be powerful, but they require careful interpretation.</span>
+<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a>First, the estimates are not individual treatment effects observed in the data. They are predictions of conditional treatment effects based on patterns in the data.</span>
+<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a>Second, the results depend on the identifying assumptions. If treatment assignment is confounded by unobserved variables, causal forests may discover heterogeneity in selection bias rather than heterogeneity in causal effects.</span>
+<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a>Third, variable importance measures should not be interpreted mechanically. A variable may appear important because it helps define treatment effect heterogeneity, but the meaning of that heterogeneity still requires substantive interpretation.</span>
+<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning appearance="simple"}</span>
+<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a><span class="fu">### Be careful with causal forests</span></span>
+<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a>Causal forests can be useful tools for exploring HTEs, but their unit-level predictions should not be interpreted as precisely estimated individual causal effects. These methods build on recursive partitioning, and the resulting estimates can be locally noisy, especially in sparse regions of the covariate space or when some leaves contain few observations.</span>
+<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a>Recent theoretical results show that even causal trees based on standard splitting rules may perform poorly at the local level, even when average accuracy looks acceptable <span class="co">[</span><span class="ot">@cattaneo2026accuracy</span><span class="co">]</span>. This means that a model may appear to work well overall while still producing unreliable effect estimates for specific units or small subgroups.</span>
+<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a>For this reason, causal forests are best used as exploratory tools for detecting broad patterns of heterogeneity, not as automatic machines for identifying precisely which units benefit more or less from a policy.</span>
+<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a><span class="fu">## Practical Guidance on the estimation of HTEs</span></span>
+<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a>A credible analysis of heterogeneous treatment effects should report:</span>
+<span id="cb1-219"><a href="#cb1-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-220"><a href="#cb1-220" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>why heterogeneity is substantively important;</span>
+<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>whether subgroup analyses were pre-specified or exploratory;</span>
+<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>which covariates are used to define heterogeneity;</span>
+<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>how multiple testing is handled;</span>
+<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>whether the analysis relies on unconfoundedness, randomization, IV, RDD, or another design;</span>
+<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>whether the estimated heterogeneity is statistically meaningful;</span>
+<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>how large the subgroups are;</span>
+<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>whether results are robust across alternative specifications or methods.</span>
+<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a>When using causal trees or causal forests, it is also useful to report how the data were split, how tuning parameters were chosen, and which covariates are most important in explaining heterogeneity.</span>
+<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a>::: {.callout-warning appearance="simple"}</span>
+<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a><span class="fu">### Heterogeneity needs design too</span></span>
+<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a>Flexible methods can find patterns, but they do not create causal identification by themselves.  </span>
+<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a>The credibility of HTE analysis still depends on the underlying research design.</span>
+<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary</span></span>
+<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a>Average treatment effects are useful, but they may hide important variation. Heterogeneous treatment effect analysis asks whether a policy works differently for different units.</span>
+<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a>Traditional subgroup analysis is simple and transparent, but it can be vulnerable to multiple testing and selective reporting. More flexible approaches, such as causal trees and causal forests, can discover complex heterogeneity across many covariates, but they require careful implementation and interpretation.</span>
+<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a>The main message is that heterogeneity analysis should not be treated as a purely technical exercise. It should be connected to theory, policy relevance, and the credibility of the underlying causal design.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Augusto Cerqua</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/edit/main/chapters/12-heterogeneous_treatment_effects.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Built with Quarto</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

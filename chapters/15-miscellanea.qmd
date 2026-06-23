@@ -1,0 +1,120 @@
+# Miscellanea
+
+This chapter discusses several important topics that do not fit neatly into each of the previous chapters, but are highly relevant for understanding modern causal analysis. The book has mainly focused on how to estimate causal effects using research designs such as RCTs, DiD, RDD, IV, matching, synthetic control and FBCMs. These methods are powerful because they make the counterfactual comparison explicit.
+
+However, causal inference does not end with estimating one average effect. Researchers often want to understand why an effect occurs, how flexible prediction tools can help causal analysis, and what role theory should play. The topics in this chapter provide a bridge between the basic logic of impact evaluation and broader approaches to causal research.
+
+## Causal Mechanisms
+
+Estimating a causal effect tells us whether an intervention changes an outcome. It does not necessarily tell us why that change occurs. Causal mechanisms concern the channels through which a treatment affects an outcome.
+
+For example, suppose a training program increases employment. This effect may arise because participants acquire new skills, because they receive a certificate that signals ability to employers, because they expand their job-search network, or because the program changes their motivation. These are different mechanisms, even if the final outcome is the same.
+
+Mechanisms matter because they help interpret results and assess external validity. If we know why a policy works, we can better understand whether it is likely to work in another setting. A training program based on local employer connections may not travel easily to places where those connections are absent.
+
+At the same time, mechanism analysis is demanding. Intermediate outcomes are often themselves affected by the treatment, so conditioning on them can introduce bias. For this reason, mechanisms should not be studied by simply “controlling for” post-treatment variables. They require a clear causal model and additional assumptions.
+
+::: {.callout-note}
+## Mechanisms matter: the PAYT policy in Trento
+
+Bueno and Valente [-@bueno2019] study the introduction of a **pay-as-you-throw (PAYT)** policy in Trento, Italy, using the SCM. The policy made households pay according to the amount of **unsorted waste** they produced. The main effect is clear: unsorted waste fell substantially after the policy. However, this reduced-form effect does not by itself reveal the mechanism behind the change. Households may have responded in different ways. They may have recycled more, reduced overall waste generation, changed purchasing habits, reused more goods, or, in a less desirable scenario, disposed of waste illegally to avoid paying the fee.
+
+This distinction is crucial for policy interpretation. If the policy mainly shifts waste from the unsorted stream to recycling, then its effect works through **waste sorting**. If instead total waste also declines, the policy may be encouraging **waste avoidance**, for example through less packaging, more reuse, or different consumption choices. If the reduction were driven by illegal dumping, the apparent success of the policy would be much less reassuring. The evidence in Bueno and Valente [-@bueno2019] points mainly toward waste avoidance. 
+
+This example shows why causal mechanisms matter. Estimating that a policy has an effect is only the first step. Understanding **how** that effect arises is essential for deciding whether the policy should be expanded, redesigned, or accompanied by complementary measures.
+:::
+
+## Causal Machine Learning
+
+Causal machine learning uses flexible statistical and computational tools to support causal inference. Its goal is not simply to predict outcomes well, but to estimate causal quantities more accurately, flexibly, or heterogeneously (the latter is discussed in [Chapter 12](../chapters/12-heterogeneous_treatment_effects.qmd)).
+
+One important use of causal machine learning is the estimation of **nuisance components**. These are objects that are not the final causal parameter of interest, but are needed to estimate it. Examples include the probability of receiving treatment conditional on covariates, namely the **propensity score**, and the expected outcome conditional on covariates, known as the **outcome regression**.
+
+Machine learning is attractive in this setting because these nuisance components may be complex. Treatment assignment may depend on many variables and nonlinear relationships among them. Outcomes may also depend on covariates in flexible ways. Instead of imposing a simple linear specification, researchers can use flexible algorithms such as random forests, boosting, regularized regression, or neural networks to estimate these relationships.
+
+However, using machine learning naively can create problems for causal inference. Machine learning methods are designed primarily for prediction, not for unbiased estimation of causal parameters. They often involve regularization, variable selection, or tuning choices that can introduce bias. If this prediction error enters directly into the causal effect estimator, standard inference may become invalid. **Double/debiased machine learning** addresses this problem by combining flexible prediction tools with two key ideas:
+i) **Orthogonalization**: the estimator is constructed so that small errors in the nuisance functions have only a second-order effect on the estimated causal parameter.
+ii) **sample splitting** or **cross-fitting**: one part of the data is used to estimate the nuisance components, and another part is used to estimate the causal effect. This reduces overfitting bias because the same observations are not used both to learn the prediction functions and to evaluate the causal moment.
+
+The intuition is simple. Machine learning is used where flexibility is useful, namely in modeling treatment assignment and outcome prediction. But the final causal estimate is protected from the most direct consequences of prediction error. In this way, double/debiased machine learning allows researchers to use rich covariate information while still targeting a clearly defined causal estimand.
+
+This approach is especially useful in settings with many control variables, nonlinear relationships, or high-dimensional data. Yet it does not solve identification by itself. It still requires a credible causal assumption, such as conditional independence, and sufficient overlap between treated and untreated units.
+
+The key point for this book is that machine learning does not replace identification. A highly accurate prediction model cannot by itself solve confounding, selection bias, or violations of parallel trends. Causal machine learning is most useful when combined with a credible causal design.
+
+::: {.callout-note appearance="simple"}
+### Empirical example: active labour market policies in Switzerland
+
+A recent application of **Double Machine Learning (DML)** is Knaus [-@knaus2022dml], who studies active labour market programmes in Switzerland.
+
+The empirical question is whether participation in different labour market programmes improves later employment outcomes. This is a typical observational-policy setting: unemployed individuals are not randomly assigned to programmes, and participants may differ from non-participants in many observed characteristics, such as age, education, employment history, unemployment duration, occupation, and local labour-market conditions.
+
+DML is useful in this setting because it allows the researcher to flexibly control for a rich set of observed confounders. Machine learning methods are used to predict both treatment participation and potential outcomes from pre-treatment covariates. The debiasing step then combines these predictions in a way that reduces the sensitivity of the final treatment-effect estimate to regularization and prediction errors.
+
+This example illustrates the main role of DML in policy evaluation. Machine learning is not used to replace an identification strategy. The causal interpretation still relies on the assumption that, conditional on observed pre-treatment characteristics, programme participation is as good as random. Rather, machine learning helps implement this strategy in a flexible way when the number of covariates is large and their relationship with treatment and outcomes may be complex.
+
+The application also shows that DML can go beyond estimating a single average effect: it can be used to study heterogeneous effects and to explore how programme assignment could be improved.
+:::
+
+## Structural Models
+
+Structural models use economic theory to describe how individuals, firms, or institutions make decisions. Unlike reduced-form causal designs, which often focus on estimating a specific treatment effect, structural models aim to recover deeper behavioral parameters.
+
+For example, a reduced-form evaluation may estimate whether a subsidy increases firm investment. A structural model may try to model firms’ investment decisions, expectations, constraints, and responses to alternative subsidy schemes. This can allow researchers to simulate policies that have not yet been observed.
+
+Structural models are useful when the question is not only “what was the effect of this policy?” but also “what would happen under a different policy design?” They can therefore be powerful for counterfactual simulations and welfare analysis.
+
+The cost is that structural models usually require stronger modeling assumptions. Their credibility depends on whether the behavioral model is plausible and whether the data are informative enough to discipline it. For this reason, structural and design-based approaches should be seen as complements rather than substitutes.
+
+The broader lesson is that empirical strategies often involve a trade-off: **the more ambitious the causal question, the more demanding the assumptions needed to answer it credibly**.
+
+Recently, several studies have tried to bridge these two traditions by using credible design-based estimates as moments to estimate or discipline structural models.
+
+::: {.callout-note appearance="simple"}
+### Design-based moments in structural estimation
+
+A growing literature combines design-based causal evidence with structural modeling. The idea is to use credible causal estimates not only as final results, but also as empirical moments that help discipline the parameters of a structural model.
+
+A useful example is Flores [-@flores2026cashtransfers], who studies Mexico's *Oportunidades* conditional cash transfer program. The paper exploits exogenous variation in the program to estimate how transfers affect household time allocation and consumption choices. These quasi-experimental responses are then used as moments in the estimation of a structural collective household model.
+
+This approach illustrates a productive bridge between design-based and structural methods. The design-based part provides credible empirical variation; the structural model gives the estimates an economic interpretation and allows the researcher to study mechanisms, welfare, and counterfactual policies that go beyond the original treatment comparison.
+
+The key lesson is that structural modeling is not necessarily in competition with counterfactual methods; it can build on them.
+:::
+
+## Parametric vs. Non-Parametric Estimation
+
+A parametric approach imposes a specific functional form on the relationship between variables. For example, a linear regression assumes that the conditional expectation of the outcome changes linearly with covariates, unless interactions or nonlinear terms are added.
+
+A non-parametric approach imposes fewer functional-form restrictions. It allows the data to speak more flexibly, often by estimating relationships locally or using flexible functions. Matching, local polynomial regression in RDD, and some machine-learning methods can be seen as moving in this direction.
+
+The distinction matters because causal conclusions may be sensitive to functional-form assumptions. A parametric model can be efficient and easy to interpret when correctly specified, but misleading when the specification is wrong. A non-parametric method can be more flexible, but may require more data and can be less precise.
+
+For this book, the key lesson is practical: identification and estimation are different problems. A credible research design tells us which comparison can identify a causal effect. The estimation method determines how that comparison is implemented in the data.
+
+When possible, this comparison should remain as transparent as possible. Strong parametric assumptions may sometimes be useful, but they can also obscure the source of identification and make it harder to understand who is being compared with whom. For this reason, the emphasis of the book is on empirical strategies that make the construction of the counterfactual explicit and the assumptions behind the comparison clearly visible.
+
+## Qualitative Ex-Post Analyses
+
+Not all useful evaluation evidence is quantitative. After a policy has been implemented, qualitative ex-post analyses can provide important information on how the intervention worked, how it was perceived, and why its effects may have differed across contexts.
+
+Qualitative evidence may come from interviews, focus groups, administrative reports, field observations, case studies, or document analysis. These sources are especially useful for understanding implementation details that are often invisible in the data. For example, a program may have a small estimated average effect because it was poorly implemented, because take-up was low, because local actors resisted it, or because the target population interpreted the incentives differently from what policymakers expected.
+
+In the logic of this book, qualitative analysis is particularly valuable for studying **causal mechanisms**. Quantitative methods may estimate whether a policy changed an outcome, but qualitative work can help explain how that change occurred. It can reveal behavioral responses, institutional constraints, unintended consequences, and contextual factors that shape the effect of the intervention.
+
+Qualitative ex-post analysis should not be seen as a substitute for credible causal identification when the goal is to estimate treatment effects. Rather, it is a complement. It can help interpret estimated effects, assess external validity, generate hypotheses for further analysis, and improve the design of future policies.
+
+A careful evaluation often benefits from combining both perspectives: quantitative methods to estimate whether and how much a policy changed outcomes, and qualitative evidence to understand why those changes occurred.
+
+## Other Types of Evaluations
+
+This book focuses mainly on **ex-post impact evaluation**, that is, on methods designed to estimate causal effects. However, ex-post impact evaluation is only one part of a broader evaluation toolkit. Different policy questions require different evaluation approaches, and different goals should be pursued with different instruments.
+
+**Ex-ante evaluation** takes place before a policy is implemented. Its purpose is to assess whether an intervention is desirable, feasible, and likely to produce benefits larger than its costs. Ex-ante analyses may rely on theory, simulations, cost-benefit analysis, previous evidence, pilot studies, or forecasts. They are especially useful when policymakers must decide whether to introduce a policy, how to design it, or which alternative intervention to choose.
+
+**Monitoring** takes place while a policy is being implemented. Its goal is not usually to estimate causal effects, but to verify whether the program is operating as intended. Monitoring systems track inputs, activities, outputs, timelines, spending, take-up, and coverage. For example, they can show whether funds have been disbursed, whether beneficiaries have received the service, or whether implementation is delayed.
+A useful example is the monitoring of spending under **NextGenerationEU (NGEU)**. Monitoring can track whether resources are being committed and spent according to schedule, whether projects are progressing as planned, and whether implementation milestones are being met. This information is essential for accountability and program management, but it does not, by itself, tell us what effects the funded projects have produced.
+
+**Process evaluation** focuses on how the policy is implemented. It asks whether the intervention reached the intended target population, whether local actors followed the planned procedures, and whether implementation barriers emerged. This type of evaluation is crucial because a policy may fail not because its underlying theory is wrong, but because it was not implemented properly.
+
+These approaches are complementary with ex-post impact evaluation. Ex-ante evaluation helps design the policy; monitoring follows its implementation; process evaluation explains how the intervention unfolded; and impact evaluation estimates whether it worked. Confusing these goals can lead to misleading conclusions. A well-monitored program is not necessarily effective, and an effective program may still be inefficient, poorly targeted, or difficult to scale.

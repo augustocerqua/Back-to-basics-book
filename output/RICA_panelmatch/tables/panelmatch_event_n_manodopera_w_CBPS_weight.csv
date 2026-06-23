@@ -1,0 +1,6 @@
+"event_time","estimate","std_error","period_type","conf_low","conf_high","outcome","lag","lead_max","model_label","model_tag","refinement_method","size_match","exact_match_variables","se_method","n_matched_sets"
+-2,0.064737105053358,0.0307787707717987,"Pre-treatment placebo",0.00441071434063255,0.125063495766083,"n_manodopera_w",2,2,"CBPS.weight","CBPS_weight","CBPS.weight",NA,"dummy_collina + dummy_piccole + dummy_cond_fam","unconditional",87
+-1,0,0,"Baseline",0,0,"n_manodopera_w",2,2,"CBPS.weight","CBPS_weight","CBPS.weight",NA,"dummy_collina + dummy_piccole + dummy_cond_fam","unconditional",87
+0,-0.0902470800551533,0.0565164267384569,"Post-treatment",-0.201019276462529,0.0205251163522223,"n_manodopera_w",2,2,"CBPS.weight","CBPS_weight","CBPS.weight",NA,"dummy_collina + dummy_piccole + dummy_cond_fam","unconditional",87
+1,-0.103344582606071,0.0596528102768957,"Post-treatment",-0.220264090748787,0.0135749255366443,"n_manodopera_w",2,2,"CBPS.weight","CBPS_weight","CBPS.weight",NA,"dummy_collina + dummy_piccole + dummy_cond_fam","unconditional",87
+2,-0.120062712885704,0.074733287164044,"Post-treatment",-0.26653995572723,0.0264145299558221,"n_manodopera_w",2,2,"CBPS.weight","CBPS_weight","CBPS.weight",NA,"dummy_collina + dummy_piccole + dummy_cond_fam","unconditional",87
