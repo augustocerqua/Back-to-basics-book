@@ -96,7 +96,7 @@ Before taking the first steps in this journey, I would like to thank my mentor, 
 
 ## Disclaimer
 
-This book is still a work in progress, and any comments, suggestions, or corrections that can help improve it are highly welcome.
+This is version 0.1 of the book. It is still a work in progress, and I would be grateful for any comments, suggestions, or corrections that could help improve it.
 
 All illustrations in this book were created with the assistance of a generative AI system, based on specific instructions and, in some cases, hand-drawn sketches provided by the author. They are intended for illustrative and educational purposes only.
 
