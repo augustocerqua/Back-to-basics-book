@@ -1,6 +1,6 @@
 # The Backbone of Impact Evaluation Methods – Back to Basics
 
-This is the repository for the book "The Backbone of Impact Evaluation Methods – Back to Basics".
+This is the repository for the book "The Backbone of Impact Evaluation Methods – Back to Basics". The book can be accessed for free here: https://augustocerqua.github.io/Back-to-basics-book/
 
 ## About the book
 
