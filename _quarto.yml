@@ -11,7 +11,6 @@ book:
   site-url: "https://augustocerqua.github.io/Back-to-basics-book/"
   repo-url: "https://github.com/augustocerqua/Back-to-basics-book"
   repo-actions: [edit, issue]
-  downloads: [pdf, epub]
   sharing: [twitter, linkedin]
   page-footer:
     left: "© Augusto Cerqua"

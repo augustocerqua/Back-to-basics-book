@@ -1,75 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://augustocerqua.github.io/backbone-impact-evaluation/chapters/08-instrumental-variables.html</loc>
-    <lastmod>2026-06-23T09:57:27.246Z</lastmod>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/index.html</loc>
+    <lastmod>2026-06-18T09:50:40.639Z</lastmod>
   </url>
   <url>
-    <loc>https://augustocerqua.github.io/backbone-impact-evaluation/chapters/02-potential-outcomes.html</loc>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/01-why-impact-evaluation.html</loc>
+    <lastmod>2026-06-18T10:10:46.481Z</lastmod>
+  </url>
+  <url>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/02-potential-outcomes.html</loc>
     <lastmod>2026-06-18T11:00:32.198Z</lastmod>
   </url>
   <url>
-    <loc>https://augustocerqua.github.io/backbone-impact-evaluation/chapters/03-causal-parameters.html</loc>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/03-causal-parameters.html</loc>
     <lastmod>2026-06-18T11:01:58.417Z</lastmod>
   </url>
   <url>
-    <loc>https://augustocerqua.github.io/backbone-impact-evaluation/chapters/04-randomized-experiments.html</loc>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/04-randomized-experiments.html</loc>
     <lastmod>2026-06-18T13:27:58.431Z</lastmod>
   </url>
   <url>
-    <loc>https://augustocerqua.github.io/backbone-impact-evaluation/chapters/05-selection-on-observables.html</loc>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/05-selection-on-observables.html</loc>
     <lastmod>2026-06-22T18:59:03.768Z</lastmod>
   </url>
   <url>
-    <loc>https://augustocerqua.github.io/backbone-impact-evaluation/chapters/06-difference-in-differences.html</loc>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/06-difference-in-differences.html</loc>
     <lastmod>2026-06-22T19:17:43.737Z</lastmod>
   </url>
   <url>
-    <loc>https://augustocerqua.github.io/backbone-impact-evaluation/chapters/07-event-studies.html</loc>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/07-event-studies.html</loc>
     <lastmod>2026-06-22T20:17:17.663Z</lastmod>
   </url>
   <url>
-    <loc>https://augustocerqua.github.io/backbone-impact-evaluation/chapters/09-regression-discontinuity.html</loc>
-    <lastmod>2026-06-16T13:11:17.266Z</lastmod>
-  </url>
-  <url>
-    <loc>https://augustocerqua.github.io/backbone-impact-evaluation/chapters/10-synthetic-control.html</loc>
-    <lastmod>2026-06-13T17:07:20.836Z</lastmod>
-  </url>
-  <url>
-    <loc>https://augustocerqua.github.io/backbone-impact-evaluation/chapters/11-forecast-based-designs.html</loc>
-    <lastmod>2026-06-13T15:05:32.324Z</lastmod>
-  </url>
-  <url>
-    <loc>https://augustocerqua.github.io/backbone-impact-evaluation/chapters/12-heterogeneous_treatment_effects.html</loc>
-    <lastmod>2026-06-13T09:05:43.678Z</lastmod>
-  </url>
-  <url>
-    <loc>https://augustocerqua.github.io/backbone-impact-evaluation/chapters/13-spillover_effects.html</loc>
-    <lastmod>2026-06-15T12:58:06.646Z</lastmod>
-  </url>
-  <url>
-    <loc>https://augustocerqua.github.io/backbone-impact-evaluation/chapters/14-continuous_treatment.html</loc>
-    <lastmod>2026-06-13T12:59:38.938Z</lastmod>
-  </url>
-  <url>
-    <loc>https://augustocerqua.github.io/backbone-impact-evaluation/chapters/15-miscellanea.html</loc>
-    <lastmod>2026-06-16T15:07:07.026Z</lastmod>
-  </url>
-  <url>
-    <loc>https://augustocerqua.github.io/backbone-impact-evaluation/chapters/references.html</loc>
-    <lastmod>2026-06-04T19:51:15.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/11-forecast-based-designs.html</loc>
-    <lastmod>2026-06-23T11:33:42.530Z</lastmod>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/08-instrumental-variables.html</loc>
+    <lastmod>2026-06-23T09:57:27.246Z</lastmod>
   </url>
   <url>
     <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/09-regression-discontinuity.html</loc>
     <lastmod>2026-06-23T10:39:13.786Z</lastmod>
   </url>
   <url>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/10-synthetic-control.html</loc>
+    <lastmod>2026-06-13T17:07:20.836Z</lastmod>
+  </url>
+  <url>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/11-forecast-based-designs.html</loc>
+    <lastmod>2026-06-23T11:33:42.530Z</lastmod>
+  </url>
+  <url>
     <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/12-heterogeneous_treatment_effects.html</loc>
     <lastmod>2026-06-23T11:58:11.510Z</lastmod>
+  </url>
+  <url>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/13-spillover_effects.html</loc>
+    <lastmod>2026-06-15T12:58:06.646Z</lastmod>
+  </url>
+  <url>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/14-continuous_treatment.html</loc>
+    <lastmod>2026-06-13T12:59:38.938Z</lastmod>
+  </url>
+  <url>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/15-miscellanea.html</loc>
+    <lastmod>2026-06-16T15:07:07.026Z</lastmod>
+  </url>
+  <url>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/references.html</loc>
+    <lastmod>2026-06-04T19:51:15.000Z</lastmod>
   </url>
 </urlset>
