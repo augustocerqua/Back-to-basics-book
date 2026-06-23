@@ -267,21 +267,6 @@ If the dose-response function declines sharply at low subsidy levels and then fl
 
 The credibility of this analysis depends on whether firms receiving different subsidy amounts are comparable after conditioning on pre-treatment characteristics such as firm size, sector, baseline accident rate, investment capacity, and previous safety inspections.
 
-## How to Report the Results
-
-A good continuous-treatment evaluation should report:
-
-- why treatment intensity matters for the policy question;
-- how treatment intensity is measured;
-- the distribution of treatment intensity;
-- the dose-response function and uncertainty bands;
-- the identifying assumptions used to interpret the curve causally;
-- how the treatment model or balancing procedure was estimated;
-- covariate balance across treatment intensity;
-- common support and any restrictions to the dose range;
-- sensitivity to alternative specifications;
-- the policy-relevant range of treatment intensity.
-
 ## Summary
 
 Continuous-treatment methods extend causal inference from the question of whether a unit is treated to the question of how much treatment it receives.
