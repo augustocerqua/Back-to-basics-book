@@ -123,6 +123,14 @@ The comparison group can be defined in two main ways:
 - **never-treated units**, namely units that are never exposed to the treatment during the observation period;
 - **not-yet-treated units**, namely units that have not yet received the treatment at time $t$, even if they will receive it later.
 
+::: {.callout-note appearance="simple"}
+### Using not-yet-treated units as controls
+
+In staggered-adoption designs, **not-yet-treated units** can be attractive comparison units because they are scheduled to receive the treatment later. This often makes them more comparable to already-treated units than never-treated units, both in observed characteristics and in unobserved factors related to treatment adoption.
+
+However, not-yet-treated units can serve as “clean” controls only up to the point at which they receive treatment. After that, their outcomes may reflect treatment effects, and using them as controls can bias ATT estimates in later periods by design.
+:::
+
 In both cases, the comparison can also be adjusted for observed covariates. This means that treated units in cohort $g$ are compared with control units that are similar in terms of pre-treatment characteristics, rather than being compared mechanically with all available untreated units.
 
 Once the group-time effects have been estimated, they can be aggregated into event-time effects. This produces the event-study plot, but without relying on TWFE comparisons that may be contaminated by already-treated units.
@@ -233,6 +241,43 @@ For example:
 - calendar-time weights describe the average effect in a given period.
 
 Baker et al. emphasize that applied researchers should be explicit about the target parameter and the weights used to construct it [@baker2026didguide].
+
+## How event-study plots are computed
+
+In staggered-adoption designs, event-study plots are not based on a single comparison between one treated group and one control group. They are built from many smaller causal comparisons.
+
+The basic building blocks are the group-time treatment effects, denoted by $ATT(g,t)$. Each $ATT(g,t)$ measures the average effect at calendar time $t$ for the cohort of units first treated in period $g$.
+
+Once these effects are estimated, they can be reorganized in **event time**, where event time is defined as
+
+$$
+\ell = t-g.
+$$
+
+For example, $\ell=0$ is the first treated period, $\ell=1$ is one period after treatment, and $\ell=-1$ is one period before treatment. An event-study plot reports one estimate for each event-time horizon $\ell$, obtained by aggregating all available $ATT(g,t)$ values such that $t-g=\ell$.
+
+Formally, an event-time effect can be written as
+
+$$
+\tau_{\ell}
+=
+\sum_{g \in \mathcal{G}_{\ell}}
+\omega_{g\ell} ATT(g,g+\ell),
+$$
+
+where $\mathcal{G}_{\ell}$ is the set of cohorts for which the event-time horizon $\ell$ is observed, and $\omega_{g\ell}$ are aggregation weights, often related to cohort size.
+
+This construction is useful because it summarizes many cohort-specific effects in a single graph. Instead of reporting a separate effect for every cohort and calendar period, the event-study plot shows how effects evolve before and after treatment.
+
+However, this convenience comes with an important caveat: the set of cohorts contributing to the plot may change across event-time horizons. Early pre-treatment periods are observed only for cohorts treated sufficiently late, while long post-treatment horizons are observed only for cohorts treated sufficiently early.
+
+For example, suppose one cohort is first treated in period 3 and another in period 4. The cohort treated in period 3 cannot contribute to the estimate at event time $\ell=-4$, because four pre-treatment periods before treatment are not observed for that cohort. As a result, the estimate at $\ell=-4$ is based only on cohorts with enough pre-treatment history. Similarly, long-run post-treatment effects may be based only on early-treated cohorts.
+
+This changing composition matters. If cohorts differ systematically, changes in the event-study profile may reflect not only dynamic treatment effects, but also changes in which cohorts are included at each horizon. A rising or falling event-study line can therefore partly reflect treatment dynamics and partly reflect sample-composition changes.
+
+For this reason, event-study plots should be interpreted with care. Researchers should report which cohorts contribute to each event-time estimate, whether the sample changes across horizons, and whether results are robust to using a balanced event window. A balanced event window restricts the analysis to cohorts observed for the same set of pre- and post-treatment periods. This improves comparability across event time, but it may discard many cohorts and reduce precision.
+
+![This figure illustrates how event-study coefficients are constructed under staggered treatment adoption. The left panel shows that cohorts receive the treatment in different periods and may differ in the number of treated units. The upper-right panel maps these cohorts into event time: for each value of $k$, the event-study coefficient is obtained by aggregating the available cohort-specific treatment effects, with weights proportional to cohort size. A key point is that event-time coefficients are not always based on the same set of cohorts. In the central part of the event-study window, all cohorts contribute to the aggregate estimate. At the extremes, only some cohorts are observed. As shown in the lower panel, estimates for early leads and late lags are therefore based on fewer treated units and may be less precise, as reflected in wider confidence intervals. The figure also highlights an additional issue: when treatment effects are heterogeneous across cohorts, changes in the estimated event-study profile may reflect both true effect dynamics and changes in composition. For example, the steeper increase from period $+3$ onward may partly depend on the fact that the composition of contributing cohorts changes once Cohort 4 drops out. As an alternative, researchers may restrict event-study plots to the pre- and post-treatment periods in which all cohorts are observed. In this example, this would limit the event-study window to periods from $-2$ to $+2$.](../images/event-study-building-blocks-aggregation_v3.png)
 
 ## Empirical Example
 
