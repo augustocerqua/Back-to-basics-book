@@ -495,16 +495,21 @@ window.Quarto = {
   <li><a href="#why-continuous-treatments-matter" id="toc-why-continuous-treatments-matter" class="nav-link" data-scroll-target="#why-continuous-treatments-matter"><span class="header-section-number">14.2</span> Why Continuous Treatments Matter</a></li>
   <li><a href="#the-dose-response-function" id="toc-the-dose-response-function" class="nav-link" data-scroll-target="#the-dose-response-function"><span class="header-section-number">14.3</span> The Dose-Response Function</a></li>
   <li><a href="#the-policy-question" id="toc-the-policy-question" class="nav-link" data-scroll-target="#the-policy-question"><span class="header-section-number">14.4</span> The Policy Question</a></li>
-  <li><a href="#why-continuous-treatments-are-difficult" id="toc-why-continuous-treatments-are-difficult" class="nav-link" data-scroll-target="#why-continuous-treatments-are-difficult"><span class="header-section-number">14.5</span> Why Continuous Treatments Are Difficult</a></li>
-  <li><a href="#identification-assumptions" id="toc-identification-assumptions" class="nav-link" data-scroll-target="#identification-assumptions"><span class="header-section-number">14.6</span> Identification Assumptions</a></li>
-  <li><a href="#overlap-with-continuous-treatments" id="toc-overlap-with-continuous-treatments" class="nav-link" data-scroll-target="#overlap-with-continuous-treatments"><span class="header-section-number">14.7</span> Overlap With Continuous Treatments</a></li>
-  <li><a href="#the-generalized-propensity-score" id="toc-the-generalized-propensity-score" class="nav-link" data-scroll-target="#the-generalized-propensity-score"><span class="header-section-number">14.8</span> The Generalized Propensity Score</a></li>
-  <li><a href="#estimating-the-dose-response-function-with-gps" id="toc-estimating-the-dose-response-function-with-gps" class="nav-link" data-scroll-target="#estimating-the-dose-response-function-with-gps"><span class="header-section-number">14.9</span> Estimating the Dose-Response Function With GPS</a></li>
-  <li><a href="#beyond-the-standard-gps" id="toc-beyond-the-standard-gps" class="nav-link" data-scroll-target="#beyond-the-standard-gps"><span class="header-section-number">14.10</span> Beyond the Standard GPS</a></li>
-  <li><a href="#diagnostics-and-validity-checks" id="toc-diagnostics-and-validity-checks" class="nav-link" data-scroll-target="#diagnostics-and-validity-checks"><span class="header-section-number">14.11</span> Diagnostics and Validity Checks</a></li>
-  <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes"><span class="header-section-number">14.12</span> Common Mistakes</a></li>
-  <li><a href="#worked-example" id="toc-worked-example" class="nav-link" data-scroll-target="#worked-example"><span class="header-section-number">14.13</span> Worked Example</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">14.14</span> Summary</a></li>
+  <li><a href="#the-challenge-of-comparing-treatment-intensities" id="toc-the-challenge-of-comparing-treatment-intensities" class="nav-link" data-scroll-target="#the-challenge-of-comparing-treatment-intensities"><span class="header-section-number">14.5</span> The Challenge of Comparing Treatment Intensities</a></li>
+  <li><a href="#the-generalized-propensity-score" id="toc-the-generalized-propensity-score" class="nav-link" data-scroll-target="#the-generalized-propensity-score"><span class="header-section-number">14.6</span> The Generalized Propensity Score</a>
+  <ul class="collapse">
+  <li><a href="#estimating-the-adrf-with-gps" id="toc-estimating-the-adrf-with-gps" class="nav-link" data-scroll-target="#estimating-the-adrf-with-gps"><span class="header-section-number">14.6.1</span> Estimating the ADRF with GPS</a></li>
+  </ul></li>
+  <li><a href="#identification-assumptions" id="toc-identification-assumptions" class="nav-link" data-scroll-target="#identification-assumptions"><span class="header-section-number">14.7</span> Identification Assumptions</a>
+  <ul class="collapse">
+  <li><a href="#overlap-with-continuous-treatments" id="toc-overlap-with-continuous-treatments" class="nav-link" data-scroll-target="#overlap-with-continuous-treatments"><span class="header-section-number">14.7.1</span> Overlap With Continuous Treatments</a></li>
+  <li><a href="#application-gps-matching-with-continuous-air-pollution-exposure" id="toc-application-gps-matching-with-continuous-air-pollution-exposure" class="nav-link" data-scroll-target="#application-gps-matching-with-continuous-air-pollution-exposure"><span class="header-section-number">14.7.2</span> Application: GPS matching with continuous air-pollution exposure</a></li>
+  </ul></li>
+  <li><a href="#beyond-the-standard-gps" id="toc-beyond-the-standard-gps" class="nav-link" data-scroll-target="#beyond-the-standard-gps"><span class="header-section-number">14.8</span> Beyond the Standard GPS</a></li>
+  <li><a href="#diagnostics-and-validity-checks" id="toc-diagnostics-and-validity-checks" class="nav-link" data-scroll-target="#diagnostics-and-validity-checks"><span class="header-section-number">14.9</span> Diagnostics and Validity Checks</a></li>
+  <li><a href="#common-mistakes" id="toc-common-mistakes" class="nav-link" data-scroll-target="#common-mistakes"><span class="header-section-number">14.10</span> Common Mistakes</a></li>
+  <li><a href="#worked-example" id="toc-worked-example" class="nav-link" data-scroll-target="#worked-example"><span class="header-section-number">14.11</span> Worked Example</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">14.12</span> Summary</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -531,9 +536,9 @@ window.Quarto = {
 </header>
 
 
-<p>Most methods in this book have been introduced using a binary treatment. A unit is either treated or untreated. A firm either receives a subsidy or does not. A municipality either opens a nursery school or does not. A region either crosses an eligibility threshold or does not.</p>
-<p>This binary representation is useful and often realistic. Many policies are indeed organized around access: receiving the programme, being eligible for a benefit, or being exposed to a reform. But in many applications, treatment is not simply a yes-or-no variable. Units may receive different <strong>amounts</strong>, <strong>intensities</strong>, or <strong>doses</strong> of the same policy.</p>
-<p>For example, firms may receive different subsidy amounts. Regions may receive different amounts of EU Structural Funds per capita. Schools may receive different numbers of additional teachers. Patients may receive different drug dosages. Municipalities may experience different levels of exposure to an environmental shock.</p>
+<p>All methods in this book have been introduced using a binary treatment. A unit is either treated or untreated. A firm either receives a subsidy or does not. A municipality either opens a nursery school or does not. A region either crosses an eligibility threshold or does not.</p>
+<p>This binary representation is useful and often realistic. Many policies are indeed organized around access: receiving the program, being eligible for a benefit, or being exposed to a reform. But in many applications, treatment is not simply a yes-or-no variable. Units may receive different <strong>amounts</strong>, <strong>intensities</strong>, or <strong>doses</strong> of the same policy.</p>
+<p>For example, firms may receive different subsidy amounts. Regions may receive different amounts of EU Cohesion Policy funds per capita. Schools may receive different numbers of additional teachers. Patients may receive different drug dosages. Municipalities may experience different levels of exposure to an environmental shock.</p>
 <p>In these cases, the question is not only whether the policy works. The question is also how the effect changes with the intensity of treatment.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -556,7 +561,7 @@ Y_i(1)
 \quad \text{and} \quad
 Y_i(0).
 \]</span></p>
-<p>With a continuous treatment, the treatment can take many values. Let <span class="math inline">\(T_i\)</span> denote the treatment intensity received by unit <span class="math inline">\(i\)</span>. For each possible treatment level <span class="math inline">\(t\)</span>, unit <span class="math inline">\(i\)</span> has a potential outcome:</p>
+<p>With a continuous treatment, the treatment can take many values. Let <span class="math inline">\(T_i\)</span> denote the treatment intensity received by unit <span class="math inline">\(i\)</span>. For each possible treatment level <span class="math inline">\(t\)</span> within the relevant support of the treatment, unit <span class="math inline">\(i\)</span> has a potential outcome:</p>
 <p><span class="math display">\[
 Y_i(t).
 \]</span></p>
@@ -566,31 +571,35 @@ Y_i^{obs}=Y_i(T_i).
 \]</span></p>
 <p>As usual, we observe only one potential outcome for each unit: the one corresponding to the dose actually received. All other potential outcomes are counterfactual.</p>
 <p>This is the continuous-treatment version of the fundamental problem of causal inference. The difference is that the missingness problem is now richer. Instead of missing one counterfactual outcome, we are missing the full schedule of potential outcomes over all treatment levels not received.</p>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Support of treatment intensities
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The relevant support of the treatment matters because causal effects can be studied only over treatment intensities that are meaningfully represented in the data. Extrapolating to doses that are rarely observed, or not observed at all, requires much stronger assumptions.</p>
+</div>
+</div>
 </section>
 <section id="why-continuous-treatments-matter" class="level2" data-number="14.2">
 <h2 data-number="14.2" class="anchored" data-anchor-id="why-continuous-treatments-matter"><span class="header-section-number">14.2</span> Why Continuous Treatments Matter</h2>
 <p>Discretizing a continuous treatment into a binary variable can be convenient, but it often throws away important information.</p>
-<p>Suppose a policy provides public subsidies to firms. A binary analysis compares subsidized firms with non-subsidized firms. This can answer whether access to the policy matters. But it cannot answer whether larger subsidies produce larger effects, whether the impact flattens after a certain amount, or whether very high subsidies become inefficient.</p>
-<p>The same issue arises in regional policy. EU regional funds are often distributed with highly heterogeneous intensity across eligible regions. Treating all supported regions as equally treated ignores potentially large differences in the amount of treatment received <span class="citation" data-cites="becker2012 cerqua2018structural">(<a href="references.html#ref-becker2012" role="doc-biblioref">Becker et al. 2012</a>; <a href="references.html#ref-cerqua2018structural" role="doc-biblioref">Cerqua and Pellegrini 2018</a>)</span>.</p>
-<p>Continuous-treatment analysis is therefore useful when the policy question concerns <strong>how much</strong> treatment should be provided, not only whether treatment should be provided.</p>
+<p>Suppose a policy provides public subsidies to firms. A binary analysis compares subsidized firms with non-subsidized firms. This can answer whether access to the policy matters. But it cannot answer whether larger subsidies produce larger effects, whether the impact flattens after a certain amount, or whether low subsidies are too small to activate meaningful behavioral responses.</p>
+<p>The same issue arises in regional policy. For instance, EU Cohesion Policy funds are allocated across regions classified as less developed, transition, and more developed. Yet funding intensity can remain highly heterogeneous even within the same regional category. Treating all supported regions as equally treated ignores potentially large differences in the amount of treatment received <span class="citation" data-cites="becker2012 cerqua2018structural">(<a href="references.html#ref-becker2012" role="doc-biblioref">Becker et al. 2012</a>; <a href="references.html#ref-cerqua2018structural" role="doc-biblioref">Cerqua and Pellegrini 2018</a>)</span>. <!---
+Continuous-treatment analysis is therefore useful when the policy question concerns the intensity of treatment, not only access to treatment.---></p>
 </section>
 <section id="the-dose-response-function" class="level2" data-number="14.3">
 <h2 data-number="14.3" class="anchored" data-anchor-id="the-dose-response-function"><span class="header-section-number">14.3</span> The Dose-Response Function</h2>
-<p>The central object in continuous-treatment analysis is the <strong>average dose-response function (ADRF)</strong>. It describes how the expected potential outcome changes with treatment intensity.</p>
+<p>The main quantity of interest in continuous-treatment analysis is the <strong>average dose-response function (ADRF)</strong>. It describes how the expected potential outcome changes with treatment intensity.</p>
 <p>The ADRF is</p>
 <p><span class="math display">\[
 \mu(t)=E[Y_i(t)].
 \]</span></p>
 <p>For each treatment level <span class="math inline">\(t\)</span>, <span class="math inline">\(\mu(t)\)</span> gives the average outcome that would be observed if all units received dose <span class="math inline">\(t\)</span>.</p>
-<p>The causal effect of increasing treatment from <span class="math inline">\(t_0\)</span> to <span class="math inline">\(t_1\)</span> can be written as</p>
-<p><span class="math display">\[
-\mu(t_1)-\mu(t_0).
-\]</span></p>
-<p>If the treatment is continuous, we may also be interested in the marginal effect of treatment intensity:</p>
-<p><span class="math display">\[
-\frac{\partial \mu(t)}{\partial t}.
-\]</span></p>
-<p>This derivative describes how the expected outcome changes for a small increase in the dose.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -601,11 +610,19 @@ Y_i^{obs}=Y_i(T_i).
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The average dose-response function (ADRF) answers the question:<br>
-What would the average outcome be if all units received a given level of treatment intensity?</p>
+<p>The average dose-response function (ADRF) describes how the average potential outcome would change across different levels of treatment intensity. For each possible treatment level, it gives the average outcome that would be observed if all units were assigned that specific intensity.</p>
 </div>
 </div>
-<p>An ADRF may be increasing, decreasing, flat, or nonlinear. For example, subsidies may increase firm employment at low levels of support but have little additional effect after a certain threshold. In that case, the policy may have diminishing returns.</p>
+<p>The causal effect of increasing treatment from <span class="math inline">\(t_0\)</span> to <span class="math inline">\(t_1\)</span> can be written as</p>
+<p><span class="math display">\[
+\mu(t_1)-\mu(t_0).
+\]</span></p>
+<p>If the treatment is continuous, we are usually also interested in the marginal effect of treatment intensity:</p>
+<p><span class="math display">\[
+\frac{\partial \mu(t)}{\partial t}.
+\]</span></p>
+<p>This derivative describes how the expected outcome changes for a small increase in the dose.</p>
+<p>The ADRF may be increasing, decreasing, flat, or nonlinear. For example, subsidies may increase firm employment at low levels of support but have little additional effect after a certain threshold. In that case, the policy may have diminishing returns.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -640,12 +657,12 @@ What would the average outcome be if all units received a given level of treatme
 <blockquote class="blockquote">
 <p>Is there an optimal level of treatment intensity?</p>
 </blockquote>
-<p>This distinction is important for policy design. If the dose-response function flattens after a certain point, additional resources may have low marginal returns. If the function is strongly increasing, increasing the dose may be justified. If it is non-monotonic, too much treatment may even reduce effectiveness.</p>
+<p>This distinction is important for policy design. If the ADRF flattens after a certain point, additional resources may have low marginal returns. If the function is strongly increasing, increasing the dose may be justified. If it is non-monotonic, too much treatment may even reduce effectiveness.</p>
 </section>
-<section id="why-continuous-treatments-are-difficult" class="level2" data-number="14.5">
-<h2 data-number="14.5" class="anchored" data-anchor-id="why-continuous-treatments-are-difficult"><span class="header-section-number">14.5</span> Why Continuous Treatments Are Difficult</h2>
-<p>Continuous-treatment evaluation is difficult because treatment intensity is often endogenous.</p>
-<p>In many policies, the dose is not randomly assigned. Firms receiving larger subsidies may have larger projects, stronger administrative capacity, better political connections, or more severe constraints. Regions receiving more funds may differ systematically from regions receiving less. Patients receiving higher doses may have more severe baseline conditions.</p>
+<section id="the-challenge-of-comparing-treatment-intensities" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="the-challenge-of-comparing-treatment-intensities"><span class="header-section-number">14.5</span> The Challenge of Comparing Treatment Intensities</h2>
+<p>Continuous-treatment evaluation is difficult because treatment intensity is generally endogenous.</p>
+<p>In many policies, the dose is not randomly assigned. Firms receiving larger subsidies may have larger projects, stronger administrative capacity, better political connections, or more severe constraints. Regions receiving more funds may differ systematically from those receiving less, as in the EU Cohesion Policy example. Patients receiving higher doses may have more severe baseline conditions.</p>
 <p>Therefore, units receiving different treatment intensities are usually not directly comparable.</p>
 <div class="callout callout-style-simple callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -657,45 +674,13 @@ What would the average outcome be if all units received a given level of treatme
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The fact that two units are both treated does not mean they are comparable. Units receiving different doses may differ in ways that also affect their outcomes.</p>
+<p>The fact that two units are both treated does not mean they are comparable. Units receiving different doses typically differ in ways that also affect their outcomes.</p>
 </div>
 </div>
-<p>This is why estimating a dose-response function is not simply a matter of plotting outcomes against treatment intensity. A raw regression of <span class="math inline">\(Y_i\)</span> on <span class="math inline">\(T_i\)</span> compares different populations at different treatment levels. It may reflect selection into dose rather than the causal effect of dose.</p>
+<p>This is why estimating an ADRF is not simply a matter of plotting outcomes against treatment intensity. A raw regression of <span class="math inline">\(Y_i\)</span> on <span class="math inline">\(T_i\)</span> compares different populations at different treatment levels. As a result, it may reflect selection into dose rather than the causal effect of dose.</p>
 </section>
-<section id="identification-assumptions" class="level2" data-number="14.6">
-<h2 data-number="14.6" class="anchored" data-anchor-id="identification-assumptions"><span class="header-section-number">14.6</span> Identification Assumptions</h2>
-<p>The most common identification strategy for continuous treatments extends selection-on-observables methods to the case of many possible treatment levels.</p>
-<p>The key assumption is a continuous-treatment version of the Conditional Independence Assumption. For every treatment level <span class="math inline">\(t\)</span>, potential outcomes are independent of the actual treatment received after conditioning on observed pre-treatment covariates:</p>
-<p><span class="math display">\[
-Y_i(t) \perp T_i \mid X_i
-\quad \text{for all } t.
-\]</span></p>
-<p>This is often called <strong>weak unconfoundedness</strong> <span class="citation" data-cites="hirano2004">(<a href="references.html#ref-hirano2004" role="doc-biblioref">Hirano and Imbens 2004</a>)</span>.</p>
-<p>The intuition is the same as in matching and propensity score methods. After controlling for observed characteristics, units receiving different treatment intensities should be comparable. In other words, among units with similar covariates, variation in treatment intensity should be as good as random.</p>
-<p>This is a strong assumption. It requires that all variables affecting both treatment intensity and potential outcomes are observed and correctly accounted for.</p>
-</section>
-<section id="overlap-with-continuous-treatments" class="level2" data-number="14.7">
-<h2 data-number="14.7" class="anchored" data-anchor-id="overlap-with-continuous-treatments"><span class="header-section-number">14.7</span> Overlap With Continuous Treatments</h2>
-<p>Continuous treatments also require an overlap condition. For each relevant value of the covariates, there must be enough variation in treatment intensity.</p>
-<p>In practical terms, this means that we need similar units receiving different treatment levels. If all small firms receive low subsidies and all large firms receive high subsidies, it is difficult to separate the effect of subsidy intensity from the effect of firm size.</p>
-<p>The overlap problem is often more severe with continuous treatments than with binary treatments. In the binary case, we need comparable treated and untreated units. In the continuous case, we need comparable units across a range of treatment intensities.</p>
-<div class="callout callout-style-simple callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Common support is harder
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>With continuous treatments, common support means not only having treated and untreated units. It means having comparable units observed at different dose levels.</p>
-</div>
-</div>
-<p>When overlap is weak, the estimated dose-response function may rely heavily on extrapolation. This is especially problematic at very low or very high treatment levels, where few comparable units may be available.</p>
-</section>
-<section id="the-generalized-propensity-score" class="level2" data-number="14.8">
-<h2 data-number="14.8" class="anchored" data-anchor-id="the-generalized-propensity-score"><span class="header-section-number">14.8</span> The Generalized Propensity Score</h2>
+<section id="the-generalized-propensity-score" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="the-generalized-propensity-score"><span class="header-section-number">14.6</span> The Generalized Propensity Score</h2>
 <p>The propensity score was originally introduced for binary treatments <span class="citation" data-cites="rosenbaum1983">(<a href="references.html#ref-rosenbaum1983" role="doc-biblioref">Rosenbaum and Rubin 1983</a>)</span>. Hirano and Imbens extend this idea to continuous treatments through the <strong>generalized propensity score</strong>, or <strong>GPS</strong> <span class="citation" data-cites="hirano2004">(<a href="references.html#ref-hirano2004" role="doc-biblioref">Hirano and Imbens 2004</a>)</span>.</p>
 <p>In the binary case, the propensity score is the probability of receiving treatment conditional on covariates. In the continuous case, the GPS is the conditional density of the treatment level actually received:</p>
 <p><span class="math display">\[
@@ -706,25 +691,43 @@ r(t,x)=f_{T\mid X}(t\mid x).
 R_i = r(T_i,X_i).
 \]</span></p>
 <p>The GPS summarizes how likely it is for a unit with characteristics <span class="math inline">\(X_i\)</span> to receive treatment intensity <span class="math inline">\(T_i\)</span>.</p>
-<p>The key result is that, under weak unconfoundedness, adjusting for the GPS can help remove confounding due to observed covariates when estimating the dose-response function.</p>
-</section>
-<section id="estimating-the-dose-response-function-with-gps" class="level2" data-number="14.9">
-<h2 data-number="14.9" class="anchored" data-anchor-id="estimating-the-dose-response-function-with-gps"><span class="header-section-number">14.9</span> Estimating the Dose-Response Function With GPS</h2>
-<p>A typical GPS analysis proceeds in two stages.</p>
-<p>First, estimate the treatment model. This means modeling the distribution of treatment intensity conditional on pre-treatment covariates:</p>
+<p>The key result is that, under weak unconfoundedness (see below), adjusting for the GPS can help remove confounding due to observed covariates when estimating the ADRF.</p>
+<section id="estimating-the-adrf-with-gps" class="level3" data-number="14.6.1">
+<h3 data-number="14.6.1" class="anchored" data-anchor-id="estimating-the-adrf-with-gps"><span class="header-section-number">14.6.1</span> Estimating the ADRF with GPS</h3>
+<p>Importantly, while a naive regression curve compares different units observed at different treatment levels, a GPS-adjusted ADRF aims to compare the same population under alternative treatment intensities. A typical GPS analysis proceeds in two stages.</p>
+<p>First, estimate the <strong>treatment model</strong>. This means modeling the distribution of treatment intensity conditional on observed pre-treatment covariates:</p>
 <p><span class="math display">\[
 T_i \mid X_i.
 \]</span></p>
-<p>This step produces an estimate of the generalized propensity score:</p>
+<p>In practice, this requires specifying a model for how treatment intensity is assigned. A common approach is to assume that, conditional on <span class="math inline">\(X_i\)</span>, the treatment follows a normal distribution:</p>
+<p><span class="math display">\[
+T_i \mid X_i \sim N(m(X_i),\sigma^2),
+\]</span></p>
+<p>where <span class="math inline">\(m(X_i)\)</span> is the expected treatment intensity given the covariates. The function <span class="math inline">\(m(X_i)\)</span> can be estimated using a linear regression of <span class="math inline">\(T_i\)</span> on <span class="math inline">\(X_i\)</span>, or with more flexible methods if the relationship between treatment intensity and covariates is expected to be non-linear. Once this model has been estimated, the GPS is obtained as the conditional density of the observed treatment level:</p>
 <p><span class="math display">\[
 \widehat{R}_i=\widehat{r}(T_i,X_i).
 \]</span></p>
-<p>Second, estimate the outcome model as a function of treatment intensity and the GPS:</p>
+<p>Second, estimate the <strong>outcome model</strong>. This means modeling the expected outcome as a function of both treatment intensity and the estimated GPS:</p>
 <p><span class="math display">\[
 E[Y_i \mid T_i=t, R_i=r].
 \]</span></p>
-<p>The estimated model is then used to predict potential outcomes at different treatment levels for the same population of units. Averaging these predicted potential outcomes gives the estimated dose-response function.</p>
-<p>This distinction is important. A naive regression curve compares different units observed at different treatment levels. A GPS-adjusted dose-response function aims to compare the same population under alternative treatment intensities.</p>
+<p>In practice, this is often done by regressing the outcome on flexible functions of the treatment intensity and the GPS, such as polynomials, splines, or interactions between <span class="math inline">\(T_i\)</span> and <span class="math inline">\(\widehat{R}_i\)</span>. For example, one may estimate a model including <span class="math inline">\(T_i\)</span>, <span class="math inline">\(T_i^2\)</span>, <span class="math inline">\(\widehat{R}_i\)</span>, <span class="math inline">\(\widehat{R}_i^2\)</span>, and their interaction.</p>
+<p>The estimated outcome model is then used to predict potential outcomes at different treatment levels. For each target dose <span class="math inline">\(t\)</span>, the researcher computes the GPS that each unit would have at that dose, <span class="math inline">\(\widehat{r}(t,X_i)\)</span>, and predicts the corresponding potential outcome:</p>
+<p><span class="math display">\[
+\widehat{Y}_i(t)
+=
+\widehat{E}[Y_i \mid T_i=t, R_i=\widehat{r}(t,X_i)].
+\]</span></p>
+<p>Averaging these predicted potential outcomes across units gives the estimated average dose-response function:</p>
+<p><span class="math display">\[
+\widehat{\mu}(t)
+=
+\frac{1}{N}
+\sum_{i=1}^{N}
+\widehat{Y}_i(t).
+\]</span></p>
+<p>The logic is therefore similar to matching or regression adjustment: the GPS is used to adjust for differences in observed covariates across treatment intensities, and the ADRF is obtained by comparing predicted outcomes for the same population of units at different dose levels. <!---
+A crucial diagnostic step is to check whether the GPS improves balance in covariates across treatment intensities and whether there is sufficient common support. If some dose levels are observed only for units with very different covariate profiles, the estimated ADRF will rely heavily on extrapolation. ---></p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -738,26 +741,101 @@ E[Y_i \mid T_i=t, R_i=r].
 <ol type="1">
 <li>Model treatment intensity using pre-treatment covariates.<br>
 </li>
-<li>Use the generalized propensity score to adjust the outcome model and recover the dose-response function.</li>
+<li>Use the GPS to adjust the outcome model and recover the dose-response function.</li>
 </ol>
 </div>
 </div>
-<p>Bia and Mattei use the GPS to study how different amounts of financial aid affected employment among firms in Piedmont, estimating separate dose-response functions for small and larger firms <span class="citation" data-cites="bia2012">(<a href="references.html#ref-bia2012" role="doc-biblioref">Bia and Mattei 2012</a>)</span>.</p>
 </section>
-<section id="beyond-the-standard-gps" class="level2" data-number="14.10">
-<h2 data-number="14.10" class="anchored" data-anchor-id="beyond-the-standard-gps"><span class="header-section-number">14.10</span> Beyond the Standard GPS</h2>
-<p>The GPS approach is powerful, but it relies on modeling choices that may be restrictive. Researchers must specify a treatment model and an outcome model. If these models are misspecified, the estimated dose-response function may be biased.</p>
-<p>Recent work has therefore developed methods that focus more directly on balancing covariates across treatment intensities. One example is entropy balancing for continuous treatments <span class="citation" data-cites="tubbicke2022">(<a href="references.html#ref-tubbicke2022" role="doc-biblioref">Tübbicke 2022</a>)</span>. Another is the use of independence weights, which aim to make the treatment independent of observed covariates after weighting <span class="citation" data-cites="huling2024">(<a href="references.html#ref-huling2024" role="doc-biblioref">Huling et al. 2024</a>)</span>.</p>
+</section>
+<section id="identification-assumptions" class="level2" data-number="14.7">
+<h2 data-number="14.7" class="anchored" data-anchor-id="identification-assumptions"><span class="header-section-number">14.7</span> Identification Assumptions</h2>
+<p>The most common identification strategy for continuous treatments extends selection-on-observables methods to the case of many possible treatment levels.</p>
+<p>The key assumption is a continuous-treatment version of the Conditional Independence Assumption. For every treatment level <span class="math inline">\(t\)</span>, potential outcomes are independent of the actual treatment received after conditioning on observed pre-treatment covariates:</p>
+<p><span class="math display">\[
+Y_i(t) \perp T_i \mid X_i
+\quad \text{for all } t.
+\]</span></p>
+<p>This is often called <strong>weak unconfoundedness</strong> <span class="citation" data-cites="hirano2004">(<a href="references.html#ref-hirano2004" role="doc-biblioref">Hirano and Imbens 2004</a>)</span>.</p>
+<p>The intuition is the same as in matching and propensity score methods. After controlling for observed characteristics, units receiving different treatment intensities should be comparable. In other words, among units with similar covariates, variation in treatment intensity should be as good as random.</p>
+<p>This should typically be regarded as a strong assumption. It requires all variables affecting both treatment intensity and potential outcomes to be observed and correctly accounted for.</p>
+<section id="overlap-with-continuous-treatments" class="level3" data-number="14.7.1">
+<h3 data-number="14.7.1" class="anchored" data-anchor-id="overlap-with-continuous-treatments"><span class="header-section-number">14.7.1</span> Overlap With Continuous Treatments</h3>
+<p>Continuous treatments also require an overlap condition. For each relevant value of the covariates, there must be enough variation in treatment intensity.</p>
+<p>In practical terms, this means that we need similar units receiving different treatment levels. E.g., if all small firms receive low subsidies and all large firms receive high subsidies, it is difficult to separate the effect of subsidy intensity from the effect of firm size.</p>
+<p>The overlap problem is often more severe with continuous treatments than with binary treatments. In the binary case, we need comparable treated and untreated units. In the continuous case, we need comparable units across a range of treatment intensities.</p>
+<p>When overlap is weak, the estimated dose-response function may rely heavily on extrapolation. This is especially problematic at very low or very high treatment levels, where few comparable units may be available.</p>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common support with continuous treatment
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>With continuous treatments, common support means having comparable units observed at different dose levels. For each relevant level of treatment intensity, there must be units with similar pre-treatment characteristics receiving nearby, lower, and higher doses. Without this overlap, the ADRF is identified only by extrapolating across units that are not truly comparable.</p>
+</div>
+</div>
+</section>
+<section id="application-gps-matching-with-continuous-air-pollution-exposure" class="level3" data-number="14.7.2">
+<h3 data-number="14.7.2" class="anchored" data-anchor-id="application-gps-matching-with-continuous-air-pollution-exposure"><span class="header-section-number">14.7.2</span> Application: GPS matching with continuous air-pollution exposure</h3>
+<p>Wu et al. <span class="citation" data-cites="wu2022gps">(<a href="references.html#ref-wu2022gps" role="doc-biblioref">2022</a>)</span> propose a matching approach for <strong>continuous treatments</strong> based on the <strong>GPS</strong>. This differs from the classical GPS approach of Hirano and Imbens, where the GPS is typically included as an adjustment variable in an outcome model to estimate the ADRF. In Wu et al.’s approach, the GPS is used more directly to construct matched comparisons among units with similar exposure levels and similar GPS values. The goal is to preserve the design-based intuition of matching while extending it beyond the binary treated-versus-control setting.</p>
+<p>Their application studies the causal relationship between long-term exposure to fine particulate matter, PM<span class="math inline">\(_{2.5}\)</span>, and all-cause mortality among Medicare enrollees in the United States. Here, the treatment is not whether a unit is exposed to pollution, since everyone is exposed to some level of air pollution. The treatment is instead the <strong>intensity of exposure</strong>, measured by annual average PM<span class="math inline">\(_{2.5}\)</span>.</p>
+<p>The method first estimates the GPS. Units are then matched so that, across different pollution levels, the distribution of observed covariates becomes more comparable. This produces a matched dataset that can be used to estimate an ADRF.</p>
+<p>In the empirical application, the authors use data on 68.5 million Medicare enrollees from 2000 to 2016. Matching substantially improves covariate balance. The estimated exposure-response function shows that long-term PM<span class="math inline">\(_{2.5}\)</span> exposure increases mortality, with evidence of adverse effects even at pollution levels below the national standard.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Dose-Response Relationship between Pollution and Mortality
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/wu_pm25_adrf_stylized_slim.png" class="img-fluid figure-img"></p>
+<figcaption>This is a stylized version of the ADRF reported in the paper. It illustrates the intuition behind the ADRF: how the expected outcome changes as exposure intensity increases, after adjusting for observed confounders through GPS matching. The upward-sloping curve suggests that higher long-term PM2.5 exposure is associated with higher relative mortality risk.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="beyond-the-standard-gps" class="level2" data-number="14.8">
+<h2 data-number="14.8" class="anchored" data-anchor-id="beyond-the-standard-gps"><span class="header-section-number">14.8</span> Beyond the Standard GPS</h2>
+<p>The GPS approach is powerful, but it relies on modeling choices that may be restrictive. Researchers must specify a treatment model and an outcome model. If these models are misspecified, the estimated ADRF may be biased.</p>
+<p>Recent work has developed methods that focus more directly on balancing covariates across treatment intensities. One example is entropy balancing for continuous treatments <span class="citation" data-cites="tubbicke2022">(<a href="references.html#ref-tubbicke2022" role="doc-biblioref">Tübbicke 2022</a>)</span>. Another is the use of independence weights, which aim to make the treatment independent of observed covariates after weighting <span class="citation" data-cites="huling2024">(<a href="references.html#ref-huling2024" role="doc-biblioref">Huling et al. 2024</a>)</span>.</p>
 <p>The common idea is to reduce dependence between treatment intensity and pre-treatment covariates without relying entirely on a parametric model for the treatment assignment process.</p>
 <p>These approaches are part of a broader movement toward more flexible methods for continuous treatments. However, they do not remove the core identification problem. If important confounders are unobserved, weighting and balancing methods cannot recover the causal dose-response function by themselves.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Different approaches for estimating the ADRF
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/GPS_matching_vs_independence_weights_v3_slim.png" class="img-fluid figure-img" style="width:85.0%"></p>
+<figcaption>The figure contrasts two approaches to estimating an ADRF. GPS matching builds local comparisons among units with similar doses and similar GPS. Independence weighting instead keeps the full sample but reweights units so that treatment intensity becomes approximately independent of observed covariates. The key difference is between <strong>matching comparable units</strong> and <strong>creating a balanced weighted pseudo-population</strong>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="diagnostics-and-validity-checks" class="level2" data-number="14.11">
-<h2 data-number="14.11" class="anchored" data-anchor-id="diagnostics-and-validity-checks"><span class="header-section-number">14.11</span> Diagnostics and Validity Checks</h2>
-<p>A continuous-treatment analysis should report more than the estimated dose-response curve.</p>
+<section id="diagnostics-and-validity-checks" class="level2" data-number="14.9">
+<h2 data-number="14.9" class="anchored" data-anchor-id="diagnostics-and-validity-checks"><span class="header-section-number">14.9</span> Diagnostics and Validity Checks</h2>
+<p>A continuous-treatment analysis should report more than the estimated ADRF.</p>
 <p>First, the researcher should inspect the distribution of treatment intensity. If most observations are concentrated in a narrow range, the dose-response function outside that range will be weakly supported.</p>
 <p>Second, common support should be assessed. The analysis should show whether comparable units exist at different treatment levels.</p>
-<p>Third, covariate balance should be checked across the treatment distribution. The goal is not only to balance treated and untreated units, but to reduce the association between treatment intensity and pre-treatment covariates.</p>
-<p>Fourth, the dose-response function should be reported with uncertainty bands. The curve may look smooth, but estimates at extreme treatment levels may be very imprecise.</p>
+<p>Third, covariate balance should be checked across the treatment distribution. The goal is to reduce the association between treatment intensity and pre-treatment covariates.</p>
+<p>Fourth, the ADRF should be reported with uncertainty bands. The curve may look smooth, but estimates at extreme treatment levels may be very imprecise.</p>
 <p>Fifth, researchers should test sensitivity to alternative specifications of the treatment model, outcome model, and dose range.</p>
 <div class="callout callout-style-simple callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -769,44 +847,86 @@ E[Y_i \mid T_i=t, R_i=r].
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Before interpreting the shape of the dose-response function, check whether the data actually contain comparable units at low, medium, and high treatment intensities.</p>
+<p>Before interpreting the shape of the ADRF, check whether the data actually contain comparable units observed at several different levels of treatment intensity.</p>
 </div>
 </div>
 </section>
-<section id="common-mistakes" class="level2" data-number="14.12">
-<h2 data-number="14.12" class="anchored" data-anchor-id="common-mistakes"><span class="header-section-number">14.12</span> Common Mistakes</h2>
+<section id="common-mistakes" class="level2" data-number="14.10">
+<h2 data-number="14.10" class="anchored" data-anchor-id="common-mistakes"><span class="header-section-number">14.10</span> Common Mistakes</h2>
 <p>The first mistake is to convert a continuous treatment into a binary treatment without a substantive reason. This may hide important variation in treatment intensity.</p>
 <p>The second mistake is to interpret a raw regression of outcomes on treatment intensity as causal. Units receiving different doses are often selected in different ways.</p>
 <p>The third mistake is to estimate the dose-response function in regions with little support. This creates extrapolation disguised as causal inference.</p>
 <p>The fourth mistake is to focus only on whether the curve is increasing or decreasing, without considering uncertainty. Apparent nonlinearities may be driven by noise.</p>
 <p>The fifth mistake is to ignore the policy margin. Sometimes the relevant question is not the effect of moving from zero to a very high dose, but the effect of increasing the dose within the range where policymakers can realistically act.</p>
 </section>
-<section id="worked-example" class="level2" data-number="14.13">
-<h2 data-number="14.13" class="anchored" data-anchor-id="worked-example"><span class="header-section-number">14.13</span> Worked Example</h2>
+<section id="worked-example" class="level2" data-number="14.11">
+<h2 data-number="14.11" class="anchored" data-anchor-id="worked-example"><span class="header-section-number">14.11</span> Worked Example</h2>
 <p>Suppose a government provides public subsidies to firms to reduce workplace accidents. A binary analysis would compare firms that receive a subsidy with firms that do not.</p>
 <p>But the policy may provide different subsidy amounts. Some firms receive a small grant for basic safety equipment. Others receive a larger grant for major workplace redesign. A continuous-treatment analysis would ask how accident rates change as subsidy intensity increases.</p>
-<p>Let <span class="math inline">\(T_i\)</span> be the subsidy amount per worker. The dose-response function is</p>
+<p>Let <span class="math inline">\(T_i\)</span> be the subsidy amount per worker. The ADRF is</p>
 <p><span class="math display">\[
 \mu(t)=E[Y_i(t)],
 \]</span></p>
 <p>where <span class="math inline">\(Y_i(t)\)</span> is the accident rate that firm <span class="math inline">\(i\)</span> would have under subsidy intensity <span class="math inline">\(t\)</span>.</p>
-<p>If the dose-response function declines sharply at low subsidy levels and then flattens, this suggests that modest subsidies may generate most of the safety gains. If the function continues to decline at higher doses, larger subsidies may be justified. If the curve becomes flat or even increases, additional funding may be inefficient or targeted to firms with more severe baseline risks.</p>
+<p>If the ADRF declines sharply at low subsidy levels and then flattens, this suggests that modest subsidies may generate most of the safety gains. If the function continues to decline at higher doses, larger subsidies may be justified. If the curve becomes flat or even increases, additional funding may be inefficient or targeted to firms with more severe baseline risks.</p>
 <p>The credibility of this analysis depends on whether firms receiving different subsidy amounts are comparable after conditioning on pre-treatment characteristics such as firm size, sector, baseline accident rate, investment capacity, and previous safety inspections.</p>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>What if we expect heterogeneous treatment effects with continuous treatment?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A single ADRF summarizes how the outcome changes with treatment intensity for the average unit. This may be misleading when units respond differently to the same dose. In that case, the pooled ADRF can hide subgroup-specific dose-response relationships, especially when common support is limited across groups.</p>
+<p>A useful alternative is to estimate dose-response functions separately for theoretically defined or data-driven subgroups, as in the Clustered Dose-Response Function approach <span class="citation" data-cites="cerqua2026cldrf">(<a href="references.html#ref-cerqua2026cldrf" role="doc-biblioref">Cerqua et al. 2026</a>)</span>. The target then shifts from one population-average curve to a set of subgroup-specific curves, which may be more informative for policy design. This can also make the unconfoundedness assumption less demanding, because identification is required within more homogeneous groups rather than across the full population.</p>
+</div>
+</div>
 </section>
-<section id="summary" class="level2" data-number="14.14">
-<h2 data-number="14.14" class="anchored" data-anchor-id="summary"><span class="header-section-number">14.14</span> Summary</h2>
+<section id="summary" class="level2" data-number="14.12">
+<h2 data-number="14.12" class="anchored" data-anchor-id="summary"><span class="header-section-number">14.12</span> Summary</h2>
 <p>Continuous-treatment methods extend causal inference from the question of whether a unit is treated to the question of how much treatment it receives.</p>
-<p>The main object of interest is the dose-response function, which describes how expected outcomes change across treatment intensities. This is especially useful when policymakers need to decide not only whether to implement a policy, but also how intensely to implement it.</p>
-<p>The main difficulty is that treatment intensity is rarely randomly assigned. Units receiving different doses may differ systematically. Methods such as the generalized propensity score and newer balancing approaches can help address selection on observed covariates, but they require strong assumptions and careful diagnostics.</p>
-<p>The key message is simple: when treatment has a meaningful dose, the evaluation should not automatically collapse it into a binary variable. But estimating causal effects of treatment intensity requires credible variation in dose among comparable units.</p>
+<p>The main object of interest is the ADRF, which describes how expected outcomes change across treatment intensities. This is especially useful when policymakers need to decide not only whether to implement a policy, but also how intensely to implement it.</p>
+<p>The main difficulty is that treatment intensity is rarely randomly assigned. Units receiving different doses may differ systematically. Methods such as the GPS and newer balancing approaches can help address selection on observed covariates, but they require strong assumptions and careful diagnostics.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Software packages
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Several software packages can be used to estimate effects with continuous treatments.</p>
+<ul>
+<li><strong>R</strong>
+<ul>
+<li><a href="https://cran.r-project.org/package=CausalGPS"><code>CausalGPS</code></a>: implements matching and weighting methods based on the generalized propensity score for continuous exposures.</li>
+<li><a href="https://github.com/jaredhuling/independenceWeights"><code>independenceWeights</code></a>: implements independence weights for causal inference with continuous treatments.</li>
+<li><a href="https://cran.r-project.org/package=WeightIt"><code>WeightIt</code></a>: estimates balancing weights for binary, multi-valued, and continuous treatments.</li>
+</ul></li>
+<li><strong>Python</strong>
+<ul>
+<li><a href="https://causal-curve.readthedocs.io/"><code>causal-curve</code></a>: estimates causal dose-response curves for continuous treatments.</li>
+</ul></li>
+<li><strong>Stata</strong>
+<ul>
+<li><a href="https://ideas.repec.org/c/boc/bocode/s457096.html"><code>doseresponse</code></a>: estimates the generalized propensity score, checks balance, and estimates dose-response functions.</li>
+</ul></li>
+</ul>
+</div>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-becker2012" class="csl-entry" role="listitem">
 Becker, Sascha O., Peter H. Egger, and Maximilian von Ehrlich. 2012. <span>“Too Much of a Good Thing? On the Growth Effects of the <span>EU</span>’s Regional Policy.”</span> <em>European Economic Review</em> 56 (4): 648–68. <a href="https://doi.org/10.1016/j.euroecorev.2012.03.001">https://doi.org/10.1016/j.euroecorev.2012.03.001</a>.
 </div>
-<div id="ref-bia2012" class="csl-entry" role="listitem">
-Bia, Michela, and Alessandra Mattei. 2012. <span>“Assessing the Effect of the Amount of Financial Aids to Piedmont Firms Using the Generalized Propensity Score.”</span> <em>Statistical Methods &amp; Applications</em> 21 (4): 485–516. <a href="https://doi.org/10.1007/s10260-012-0193-4">https://doi.org/10.1007/s10260-012-0193-4</a>.
+<div id="ref-cerqua2026cldrf" class="csl-entry" role="listitem">
+Cerqua, Augusto, Roberta Di Stefano, and Raffaele Mattera. 2026. <em>Heterogeneous Responses to Continuous Treatments: A Cluster-Based Causal Framework</em>. <a href="https://doi.org/10.48550/arXiv.2409.08773">https://doi.org/10.48550/arXiv.2409.08773</a>.
 </div>
 <div id="ref-cerqua2018structural" class="csl-entry" role="listitem">
 Cerqua, Augusto, and Guido Pellegrini. 2018. <span>“Are We Spending Too Much to Grow? The Case of Structural Funds.”</span> <em>Journal of Regional Science</em> 58 (3): 535–63. <a href="https://doi.org/10.1111/jors.12365">https://doi.org/10.1111/jors.12365</a>.
@@ -822,6 +942,9 @@ Rosenbaum, Paul R., and Donald B. Rubin. 1983. <span>“The Central Role of the 
 </div>
 <div id="ref-tubbicke2022" class="csl-entry" role="listitem">
 Tübbicke, Stefan. 2022. <span>“Entropy Balancing for Continuous Treatments.”</span> <em>Journal of Econometric Methods</em> 11 (1): 71–89. <a href="https://doi.org/10.1515/jem-2021-0002">https://doi.org/10.1515/jem-2021-0002</a>.
+</div>
+<div id="ref-wu2022gps" class="csl-entry" role="listitem">
+Wu, Xiao, Fabrizia Mealli, Marianthi-Anna Kioumourtzoglou, Francesca Dominici, and Danielle Braun. 2022. <span>“Matching on Generalized Propensity Scores with Continuous Exposures.”</span> <em>Journal of the American Statistical Association</em> 0 (0): 1–29. <a href="https://doi.org/10.1080/01621459.2022.2144737">https://doi.org/10.1080/01621459.2022.2144737</a>.
 </div>
 </div>
 </section>

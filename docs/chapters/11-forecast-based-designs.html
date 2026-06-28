@@ -630,7 +630,7 @@ Y_t^{obs}=Y_t(1),
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The INPS report <span class="citation" data-cites="inps2020mortalita">(<a href="references.html#ref-inps2020mortalita" role="doc-biblioref">INPS Coordinamento Generale Statistico Attuariale 2020</a>)</span> on mortality during the Covid-19 epidemic provides a useful example of a <strong>mean-method</strong> counterfactual. To assess excess mortality in early 2020, the report compares observed deaths with a baseline given by the average number of deaths in the same calendar period of previous years.</p>
+<p>The report by the Italian National Social Security Institute <span class="citation" data-cites="inps2020mortalita">(<a href="references.html#ref-inps2020mortalita" role="doc-biblioref">INPS 2020</a>)</span> on mortality during the Covid-19 epidemic provides a useful example of a <strong>mean-method</strong> counterfactual. To assess excess mortality in early 2020, the report compares observed deaths with a baseline given by the average number of deaths in the same calendar period of previous years.</p>
 <p>This approach is credible in this application because all-cause mortality is relatively stable over short periods once seasonality is taken into account. Excess mortality is then estimated as the difference between observed deaths in 2020 and this historical mean baseline.</p>
 </div>
 </div>
@@ -767,19 +767,6 @@ Y_t=\alpha+\beta t+\gamma Post_t+\delta(t-T_0)Post_t+u_t,
 \]</span></p>
 <p>where <span class="math inline">\(X_i\)</span> denotes pre-treatment characteristics and <span class="math inline">\(\mathcal{H}_{i,T_0}\)</span> denotes the pre-treatment history of unit <span class="math inline">\(i\)</span>.</p>
 <p>Compared with simple time-series methods, MLCM can exploit many predictors and flexible nonlinear relationships. It is particularly useful when the researcher observes many treated units, such as municipalities, firms, or schools, but cannot rely on untreated units as controls.</p>
-<div class="callout callout-style-simple callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Machine learning does not remove the causal problem
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Machine learning can improve prediction, but causal interpretation still depends on assumptions. A very accurate forecasting model may still produce a misleading causal estimate if the post-treatment period contains other shocks that are unrelated to the treatment.</p>
-</div>
-</div>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -805,13 +792,32 @@ Y_t=\alpha+\beta t+\gamma Post_t+\delta(t-T_0)Post_t+u_t,
 <li><p><strong>Absence of other simultaneous shocks</strong>. If another event occurs at the same time as the treatment, it may be impossible to distinguish the effect of the treatment from the effect of the other event.</p></li>
 <li><p><strong>Sufficient pre-treatment information</strong>. Forecasting requires enough historical data to learn the relevant pattern.</p></li>
 </ol>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Machine learning and time-series models do not remove the causal problem
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Machine learning, time-series models, or a combination of the two can improve prediction, but causal interpretation still depends on assumptions. Even a highly accurate forecasting model may produce a misleading causal estimate if the post-treatment period contains other shocks unrelated to the treatment.</p>
+</div>
+</div>
 </section>
 <section id="diagnostics-and-validation" class="level2" data-number="11.8">
 <h2 data-number="11.8" class="anchored" data-anchor-id="diagnostics-and-validation"><span class="header-section-number">11.8</span> Diagnostics and Validation</h2>
 <p>Because these methods rely heavily on prediction, validation is central.</p>
 <p>A useful diagnostic is a pre-treatment forecasting exercise. The researcher can pretend that treatment occurred earlier, estimate the model using only data before that placebo date, and test how well the method predicts the held-out pre-treatment observations.</p>
 <p>If the model cannot predict the pre-treatment period, it is difficult to trust its post-treatment counterfactual forecast.</p>
-<p>Other useful checks include: - comparing the main method with simple benchmarks such as the mean, naive, and drift methods; - inspecting forecast errors in the pre-treatment period; - checking whether results depend on a few influential periods - examining whether other shocks occurred around the intervention date.</p>
+<p>Other useful checks include:</p>
+<ul>
+<li>comparing the main method with simple benchmarks such as the mean, naive, and drift methods;</li>
+<li>inspecting forecast errors in the pre-treatment period;</li>
+<li>checking whether results depend on a few influential periods</li>
+<li>examining whether other shocks occurred around the intervention date.</li>
+</ul>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -873,7 +879,7 @@ Cesaroni, Giulia, Francesco Forastiere, Nera Agabiti, Patrizia Valente, Piergior
 Cox, David R. 1958. <em>Planning of Experiments</em>. John Wiley &amp; Sons.
 </div>
 <div id="ref-inps2020mortalita" class="csl-entry" role="listitem">
-INPS Coordinamento Generale Statistico Attuariale. 2020. <em>Analisi Della Mortalit<span>à</span> Nel Periodo Di Epidemia Da Covid-19</em>. Istituto Nazionale della Previdenza Sociale. <a href="https://www.inps.it/content/dam/inps-site/pdf/Mortalita_Covid19.pdf">https://www.inps.it/content/dam/inps-site/pdf/Mortalita_Covid19.pdf</a>.
+INPS. 2020. <em>Analisi Della Mortalit<span>à</span> Nel Periodo Di Epidemia Da Covid-19</em>. Istituto Nazionale della Previdenza Sociale. <a href="https://www.inps.it/content/dam/inps-site/pdf/Mortalita_Covid19.pdf">https://www.inps.it/content/dam/inps-site/pdf/Mortalita_Covid19.pdf</a>.
 </div>
 <div id="ref-menchetti2023" class="csl-entry" role="listitem">
 Menchetti, Fiammetta, Fabrizio Cipollini, and Fabrizia Mealli. 2023. <span>“Combining Counterfactual Outcomes and <span>ARIMA</span> Models for Policy Evaluation.”</span> <em>The Econometrics Journal</em> 26 (1): 1–24. <a href="https://doi.org/10.1093/ectj/utac024">https://doi.org/10.1093/ectj/utac024</a>.

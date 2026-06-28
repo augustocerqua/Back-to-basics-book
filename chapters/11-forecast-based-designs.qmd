@@ -93,7 +93,7 @@ This approach is reasonable only if the untreated outcome is approximately stabl
 ::: {.callout-note appearance="simple"}
 ### Application: excess mortality during the first Covid-19 wave
 
-The INPS report [@inps2020mortalita] on mortality during the Covid-19 epidemic provides a useful example of a **mean-method** counterfactual. To assess excess mortality in early 2020, the report compares observed deaths with a baseline given by the average number of deaths in the same calendar period of previous years.
+The report by the Italian National Social Security Institute [@inps2020mortalita] on mortality during the Covid-19 epidemic provides a useful example of a **mean-method** counterfactual. To assess excess mortality in early 2020, the report compares observed deaths with a baseline given by the average number of deaths in the same calendar period of previous years.
 
 This approach is credible in this application because all-cause mortality is relatively stable over short periods once seasonality is taken into account. Excess mortality is then estimated as the difference between observed deaths in 2020 and this historical mean baseline.
 :::
@@ -227,12 +227,6 @@ where $X_i$ denotes pre-treatment characteristics and $\mathcal{H}_{i,T_0}$ deno
 
 Compared with simple time-series methods, MLCM can exploit many predictors and flexible nonlinear relationships. It is particularly useful when the researcher observes many treated units, such as municipalities, firms, or schools, but cannot rely on untreated units as controls.
 
-::: {.callout-warning appearance="simple"}
-### Machine learning does not remove the causal problem
-
-Machine learning can improve prediction, but causal interpretation still depends on assumptions. A very accurate forecasting model may still produce a misleading causal estimate if the post-treatment period contains other shocks that are unrelated to the treatment.
-:::
-
 ::: {.callout-note appearance="simple"}
 ### MLCM Application: COVID-19 and standardized math scores
 
@@ -255,6 +249,12 @@ FBCMs require a set of assumptions that is almost completely different from thos
 
 4) **Sufficient pre-treatment information**. Forecasting requires enough historical data to learn the relevant pattern.
 
+::: {.callout-warning appearance="simple"}
+### Machine learning and time-series models do not remove the causal problem
+
+Machine learning, time-series models, or a combination of the two can improve prediction, but causal interpretation still depends on assumptions. Even a highly accurate forecasting model may produce a misleading causal estimate if the post-treatment period contains other shocks unrelated to the treatment.
+:::
+
 ## Diagnostics and Validation
 
 Because these methods rely heavily on prediction, validation is central.
@@ -264,6 +264,7 @@ A useful diagnostic is a pre-treatment forecasting exercise. The researcher can 
 If the model cannot predict the pre-treatment period, it is difficult to trust its post-treatment counterfactual forecast.
 
 Other useful checks include:
+
 - comparing the main method with simple benchmarks such as the mean, naive, and drift methods;
 - inspecting forecast errors in the pre-treatment period;
 - checking whether results depend on a few influential periods

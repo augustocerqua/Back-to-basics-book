@@ -12,16 +12,16 @@ For example, suppose a training program increases employment. This effect may ar
 
 Mechanisms matter because they help interpret results and assess external validity. If we know why a policy works, we can better understand whether it is likely to work in another setting. A training program based on local employer connections may not travel easily to places where those connections are absent.
 
-At the same time, mechanism analysis is demanding. Intermediate outcomes are often themselves affected by the treatment, so conditioning on them can introduce bias. For this reason, mechanisms should not be studied by simply “controlling for” post-treatment variables. They require a clear causal model and additional assumptions.
+At the same time, mechanism analysis is demanding. Intermediate outcomes are often themselves affected by the treatment, so conditioning on them can block part of the treatment effect or introduce new sources of bias. For this reason, mechanisms should not be studied by simply “controlling for” post-treatment variables. They require a clear causal model, additional assumptions, and possibly ancillary quantitative and qualitative information.
 
 ::: {.callout-note}
 ## Mechanisms matter: the PAYT policy in Trento
 
 Bueno and Valente [-@bueno2019] study the introduction of a **pay-as-you-throw (PAYT)** policy in Trento, Italy, using the SCM. The policy made households pay according to the amount of **unsorted waste** they produced. The main effect is clear: unsorted waste fell substantially after the policy. However, this reduced-form effect does not by itself reveal the mechanism behind the change. Households may have responded in different ways. They may have recycled more, reduced overall waste generation, changed purchasing habits, reused more goods, or, in a less desirable scenario, disposed of waste illegally to avoid paying the fee.
 
-This distinction is crucial for policy interpretation. If the policy mainly shifts waste from the unsorted stream to recycling, then its effect works through **waste sorting**. If instead total waste also declines, the policy may be encouraging **waste avoidance**, for example through less packaging, more reuse, or different consumption choices. If the reduction were driven by illegal dumping, the apparent success of the policy would be much less reassuring. The evidence in Bueno and Valente [-@bueno2019] points mainly toward waste avoidance. 
+This distinction is crucial for policy interpretation. If the policy mainly shifts waste from the unsorted stream to recycling, then its effect works through **waste sorting**. If instead total waste also declines, the policy may be encouraging **waste avoidance**, for example through less packaging, more reuse, or different consumption choices. If the reduction were driven by illegal dumping, the apparent success of the policy would be much less reassuring. The ancillary evidence in Bueno and Valente [-@bueno2019] points mainly toward waste avoidance. 
 
-This example shows why causal mechanisms matter. Estimating that a policy has an effect is only the first step. Understanding **how** that effect arises is essential for deciding whether the policy should be expanded, redesigned, or accompanied by complementary measures.
+This example shows why causal mechanisms matter. Estimating that a policy has an effect is only the first step. Understanding **how** that effect arises is essential for deciding whether the policy should be expanded, redesigned, or discontinued.
 :::
 
 ## Causal Machine Learning
@@ -40,20 +40,20 @@ The intuition is simple. Machine learning is used where flexibility is useful, n
 
 This approach is especially useful in settings with many control variables, nonlinear relationships, or high-dimensional data. Yet it does not solve identification by itself. It still requires a credible causal assumption, such as conditional independence, and sufficient overlap between treated and untreated units.
 
-The key point for this book is that machine learning does not replace identification. A highly accurate prediction model cannot by itself solve confounding, selection bias, or violations of parallel trends. Causal machine learning is most useful when combined with a credible causal design.
+The key point for this book is that machine learning does not replace identification. A highly accurate prediction model cannot by itself solve confounding, selection bias, or violations of parallel trends. Causal machine learning is most useful when combined with a credible causal design. The interested reader can find a much more detailed treatment of these methods in *Applied Causal Inference Powered by ML and AI* [@chernozhukov2024causalml].
 
 ::: {.callout-note appearance="simple"}
 ### Empirical example: active labour market policies in Switzerland
 
-A recent application of **Double Machine Learning (DML)** is Knaus [-@knaus2022dml], who studies active labour market programmes in Switzerland.
+An interesting application of **Double Machine Learning (DML)** is Knaus [-@knaus2022dml], who studies active labor market programs in Switzerland.
 
-The empirical question is whether participation in different labour market programmes improves later employment outcomes. This is a typical observational-policy setting: unemployed individuals are not randomly assigned to programmes, and participants may differ from non-participants in many observed characteristics, such as age, education, employment history, unemployment duration, occupation, and local labour-market conditions.
+The empirical question is whether participation in different labor market programs improves later employment outcomes. This is a typical observational-policy setting: unemployed individuals are not randomly assigned to programs, and participants may differ from non-participants in many observed characteristics, such as age, education, employment history, unemployment duration, occupation, and local labor-market conditions.
 
 DML is useful in this setting because it allows the researcher to flexibly control for a rich set of observed confounders. Machine learning methods are used to predict both treatment participation and potential outcomes from pre-treatment covariates. The debiasing step then combines these predictions in a way that reduces the sensitivity of the final treatment-effect estimate to regularization and prediction errors.
 
-This example illustrates the main role of DML in policy evaluation. Machine learning is not used to replace an identification strategy. The causal interpretation still relies on the assumption that, conditional on observed pre-treatment characteristics, programme participation is as good as random. Rather, machine learning helps implement this strategy in a flexible way when the number of covariates is large and their relationship with treatment and outcomes may be complex.
+This example illustrates the main role of DML in policy evaluation. Machine learning is not used to replace an identification strategy. The causal interpretation still relies on the assumption that, conditional on observed pre-treatment characteristics, program participation is as good as random. Rather, machine learning helps implement this strategy in a flexible way when the number of covariates is large and their relationship with treatment and outcomes may be complex.
 
-The application also shows that DML can go beyond estimating a single average effect: it can be used to study heterogeneous effects and to explore how programme assignment could be improved.
+The application also shows that DML can go beyond estimating a single average effect: it can be used to study heterogeneous effects and to explore how program assignment could be improved.
 :::
 
 ## Structural Models
@@ -78,17 +78,15 @@ A growing literature combines design-based causal evidence with structural model
 A useful example is Flores [-@flores2026cashtransfers], who studies Mexico's *Oportunidades* conditional cash transfer program. The paper exploits exogenous variation in the program to estimate how transfers affect household time allocation and consumption choices. These quasi-experimental responses are then used as moments in the estimation of a structural collective household model.
 
 This approach illustrates a productive bridge between design-based and structural methods. The design-based part provides credible empirical variation; the structural model gives the estimates an economic interpretation and allows the researcher to study mechanisms, welfare, and counterfactual policies that go beyond the original treatment comparison.
-
-The key lesson is that structural modeling is not necessarily in competition with counterfactual methods; it can build on them.
 :::
 
 ## Parametric vs. Non-Parametric Estimation
 
 A parametric approach imposes a specific functional form on the relationship between variables. For example, a linear regression assumes that the conditional expectation of the outcome changes linearly with covariates, unless interactions or nonlinear terms are added.
 
-A non-parametric approach imposes fewer functional-form restrictions. It allows the data to speak more flexibly, often by estimating relationships locally or using flexible functions. Matching, local polynomial regression in RDD, and some machine-learning methods can be seen as moving in this direction.
+A non-parametric approach imposes fewer functional-form restrictions. It allows the data to speak more flexibly, often by estimating relationships locally or using flexible functions. Matching, local polynomial regression in the RD design, and some machine-learning methods can be seen as moving in this direction.
 
-The distinction matters because causal conclusions may be sensitive to functional-form assumptions. A parametric model can be efficient and easy to interpret when correctly specified, but misleading when the specification is wrong. A non-parametric method can be more flexible, but may require more data and can be less precise.
+The distinction matters because causal conclusions may be sensitive to functional-form assumptions. A parametric model can be efficient and easy to interpret when correctly specified, but misleading when the specification is incorrect. A non-parametric method can be more flexible, but may require more data and produce less precise estimates.
 
 For this book, the key lesson is practical: identification and estimation are different problems. A credible research design tells us which comparison can identify a causal effect. The estimation method determines how that comparison is implemented in the data.
 
@@ -108,7 +106,7 @@ A careful evaluation often benefits from combining both perspectives: quantitati
 
 ## Other Types of Evaluations
 
-This book focuses mainly on **ex-post impact evaluation**, that is, on methods designed to estimate causal effects. However, ex-post impact evaluation is only one part of a broader evaluation toolkit. Different policy questions require different evaluation approaches, and different goals should be pursued with different instruments.
+This book focuses mainly on **ex-post impact evaluation**, that is, on methods designed to estimate the causal effects of interventions after they have taken place. However, ex-post impact evaluation is only one part of a broader evaluation toolkit. Different policy questions require different evaluation approaches, and different goals should be pursued with different instruments.
 
 **Ex-ante evaluation** takes place before a policy is implemented. Its purpose is to assess whether an intervention is desirable, feasible, and likely to produce benefits larger than its costs. Ex-ante analyses may rely on theory, simulations, cost-benefit analysis, previous evidence, pilot studies, or forecasts. They are especially useful when policymakers must decide whether to introduce a policy, how to design it, or which alternative intervention to choose.
 
@@ -117,4 +115,4 @@ A useful example is the monitoring of spending under **NextGenerationEU (NGEU)**
 
 **Process evaluation** focuses on how the policy is implemented. It asks whether the intervention reached the intended target population, whether local actors followed the planned procedures, and whether implementation barriers emerged. This type of evaluation is crucial because a policy may fail not because its underlying theory is wrong, but because it was not implemented properly.
 
-These approaches are complementary with ex-post impact evaluation. Ex-ante evaluation helps design the policy; monitoring follows its implementation; process evaluation explains how the intervention unfolded; and impact evaluation estimates whether it worked. Confusing these goals can lead to misleading conclusions. A well-monitored program is not necessarily effective, and an effective program may still be inefficient, poorly targeted, or difficult to scale.
+These approaches are complementary with ex-post impact evaluation. Ex-ante evaluation helps design the policy; monitoring follows its implementation; process evaluation explains how the intervention unfolded; and ex-post impact evaluation estimates whether it worked. Confusing these goals can lead to misleading conclusions. A well-monitored program is not necessarily effective, and an effective program may still be inefficient, poorly targeted, or difficult to scale.

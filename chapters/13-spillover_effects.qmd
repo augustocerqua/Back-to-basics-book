@@ -35,10 +35,10 @@ The same logic applies to local economic policies. A subsidy to some firms may i
 ::: {.callout-warning appearance="simple"}
 ### A contaminated control group
 
-If untreated units are affected by the treatment received by other units, they are no longer pure controls. Comparing treated and untreated units may understate or overstate the average treatment effects.
+If untreated units are affected by the treatment received by other units, they are no longer pure controls. Comparing treated and untreated units may understate or overstate the treatment effects of interest.
 :::
 
-## Spillovers and SUTVA
+## Relaxing the no-interference assumption
 
 Under the no-interference assumption, the potential outcome of unit $i$ depends only on its own treatment status:
 
@@ -56,11 +56,9 @@ This creates a serious dimensionality problem. With $N$ units and a binary treat
 
 This is why causal inference with interference requires structure. We need assumptions that reduce the number of relevant potential outcomes and define which forms of exposure matter.
 
-## Direct and Indirect Effects
+A common way to simplify the problem is to distinguish between a unit's own treatment and its exposure to the treatment of others.
 
-A useful way to simplify the problem is to distinguish between a unit's own treatment and its exposure to the treatment of others.
-
-Let $D_i$ denote whether unit $i$ is directly treated. Let $G_i$ denote its exposure to the treatment of other units. For example, $G_i$ may indicate whether some neighboring units are treated, or it may measure the share of treated units in the same local area.
+Let $D_i$ denote whether unit $i$ is directly treated. Let $G_i$ summarize unit $i$'s exposure to the treatment status of other units. The rule that maps the full treatment allocation into this lower-dimensional exposure measure is known as the **exposure mapping** [@manski2013; @aronow2017]. For example, $G_i$ may indicate whether some neighboring units are treated, or it may measure the share of treated units in the same local area.
 
 Potential outcomes can then be written as
 
@@ -69,6 +67,16 @@ Y_i(d,g),
 $$
 
 where $d$ is the unit's own treatment status and $g$ is its exposure to others' treatment.
+
+::: {.callout-warning appearance="simple"}
+### Exposure mapping is an identifying assumption
+
+Writing potential outcomes as $Y_i(d,g)$ makes the interference problem more tractable. This simplification is useful, but it is also an assumption. It means that, once we know unit $i$'s own treatment status $D_i$ and its exposure measure $G_i$, the exact identity and configuration of treated units no longer matter for unit $i$'s potential outcome.
+
+For example, if $G_i$ is defined as the share of treated neighboring municipalities, we assume that two municipalities with the same own treatment status and the same treated-neighbor share have the same relevant exposure, even if the treated neighbors are located in different directions or have different sizes.
+
+The credibility of the analysis therefore depends on whether the chosen exposure mapping captures the spillover channels that matter in the application.
+:::
 
 The **direct effect** compares treated and untreated status while holding exposure fixed:
 
@@ -100,15 +108,15 @@ The **overall effect** summarizes the effect of the policy on the whole populati
 With spillovers, the direct effect is only part of the story. A complete evaluation may also need indirect, total, and overall effects.
 :::
 
-## Why Control-based Designs Can Retrieve Biased Estimates
+## Why Spillover Effects Are a Problem for Control-Based Designs
 
-Suppose we estimate a simple difference in means:
+Suppose we are analyzing an RCT and we adopt a simple difference in means estimator:
 
 $$
 DIM = E[Y_i^{obs}\mid D_i=1] - E[Y_i^{obs}\mid D_i=0].
 $$
 
-Without spillovers, the average outcome of untreated units may help estimate the missing counterfactual outcome for treated units.
+Without spillovers, the average outcome of untreated units provides a reliable estimate of the missing counterfactual outcome for treated units.
 
 With spillovers, however, untreated units may be exposed to the treatment of others. If untreated units benefit from positive spillovers, their observed outcomes are higher than they would have been without the policy. The treated-control difference may then understate the total effect of the program.
 
@@ -116,15 +124,13 @@ If untreated units are harmed by negative spillovers, their observed outcomes ar
 
 The bias depends on the type, direction, and intensity of interference.
 
-## Spillovers in Randomized Experiments
-
-Randomization does not automatically solve the problem of spillovers. If treated units affect untreated units, then even a perfectly randomized experiment may not identify the standard treatment effect.
+**Randomization does not automatically solve the problem of spillovers**. If treated units affect untreated units, then even a perfectly randomized experiment may not identify the treatment effects of interest.
 
 For example, in an experiment on job training, assigning some workers to training may change the labor-market opportunities of untreated workers. In an experiment on vaccination, assigning some individuals to treatment may reduce infection risk for untreated individuals.
 
-Randomization still helps, but the design must be adapted to the relevant estimand. In some cases, the researcher may randomize treatment saturation across groups, so that some groups have many treated units and others have few treated units. This makes it possible to study how outcomes vary with exposure to treatment [@hudgens2008].
+Randomization still simplifies identification, but the design must be adapted to the relevant estimand. In some cases, researchers may randomize treatment saturation across groups, so that some groups have many treated units while others have few. This makes it possible to study how outcomes vary with exposure to treatment [@hudgens2008].
 
-## Partial Interference
+### Partial Interference
 
 One common restriction is **partial interference** [@sobel2006]. Units are divided into groups, and interference is assumed to occur within groups but not between groups.
 
@@ -146,8 +152,8 @@ This assumption greatly simplifies the problem. It allows the researcher to comp
 Partial interference assumes that units can affect each other within groups, but not across groups.
 :::
 
-The assumption is useful, but it may be unrealistic in regional policy. Economic interactions often cross administrative boundaries. Firms trade with suppliers outside their municipality, workers commute across local labor markets, and households may respond to opportunities in nearby areas.
-
+The assumption is useful, but it may be unrealistic for some policies. Economic interactions often cross administrative boundaries. Firms trade with suppliers outside their municipality, workers commute across local labor markets, and households may respond to opportunities in nearby areas.
+<!---
 ## Exposure Mappings
 
 A more flexible approach is to define an **exposure mapping** [@manski2013; @aronow2017]. Instead of allowing every possible treatment allocation to matter separately, the researcher summarizes the treatment environment of each unit using a lower-dimensional exposure variable.
@@ -167,8 +173,9 @@ Y_i(D_1,\ldots,D_N)=Y_i(D_i,G_i).
 $$
 
 This assumption is not innocuous. It must be justified by theory, institutional knowledge, or knowledge of the mechanism.
+--->
 
-## Spatial Spillovers
+## Spatial Econometric Models
 
 In regional and urban policy, spillovers often depend on geography. The treatment assigned to one municipality, region, or firm may affect nearby units more than distant units.
 
@@ -196,13 +203,13 @@ $$
 
 Here, $\tau$ is associated with direct treatment exposure, while $\theta$ is associated with spillover exposure from connected treated units.
 
-## A Caution on Spatial Econometrics
+### A Caution on Spatial Econometrics
 
-Spatial econometric models can be useful, but they are not automatically causal. The key difficulty is that the spatial weights matrix must represent the true structure of interactions.
+Spatial econometric models can be useful, but their estimates do not have a causal interpretation by default. For causal interpretation, the spatial weights matrix $W$ must provide a credible representation of the true structure of interactions.
 
-If the researcher uses geographic distance but the relevant interactions occur through commuting networks, the exposure measure may be misspecified. If spillovers operate through suppliers, competitors, or social networks, a simple border-contiguity matrix may be misleading.
+If the researcher uses geographic distance but the relevant interactions occur through commuting networks, the spatial weights matrix may be misspecified. If spillovers operate through suppliers, competitors, or social networks, a simple border-contiguity matrix may be misleading.
 
-This is one reason why the use of spatial econometrics for causal policy evaluation has been criticized [@gibbons2012]. The problem is not that spatial methods are useless. The problem is that causal interpretation requires credible identification, not only spatial correlation.
+This is one reason why the use of spatial econometrics for causal policy evaluation has been criticized [@gibbons2012]. Spatial methods can be informative, but spatial correlation alone is not enough for causal interpretation. What is needed is a credible identification strategy that defines the relevant potential outcomes and clarifies the assumptions under which they can be identified.
 
 ::: {.callout-warning appearance="simple"}
 ### Spatial correlation is not spillover identification
@@ -210,7 +217,7 @@ This is one reason why the use of spatial econometrics for causal policy evaluat
 Nearby units often look similar for many reasons. To interpret spatial dependence as a causal spillover, the researcher must explain why the spatial exposure measure captures the relevant causal channel.
 :::
 
-## Empirical Strategies
+## A Commonly Adopted Empirical Strategy with Control-Based Methods
 
 A credible spillover analysis usually starts from theory. The researcher should ask:
 
@@ -220,7 +227,7 @@ A credible spillover analysis usually starts from theory. The researcher should 
 - Does exposure depend on geography, networks, markets, or institutions?
 - Are there units that are untreated and plausibly unexposed?
 
-If some untreated units are plausibly unexposed, they can be used as a control group to estimate direct effects. Treated units can then be compared with unexposed untreated units using familiar methods such as matching, difference-in-differences, regression discontinuity, or synthetic control.
+If some untreated units are plausibly unexposed, they can be used as a control group to estimate direct effects. Treated units can then be compared with unexposed untreated units using familiar methods such as matching, DiD, RD, or SCM.
 
 If some untreated units are exposed to spillovers, they can be compared with unexposed untreated units to estimate indirect effects. This is the logic of applications that explicitly distinguish between treated units, neighboring exposed units, and untreated unexposed units [@cerqua2017spillovers].
 
@@ -230,13 +237,37 @@ The general empirical design should therefore classify units into meaningful exp
 - untreated units exposed to spillovers;
 - untreated units not exposed to spillovers.
 
+In spatial applications, a common extension of the DiD strategy is to define **distance rings** around treated units. For example, untreated units may be classified as being within 0-10 km, 10-20 km, or more than 20 km from the nearest treated unit. Units far enough away from treatment are treated as “pure controls”, while untreated units in closer rings are interpreted as exposed to different spillover intensities. The DiD model can then compare changes in outcomes for each exposed ring with changes among far-away unexposed controls. This provides a transparent way to study whether spillovers decay with distance. However, the strategy remains assumption-based: the researcher must justify the distance cutoffs, the definition of the pure control group, and the parallel-trends assumption between each ring and the unexposed control units.
+
 The direct effect is estimated by comparing directly treated units with credible counterfactual units. The indirect effect is estimated by comparing exposed untreated units with unexposed untreated units. The total and overall effects combine these components.
+
+::: {.callout-note appearance="simple"}
+### Example: distance bands around protected blocks
+
+Di Tella and Schargrodsky's study of police and crime in Buenos Aires [@ditella2004police] provides an application of this logic. After the 1994 terrorist attack on the main Jewish center, Jewish institutions received visible police protection. The authors use this sudden change to compare car thefts before and after the attack across blocks with different exposure to police protection.
+
+The key idea is similar to a **DiD rings strategy**. Blocks with protected institutions are directly treated. Nearby unprotected blocks are useful for checking whether crime was displaced just around the corner. Farther blocks provide a comparison group that is less likely to be affected by the extra police presence.
+
+This example shows why distance bands can be informative: they do not only estimate whether the intervention worked where it was implemented, but also whether its effects faded, spilled over, or displaced outcomes across nearby locations.
+:::
+
+## Application: German reunification and the inclusive SCM
+
+Di Stefano and Mellace [-@distefano2024isc] revisit the effect of German reunification on West Germany’s GDP per capita. In the original SCM application, Austria receives 42% of the weight used to construct synthetic West Germany. This large weight substantially improves the pre-treatment fit, reflecting the close historical and economic relationship between the two countries.
+
+However, Austria may itself have been affected by reunification. West Germany may have diverted demand and investment toward East Germany and away from Austria. Including Austria in the donor pool may therefore contaminate the estimated counterfactual. Excluding it is not an easy solution either: the pre-treatment RMSPE increases from 119.07 to 270.74, substantially weakening the quality of the synthetic control.
+
+The **inclusive Synthetic Control Method** (iSCM) addresses this trade-off by allowing potentially affected units to remain in the donor pool. It constructs synthetic controls for both West Germany and Austria and uses the resulting system of relationships to separate the direct effect on West Germany from the possible spillover effect on Austria.
+
+The results confirm a negative effect of reunification on West Germany’s GDP per capita. After accounting for spillovers, the estimated loss is up to 1.5% larger than the conventional SCM estimate. For Austria, iSCM estimates a small negative spillover, reaching at most approximately USD 708 per capita, although this effect is not statistically significant.
+
+This application illustrates a central difficulty in spillover analysis: the units most useful for constructing a credible counterfactual may also be those most likely to be indirectly affected by the intervention.
 
 ## Worked Example
 
 Suppose the government subsidizes a subset of firms in a disadvantaged region. The goal is to increase investment and employment among beneficiary firms, but the policy may also affect other firms.
 
-There may be positive spillovers if beneficiary firms buy more inputs from local suppliers, attract skilled workers to the area, or generate new demand for local services.
+Positive spillovers may arise if beneficiary firms strengthen local input–output linkages, increase demand for local services, or expand the local pool of skilled workers available to other firms.
 
 There may also be negative spillovers if subsidized firms compete more aggressively, hire workers away from non-beneficiary firms, or increase local wages and rents.
 
