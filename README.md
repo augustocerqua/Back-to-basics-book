@@ -8,7 +8,7 @@ This book is about impact evaluation and causal inference. Policies, interventio
 
 ## This version
 
-This is version 0.1 of the book. It is still a work in progress, so some errors, imprecisions, and unfinished parts may remain.
+This is version 0.2 of the book. It is still a work in progress, so some errors, imprecisions, and unfinished parts may remain.
 
 ## Publish to GitHub Pages
 
