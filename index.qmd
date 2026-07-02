@@ -88,7 +88,9 @@ The book therefore does not try to cover every method, every extension, or every
 
 The book is written for readers who want to understand the intuition behind impact evaluation methods before moving to technical details. It is intended for students, applied researchers, policy analysts, and practitioners who use causal methods or read studies based on them.
 
-Formal notation is kept to a minimum and postponed to the end of each chapter. The emphasis is on **interpretation**, **design**, **credibility**, and **transparency**.
+Formal notation is kept to a minimum. The emphasis is on **interpretation**, **design**, **credibility**, and **transparency**.
+
+Readers who feel less comfortable with formal notation may first consult the [Appendix](../chapters/appendix-technical-language.qmd), which offers a basic guide to essential concepts in statistics, econometrics, and causal inference.
 
 ## Acknowledgments
 
@@ -99,6 +101,14 @@ Before taking the first steps in this journey, I would like to thank my mentor, 
 This is version 0.2 of the book. It is still a work in progress, and I would be grateful for any comments, suggestions, or corrections that could help improve it.
 
 All illustrations in this book were created with the assistance of a generative AI system, based on specific instructions and, in some cases, hand-drawn sketches provided by the author. They are intended for illustrative and educational purposes only.
+
+
+
+Except where otherwise noted, © 2026 Augusto Cerqua.
+
+This book is licensed under a
+[Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 <!--# About the book {.unnumbered}
 

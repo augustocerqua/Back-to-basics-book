@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://augustocerqua.github.io/Back-to-basics-book/index.html</loc>
-    <lastmod>2026-06-28T09:41:16.249Z</lastmod>
+    <lastmod>2026-07-02T06:54:57.226Z</lastmod>
   </url>
   <url>
     <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/01-why-impact-evaluation.html</loc>
@@ -34,7 +34,7 @@
   </url>
   <url>
     <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/08-instrumental-variables.html</loc>
-    <lastmod>2026-06-23T09:57:27.246Z</lastmod>
+    <lastmod>2026-07-01T11:02:15.576Z</lastmod>
   </url>
   <url>
     <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/09-regression-discontinuity.html</loc>
@@ -42,7 +42,7 @@
   </url>
   <url>
     <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/10-synthetic-control.html</loc>
-    <lastmod>2026-06-13T17:07:20.836Z</lastmod>
+    <lastmod>2026-07-02T06:16:48.683Z</lastmod>
   </url>
   <url>
     <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/11-forecast-based-designs.html</loc>
@@ -63,6 +63,10 @@
   <url>
     <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/15-miscellanea.html</loc>
     <lastmod>2026-06-28T09:09:41.473Z</lastmod>
+  </url>
+  <url>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/appendix-technical-language.html</loc>
+    <lastmod>2026-07-02T06:46:53.827Z</lastmod>
   </url>
   <url>
     <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/references.html</loc>

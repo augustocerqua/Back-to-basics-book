@@ -1,0 +1,622 @@
+# A Gentle Guide to Statistical and Econometric Language
+
+This appendix is intended for readers who are new to statistics, econometrics, or causal inference. It explains the technical terms that appear repeatedly throughout the book without attempting to provide a complete course in statistical methods.
+
+The aim is practical. A reader should be able to return to this appendix whenever a term such as *expected value*, *covariate*, *endogeneity*, or *confidence interval* makes the main argument difficult to follow.
+
+::: {.callout-note appearance="simple"}
+## How to use this appendix
+
+It is not necessary to read every section before starting the book. The appendix can be used as a reference. The final glossary provides short definitions, while the preceding sections explain the most important concepts more carefully and with examples.
+:::
+
+## Units, observations, and variables
+
+### Units and observations
+
+The **unit of analysis** is the entity about which we collect information and want to draw conclusions. A unit may be a person, household, firm, school, municipality, region, or country.
+
+An **observation** is a recorded set of information about a unit. In a **cross-sectional dataset**, different units are observed at a single point in time, and each unit typically contributes one observation. In a **panel dataset**, the same units are observed at multiple points in time, so each unit may contribute one observation for each time period.
+
+For example, suppose we collect information on 500 firms in 2025. This produces a cross-sectional dataset with 500 units and 500 observations. If we instead follow the same 500 firms annually from 2016 to 2025, we obtain a panel dataset. Each firm-year combination constitutes a separate observation, so a balanced panel contains 5,000 observations: ten observations for each firm.
+
+### Population and sample
+
+The **population** is the complete set of units about which we want to learn. The **sample** is the subset of units that we actually observe.
+
+If we study workplace accidents among all manufacturing firms in Brazil but observe data for only 2,000 firms, the population is all Brazilian manufacturing firms and the sample consists of the 2,000 observed firms.
+
+How the sample is selected matters. If the 2,000 firms are randomly sampled from the population, the sample is more likely to be representative of Brazilian manufacturing firms as a whole. If, instead, the sample includes only large firms, firms in specific regions, or firms that voluntarily report information, the sample may differ systematically from the population.
+
+This distinction matters for external validity. An effect estimated in a particular sample does not necessarily apply to every unit in the broader population. The more selective the sample is, the more careful we should be when generalizing the results.
+
+### Variables
+
+A **variable** is a characteristic that can take different values across units or over time. Employment status, income, age, firm size, pollution exposure, and policy participation are all variables.
+
+Variables can be:
+
+- **binary**, taking two values, such as treated or untreated;
+- **categorical**, assigning units to categories, such as region or industry;
+- **discrete**, taking countable numerical values, such as the number of accidents;
+- **continuous**, taking many possible numerical values, such as income or pollution intensity.
+
+A variable is called a **random variable** when its value depends on chance or uncertainty. For example, the income of a randomly selected individual, the number of workplace accidents in a firm, or a student’s test score can all be treated as random variables because their values are not known before observation.
+
+### Outcome or dependent variable
+
+The **outcome variable** is the variable that the analysis seeks to explain or whose response to a treatment is of interest. It is often denoted by $Y$.
+
+In a study of speed cameras, the outcome may be the number of road accidents. In a study of training, it may be earnings. In regression terminology (see below), the outcome is also called the **dependent variable**. The term *dependent* does not itself imply causation. It only indicates that the variable appears on the left-hand side of the regression model and is being explained or predicted.
+
+### Treatment or exposure variable
+
+The **treatment variable** indicates which intervention, policy, or exposure a unit receives. A binary treatment is often denoted by $D$, with $D=1$ for treated units and $D=0$ for untreated units.
+
+When treatment can vary in intensity, it may be denoted by $T$. Examples include the amount of a subsidy, the number of hours of tutoring, or the concentration of air pollution.
+
+The term **exposure** is common in epidemiology and in settings with spillovers. It may refer either to a unit's own treatment intensity or to its exposure to the treatment received by other units.
+
+### Explanatory and independent variables
+
+An **explanatory variable** is a variable used to explain or predict variation in the outcome. It is also often called an **independent variable**, a **predictor**, a **feature**, or a **regressor**.
+
+These terms describe the variable's role in a model. Importantly, calling a variable *independent* does not guarantee that it is statistically independent of other variables or that its coefficient has a causal interpretation.
+
+### Covariates and control variables
+
+A **covariate** is a characteristic of a unit that is included in the analysis. Age, education, prior earnings, baseline accident rates, and regional characteristics may all be covariates. Covariates are often denoted collectively by $X$.
+
+A **control variable** is a covariate included in a regression or another adjustment procedure. Researchers control for a variable to compare units that are similar with respect to that characteristic.
+
+In causal analysis, covariates should generally be measured before treatment. Controlling for variables affected by treatment may remove part of the causal effect or introduce new bias.
+
+### Confounders
+
+A **confounder** is a pre-treatment variable associated with both treatment assignment and potential outcomes. Confounders can make treated and untreated units systematically different even before treatment.
+
+Suppose speed cameras are installed on roads with high pre-policy accident rates. Previous accidents affect the probability of receiving a camera and predict future accidents. Previous accidents are therefore a confounder of the relationship between cameras and post-policy accidents.
+
+An **observed confounder** is measured in the data and can potentially be adjusted for. An **unobserved confounder** is not measured and may continue to bias the analysis.
+
+## Averages, expectations, and distributions
+
+### The arithmetic mean
+
+The **arithmetic mean** is the simple average of the observed values. Suppose we observe $N$ units, indexed by $i=1,\ldots,N$, and let $Y_i$ denote the outcome of unit $i$. The sample mean is
+
+$$
+\bar{Y}
+=
+\frac{1}{N}\sum_{i=1}^{N}Y_i.
+$$
+
+Here, $N$ is the total number of observed units. The symbol $\bar{Y}$ is read as “Y bar,” while the summation symbol $\sum$ indicates that the outcome values are added across all units. The resulting sum is then divided by $N$.
+
+### Expected value
+
+The **expected value** is the population counterpart of an average and is denoted by $E[Y]$. It represents the long-run or probability-weighted average value of a random variable.
+
+An expected value is not necessarily a value that any individual unit will experience. If half of the firms have zero accidents and half have one accident, the expected number of accidents is 0.5, even though no firm necessarily records exactly half an accident.
+
+In causal inference,
+
+$$
+E[Y_i(1)]
+$$
+
+is the average outcome that would be observed if all units in the relevant population were treated, while
+
+$$
+E[Y_i(0)]
+$$
+
+is the average outcome that would be observed if all units were untreated.
+
+### Conditional expected value
+
+A **conditional expected value** is an ordinary average calculated for a specific subgroup of units satisfying a given condition. For example,
+
+$$
+E[Y_i \mid D_i=1]
+$$
+
+is the average outcome among the subgroup of treated units. It is computed like a simple mean, but using only observations for which $D_i=1$. The vertical bar $\mid$ is read as “given” or “conditional on.”
+
+Similarly,
+
+$$
+E[Y_i \mid X_i=x]
+$$
+
+is the average outcome among units whose covariates take the value $x$.
+
+### Weighted average
+
+A **weighted average** gives different importance to different observations. If the weights are $w_i$ and sum to one, the weighted average is
+
+$$
+\sum_{i=1}^{N} w_iY_i.
+$$
+
+Matching, weighting, and synthetic control methods use weights to construct a comparison group or counterfactual that better resembles the treated units.
+
+### Distribution
+
+The **distribution** of a variable describes which values it can take and how frequently or probably those values occur. Two groups may have the same mean but very different distributions.
+
+For example, two regions may have the same average income even though one has little inequality and the other contains many low-income and high-income households.
+
+### Variance and standard deviation
+
+The **variance** measures how dispersed values are around their mean. The **standard deviation** is the square root of the variance and is expressed in the same units as the original variable.
+
+A small standard deviation means that observations are concentrated near the mean. A large standard deviation means that they are more dispersed.
+
+Standardized outcomes are often expressed in standard-deviation units. An estimated effect of $-0.5$ standard deviations means that treatment reduced the outcome by half of the outcome's reference standard deviation.
+
+## The linear regression model
+
+### The simple linear regression model
+
+A **linear regression model** describes how an outcome is related to one or more explanatory variables. A simple regression with one explanatory variable can be written as
+
+$$
+Y_i = \alpha + \beta X_i + u_i.
+$$
+
+The components are:
+
+- $Y_i$: the outcome or dependent variable;
+- $X_i$: the explanatory variable;
+- $\alpha$: the intercept;
+- $\beta$: the regression coefficient;
+- $u_i$: the error term.
+
+The intercept $\alpha$ is the model's predicted value of $Y$ when $X=0$. The coefficient $\beta$ describes how the predicted outcome changes when $X$ increases by one unit.
+
+The regression equation describes an association unless a credible research design and appropriate assumptions justify a causal interpretation.
+
+### Predicted values, errors, and residuals
+
+Once the regression coefficients have been estimated, the **predicted value** for unit $i$ is
+
+$$
+\widehat{Y}_i = \widehat{\alpha}+\widehat{\beta}X_i.
+$$
+
+A hat indicates an estimated or predicted quantity. The theoretical term $u_i$ is usually called the **error term**, although it does not necessarily represent a mistake. It collects all determinants of $Y_i$ that are not explicitly captured by the explanatory variable $X_i$ included in the model, together with any random variation.
+
+Its estimated counterpart, $\widehat{u}_i$, is called the **residual**. It is the observed prediction error for unit $i$, calculated as the difference between the observed and predicted outcome:
+
+$$
+\widehat{u}_i = Y_i-\widehat{Y}_i.
+$$
+
+### Ordinary least squares
+
+**Ordinary least squares (OLS)** is the most common method for estimating the coefficients of a linear regression model. OLS chooses the coefficients that minimize the sum of squared residuals:
+
+$$
+\sum_{i=1}^{N}\widehat{u}_i^2.
+$$
+
+Squaring prevents positive and negative residuals from cancelling one another and gives relatively more importance to large prediction errors.
+
+When the model can be estimated, OLS produces the linear fit that minimizes the sum of squared residuals. This does not mean that the relationship is causal or that the model is substantively credible.
+
+### Multiple regression and holding variables constant
+
+A **multiple regression** includes several explanatory variables. For example, a model with three explanatory variables can be written as
+
+$$
+Y_i
+=
+\alpha
++
+\beta_1 X_{1i}
++
+\beta_2 X_{2i}
++
+\beta_3 X_{3i}
++
+u_i.
+$$
+
+Each coefficient describes the relationship between one explanatory variable and the outcome **holding the other included variables constant**. For example, $\beta_1$ measures how the predicted value of $Y_i$ changes when $X_{1i}$ increases by one unit, for fixed values of $X_{2i}$ and $X_{3i}$.
+
+Holding other variables constant allows the regression to separate the conditional relationship between each explanatory variable and the outcome. However, this interpretation depends on the model specification and on whether the data contain observations with sufficiently comparable combinations of the explanatory variables.
+
+### Regression coefficients
+
+A **regression coefficient** summarizes the association between an explanatory variable and the outcome, conditional on the other variables included in the model.
+
+Its interpretation depends on:
+
+- the units in which the variables are measured;
+- the variables included in the regression;
+- the functional form of the model;
+- the population and sample being studied;
+- the assumptions used to give the coefficient a causal interpretation.
+
+Changing the set of control variables can change a coefficient because it changes the comparison being made.
+
+### Functional form, nonlinearities, and interactions
+
+The **functional form** describes the mathematical relationship imposed between variables. A basic linear model assumes that a one-unit change in $X$ has the same marginal association with $Y$ at every value of $X$.
+
+This may be too restrictive. The relationship may be curved, may flatten at high values, or may differ across groups. Researchers can allow for **nonlinearities** by including transformations such as $X^2$, logarithms, splines, or non-parametric estimators.
+
+An **interaction term** allows the relationship between one variable and the outcome to depend on another variable. For example, an interaction between treatment and age allows the treatment effect to differ between younger and older individuals.
+
+### Fixed effects
+
+**Fixed effects** are sets of indicator variables used to absorb systematic differences across units or time periods.
+
+Unit fixed effects control for characteristics of each unit that do not change over time. Time fixed effects control for shocks that affect all units in a given period.
+
+In panel-data models, unit and time fixed effects are often included together. They do not automatically solve all confounding problems. In particular, they do not remove unobserved factors that change over time differently across units.
+
+## Common data structures
+
+### Cross-sectional data
+
+**Cross-sectional data** observe many units at one point in time, or over one common period. An example is a dataset containing income, education, and treatment status for individuals in 2025.
+
+With only a post-treatment cross-section, causal analysis generally requires strong assumptions because pre-treatment outcomes and trends are not observed.
+
+### Time-series data
+
+**Time-series data** follow one unit or aggregate variable over many periods. Monthly national unemployment from 2000 to 2025 is a time series.
+
+Forecast-based counterfactual methods use the pre-treatment history of an outcome to predict its untreated post-treatment path.
+
+### Repeated cross-sections
+
+**Repeated cross-sectional data** contain different samples from the same population at different times. For example, separate household surveys conducted before and after a reform form repeated cross-sections even if the same households are not interviewed twice.
+
+### Panel or longitudinal data
+
+**Panel data** follow the same units over time. They allow researchers to observe how outcomes change within units and to control for time-invariant unit characteristics.
+
+If $Y_{it}$ denotes the outcome of unit $i$ in period $t$, then the two subscripts identify both the unit and the time period.
+
+Panel data are especially important for DiD, event-study, fixed-effects, synthetic control, and many forecast-based methods.
+
+### Pre-treatment and post-treatment periods
+
+The **pre-treatment period** occurs before the intervention begins. It is used to measure baseline characteristics, assess comparability, study trends, or train a forecasting model.
+
+The **post-treatment period** occurs after treatment begins. Outcomes observed in this period may reflect treatment effects.
+
+Variables measured after treatment should not normally be used as ordinary controls if treatment may have affected them.
+
+## From association to causation
+
+### Association and causation
+
+Two variables are **associated** if their values systematically move together. Association alone does not imply that changing one variable would change the other.
+
+A **causal effect** compares outcomes under alternative interventions or exposure levels. It asks what would change if treatment were changed while the relevant comparison were otherwise held fixed.
+
+### Counterfactuals and potential outcomes
+
+A **potential outcome** is the outcome a unit would experience under a specified treatment condition. With a binary treatment, the two potential outcomes are commonly written as $Y_i(1)$ and $Y_i(0)$.
+
+The **counterfactual outcome** is the potential outcome that is not observed under the treatment status actually received. If a firm receives a subsidy, its outcome without the subsidy is counterfactual.
+
+### Parameters, estimands, estimators, and estimates
+
+These four terms are related but different:
+
+- A **parameter** is a feature of a population, such as the population ATE.
+- An **estimand** is the precise quantity the analysis aims to learn.
+- An **estimator** is the rule or formula used to estimate that quantity from data.
+- An **estimate** is the numerical value produced by applying the estimator to a particular dataset.
+
+For example, the ATT may be the estimand, matching may provide the estimator, and an estimated effect of 2.4 percentage points may be the estimate.
+
+### Identification and estimation
+
+**Identification** asks whether a causal parameter can, in principle, be uniquely recovered from the observed data under a stated set of assumptions. It is therefore a question about whether the research design, the data, and the maintained assumptions contain enough information to distinguish the causal effect from alternative explanations. If a parameter is not identified, no statistical estimator can recover it from the observed data without imposing additional assumptions.
+
+**Estimation** concerns how to calculate the identified parameter using the available finite sample. Different estimators may be used for the same identified parameter, and they may differ in terms of bias, precision, computational complexity, and sensitivity to model specification.
+
+Identification therefore comes before estimation. A sophisticated estimator can improve how an identified effect is measured, but it cannot solve a failure of identification.
+
+### Identification assumptions
+
+An **identifying assumption** connects observed data to an unobserved causal parameter. Random assignment, conditional independence, parallel trends, exclusion restrictions, and continuity at an RD cutoff are examples.
+
+These assumptions are rarely all directly testable. Their credibility must be defended using institutional knowledge, the policy assignment mechanism, descriptive evidence, and diagnostic analyses.
+
+### Bias and unbiasedness
+
+**Bias** is a systematic difference between what an estimator targets on average and the parameter of interest. An estimator is **unbiased** if its expected value equals the target parameter.
+
+Bias is different from ordinary sampling noise. Increasing the sample size usually reduces sampling variability, but it does not automatically remove bias caused by confounding, invalid controls, or a misspecified research design.
+
+### Selection bias
+
+**Selection bias** arises when treated and untreated units differ in ways that are related to their potential outcomes. In that case, a simple comparison of average post-treatment outcomes between treated and untreated units does not isolate the causal effect: it also captures pre-existing differences between the two groups.
+
+Selection may occur because units choose treatment, policymakers target particular units, or treatment eligibility depends on observed or unobserved characteristics.
+
+### Endogeneity
+
+A treatment or explanatory variable is **endogenous** when it is related to unobserved determinants of the outcome or to the regression error term. Endogeneity prevents a regression coefficient from being interpreted as the isolated causal effect of that variable.
+
+Common sources include:
+
+- omitted confounders;
+- reverse causality;
+- measurement error;
+- simultaneous determination;
+- policy assignment based on expected outcomes.
+
+For example, larger subsidies may be awarded to firms expected to grow more rapidly. A regression of growth on subsidy size may then attribute pre-existing growth potential to the subsidy.
+
+### Exogeneity
+
+A treatment or explanatory variable is **exogenous** when the variation used to estimate its effect is not systematically related to other unobserved factors that also affect the outcome.
+
+In other words, exogeneity means that, after accounting for the relevant observed factors, the remaining variation in treatment assignment can be treated as if it were unrelated to the unobserved reasons why some units would have higher or lower outcomes anyway.
+
+Importantly, exogeneity is not a permanent property of a variable. The same variable may be exogenous in one empirical setting and endogenous in another. What matters is the specific source of variation being used and whether that variation can plausibly be separated from unobserved determinants of the outcome.
+
+Random assignment creates exogenous treatment variation by design. Natural experiments, instruments, thresholds, or policy timing may generate plausibly exogenous variation under additional assumptions.
+
+### Reverse causality
+
+**Reverse causality** occurs when the outcome, or expected future values of the outcome, influences the explanatory variable. For example, public support may be directed toward firms because policymakers anticipate poor performance. Observing a negative association between support and performance would not mean that support caused poor performance.
+
+### Omitted variable bias
+
+**Omitted variable bias** occurs when the regression fails to account for one or more relevant factors that are related both to the explanatory variable of interest and to the outcome.
+
+Adding more control variables does not automatically eliminate omitted variable bias. To reduce this bias, the relevant confounders must be observed, measured accurately, and included in the regression model in a way that plausibly captures their relationship with both treatment assignment and the outcome.
+
+### Random assignment and as-if random assignment
+
+With **random assignment**, a known random mechanism determines which units receive treatment. This makes treatment independent of potential outcomes in expectation.
+
+An observational assignment mechanism is **as if random** when, under a credible argument and perhaps after conditioning on covariates, treatment variation can be treated as unrelated to potential outcomes.
+
+The phrase does not mean that treatment was literally randomized. It is an identifying claim that requires justification.
+
+### Overlap and common support
+
+**Overlap**, also called **common support**, means that relevant types of treated units have comparable untreated units, and vice versa when the ATE is of interest.
+
+Without overlap, counterfactual estimation relies on extrapolation. A statistical model may still return an estimate, but the estimate is based more heavily on functional-form assumptions than on observed comparisons.
+
+### Extrapolation and interpolation
+
+**Interpolation** predicts outcomes within the range of combinations represented in the data. **Extrapolation** predicts outside that range.
+
+Interpolation is generally more credible because nearby observations provide empirical support. Extrapolation can be highly sensitive to the chosen model.
+
+### SUTVA, interference, and spillovers
+
+The **Stable Unit Treatment Value Assumption (SUTVA)** requires a well-defined treatment and, in its basic form, no interference between units.
+
+**Interference** occurs when one unit's outcome depends on the treatment received by other units. A **spillover effect** is the resulting indirect effect of treatment on another unit.
+
+If untreated units are affected by treated neighbors, they are not clean controls. The exposure mapping, distance rings, or other structures discussed in the spillover chapter are attempts to represent this interference explicitly.
+
+## Statistical uncertainty
+
+### Sampling variation
+
+Different random samples from the same population would generally produce different estimates. This is **sampling variation**.
+
+A precise estimate varies relatively little across hypothetical repeated samples. An imprecise estimate varies substantially.
+
+### Standard error
+
+The **standard error** measures the estimated sampling variability of an estimator. A smaller standard error indicates greater statistical precision, although it says nothing by itself about bias or causal validity.
+
+Large samples often reduce standard errors. They do not rescue a poorly identified research design.
+
+### Confidence and prediction intervals
+
+A **confidence interval** reports a range of parameter values compatible with the estimate and its sampling uncertainty under the maintained assumptions. A 95% confidence interval is generated by a procedure that would contain the true parameter in 95% of repeated samples under the statistical model.
+
+A **prediction interval** quantifies uncertainty about a future or unobserved outcome, rather than only uncertainty about an estimated average parameter. Prediction intervals are usually wider than confidence intervals because they account both for uncertainty in the fitted model and for the variability of the outcome being predicted. They are especially relevant for forecast-based counterfactual methods.
+
+### Statistical significance and p-values
+
+A result is conventionally called **statistically significant** when a test rejects a specified null hypothesis at a chosen significance level, often 5%. A 5% significance level means that the researcher is willing to tolerate a 5% probability of rejecting the null hypothesis when it is actually true. Equivalently, if the null hypothesis were true, a result as extreme as the one observed would occur with probability less than 5%.
+
+A **p-value** measures how unusual the observed test statistic would be under the null hypothesis and the maintained model. It is not the probability that the null hypothesis is true, nor the probability that the estimate is causal.
+
+Statistical significance should not be confused with substantive importance. A very small effect may be statistically significant in a large sample, while an important but imprecisely estimated effect may not be significant.
+
+### Bootstrap
+
+The **bootstrap** is a resampling method used to approximate the sampling distribution of an estimator. It repeatedly draws samples from the observed data and recalculates the estimate.
+
+Bootstrap procedures must respect the structure of the data. Panel, clustered, spatial, and time-series data often require block or cluster bootstrap methods rather than resampling individual observations independently.
+
+### Placebo tests
+
+A **placebo test** applies the method where no causal effect should be present. Researchers may assign a false treatment date, treat an unaffected outcome as if it were the target outcome, or pretend that untreated units were treated.
+
+Placebo tests can reveal suspicious patterns or poor predictive performance. Passing a placebo test does not prove that all identifying assumptions are valid, but it can increase confidence in the design by showing that the method does not detect effects where none should be expected.
+
+## Terms linked to specific designs
+
+### Parallel trends
+
+The **parallel-trends assumption** requires that, without treatment, the average outcome of treated and comparison units would have changed in the same way over time.
+
+It does not require the groups to have the same outcome level. It concerns the evolution of their untreated potential outcomes.
+
+### Propensity score and generalized propensity score
+
+The **propensity score** is the probability of receiving a binary treatment conditional on observed pre-treatment covariates.
+
+The **generalized propensity score (GPS)** extends this idea to multi-valued or continuous treatments. It describes the conditional likelihood or density of receiving a particular treatment level.
+
+These scores do not automatically remove confounding. Their usefulness depends on the conditional independence and overlap assumptions and on achieving covariate balance.
+
+### Weights and weighted pseudo-populations
+
+A **weight** determines how much an observation contributes to an estimator. Weighting methods assign larger or smaller importance to units to create a sample in which treatment groups are more comparable.
+
+A **weighted pseudo-population** is the conceptual population represented by the reweighted data. The observed units remain the same, but their statistical importance changes.
+
+### Donor pool and pre-treatment fit
+
+In standard synthetic control methods, the **donor pool** is the set of untreated comparison units available to construct the synthetic counterfactual. Some extensions allow the donor pool to include potentially affected units, but doing so requires additional assumptions or adjustments.
+
+The **pre-treatment fit** measures how closely the synthetic control reproduces the treated unit before treatment. Good fit supports the credibility of the synthetic comparison, but it does not by itself guarantee an unbiased post-treatment counterfactual.
+
+### Instrument, relevance, and exclusion restriction
+
+An **instrumental variable** is a variable used to isolate treatment variation that is plausibly exogenous.
+
+The **relevance condition** requires the instrument to affect treatment. The **exclusion restriction** requires the instrument to affect the outcome only through treatment. Instrument validity also requires the instrument to be unrelated to unobserved determinants of the outcome, possibly after conditioning on pre-treatment covariates.
+
+The **first stage** measures how the instrument changes treatment. The **reduced form** measures how the instrument changes the outcome.
+
+### Running variable, cutoff, and bandwidth
+
+In an RD design, the **running variable**, also called the forcing or assignment variable, determines treatment eligibility relative to a **cutoff**.
+
+The **bandwidth** defines how close observations must be to the cutoff to enter the local analysis. A narrow bandwidth emphasizes comparability near the threshold but uses fewer observations. A wider bandwidth increases precision but may compare less similar units.
+
+The term bandwidth also appears in kernel matching and smoothing, where it determines how rapidly the influence of observations declines with distance.
+
+### Heterogeneous treatment effects
+
+**Treatment-effect heterogeneity** means that treatment effects differ across units, groups, places, or time periods.
+
+A **conditional average treatment effect (CATE)** is an average effect for units sharing particular characteristics. An **average dose-response function (ADRF)** describes how the average potential outcome changes across treatment intensities.
+
+Heterogeneity analysis requires care because searching across many subgroups can produce chance findings and because each subgroup may have weaker overlap and smaller sample sizes.
+
+## Reading common notation
+
+The following notation appears repeatedly in the book:
+
+| Symbol | How to read it | Meaning |
+|---|---|---|
+| $i$ | unit $i$ | Index identifying a unit. |
+| $t$ | period $t$ | Index identifying a time period or, in continuous-treatment chapters, a treatment level depending on context. |
+| $Y_i$ | Y for unit $i$ | Observed outcome for unit $i$. |
+| $Y_i(1),Y_i(0)$ | potential outcomes | Outcome under treatment and non-treatment. |
+| $D_i$ | treatment indicator | Usually 1 if treated and 0 otherwise. |
+| $X_i$ | covariates | One or more observed characteristics of unit $i$. |
+| $E[Y]$ | expected Y | Population average or expectation. |
+| $E[Y\mid D=1]$ | expected Y given treatment | Average outcome among treated units. |
+| $\bar{Y}$ | Y bar | Sample average. |
+| $\widehat{\tau}$ | tau hat | Estimated treatment effect. |
+| $\perp$ | independent of | Statistical independence. |
+| $\sum$ | sum | Add values across the indicated observations. |
+| $\Delta Y$ | change in Y | Difference in the outcome across two states or periods. |
+| $Y_{it}$ | Y for unit $i$ at time $t$ | Observed outcome for unit $i$ in period $t$. |
+
+::: {.callout-warning appearance="simple"}
+## The same symbol may have different roles
+
+Notation is not completely universal. For example, $T$ may denote time in one source and treatment intensity in another. Always check how a symbol is defined in the surrounding text. The meaning of the underlying concept is more important than the particular letter used to represent it.
+:::
+
+## Brief glossary
+
+**ADRF (average dose-response function).** The average potential outcome associated with each possible treatment intensity.
+
+**ATE (average treatment effect).** The average effect of treatment for the target population.
+
+**ATT (average treatment effect on the treated).** The average effect for units that actually received treatment.
+
+**Bandwidth.** A tuning parameter determining how local a comparison or smoothing procedure is.
+
+**Bias.** A systematic difference between an estimator's average target and the parameter of interest.
+
+**CATE (conditional average treatment effect).** The average treatment effect for units with specified characteristics.
+
+**Common support.** The region in which comparable treated and untreated observations exist.
+
+**Confidence interval.** A range expressing uncertainty about an estimated parameter.
+
+**Confounder.** A variable related to both treatment assignment and potential outcomes.
+
+**Control group.** Units used to approximate what would have happened without treatment.
+
+**Counterfactual.** The potential outcome that is not observed under the treatment status actually received.
+
+**Covariate.** An observed characteristic included in the analysis.
+
+**Dependent variable.** The outcome variable explained or predicted by a model.
+
+**Endogeneity.** Dependence between an explanatory variable and unobserved determinants of the outcome.
+
+**Estimate.** The numerical result obtained by applying an estimator to data.
+
+**Estimator.** A statistical rule used to estimate a parameter or estimand.
+
+**Estimand.** The precisely defined quantity the analysis aims to learn.
+
+**Exogeneity.** A condition under which the relevant variation in an explanatory variable is unrelated to unobserved outcome determinants.
+
+**Expected value.** The probability-weighted population average of a random variable.
+
+**Explanatory variable.** A variable used to explain or predict an outcome.
+
+**Extrapolation.** Prediction outside the empirically supported range of the data.
+
+**Fixed effects.** Indicator variables absorbing persistent unit differences or common time shocks.
+
+**Identification.** The possibility of recovering a causal parameter from observed data under stated assumptions.
+
+**Instrument.** A variable used to isolate plausibly exogenous treatment variation.
+
+**Interference.** A situation in which one unit's outcome depends on other units' treatments.
+
+**LATE (local average treatment effect).** The average effect for units whose treatment status is changed by an instrument or assignment rule.
+
+**OLS (ordinary least squares).** A regression estimator that minimizes the sum of squared residuals.
+
+**Outcome.** The variable whose response to treatment is being studied.
+
+**Overlap.** The availability of relevant comparisons across treatment states or intensities.
+
+**Panel data.** Data following the same units over multiple periods.
+
+**Parameter.** A characteristic of a population, such as a population average treatment effect.
+
+**Parallel trends.** The assumption that treated and comparison units would have followed the same average untreated trend.
+
+**Placebo test.** A diagnostic that applies a method where no effect should be found.
+
+**Potential outcome.** The outcome a unit would experience under a specified treatment condition.
+
+**Prediction interval.** A range expressing uncertainty about a future or counterfactual outcome.
+
+**Propensity score.** The conditional probability of receiving treatment given observed covariates.
+
+**Random assignment.** Assignment of treatment through a known random mechanism.
+
+**Regression coefficient.** A number summarizing a conditional association within a regression model.
+
+**Residual.** The difference between an observed outcome and its fitted value.
+
+**Selection bias.** Bias caused by systematic differences between treated and comparison units.
+
+**Spillover effect.** An indirect effect of treatment on another unit.
+
+**Standard deviation.** A measure of dispersion expressed in the outcome's original units.
+
+**Standard error.** A measure of an estimator's sampling variability.
+
+**Statistical significance.** Rejection of a specified null hypothesis at a chosen significance level.
+
+**SUTVA.** The assumption of well-defined treatment versions and, in its basic form, no interference between units.
+
+**Treatment.** The intervention, policy, or exposure whose causal effect is being studied.
+
+**Unit of analysis.** The entity represented by the observations and targeted by the causal question.
+
+**Weighted average.** An average in which observations contribute with different importance.

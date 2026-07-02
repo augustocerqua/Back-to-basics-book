@@ -38,6 +38,8 @@ book:
         - chapters/13-spillover_effects.qmd
         - chapters/14-continuous_treatment.qmd
         - chapters/15-miscellanea.qmd
+  appendices:
+    - chapters/appendix-technical-language.qmd
     - chapters/references.qmd
 
 bibliography: references/references.bib

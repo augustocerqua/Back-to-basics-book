@@ -475,12 +475,29 @@ window.Quarto = {
 </li>
       </ul>
   </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-technical-language.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">A Gentle Guide to Statistical and Econometric Language</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -722,6 +739,24 @@ Figure&nbsp;10.1: Before reunification, actual West Germany and synthetic West G
 <section id="recent-developments" class="level2" data-number="10.10">
 <h2 data-number="10.10" class="anchored" data-anchor-id="recent-developments"><span class="header-section-number">10.10</span> Recent developments</h2>
 <p>The synthetic control literature has evolved substantially in recent years. One important development is the <strong>synthetic difference-in-differences design (SDiD)</strong>, which combines features of synthetic control methods and difference-in-differences <span class="citation" data-cites="arkhangelsky2021synthetic">(<a href="references.html#ref-arkhangelsky2021synthetic" role="doc-biblioref">Arkhangelsky et al. 2021</a>)</span>. Like SCM, it uses data-driven weighting to make treated and untreated units more comparable before the intervention. Like DiD, it relies on the idea that causal effects can be estimated by comparing changes over time between treated and untreated units. The key difference is that, rather than assuming parallel trends directly in the original data, SDiD uses weights to make pre-treatment trends more parallel, thereby improving the credibility of the DiD comparison.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>SCM vs.&nbsp;SDiD in a figure
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/scm_vs_sdid_same_treated_unit.png" class="img-fluid figure-img"></p>
+<figcaption>This figure provides a stylized comparison between SCM and SDiD. In <strong>SCM</strong>, the synthetic control should closely match the treated unit before treatment, both in levels and in trends. The post-treatment gap is then interpreted as the treatment effect. In <strong>SDiD</strong>, the requirement is less demanding. The synthetic control may remain at a different level, as long as it follows an approximately parallel pre-treatment trend. The level gap is then differenced out using the DiD logic. In many applications, SCM produces sparse weights, concentrating most of the weight on a small number of donor units, while SDiD weights are often more dispersed.Time weights also play an important role in SDiD, but they are not discussed here in order to keep the presentation non-technical.</figcaption>
+</figure>
+</div>
+</div>
+</div>
 <p>Moreover, the most recent extensions to SCM extend the synthetic control logic beyond the canonical case of a single treated unit. Recent synthetic-control-based estimators can accommodate <strong>multiple treated units</strong>, including settings in which treatment adoption is <strong>staggered</strong>, meaning that different units may become treated at different points in time <span class="citation" data-cites="cattaneo2025uncertainty">(<a href="references.html#ref-cattaneo2025uncertainty" role="doc-biblioref">Cattaneo et al. 2025</a>)</span>. This makes synthetic-control-inspired methods applicable to a broader range of policy evaluation settings, where several regions, municipalities, firms, or individuals may be exposed to the treatment either simultaneously or sequentially. The basic logic, however, remains the same: the goal is to construct credible counterfactual trajectories against which the observed post-treatment outcomes of treated units can be compared. In this sense, the event-study and synthetic-control literatures are increasingly converging toward a unified framework for estimating dynamic treatment effects in panel data settings.</p>
 </section>
 <section id="summing-up" class="level2" data-number="10.11">
