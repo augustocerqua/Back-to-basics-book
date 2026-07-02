@@ -776,7 +776,7 @@ D_i(1)
 D_i(0),
 \]</span></p>
 <p>where <span class="math inline">\(D_i(1)\)</span> is the treatment status that unit <span class="math inline">\(i\)</span> would have if exposed to the instrument, <span class="math inline">\(Z_i=1\)</span>, and <span class="math inline">\(D_i(0)\)</span> is the treatment status that the same unit would have if not exposed to the instrument, <span class="math inline">\(Z_i=0\)</span>. Units can then be classified according to how their treatment status responds to the instrument.</p>
-<p>There are four types of units:</p>
+<p>There are four types of units (see <span class="citation" data-cites="angrist1996iv">(<a href="references.html#ref-angrist1996iv" role="doc-biblioref">Angrist et al. 1996</a>)</span>):</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 18%">
@@ -870,6 +870,12 @@ E[D_i\mid Z_i=1] - E[D_i\mid Z_i=0]
 </ul>
 <p>Not everyone who was draft-eligible served in the military, and some individuals who were not draft-eligible may still have served. The draft lottery therefore generated variation in military service, but did not perfectly determine it. As a result, the design includes compliers, always-takers, and never-takers.</p>
 <p>The IV estimate identifies the effect of military service for compliers: individuals whose military service status was changed by draft eligibility. In this context, Angrist finds that military service reduced later earnings by approximately 15% for white veterans. This interpretation relies on the assumptions that there are no defiers, that is, no individuals who would serve if not draft-eligible but would avoid service if draft-eligible, and that draft eligibility affects later earnings only through military service.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/vietnam-draft-lottery-compliance-types.png" class="img-fluid figure-img"></p>
+<figcaption>Vietnam Draft Lottery - the four types of individuals.</figcaption>
+</figure>
+</div>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -980,6 +986,9 @@ E[D_i\mid Z_i=1] - E[D_i\mid Z_i=0]
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-angrist1990" class="csl-entry" role="listitem">
 Angrist, Joshua D. 1990. <span>“Lifetime Earnings and the Vietnam Era Draft Lottery: Evidence from Social Security Administrative Records.”</span> <em>The American Economic Review</em> 80 (3): 313–36. <a href="https://www.jstor.org/stable/2006669">https://www.jstor.org/stable/2006669</a>.
+</div>
+<div id="ref-angrist1996iv" class="csl-entry" role="listitem">
+Angrist, Joshua D., Guido W. Imbens, and Donald B. Rubin. 1996. <span>“Identification of Causal Effects Using Instrumental Variables.”</span> <em>Journal of the American Statistical Association</em> 91 (434): 444–55. <a href="https://doi.org/10.1080/01621459.1996.10476902">https://doi.org/10.1080/01621459.1996.10476902</a>.
 </div>
 <div id="ref-angrist1991" class="csl-entry" role="listitem">
 Angrist, Joshua D., and Alan B. Krueger. 1991. <span>“Does Compulsory School Attendance Affect Schooling and Earnings?”</span> <em>The Quarterly Journal of Economics</em> 106 (4): 979–1014. <a href="https://doi.org/10.2307/2937954">https://doi.org/10.2307/2937954</a>.
