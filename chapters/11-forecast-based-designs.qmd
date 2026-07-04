@@ -261,6 +261,12 @@ Because these methods rely heavily on prediction, validation is central.
 
 A useful diagnostic is a pre-treatment forecasting exercise. The researcher can pretend that treatment occurred earlier, estimate the model using only data before that placebo date, and test how well the method predicts the held-out pre-treatment observations.
 
+::: {.callout-note appearance="simple"}
+### A practical rule
+
+Before interpreting a post-treatment gap as a causal effect, ask whether the method would have predicted the pre-treatment path reasonably well.
+:::
+
 If the model cannot predict the pre-treatment period, it is difficult to trust its post-treatment counterfactual forecast.
 
 Other useful checks include:
@@ -271,9 +277,15 @@ Other useful checks include:
 - examining whether other shocks occurred around the intervention date.
 
 ::: {.callout-note appearance="simple"}
-### A practical rule
+### Tabular foundation models: a new frontier for FBCMs?
 
-Before interpreting a post-treatment gap as a causal effect, ask whether the method would have predicted the pre-treatment path reasonably well.
+A promising recent development is the emergence of **tabular foundation models**, such as TabPFN and TabFM. Unlike conventional forecasting algorithms, these models are pretrained across millions of synthetic datasets and can transfer what they have learned to a new prediction problem through **in-context learning**, often without task-specific training or extensive hyperparameter tuning.
+
+This feature is particularly relevant when the available dataset is not large. TabPFN has shown strong predictive performance on small and medium-sized tabular datasets, including regression problems with relatively few observations ([Hollmann et al. 2025](https://doi.org/10.1038/s41586-024-08328-6)). TabPFN-TS extends this approach to forecasting by transforming time-series information into a tabular regression problem. Recent evidence indicates that it can produce competitive forecasts even without time-series-specific pretraining ([Hoo et al. 2026](https://arxiv.org/abs/2501.02945)). Newer models such as [TabFM](https://research.google/blog/introducing-tabfm-a-zero-shot-foundation-model-for-tabular-data/) further develop this zero-shot approach for tabular regression and classification.
+
+These advances could represent an important step forward for **FBCMs**. Policy evaluations often have only a limited number of pre-treatment periods or observations, but may contain many informative predictors. A pretrained foundation model could exploit complex relationships among these predictors more effectively than a model trained from scratch on the application dataset.
+
+However, it is important to keep in mind that, although tabular foundation models may substantially strengthen the forecasting component of FBCMs, they do not replace the assumptions required for causal identification.
 :::
 
 ## Worked Example

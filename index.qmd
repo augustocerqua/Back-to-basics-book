@@ -1,18 +1,20 @@
 # About the book {.unnumbered}
 
-This book is not intended to be a comprehensive textbook on impact evaluation and causal inference. Many excellent books and articles already provide rigorous and detailed treatments of causal inference, program evaluation, and econometric methods for policy analysis.
+This book is not intended to be a comprehensive textbook on impact evaluation and causal inference.Many excellent books and articles already provide rigorous and detailed accounts of causal inference, program evaluation, and econometric methods for policy analysis.
 
 The purpose of this book is different. It is to go **back to basics** and offer a simple and transparent perspective on the logic behind the most widely used impact evaluation methods. Rather than emphasizing the technical aspects of evaluation methods, the book aims to clarify how each method constructs a counterfactual, what assumptions it requires, and how it works in practice, while keeping formal details to a minimum.
 
 ## How to estimate treatment effects?
 
-The central question of ex-post impact evaluation is simple, and it is counterfactual: **What would have happened to the outcome of interest in the absence of the treatment?** The focus is usually on the units exposed to the treatment. For these units, we observe the post-treatment outcome, but we do not observe what their outcome would have been had they not been treated. The main challenge is therefore to estimate this missing counterfactual outcome. The difference between the observed post-treatment outcome and the estimated counterfactual outcome provides an estimate of the treatment effect of interest.
+The central question of ex-post impact evaluation is simple: **What would have happened to the outcome of interest in the absence of the treatment?** For instance, what would have happened to students’ test scores if schools had not introduced a new tutoring program? Or what would have happened to firms’ investment if they had not received a public subsidy?
+
+The focus is usually on the units exposed to the treatment, such as students or firms. For these units, we observe the post-treatment outcome: their test scores or investment levels. What we do not observe is the outcome they would have experienced had they not been treated. The main challenge is therefore to estimate this missing counterfactual. The difference between the observed post-treatment outcome and the estimated counterfactual outcome provides an estimate of the treatment effect of interest.
 
 ![As in *Sliding Doors*, where Helen's life splits into two possible paths, causal inference starts from the fact that only one realized outcome is observed, while the alternative path remains counterfactual.](images/sliding-doors-counterfactual.png)
 
-Crucially, **the counterfactual is never observed**. To estimate treatment effects credibly, we therefore need to construct a plausible approximation of it. How can this be done? The most common approach, though not the only one, as discussed in [Chapter 11](../chapters/11-forecast-based-designs.qmd), is to exploit information from untreated units. The basic idea is that untreated units can help approximate what would have happened to treated units in the absence of the treatment.
+Crucially, **the counterfactual is never observed**. To estimate treatment effects credibly, we therefore need to construct a plausible approximation of it. How can this be done? The most common approach, though not the only one, as discussed in [Chapter 11](chapters/11-forecast-based-designs.qmd), is to exploit information from untreated units. The basic idea is that untreated units can help approximate what would have happened to treated units in the absence of the treatment.
 
-We will see how the most widely used evaluation strategies within this family of **control-based counterfactual methods**---randomized controlled trials (RCTs), matching methods, difference-in-differences (DiD), instrumental variables (IV), regression discontinuity (RD), and the synthetic control method (SCM)---exploit information from untreated units<!--, or from units observed under different treatment conditions,--> to retrieve the treatment effects of interest.
+We will see how the most widely used evaluation strategies within this family of **control-based counterfactual methods (CBCMs)**---randomized controlled trials (RCTs), matching methods, difference-in-differences (DiD), instrumental variables (IV), regression discontinuity (RD), and the synthetic control method (SCM)---exploit information from untreated units<!--, or from units observed under different treatment conditions,--> to retrieve the treatment effects of interest.
 
 The central theme is **transparency**: showing how each method builds its counterfactual, from which units, and under which assumptions.
 
@@ -20,7 +22,7 @@ The central theme is **transparency**: showing how each method builds its counte
 
 In recent years, transparency has become central to the debate surrounding machine and deep learning algorithms. Complex predictive models are often difficult to interpret, and it is not always clear how an algorithm transforms data into predictions. For this reason, researchers and practitioners increasingly ask for models that are not only accurate, but also **interpretable** and **transparent**. At the same time, much less attention is usually paid to transparency in the context of impact evaluation methods. It is often taken for granted that causal methods are transparent by nature. Yet, as discussed below, this is not necessarily true for some of the most commonly used approaches.
 
-In a successful RCT, the logic of the comparison is usually easy to understand. Random assignment makes treated and untreated units comparable before the intervention: on average, the two groups are similar in all respects except for the treatment they receive. For example, in a trial testing a new drug, patients are randomly assigned either to receive the drug or to remain in the control group, so differences in health outcomes after treatment can be credibly attributed to the drug itself. As a result, the untreated group provides a natural benchmark for what would have happened to the treated group in the absence of the intervention. Similarly, in an RD design, the role of the comparison units is relatively intuitive. Units just below and just above the cutoff are compared because they are assumed to be similar, except for treatment assignment.
+In a successful RCT, the logic of the comparison is usually easy to understand. Random assignment makes treated and untreated units comparable before the intervention: on average, the two groups are similar in all respects except for the treatment they receive. For example, in a trial testing a new drug, patients are randomly assigned to one of two groups: a treatment group that receives the drug and a control group that does not, so differences in health outcomes after treatment can be credibly attributed to the drug itself. As a result, the untreated group provides a natural benchmark for what would have happened to the treated group in the absence of the intervention. Similarly, in an RD design, the role of the comparison units is relatively intuitive. Units just below and just above the cutoff are compared because they are assumed to be similar, except for treatment assignment.
 
 This clarity is often less immediate in other widely used methods. For instance, in a matching application, it is not always disclosed which untreated units are actually used to construct the counterfactual, how much weight each of them receives, and whether all treated units are retained in the final matched sample. In a staggered DiD design, the comparison group is often described simply as “untreated”, but this label can hide considerable complexity. Applied studies do not always make clear which untreated units drive the comparison, whether not-yet-treated units are part of the control group, and how much the estimate depends on specific groups or time periods. The same issue becomes even more complex in IV designs, especially when the instrument is non-binary, when multiple instruments are used, or when the empirical specification includes several fixed effects, covariates, and trends.
 
@@ -38,8 +40,7 @@ This feature is not only useful from a methodological point of view; it is also 
 
 **No ground truth.** This point is particularly important because in observational studies, we do not observe a **ground truth** causal effect. We observe what happened after a policy was introduced, but we do not observe what would have happened to the same units, at the same time, in the absence of that policy. This makes it difficult to compare evaluation strategies as we often compare machine learning algorithms for prediction. In prediction problems, models can be assessed against observed outcomes, and their accuracy can be compared directly. For example, algorithms predicting the sale prices of flats can later be evaluated by comparing their forecasts with the actual prices at which those flats were sold. In impact evaluation, instead, the counterfactual outcome is always missing. We therefore cannot simply run a “horse race” among methods and declare which one is empirically more accurate. For this reason, the credibility of an impact evaluation strategy depends mainly on the plausibility of its identifying assumptions and on the transparency of the comparison it constructs.
 
-::: {.callout-note}
-## Why causality matters
+###  Why causality matters
 
 Many important questions in economics, policy evaluation, business, political science, and the social sciences are **causal questions**. We do not only want to know whether two variables move together. We want to know whether changing one of them would actually change the other. This is the idea behind the familiar motto: **association is not causation**. Two variables may be strongly associated because one causes the other, but also because they are both driven by a third factor, because of selection, or simply because the observed relationship reflects a misleading comparison. Causal inference starts from this distinction.
 
@@ -49,7 +50,6 @@ Would a public subsidy reduce workplace accidents? Would smaller classes improve
 Estimating causal effects is difficult because this counterfactual outcome is not directly observed. We observe what happened after the policy change but not what would have happened otherwise. Impact evaluation methods are ways of making this missing comparison as credible as possible.
 
 This is why causality is at the center of empirical work. Without a credible causal design, data can reveal patterns, correlations, and associations, but it cannot by itself tell us what works, for whom, and under which conditions.
-:::
 
 ::: {.callout-warning}
 
@@ -57,7 +57,7 @@ This is why causality is at the center of empirical work. Without a credible cau
 
 A causal effect is defined with respect to a specific intervention, outcome, target population, and counterfactual state of the world. For this reason, causal analysis should usually begin by clarifying **one causal question at a time**.
 
-For example, suppose the outcome of interest is workers' earnings. Asking whether a training program increases earnings is not the same as asking whether a wage subsidy, job-search assistance, or access to childcare increases earnings. The outcome is the same, but each question involves a distinct treatment, counterfactual comparison, and possibly target population. Mixing these questions in a single analysis can make the estimand unclear.
+For example, suppose the outcome of interest is workers' earnings. Asking whether a training program increases earnings is not the same as asking whether a wage subsidy, job-search assistance, or access to childcare increases earnings. The outcome is the same, but each question involves a distinct treatment, counterfactual comparison, and possibly target population. Mixing these questions in a single analysis can make it unclear which causal effect is being estimated.
 
 This matters because credible causal inference requires a precise answer to the question: **compared to what?** The same observed outcome may be consistent with many different causal stories. To estimate an effect, we need to define the treatment, the untreated state, the units of interest, the timing of the intervention, and the outcome to be evaluated.
 
@@ -68,7 +68,7 @@ Trying to estimate several causal effects at once often leads to ambiguity. It b
 
 The second part of the book covers selected topics in impact evaluation, including:
 
-- **Forecasting-based counterfactual methods.** These methods estimate causal effects without necessarily requiring untreated units in the data. Instead, they construct the counterfactual by forecasting what would have happened to treated units in the absence of the treatment, and therefore rely on a different set of identifying assumptions.
+* **Forecasting-based counterfactual methods (FBCMs)**. These methods do not build the counterfactual by comparing treated units with untreated units. Instead, they use the treated unit’s pre-treatment trajectory to forecast what would have happened after treatment in its absence. The treatment effect is the difference between the observed post-treatment outcome and this forecasted counterfactual.
 
 - **Spillovers and interference.** We will discuss what happens when the treatment affects not only treated units, but also the outcomes of some or all untreated units. In these settings, untreated units may no longer provide a 'clean' counterfactual.
 
@@ -82,7 +82,7 @@ Impact evaluation is not primarily about applying sophisticated estimators. It i
 Different methods provide different ways of approximating the missing counterfactual, and each of them relies on specific assumptions that should be assessed **case by case**, depending on the empirical setting, the available data, and the institutional context.
 :::
 
-The book therefore does not try to cover every method, every extension, or every recent technical debate. Instead, it focuses on the basic logic of the main approaches and on the practical questions that arise when we use them to evaluate public policies.
+The book therefore does not try to cover every method, every extension, or every recent technical debate. Instead, it focuses on the basic logic of the main approaches and on the practical questions that arise when these methods are used to evaluate public policies or other treatments.
 
 ## The audience of this book
 
@@ -90,7 +90,7 @@ The book is written for readers who want to understand the intuition behind impa
 
 Formal notation is kept to a minimum. The emphasis is on **interpretation**, **design**, **credibility**, and **transparency**.
 
-Readers who feel less comfortable with formal notation may first consult the [Appendix](../chapters/appendix-technical-language.qmd), which offers a basic guide to essential concepts in statistics, econometrics, and causal inference.
+Readers who feel less comfortable with formal notation may first consult the [Appendix](chapters/appendix-technical-language.qmd), which offers a basic guide to essential concepts in statistics, econometrics, and causal inference.
 
 ## Acknowledgments
 
@@ -102,7 +102,7 @@ This is version 0.2 of the book. It is still a work in progress, and I would be 
 
 All illustrations in this book were created with the assistance of a generative AI system, based on specific instructions and, in some cases, hand-drawn sketches provided by the author. They are intended for illustrative and educational purposes only.
 
-
+<div style="height: 3rem;"></div>
 
 Except where otherwise noted, © 2026 Augusto Cerqua.
 

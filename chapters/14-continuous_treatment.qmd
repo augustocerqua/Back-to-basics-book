@@ -14,6 +14,8 @@ In these cases, the question is not only whether the policy works. The question 
 With continuous treatments, causal inference studies how outcomes change as the dose or intensity of treatment changes.
 :::
 
+![As in a hypothetical version of *Sliding Doors* with many potential doors rather than just two, each door represents a different treatment intensity. Only one path is observed, while all the others remain counterfactual.](../images/sliding-doors-continuous-treatment.png)
+
 ## From Binary Treatment to Treatment Intensity
 
 In the binary case, each unit has two potential outcomes:

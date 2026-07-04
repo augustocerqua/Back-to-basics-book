@@ -323,6 +323,16 @@ A modern event-study approach would instead proceed as follows:
 
 If the pre-treatment estimates are close to zero and the post-treatment estimates rise gradually, the evidence would be consistent with a delayed positive employment effect. If pre-treatment estimates are already rising before adoption, the design would be less credible.
 
+::: {.callout-warning appearance="simple"}
+### A reassuring event-study plot may still be misleading
+
+In a 2025 LinkedIn post titled *Event Studies Madness*, I construct a deliberately implausible event study. The performance of eight Italian Serie A teams qualifying for European competitions is compared with that of eight successful Serie B teams. The two groups display remarkably similar pre-treatment trends in points, while their outcomes diverge after European competitions begin. Taken mechanically, the resulting event-study plot would suggest that participation in European competitions increases domestic-league performance.
+
+The conclusion is clearly not credible. Serie A and Serie B teams differ substantially in budgets, player quality, competitive environment, and many other characteristics. Similar outcome trends over a short pre-treatment period do not make these teams valid counterfactuals for one another.
+
+The example illustrates an important limitation of event-study diagnostics: pre-treatment coefficients close to zero do not prove that the **parallel-trends assumption** is valid. They show only that treated and control units followed similar trends before treatment, whereas the key assumption concerns the counterfactual post-treatment period, namely how treated outcomes would have evolved relative to control outcomes *after treatment, in the absence of treatment*. Pre-treatment estimates are therefore useful diagnostic evidence, but they cannot replace a substantive justification of the comparison group. Researchers should explain why treated and control units are exposed to comparable underlying dynamics, examine differences in relevant pre-treatment characteristics, and discuss institutional reasons why their untreated outcomes should have evolved similarly.
+:::
+
 ## Summary
 
 Event studies extend DiD by organizing effects around the timing of treatment. They are especially useful for staggered adoption and dynamic treatment effects.
