@@ -103,7 +103,7 @@ In words, the counterfactual post-treatment outcome for the treated group is obt
 
 <!--Importantly, the parallel trends assumption cannot be fully tested. We cannot observe how treated units would have evolved after the intervention in the absence of treatment. What we can check is whether treated and untreated units followed similar trends before the intervention, using pre-treatment outcomes as indirect evidence in support of the assumption.
 -->
-::: {.callout-warning appearance="simple"}
+::: {.callout-warning}
 ### Parallel trends is about counterfactual trends
 
 The assumption is not that treated and control groups have the same outcome levels. The assumption is that, without treatment, their outcomes would have moved in parallel.
@@ -166,7 +166,7 @@ The relevant assumption then becomes **conditional parallel trends**: after cond
 
 Covariates should be handled with care. They should typically be measured before treatment or otherwise be unaffected by treatment. Including post-treatment variables can introduce severe sources of bias.
 
-::: {.callout-tip appearance="simple"}
+::: {.callout-note appearance="simple"}
 ### Good covariates
 
 Covariates in DiD are most convincing when they measure pre-treatment characteristics that help explain different outcome trends.
@@ -194,7 +194,7 @@ Other useful checks include:
 - checking whether the estimated effect changes when adding pre-treatment covariates;
 - examining whether other policies or shocks occurred at the same time.
 
-::: {.callout-note appearance="simple"}
+::: {.callout-caution appearance="simple"}
 ### Pre-trends are informative, not definitive
 
 Similar pre-treatment trends support the credibility of the DiD design, but they do not prove that counterfactual trends would have been parallel after treatment. Conversely, different pre-treatment trends should be consideres as a strong warning sign.
@@ -239,8 +239,7 @@ The problem is that treatment timing is related to a temporary shock in the untr
 
 Longer panels can help diagnose the problem. If outcomes fall sharply just before treatment and then recover, the design may be capturing mean reversion rather than a causal effect.
 
-::: {.callout-note appearance="simple"}
-### Triple Differences
+## A DiD extension: The Triple Differences Estimator
 
 The **triple difference** estimator, or DDD, extends DiD by adding a third comparison dimension [@olden2022].
 
@@ -255,7 +254,6 @@ $$
 The intuition is that if the bias is common to both comparisons, subtracting the second DiD removes it.
 
 Triple differences do not remove the need for assumptions. They replace the standard parallel-trends assumption with a stronger structure: the remaining difference between the two DiD comparisons must identify the policy-specific effect.
-:::
 
 ## Matching Difference-in-Differences
 
@@ -320,7 +318,7 @@ $$
 
 Here, $\alpha_i$ are unit fixed effects, which absorb time-invariant differences across units. The terms $\lambda_t$ are time fixed effects, which absorb shocks common to all units in a given period. The variable $D_{it}$ indicates whether unit $i$ is treated at time $t$. The coefficient $\tau$ is often interpreted as the ATT.
 
-::: {.callout-warning appearance="simple"}
+::: {.callout-warning}
 ### Why TWFE needs caution
 
 With staggered treatment timing and heterogeneous effects, a TWFE coefficient may not estimate the policy-relevant ATT.

@@ -1,11 +1,5 @@
 ## Heterogeneous Treatment Effects
 
-::: {.callout-note appearance="simple"}
-### Key idea
-
-A policy can work on average and still work very differently across units. Heterogeneous treatment effect analysis asks who benefits, who does not, and can provide insights into why the same policy may produce different effects for different units.
-:::
-
 Most impact evaluation methods are introduced by focusing on average effects. We often ask whether a policy works **on average**, and summarize its impact using parameters such as the average treatment effect on the treated (ATT), or the local average treatment effect (LATE).
 
 This is a natural starting point. Because of the fundamental problem of causal inference, we cannot observe both potential outcomes for the same unit [@holland1986; @rubin1974]. We therefore usually move from individual-level causal effects to average causal effects.
@@ -15,7 +9,7 @@ However, average effects may hide important variation. A policy may be highly ef
 ::: {.callout-note appearance="simple"}
 ### Key idea
 
-Heterogeneous treatment effect (HTE) analysis asks whether the causal effect of a treatment varies across units, groups, or contexts.
+A policy can work on average and still work very differently across units. Heterogeneous treatment effect analysis asks who benefits, who does not, and can provide insights into why the same policy may produce different effects for different units.
 :::
 
 ## From Average Effects to HTEs
@@ -47,8 +41,8 @@ $$
 
 The CATE measures the average treatment effect for units with characteristics $X_i=x$.
 
-::: {.callout-note appearance="simple"}
-### CATE
+::: {.callout-note}
+### The Conditional Average Treatment Effect (CATE)
 
 The CATE answers the question:  
 What is the average treatment effect for units with a given set of pre-treatment characteristics?
@@ -68,7 +62,7 @@ HTEs matter for several reasons.
 
 4. Heterogeneity is important for equity. A policy that improves average outcomes may still increase inequality if its benefits are concentrated among already advantaged groups.
 
-::: {.callout-tip appearance="simple"}
+::: {.callout-important}
 ### Policy relevance
 
 A policy evaluation should not only ask whether a program works on average.  
@@ -81,7 +75,7 @@ Although there exist several ways to study HTEs, post-conditioning on relevant s
 
 The advantage of this approach is that it is easy to understand and communicate. Its main limitation is that the estimation process can easily become arbitrary and vulnerable to cherry-picking: researchers may try many subgroup definitions and report only those that produce statistically significant differences. This creates risks of multiple testing, selective reporting, and p-hacking [@brand2021].
 
-::: {.callout-warning appearance="simple"}
+::: {.callout-warning}
 ### The risk of subgroup fishing
 
 Subgroup analysis is most credible when the relevant groups are motivated before looking at the results.  
@@ -92,7 +86,7 @@ This is also a **multiple testing** problem: the more subgroup comparisons we tr
 
 A second limitation is that one-variable-at-a-time subgroup analysis may miss complex patterns. Treatment effects may vary not simply by income or education separately, but by combinations of characteristics.
 
-::: {.callout-note appearance="simple"}
+::: {.callout-note}
 
 ### A bottom-up approach to heterogeneity
 
@@ -129,7 +123,7 @@ A method that predicts $Y_i$ very well does not necessarily estimate causal effe
 
 For this reason, standard machine learning tools should not be used directly to estimate causal effects without modification. They must be adapted to the causal problem.
 
-::: {.callout-note appearance="simple"}
+::: {.callout-important}
 ### Prediction is not causation
 
 A model can predict outcomes accurately and still fail to estimate causal effects.  
@@ -159,7 +153,7 @@ A central idea in causal trees is **honesty**. The data are split into two parts
 
 This helps reduce overfitting. If the same data are used both to choose the subgroups and to estimate the effects, the estimated heterogeneity may be exaggerated. Honest estimation separates discovery from estimation.
 
-::: {.callout-tip appearance="simple"}
+::: {.callout-note}
 ### Honest trees
 
 Honest causal trees use one part of the data to decide the tree structure and another part to estimate treatment effects within the leaves.
@@ -202,7 +196,7 @@ Second, the results depend on the identifying assumptions. If treatment assignme
 
 Third, variable importance measures should not be interpreted mechanically. A variable may appear important because it helps define treatment effect heterogeneity, but the meaning of that heterogeneity still requires substantive interpretation.
 
-::: {.callout-warning appearance="simple"}
+::: {.callout-warning}
 
 ### Be careful with causal forests
 
@@ -228,7 +222,7 @@ A credible analysis of heterogeneous treatment effects should report:
 
 When using causal trees or causal forests, it is also useful to report how the data were split, how tuning parameters were chosen, and which covariates are most important in explaining heterogeneity.
 
-::: {.callout-warning appearance="simple"}
+::: {.callout-warning}
 ### Heterogeneity needs design too
 
 Flexible methods can find patterns, but they do not create causal identification by themselves.  

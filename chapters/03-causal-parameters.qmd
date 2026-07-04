@@ -62,7 +62,7 @@ $$
 
 The second component, $E[Y_i(0) \mid D_i=1]$, is not observed. It is the mean outcome that treated units would have experienced without treatment. Estimating this counterfactual is the central empirical challenge.
 
-::: {.callout-warning appearance="simple"}
+::: {.callout-caution appearance="simple"}
 ### The difficulties in estimating $E[Y_i(0) \mid D_i=1]$
 
 The simplest way to compare treated and untreated units is the **difference-in-means (DIM) estimator**. It is defined as the difference between the average observed outcome of treated units and the average observed outcome of untreated units:

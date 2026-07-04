@@ -175,7 +175,7 @@ For instance, people who choose to attend a training course may be more motivate
 
 Randomization breaks this link between treatment assignment and potential outcomes because units are assigned to treatment or control before the treatment takes place. It creates treated and untreated groups that are comparable before the treatment, at least in expectation.
 
-::: {.callout-note appearance="simple"}
+::: {.callout-note}
 ## The Project STAR experiment
 
 One of the largest and most influential RCTs in education is **Project STAR** (*Student/Teacher Achievement Ratio*), conducted in Tennessee in the 1980s.
@@ -232,7 +232,7 @@ The key point is that the two groups should be comparable before seeing the webp
 
 ## Threats to Internal Validity
 
-::: {.callout-warning appearance="simple"}
+::: {.callout-warning}
 ### RCTs are not magic
 
 Randomization removes selection bias by design, but the experiment can still be threatened by failed randomization, non-compliance, attrition, behavioral responses, or small samples.

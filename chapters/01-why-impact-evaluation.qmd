@@ -1,4 +1,4 @@
-# ## What Is Impact Evaluation and Why Does It Matter?
+## What Is Impact Evaluation and Why Does It Matter?
 
 Does the opening of a nursery school in a neighborhood increase local employment? Do subsidies aimed at improving workplace safety actually reduce occupational injuries? Do local jurisdiction amalgamations affect voters' political engagement? How many people died because of the COVID-19 pandemic?
 
@@ -44,7 +44,7 @@ Each of these approaches is intuitive. Yet each can also be misleading.
 
 ## Why simple comparisons may fail
 
-::: {.callout-note}
+::: {.callout-warning}
 ## Identification issues with simple comparisons
 
 **Option A**: A before–after comparison may confuse the effect of the nursery school with other changes occurring over time. Parents’ employment may have increased even without the new facility. For example, the local labor market may already have been on an upward trend before the nursery school opened. In that case, attributing the entire increase in parents’ employment to the nursery school would overstate its effect. Similarly, if a negative economic shock occurred between $t_1$ and $t_2$, we might wrongly attribute the consequences of that shock to the nursery school.
@@ -70,7 +70,7 @@ If the neighborhoods receiving the new facility were chosen at random, then, on 
 
 With a sufficiently large number of neighborhoods, say a few hundred, the law of large numbers helps make the treated and untreated groups similar, on average, in terms of these characteristics. In that case, neighborhoods without a new facility would provide, on average, a credible approximation of the counterfactual outcome for the treated neighborhoods in the absence of the policy.
 
-::: {.callout-note}
+::: {.callout-important appearance="simple"}
 ## Why randomization is powerful
 
 Randomization is powerful because it creates treated and untreated groups that are comparable **by design**, before the intervention takes place. Differences observed after the intervention can then be more plausibly attributed to the intervention itself, rather than to pre-existing differences between the two groups.
@@ -84,7 +84,7 @@ In many policy contexts, however, randomization is not feasible. It may be too c
 
 Much of impact evaluation therefore deals with a practical question:
 
-::: {.callout-tip}
+::: {.callout-note}
 ## The practical question
 
 How can we construct a credible counterfactual when random assignment is not available?

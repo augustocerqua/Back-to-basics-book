@@ -1,6 +1,5 @@
 # Synthetic Control Method
 
-
 When a policy affects only one unit, or a small number of aggregate units, constructing a credible counterfactual becomes especially challenging. Most impact evaluation methods rely on comparisons between many treated and untreated units. This logic is harder to apply when treatment is assigned to a single country, region, city, or municipality. In such settings, no individual untreated unit is likely to provide a fully convincing representation of what would have happened to the treated unit in the absence of the intervention. The **synthetic control method (SCM)** addresses this problem by constructing the counterfactual as a weighted combination of untreated units.
 
 ::: {.callout-note}
@@ -25,8 +24,8 @@ The goal is to construct a synthetic unit that closely reproduces the treated un
 
 After the treatment occurs, the causal effect is estimated by comparing the observed outcome of the treated unit with the outcome of its synthetic counterpart.
 
-::: {.callout-note}
-## Back to basics
+::: {.callout-note appearance="simple"}
+## Key idea
 
 SCM is based on a very transparent idea: **the counterfactual is constructed as a weighted average of untreated units.**
 
@@ -67,7 +66,7 @@ Before the intervention, the treated unit and the synthetic control should displ
 
 This is one of the strengths of SCM: the quality of the counterfactual can be visually inspected. Researchers usually show a graph comparing the treated unit and the synthetic control over time. If the two lines are close before the treatment and diverge only after the treatment, the result is easier to interpret. In addition, researchers can report a balance table, similar to those commonly used in matching applications, to assess whether the treated unit and its synthetic counterpart are similar before the intervention in terms of the outcome and other relevant predictors.
 
-::: {.callout-important}
+::: {.callout-note}
 ## Transparency
 
 SCM is based on a data-driven algorithm, and the optimization procedure may not be fully transparent at first sight. However, the method produces two outputs that are highly informative:
@@ -122,7 +121,7 @@ SCM is less convincing when the treated unit is too different from all units in 
 
 <!--As with all methods based on untreated units, one should also be careful about anticipation effects and spillovers. If untreated units are indirectly affected by the treatment, they may no longer provide a valid counterfactual.-->
 
-::: {.callout-tip}
+::: {.callout-important}
 ## Practical implication
 
 SCM should only be used when the synthetic control provides a credible approximation of the treated unit before the intervention.
@@ -130,10 +129,7 @@ SCM should only be used when the synthetic control provides a credible approxima
 If the pre-treatment fit is poor, the post-treatment gap is difficult to interpret as a causal effect.
 :::
 
-## Example: German reunification and West German GDP
-
-::: {.callout-note}
-## Application: the economic effects of German reunification
+## Example: The Economic Effects of German Reunification
 
 A well-known application of SCM studies the economic effects of **German reunification** on West Germany [@abadie2015comparative].
 
@@ -154,8 +150,6 @@ A simple average of OECD countries does not reproduce West Germany well before t
 This matters because the post-treatment comparison is credible only if the synthetic control behaves like West Germany before reunification. Once this condition is satisfied, the divergence between actual West Germany and synthetic West Germany after reunification can be interpreted as the estimated effect of reunification.
 
 The results suggest that German reunification did not have a large effect on West German GDP per capita in the first two years after reunification. However, from 1992 onward, the two trajectories diverge substantially. Over the period 1990--2003, West German GDP per capita was estimated to be lower than its synthetic counterfactual. By 2003, GDP per capita in synthetic West Germany was about 12% higher than observed GDP per capita in West Germany.
-:::
-
 
 ## Recent developments
 
@@ -178,18 +172,20 @@ Its main strengths are that it is basically the only method in the evaluator’s
 At the same time, SCM is not a magic formula. Its credibility depends on the quality of the donor pool, the length and informativeness of the pre-treatment period, the absence of spillovers (as for all control-based counterfactual methods), and the ability of the synthetic control to reproduce the treated unit before the treatment.
 
 
-::: {.callout-note appearance="simple" title="Key formulae"}
+::: {.callout-note appearance="simple" title="Key SCM formulae"}
 
-Let unit $i=1$ be treated, and units $i=2,\ldots,J+1$ be untreated donors.  
-The intervention starts after period $T_0$.
+Let unit $i=1$ be the treated unit, and let units $i=2,\ldots,J+1$ be untreated donors.
+Units are observed for periods $t=1,\ldots,T$. The intervention starts after period $T_0$, so that $t=1,\ldots,T_0$ are pre-treatment periods and $t=T_0+1,\ldots,T$ are post-treatment periods.
+
+Let $X_1$ denote the vector of pre-treatment predictors for the treated unit, and let $X_0$ denote the matrix collecting the same predictors for the donor units. These predictors may include pre-treatment outcomes and other relevant pre-treatment covariates. The matrix $V$ assigns relative importance to these predictors when measuring the distance between the treated unit and the synthetic control. This is needed because not all predictors are equally informative about the untreated outcome path. Some variables may be highly predictive of future outcomes, while others may be noisy, redundant, or less relevant. The role of $V$ is therefore to make the matching criterion focus more on the predictors that matter most for constructing a credible counterfactual.
 
 SCM chooses weights $\widehat W=(\widehat w_2,\ldots,\widehat w_{J+1})'$ by solving
 
 $$
 \widehat W
 =
-\arg\min_W
-(X_1 - X_0 W)' V (X_1 - X_0 W),
+\underset{W}{\arg\min}\;
+(X_1 - X_0 W)^\top V (X_1 - X_0 W).
 $$
 
 subject to
@@ -201,12 +197,12 @@ w_j \ge 0
 \sum_{j=2}^{J+1} w_j = 1.
 $$
 
-The synthetic control outcome is
+The synthetic control outcome, interpreted as the estimated untreated potential outcome for unit 1, is
 
 $$
-\widehat Y_{1t}^{N}
+\widehat{Y}_{1t}^{N}
 =
-\sum_{j=2}^{J+1} \widehat w_j Y_{jt}.
+\sum_{j=2}^{J+1} \widehat{w}_j Y_{jt}.
 $$
 
 For each post-treatment period $t>T_0$, the estimated treatment effect is

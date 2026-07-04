@@ -32,7 +32,7 @@ Spillovers can also be positive. For example, providing medicine to some childre
 
 The same logic applies to local economic policies. A subsidy to some firms may increase demand for local suppliers and create positive spillovers. But it may also crowd out competitors, increase input prices, or reallocate workers across firms.
 
-::: {.callout-warning appearance="simple"}
+::: {.callout-warning}
 ### A contaminated control group
 
 If untreated units are affected by the treatment received by other units, they are no longer pure controls. Comparing treated and untreated units may understate or overstate the treatment effects of interest.
@@ -102,7 +102,7 @@ $$
 
 The **overall effect** summarizes the effect of the policy on the whole population, including both directly treated units and indirectly affected untreated units.
 
-::: {.callout-note appearance="simple"}
+::: {.callout-note}
 ### Four effects
 
 With spillovers, the direct effect is only part of the story. A complete evaluation may also need indirect, total, and overall effects.
@@ -146,7 +146,7 @@ but not on treatment assignments in other groups.
 
 This assumption greatly simplifies the problem. It allows the researcher to compare groups with different treatment intensities and to estimate direct and spillover effects within a structured framework.
 
-::: {.callout-tip appearance="simple"}
+::: {.callout-note}
 ### Partial interference
 
 Partial interference assumes that units can affect each other within groups, but not across groups.
@@ -211,7 +211,7 @@ If the researcher uses geographic distance but the relevant interactions occur t
 
 This is one reason why the use of spatial econometrics for causal policy evaluation has been criticized [@gibbons2012]. Spatial methods can be informative, but spatial correlation alone is not enough for causal interpretation. What is needed is a credible identification strategy that defines the relevant potential outcomes and clarifies the assumptions under which they can be identified.
 
-::: {.callout-warning appearance="simple"}
+::: {.callout-warning}
 ### Spatial correlation is not spillover identification
 
 Nearby units often look similar for many reasons. To interpret spatial dependence as a causal spillover, the researcher must explain why the spatial exposure measure captures the relevant causal channel.
@@ -241,7 +241,7 @@ In spatial applications, a common extension of the DiD strategy is to define **d
 
 The direct effect is estimated by comparing directly treated units with credible counterfactual units. The indirect effect is estimated by comparing exposed untreated units with unexposed untreated units. The total and overall effects combine these components.
 
-::: {.callout-note appearance="simple"}
+::: {.callout-note}
 ### Example: distance bands around protected blocks
 
 Di Tella and Schargrodsky's study of police and crime in Buenos Aires [@ditella2004police] provides an application of this logic. After the 1994 terrorist attack on the main Jewish center, Jewish institutions received visible police protection. The authors use this sudden change to compare car thefts before and after the attack across blocks with different exposure to police protection.

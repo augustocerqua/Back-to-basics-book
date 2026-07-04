@@ -174,7 +174,7 @@ For example, suppose we want to estimate the effect of an after-school tutoring 
 
 <!--A classic example is the evaluation of training programmes studied by LaLonde [-@lalonde1986] and later by Dehejia and Wahba [-@dehejia1999]. LaLonde showed that estimating credible treatment effects with non-experimental data is difficult. Dehejia and Wahba then showed that matching methods, when implemented carefully and with rich pre-treatment information, can recover estimates close to experimental benchmarks.
 -->
-::: {.callout-tip appearance="simple"}
+::: {.callout-note appearance="simple"}
 ### Key idea
 
 Matching replaces the impossible comparison between treated units and their own missing counterfactual outcomes with a comparison between treated units and untreated units with similar observed pre-treatment characteristics.
@@ -221,7 +221,7 @@ Importantly, this assumption cannot be fully tested. What we can check is whethe
 
 This is the crucial limitation of matching. If treated and untreated units differ in unobserved characteristics, such as motivation, ability, managerial quality, or political connections, and these characteristics also affect the outcome, then matching on observed variables is not enough to rule out selection bias.
 
-::: {.callout-warning appearance="simple"}
+::: {.callout-caution appearance="simple"}
 ### What matching can and cannot solve
 
 Matching can adjust for differences in **observed** pre-treatment characteristics.  
@@ -242,7 +242,7 @@ This condition means that, for units with characteristics $X_i=x$, treatment is 
 
 In practice, lack of common support means that some units are too different to be matched. Dropping these units can improve credibility, but it also changes the population for which the treatment effect is estimated.
 
-::: {.callout-note appearance="simple"}
+::: {.callout-caution appearance="simple"}
 ### Common support
 
 Matching requires treated and untreated units to overlap in terms of observed covariates.  
@@ -353,7 +353,7 @@ $$
 
 This is the **balancing property** of the propensity score. Conditional on the propensity score, the distribution of observed covariates should be similar between treated and untreated units.
 
-::: {.callout-tip appearance="simple"}
+::: {.callout-note appearance="simple"}
 ### Why the propensity score is useful
 
 The propensity score reduces a multidimensional matching problem to a one-dimensional one.  
@@ -500,7 +500,7 @@ Matching therefore usually relies on approximations: untreated units are selecte
 
     Kernel matching uses more information than nearest-neighbor matching because it constructs the counterfactual from a weighted average of several untreated units rather than from one or a few selected matches. However, the choice of bandwidth is important because it governs how strongly distance in the propensity score affects the weights.
 
-::: {.callout-note appearance="simple"}
+::: {.callout-note}
 ### Bias--precision trade-off
 
 Matching rules differ in how many untreated units are used to construct the counterfactual for each treated unit. Using only the closest control units can reduce bias, because comparisons are made between very similar units, but it may increase variance because little information is used.
@@ -516,7 +516,7 @@ The matching methods discussed so far are only part of a broader family of appro
 
 **Mahalanobis matching** matches units using a multivariate distance measure computed directly on the covariates. Unlike propensity score matching, which reduces the covariates to a single scalar, Mahalanobis matching compares units in the original covariate space. The Mahalanobis distance between two units is based on the difference in their covariate values, adjusted by the covariance matrix of the covariates. In this way, differences are standardized and correlations among covariates are taken into account. It can work well when the number of covariates is limited, but it becomes less practical as the number of covariates increases.
 
-::: {.callout-note appearance="simple"}
+::: {.callout-note appearance="minimal"}
 ### The Mahalanobis distance
 For units $i$ and $j$, the Mahalanobis distance can be written as
 
@@ -572,7 +572,7 @@ Common diagnostics include:
 
 The ATT estimate produced by a matching estimator should be considered credible only if treated units and matched control units are sufficiently similar in their pre-treatment characteristics.
 
-::: {.callout-note appearance="simple"}
+::: {.callout-caution appearance="simple"}
 ### Balance before effects
 
 Before interpreting the estimated treatment effect, check whether matching has balanced the covariates.  
@@ -618,7 +618,7 @@ Before matching, floods appeared to reduce support for incumbent politicians. Af
 
 This example illustrates the core logic of matching: part of what looks like a treatment effect may actually reflect pre-existing differences between treated and untreated units. Matching tries to reduce this problem by constructing a comparison group that is more similar to the treated group in terms of observed pre-treatment characteristics.
 
-::: {.callout-note appearance="simple"}
+::: {.callout-note}
 ## Matching and Regression Adjustment
 
 Matching methods and regression adjustment are closely related. Both try to make treated and untreated units comparable in terms of pre-treatment characteristics. They differ mainly in **how** they use the covariates.

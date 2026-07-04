@@ -52,11 +52,11 @@ $$
 
 $\tau_{sharpRD}$ identifies the average causal effect for units at, or very close to, the cutoff.
 
-::: {.callout-warning appearance="simple"}
-### Local does not mean weak
+::: {.callout-important}
+### Credible, but local
 
-RD estimates are often highly credible near the cutoff.  
-The price of this credibility is that the estimate may not generalize to units far from the threshold.
+RD estimates are often highly credible near the cutoff.
+The price of this credibility is that the estimated effect may not generalize to units far from the threshold.
 :::
 
 ## Identification
@@ -84,7 +84,7 @@ RD design is credible only if units just below and just above the cutoff are com
 If units can precisely manipulate the running variable, this local comparison may fail.
 :::
 -->
-::: {.callout-warning appearance="simple"}
+::: {.callout-warning}
 ## The manipulation threat
 
 The concern in RD is not that units respond to incentives in general. The problem arises when units or decision-makers can **precisely manipulate the running variable** in order to place units on the preferred side of the cutoff.
@@ -148,7 +148,7 @@ Observations closer to the cutoff typically receive more weight, while observati
 
 The triangular kernel is often used in applied work because it gives the largest weight to observations closest to the cutoff.
 
-::: {.callout-note appearance="simple"}
+::: {.callout-note}
 ### Bandwidth and kernel
 
 A small bandwidth compares units very close to the cutoff, reducing bias but increasing variance.  
@@ -163,7 +163,7 @@ Together, the bandwidth and the kernel define the local comparison used to estim
 
 RD is visually intuitive, but it requires careful diagnostic checks.
 
-::: {.callout-tip appearance="simple"}
+::: {.callout-tip}
 ### Good RD practice
 
 A credible RD design should report the main estimate, graphical evidence, bandwidth sensitivity, density checks, and covariate balance around the cutoff.
@@ -194,7 +194,7 @@ Researchers can also test for discontinuities at placebo thresholds, where no tr
 
 Results should be checked using alternative bandwidths. If the estimate changes dramatically when the bandwidth changes, the conclusions may be fragile.
 
-::: {.callout-note appearance="simple"}
+::: {.callout-note}
 ###  Graphical Evidence
 
 RD is often presented using a figure that plots the outcome against the running variable. The graph usually shows:

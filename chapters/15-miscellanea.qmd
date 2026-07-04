@@ -42,8 +42,8 @@ This approach is especially useful in settings with many control variables, nonl
 
 The key point for this book is that machine learning does not replace identification. A highly accurate prediction model cannot by itself solve confounding, selection bias, or violations of parallel trends. Causal machine learning is most useful when combined with a credible causal design. The interested reader can find a much more detailed treatment of these methods in *Applied Causal Inference Powered by ML and AI* [@chernozhukov2024causalml].
 
-::: {.callout-note appearance="simple"}
-### Empirical example: active labour market policies in Switzerland
+::: {.callout-note}
+### Empirical example: active labor market policies in Switzerland
 
 An interesting application of **Double Machine Learning (DML)** is Knaus [-@knaus2022dml], who studies active labor market programs in Switzerland.
 
@@ -70,7 +70,7 @@ The broader lesson is that empirical strategies often involve a trade-off: **the
 
 Recently, several studies have tried to bridge these two traditions by using credible design-based estimates as moments to estimate or discipline structural models.
 
-::: {.callout-note appearance="simple"}
+::: {.callout-note}
 ### Design-based moments in structural estimation
 
 A growing literature combines design-based causal evidence with structural modeling. The idea is to use credible causal estimates not only as final results, but also as empirical moments that help discipline the parameters of a structural model.

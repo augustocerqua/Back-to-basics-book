@@ -40,7 +40,7 @@ This means that $Y_i^{obs}=Y_i(1)$ for treated units, for which $D_i=1$, and $Y_
 
 The missing potential outcome is the **counterfactual**. This is why causal inference is fundamentally a missing-data problem: one potential outcome is observed, while the other must be inferred. Holland famously called this the **fundamental problem of causal inference** [@holland1986].
 
-::: {.callout-note appearance="simple"}
+::: {.callout-important appearance="simple"}
 ### The fundamental problem of causal inference
 
 For each unit, we observe only one potential outcome.  
@@ -95,7 +95,7 @@ The treatment must correspond to a clear intervention that could, at least in pr
 
 For example, attending a training program, receiving a subsidy, or gaining access to a nursery school can be interpreted as treatments. By contrast, characteristics such as nationality at birth or age are not treatments in the same direct sense, because they cannot be assigned by an intervention.
 
-::: {.callout-note}
+::: {.callout-note appearance="simple"}
 ## Going deeper
 
 A related issue arises when a policy does not vary across units or over time. In principle, we can still imagine potential outcomes under alternative policy regimes. However, if every unit is always exposed to the same policy, and we never observe units under a different regime, there is no empirical comparison from which to learn what would have happened in the absence of that policy. In this case, the causal effect is not identified without additional and typically strong assumptions.
@@ -189,7 +189,7 @@ The same logic appears in different forms in other evaluation strategies. In DiD
 -->
 ## Summary
 
-::: {.callout-tip appearance="simple"}
+::: {.callout-note appearance="minimal"}
 ### Key idea
 
 Causal inference is not just about comparing outcomes.  

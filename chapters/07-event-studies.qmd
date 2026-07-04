@@ -137,7 +137,7 @@ In both cases, the comparison can also be adjusted for observed covariates. This
 
 Once the group-time effects have been estimated, they can be aggregated into event-time effects. This produces the event-study plot, but without relying on TWFE comparisons that may be contaminated by already-treated units.
 
-::: {.callout-note appearance="simple"}
+::: {.callout-note}
 ### Weighted DiD
 
 Estimate treatment effects separately by cohort and period, then aggregate them using explicit weights. In the Callaway and Sant'Anna framework, these weights are transparent and are typically linked to the number of treated units contributing to each group-time effect. This makes the final estimate easier to interpret than a single TWFE coefficient, because we can see which cohorts and time periods contribute to the aggregate effect, and how much they contribute.
@@ -180,7 +180,7 @@ The procedure can be summarized in four steps:
 
 This approach is attractive because it makes the construction of the control group transparent. It also allows researchers to inspect balance not only in baseline covariates, but also in lagged outcomes and covariate histories.
 
-::: {.callout-tip appearance="simple"}
+::: {.callout-note appearance="simple"}
 
 ### PanelMatch intuition
 
@@ -215,8 +215,8 @@ If pre-treatment coefficients are close to zero, this supports the design, but i
 
 Anticipation is especially important in event studies. If units change behavior before the treatment date because they expect the policy, then periods just before treatment are no longer untreated in a substantive sense.
 
-::: {.callout-warning appearance="simple"}
-### Pre-trends are not magic
+::: {.callout-warning}
+### The limits of pre-trend evidence
 
 Flat pre-treatment coefficients make the design more credible, but they do not guarantee that post-treatment counterfactual trends are parallel.
 :::
@@ -323,7 +323,7 @@ A modern event-study approach would instead proceed as follows:
 
 If the pre-treatment estimates are close to zero and the post-treatment estimates rise gradually, the evidence would be consistent with a delayed positive employment effect. If pre-treatment estimates are already rising before adoption, the design would be less credible.
 
-::: {.callout-warning appearance="simple"}
+::: {.callout-warning}
 ### A reassuring event-study plot may still be misleading
 
 In a 2025 LinkedIn post titled *Event Studies Madness*, I construct a deliberately implausible event study. The performance of eight Italian Serie A teams qualifying for European competitions is compared with that of eight successful Serie B teams. The two groups display remarkably similar pre-treatment trends in points, while their outcomes diverge after European competitions begin. Taken mechanically, the resulting event-study plot would suggest that participation in European competitions increases domestic-league performance.

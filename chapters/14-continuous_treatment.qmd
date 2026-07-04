@@ -42,7 +42,7 @@ As usual, we observe only one potential outcome for each unit: the one correspon
 
 This is the continuous-treatment version of the fundamental problem of causal inference. The difference is that the missingness problem is now richer. Instead of missing one counterfactual outcome, we are missing the full schedule of potential outcomes over all treatment levels not received.
 
-::: {.callout-warning appearance="simple"}
+::: {.callout-warning}
 ### Support of treatment intensities
 
 The relevant support of the treatment matters because causal effects can be studied only over treatment intensities that are meaningfully represented in the data. Extrapolating to doses that are rarely observed, or not observed at all, requires much stronger assumptions.
@@ -70,7 +70,7 @@ $$
 
 For each treatment level $t$, $\mu(t)$ gives the average outcome that would be observed if all units received dose $t$.
 
-::: {.callout-note appearance="simple"}
+::: {.callout-note}
 ### ADRF
 
 The average dose-response function (ADRF) describes how the average potential outcome would change across different levels of treatment intensity. For each possible treatment level, it gives the average outcome that would be observed if all units were assigned that specific intensity.
@@ -124,7 +124,7 @@ In many policies, the dose is not randomly assigned. Firms receiving larger subs
 
 Therefore, units receiving different treatment intensities are usually not directly comparable.
 
-::: {.callout-warning appearance="simple"}
+::: {.callout-warning}
 ### The problem of endogenous intensity
 
 The fact that two units are both treated does not mean they are comparable. Units receiving different doses typically differ in ways that also affect their outcomes.
@@ -238,7 +238,7 @@ The overlap problem is often more severe with continuous treatments than with bi
 
 When overlap is weak, the estimated dose-response function may rely heavily on extrapolation. This is especially problematic at very low or very high treatment levels, where few comparable units may be available.
 
-::: {.callout-warning appearance="simple"}
+::: {.callout-warning}
 ### Common support with continuous treatment
 
 With continuous treatments, common support means having comparable units observed at different dose levels. For each relevant level of treatment intensity, there must be units with similar pre-treatment characteristics receiving nearby, lower, and higher doses. Without this overlap, the ADRF is identified only by extrapolating across units that are not truly comparable.
@@ -290,7 +290,7 @@ Fourth, the ADRF should be reported with uncertainty bands. The curve may look s
 
 Fifth, researchers should test sensitivity to alternative specifications of the treatment model, outcome model, and dose range.
 
-::: {.callout-tip appearance="simple"}
+::: {.callout-tip}
 ### Practical diagnostic
 
 Before interpreting the shape of the ADRF, check whether the data actually contain comparable units observed at several different levels of treatment intensity.
@@ -326,7 +326,7 @@ If the ADRF declines sharply at low subsidy levels and then flattens, this sugge
 
 The credibility of this analysis depends on whether firms receiving different subsidy amounts are comparable after conditioning on pre-treatment characteristics such as firm size, sector, baseline accident rate, investment capacity, and previous safety inspections.
 
-::: {.callout-warning appearance="simple"}
+::: {.callout-note}
 
 ### What if we expect heterogeneous treatment effects with continuous treatment?
 

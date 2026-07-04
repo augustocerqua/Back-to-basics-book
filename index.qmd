@@ -26,7 +26,7 @@ In a successful RCT, the logic of the comparison is usually easy to understand. 
 
 This clarity is often less immediate in other widely used methods. For instance, in a matching application, it is not always disclosed which untreated units are actually used to construct the counterfactual, how much weight each of them receives, and whether all treated units are retained in the final matched sample. In a staggered DiD design, the comparison group is often described simply as “untreated”, but this label can hide considerable complexity. Applied studies do not always make clear which untreated units drive the comparison, whether not-yet-treated units are part of the control group, and how much the estimate depends on specific groups or time periods. The same issue becomes even more complex in IV designs, especially when the instrument is non-binary, when multiple instruments are used, or when the empirical specification includes several fixed effects, covariates, and trends.
 
-::: {.callout-warning}
+::: {.callout-note appearance="simple"}
 ## Transparency
 
 Impact evaluation methods may appear transparent at first sight. However, this apparent transparency can be misleading: the way in which they construct the counterfactual is not always clearly visible.
