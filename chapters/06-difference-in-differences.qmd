@@ -6,7 +6,7 @@
 ![DiD compares the change in outcomes for the **treated group** before and after the policy with the change in outcomes for the **control group** over the same period. The control group's trend is used to construct the treated group's **counterfactual** outcome. The **DiD estimate** is the gap between the treated group's observed post-policy outcome and this counterfactual outcome.](../images/DiD_in_a_figure.png)
 :::
 
-Difference-in-differences (DiD), is one of the most widely used research designs in impact evaluation. It is useful when a policy affects one group of units but not another, and when we observe both groups before and after the treatment.
+Difference-in-differences (DiD) is one of the most widely used research designs in impact evaluation. It is useful when a policy affects one group of units but not another, and when we observe both groups before and after the treatment.
 
 The basic idea is simple. We compare the change in outcomes for the treated group with the change in outcomes for a comparison group over the same period. The first difference removes time-invariant differences between treated and control units. The second difference removes shocks that are common to both groups.
 
@@ -197,7 +197,7 @@ Other useful checks include:
 ::: {.callout-caution appearance="simple"}
 ### Pre-trends are informative, not definitive
 
-Similar pre-treatment trends support the credibility of the DiD design, but they do not prove that counterfactual trends would have been parallel after treatment. Conversely, different pre-treatment trends should be consideres as a strong warning sign.
+Similar pre-treatment trends support the credibility of the DiD design, but they do not prove that counterfactual trends would have been parallel after treatment. Conversely, different pre-treatment trends should be considered as a strong warning sign.
 :::
 
 ## Worked Example

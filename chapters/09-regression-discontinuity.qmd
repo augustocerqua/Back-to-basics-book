@@ -211,7 +211,7 @@ The visual evidence is not a substitute for formal estimation, but it is importa
 
 A classic application is Lee’s study of incumbency advantage in U.S. House elections [@lee2008]. The running variable is the Democratic vote margin in an election. The cutoff is zero: candidates who barely win become incumbents, while candidates who barely lose do not.
 
-![Stylized representation of the RD appication reported in Lee (2008).](../images/sharp_RD_example_Lee.png){width=80%}
+![Stylized representation of the RD application reported in Lee (2008).](../images/sharp_RD_example_Lee.png){width=80%}
 
 Close elections provide a compelling RD setting. A party that barely wins and a party that barely loses are likely to be similar, but only the winner receives incumbency status.
 

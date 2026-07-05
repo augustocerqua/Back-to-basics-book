@@ -71,7 +71,7 @@ It should also ask whether the program works better or worse for different types
 
 ## The Most Common Approach for Estimating HTEs
 
-Although there exist several ways to study HTEs, post-conditioning on relevant subgroups is by far the most adopted. This generally consists of estimating the ATT and then examine whether the effect differs across subgroups. For example, researchers may estimate separate effects by gender, age, education, income, region, or firm size. This is a **top-down** approach: the researcher chooses the relevant subgroups based on theory, institutional knowledge, or prior evidence. For example, in a study of the electoral effects of refugee reception centers, one may ask whether the effect differs across municipalities with different income levels, political histories, or demographic structures.
+Although there are several ways to study HTEs, subgroup analysis is by far the most widely used. This generally consists of estimating treatment effects separately across relevant subgroups, or examining whether an estimated average effect differs across them. For example, researchers may estimate separate effects by gender, age, education, income, region, or firm size. This is a **top-down** approach: the researcher chooses the relevant subgroups based on theory, institutional knowledge, or prior evidence. For example, in a study of the electoral effects of refugee reception centers, one may ask whether the effect differs across municipalities with different income levels, political histories, or demographic structures.
 
 The advantage of this approach is that it is easy to understand and communicate. Its main limitation is that the estimation process can easily become arbitrary and vulnerable to cherry-picking: researchers may try many subgroup definitions and report only those that produce statistically significant differences. This creates risks of multiple testing, selective reporting, and p-hacking [@brand2021].
 
@@ -90,7 +90,7 @@ A second limitation is that one-variable-at-a-time subgroup analysis may miss co
 
 ### A bottom-up approach to heterogeneity
 
-An alternative approach is to estimate treatment effects at a very disaggregated level and then study which characteristics are associated with larger or smaller effects. This is a more **bottom-up** strategy: instead of starting from pre-defined subgroups, the researcher first explores how effects vary across units and then tries to explain this variation using observed covariates.
+An alternative approach is to estimate treatment effects at a very disaggregated level and then study which characteristics are associated with larger or smaller effects. This is a more **bottom-up** strategy: instead of starting from pre-defined subgroups, the researcher estimates individual treatment effects, for example by applying SCM separately to several treated units, and then investigates which observed covariates are associated with variation in these effects.
 
 This approach can be useful when rich data are available and when the relevant dimensions of heterogeneity are not fully known in advance. However, these estimates should be interpreted with caution. Individual treatment effects are often noisy and should not be considered precisely estimated individual causal effects. A practical consequence is that researchers may end up overinterpreting random variation as meaningful heterogeneity, identifying apparent “winners” and “losers” of the treatment even when these differences are largely driven by estimation noise.
 :::

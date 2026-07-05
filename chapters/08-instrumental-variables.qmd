@@ -322,7 +322,7 @@ Recent replication evidence raises concerns about how IV is used in practice. La
 
 1. Some applications overstate instrument strength because first-stage diagnostics do not properly adjust standard errors for heteroskedasticity, serial correlation, or clustering.
 
-2 Conventional t-tests based on 2SLS standard errors may understate uncertainty when instruments are weak.
+2. Conventional t-tests based on 2SLS standard errors may understate uncertainty when instruments are weak.
 
 3. IV estimates are often much larger than OLS estimates, especially when the first stage is weak. This pattern can be a warning sign of weak instruments, violations of the exclusion restriction, or both.
 

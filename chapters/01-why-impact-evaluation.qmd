@@ -49,7 +49,7 @@ Each of these approaches is intuitive. Yet each can also be misleading.
 
 **Option A**: A before–after comparison may confuse the effect of the nursery school with other changes occurring over time. Parents’ employment may have increased even without the new facility. For example, the local labor market may already have been on an upward trend before the nursery school opened. In that case, attributing the entire increase in parents’ employment to the nursery school would overstate its effect. Similarly, if a negative economic shock occurred between $t_1$ and $t_2$, we might wrongly attribute the consequences of that shock to the nursery school.
 
-**Option B**: A cross-sectional comparison may also lead to wrong conclusions. Neighborhoods with and without a new nursery school may differ in many ways even before the policy is introduced. They may have different income levels, demographic structures, education levels, labor-market opportunities, or demand for childcare. As these differences are usually related to employment, then comparing the two groups of parents after the nursery school opens would not correctly identify the employment effect of the nursery school itself.
+**Option B**: A cross-sectional comparison may also lead to wrong conclusions. Neighborhoods with and without a new nursery school may differ in many ways even before the policy is introduced. They may have different income levels, demographic structures, education levels, labor-market opportunities, or demand for childcare. As these differences are usually related to employment, comparing the two groups of parents after the nursery school opens would not correctly identify the employment effect of the nursery school itself.
 
 **Option C**: A difference-in-differences comparison is the most sophisticated among these simple alternatives, but it still relies on an assumption that may not hold in this application. The key requirement is the **parallel-trends assumption**: if the nursery school had not opened, parents’ employment in the treated neighborhood would have evolved similarly to parents’ employment in the comparison neighborhoods. However, if parents’ employment was already evolving differently in the treated neighborhood before the opening, this assumption may not be credible. In that case, the estimated effect may still mix the impact of the nursery school with other pre-existing differences in parents’ employment trends.
 
@@ -60,7 +60,7 @@ Each of these approaches is intuitive. Yet each can also be misleading.
 
 Constructing a credible counterfactual is not easy, especially when working with **observational data**, as in the examples above. In observational settings, policies are not usually assigned at random. Nursery schools may open in neighborhoods with specific characteristics. Workplace-safety subsidies may be received by firms that are more proactive, more exposed to risk, or better informed about public programs. Municipal amalgamations may involve municipalities with particular administrative or political characteristics.
 
-For this reason, a simple comparison between treated and untreated units may be misleading: it may reflect pre-existing differences between the two groups rather than the causal effect of the treatment
+For this reason, a simple comparison between treated and untreated units may be misleading: it may reflect pre-existing differences between the two groups rather than the causal effect of the treatment.
 
 ## Why randomized controlled trials help
 

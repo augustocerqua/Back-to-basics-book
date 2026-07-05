@@ -148,7 +148,7 @@ $$
 R_i = r(T_i,X_i).
 $$
 
-The GPS summarizes how likely it is for a unit with characteristics $X_i$ to receive treatment intensity $T_i$.
+The GPS summarizes how compatible a given treatment intensity $T_i$ is with the characteristics $X_i$ of a unit, through the conditional density of treatment intensity given covariates.
 
 The key result is that, under weak unconfoundedness (see below), adjusting for the GPS can help remove confounding due to observed covariates when estimating the ADRF.
 

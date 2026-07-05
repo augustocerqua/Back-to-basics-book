@@ -241,7 +241,7 @@ The results show a large negative effect of the COVID-19 shock on learning outco
 
 FBCMs require a set of assumptions that is almost completely different from those used in control-group designs.
 
-1) **No anticipation**. Units should not change behavior before the official start of the intervention because they expect the treatment to occur. Anticipation contaminates the pre-treatment period and makes the estimated untreated trajectory unreliable. This assumption is behind also most control-based counterfactual methods.
+1) **No anticipation**. Units should not change behavior before the official start of the intervention because they expect the treatment to occur. Anticipation contaminates the pre-treatment period and makes the estimated untreated trajectory unreliable. This assumption also underlies also most CBCMs.
 
 2) **Stability of the untreated outcome process**. In the absence of treatment, the relationship learned from pre-treatment data should continue to hold in the post-treatment period. If the data-generating process changes for reasons unrelated to the policy, the forecast error may capture those changes rather than the treatment effect.
 

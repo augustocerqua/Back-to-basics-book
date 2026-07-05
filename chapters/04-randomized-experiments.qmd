@@ -10,7 +10,7 @@
 
 ## What is an RCT?
 
-A **randomized controlled trial (RCT)** is the benchmark research design for causal inference. It is so central to the logic of causal analysis that we have already briefly discussed it in each of the previous chapters. Its logic is simple: if treatment is assigned randomly, treated and untreated units should be comparable on average before the intervention. Therefore, any systematic difference in outcomes after the intervention can be attributed to the treatment rather than to pre-existing differences between the two groups.
+A **randomized controlled trial (RCT)** is the benchmark research design for causal inference. It is so central to the logic of causal analysis that we have already briefly discussed it in each of the previous chapters. Its logic is simple: if treatment is assigned randomly, treated and untreated units are comparable in expectation before the intervention. Therefore, under a properly implemented RCT, systematic differences in outcomes observed after the intervention can be interpreted as causal effects of the treatment rather than as the result of pre-existing differences between the two groups.
 
 In the potential outcomes framework, each unit $i$ has two potential outcomes:
 

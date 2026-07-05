@@ -158,7 +158,7 @@ The synthetic control literature has evolved substantially in recent years. One 
 ::: {.callout-note appearance="simple"}
 ## SCM vs. SDiD in a figure
 
-![This figure provides a stylized comparison between SCM and SDiD. In **SCM**, the synthetic control should closely match the treated unit before treatment, both in levels and in trends. The post-treatment gap is then interpreted as the treatment effect. In **SDiD**, the requirement is less demanding. The synthetic control may remain at a different level, as long as it follows an approximately parallel pre-treatment trend. The level gap is then differenced out using the DiD logic. In many applications, SCM produces sparse weights, concentrating most of the weight on a small number of donor units, while SDiD weights are often more dispersed.Time weights also play an important role in SDiD, but they are not discussed here in order to keep the presentation non-technical.](../images/scm_vs_sdid_same_treated_unit.png)
+![This figure provides a stylized comparison between SCM and SDiD. In **SCM**, the synthetic control should closely match the treated unit before treatment, both in levels and in trends. The post-treatment gap is then interpreted as the treatment effect. In **SDiD**, the requirement is less demanding. The synthetic control may remain at a different level, as long as it follows an approximately parallel pre-treatment trend. The level gap is then differenced out using the DiD logic. In many applications, SCM produces sparse weights, concentrating most of the weight on a small number of donor units, while SDiD weights are often more dispersed. Time weights also play an important role in SDiD, but they are not discussed here in order to keep the presentation non-technical.](../images/scm_vs_sdid_same_treated_unit.png)
 :::
 
 Moreover, the most recent extensions to SCM extend the synthetic control logic beyond the canonical case of a single treated unit. Recent synthetic-control-based estimators can accommodate **multiple treated units**, including settings in which treatment adoption is **staggered**, meaning that different units may become treated at different points in time [@cattaneo2025uncertainty]. This makes synthetic-control-inspired methods applicable to a broader range of policy evaluation settings, where several regions, municipalities, firms, or individuals may be exposed to the treatment either simultaneously or sequentially. The basic logic, however, remains the same: the goal is to construct credible counterfactual trajectories against which the observed post-treatment outcomes of treated units can be compared. In this sense, the event-study and synthetic-control literatures are increasingly converging toward a unified framework for estimating dynamic treatment effects in panel data settings.
@@ -167,7 +167,7 @@ Moreover, the most recent extensions to SCM extend the synthetic control logic b
 
 SCM is a powerful way to make counterfactual construction explicit. It is particularly useful when the treatment affects one aggregate unit and no single untreated unit provides a convincing comparison.
 
-Its main strengths are that it is basically the only method in the evaluator’s toolkit suitable for estimating causal effects when there is a single treated unit, and that it constructs the synthetic counterfactual in a transparent way. SCM shows which untreated units contribute to the counterfactual, how much weight they receive, and how well the resulting synthetic unit reproduces the treated unit before the intervention.
+Its main strengths are that, among CBCMs, it is the only method in the evaluator’s toolkit that is suitable for estimating causal effects when there is a single treated unit, and that it constructs the synthetic counterfactual in a transparent manner. SCM shows which untreated units contribute to the counterfactual, how much weight they receive, and how well the resulting synthetic unit reproduces the treated unit before the intervention.
 
 At the same time, SCM is not a magic formula. Its credibility depends on the quality of the donor pool, the length and informativeness of the pre-treatment period, the absence of spillovers (as for all control-based counterfactual methods), and the ability of the synthetic control to reproduce the treated unit before the treatment.
 
@@ -215,15 +215,17 @@ Y_{1t}
 \sum_{j=2}^{J+1} \widehat w_j Y_{jt}.
 $$
 
-The average post-treatment effect is
+The average post-treatment effect for the treated unit is
 
 $$
-\widehat{ATT}
+\widehat{\tau}_{1,\text{post}}
 =
 \frac{1}{T-T_0}
 \sum_{t=T_0+1}^{T}
-\widehat \tau_{1t}.
+\widehat{\tau}_{1t}.
 $$
+
+This quantity summarizes the estimated treatment effect for the treated unit over the post-treatment period.
 :::
 
 ::: {.callout-note appearance="simple"}

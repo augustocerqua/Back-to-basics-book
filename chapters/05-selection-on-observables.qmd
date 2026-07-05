@@ -9,10 +9,10 @@ The linear regression model is probably the most prominent tool in statistics an
 Suppose we observe a post-treatment outcome $Y_i$ and a binary treatment indicator $D_i$, where $D_i=1$ for treated units and $D_i=0$ for untreated units. A simple regression model can be written as
 
 $$
-Y_i = \alpha + \tau D_i + u_i.
+Y_i = \alpha + \beta D_i + u_i.
 $$
 
-In this model, $\alpha$ is the average outcome for untreated units, while $\tau$ captures the difference in average outcomes between treated and untreated units. The term $u_i$ is the residual: the part of the outcome that is not explained by treatment status.
+In this model, $\alpha$ is the average outcome for untreated units, while $\beta$ captures the difference in average observed outcomes between treated and untreated units. The term $u_i$ is the error term: it captures all factors affecting the outcome that are not included in the regression.
 
 The parameters $\alpha$ and $\tau$ are usually estimated by **ordinary least squares (OLS)**. In simple terms, OLS chooses the values of $\alpha$ and $\tau$ that make the predicted outcomes as close as possible to the observed outcomes, by minimizing the sum of squared residuals.
 

@@ -1,6 +1,6 @@
 # About the book {.unnumbered}
 
-This book is not intended to be a comprehensive textbook on impact evaluation and causal inference.Many excellent books and articles already provide rigorous and detailed accounts of causal inference, program evaluation, and econometric methods for policy analysis.
+This book is not intended to be a comprehensive textbook on impact evaluation and causal inference. Many excellent books and articles already provide rigorous and detailed accounts of causal inference, program evaluation, and econometric methods for policy analysis.
 
 The purpose of this book is different. It is to go **back to basics** and offer a simple and transparent perspective on the logic behind the most widely used impact evaluation methods. Rather than emphasizing the technical aspects of evaluation methods, the book aims to clarify how each method constructs a counterfactual, what assumptions it requires, and how it works in practice, while keeping formal details to a minimum.
 
@@ -77,7 +77,7 @@ The second part of the book covers selected topics in impact evaluation, includi
 ::: {.callout-important}
 ## The main message
 
-Impact evaluation is not primarily about applying sophisticated estimators. It is about constructing a credible counterfactual scenario
+Impact evaluation is not primarily about applying sophisticated estimators. It is about constructing a credible counterfactual scenario.
 
 Different methods provide different ways of approximating the missing counterfactual, and each of them relies on specific assumptions that should be assessed **case by case**, depending on the empirical setting, the available data, and the institutional context.
 :::

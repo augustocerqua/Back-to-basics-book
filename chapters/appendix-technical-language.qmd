@@ -426,7 +426,7 @@ A **prediction interval** quantifies uncertainty about a future or unobserved ou
 
 ### Statistical significance and p-values
 
-A result is conventionally called **statistically significant** when a test rejects a specified null hypothesis at a chosen significance level, often 5%. A 5% significance level means that the researcher is willing to tolerate a 5% probability of rejecting the null hypothesis when it is actually true. Equivalently, if the null hypothesis were true, a result as extreme as the one observed would occur with probability less than 5%.
+A result is conventionally called **statistically significant** when a test rejects a specified null hypothesis at a chosen significance level, often 5%. A 5% significance level means that, in hypothetical repeated applications of the same testing procedure when the null hypothesis is true, the procedure would incorrectly reject the null hypothesis in no more than 5% of cases. Equivalently, the observed p-value is below 0.05.
 
 A **p-value** measures how unusual the observed test statistic would be under the null hypothesis and the maintained model. It is not the probability that the null hypothesis is true, nor the probability that the estimate is causal.
 
@@ -575,7 +575,7 @@ Notation is not completely universal. For example, $T$ may denote time in one so
 
 **Interference.** A situation in which one unit's outcome depends on other units' treatments.
 
-**LATE (local average treatment effect).** The average effect for units whose treatment status is changed by an instrument or assignment rule.
+**LATE (local average treatment effect).** The average treatment effect for a specific local group of units. In an IV design, this group consists of units whose treatment status is affected by the instrument; in a sharp RD design, it consists of units at or near the assignment cutoff; and in a fuzzy RD design, it consists of units near the cutoff whose treatment status is affected by crossing it.
 
 **OLS (ordinary least squares).** A regression estimator that minimizes the sum of squared residuals.
 

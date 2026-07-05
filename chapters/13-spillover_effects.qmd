@@ -2,7 +2,7 @@
 
 All evaluation methods introduced so far rely on a simple idea: each unit has two potential outcomes, one under treatment and one under no treatment. This is convenient because it allows us to write the causal effect for unit $i$ as the comparison between $Y_i(1)$ and $Y_i(0)$.
 
-This representation depends on the **Stable Unit Treatment Value Assumption (SUTVA)** [@rubin1980]. As discussed in [Chapter 3](../chapters/03-causal-parameters.qmd), SUTVA has two main components. First, there should be no hidden versions of the treatment: units assigned to the same treatment status should receive the same treatment in the relevant sense. Second, there should be no interference between units: the potential outcome of one unit should depend only on that unit's own treatment status, not on the treatment status of other units [@cox1958].
+This representation depends on the **Stable Unit Treatment Value Assumption (SUTVA)** [@rubin1980]. As discussed in [Chapter 2](../chapters/02-potential-outcomes.qmd), SUTVA has two main components. First, there should be no hidden versions of the treatment: units assigned to the same treatment status should receive the same treatment in the relevant sense. Second, there should be no interference between units: the potential outcome of one unit should depend only on that unit's own treatment status, not on the treatment status of other units [@cox1958].
 
 This second part is the **no-interference assumption**. Spillover effects arise precisely when it fails.
 
@@ -14,12 +14,28 @@ Spillover effects occur when the treatment of one unit affects the outcomes of o
 
 Spillovers are not a technical nuisance only. In many policy settings, they are part of the mechanism through which the policy is expected to work. A regional development program may aim to support treated firms, but also to stimulate local suppliers, competitors, workers, and neighboring areas. A vaccination campaign may directly protect vaccinated individuals, but also indirectly protect unvaccinated individuals by reducing disease transmission.
 
-When these indirect effects exist, treatment effect estimates obtained by comparing treated and untreated units may be biased. They may also fail to capture the indirect effects of the treatment on untreated units.
-
 ::: {.callout-note}
 ## Spillovers in a figure
 
-![Stylized example of public subsidies to shops that spill over some of the untreated shops.](../images/spillover-effects-in-a-figure.png)
+![Stylized example of public subsidies to shops that spill over some of the untreated shops.](../images/spillover-effects-in-a-figure.png){width=80%}
+:::
+
+When these indirect effects exist, treatment effect estimates obtained by comparing treated and untreated units may be biased. They may also fail to capture the indirect effects of the treatment on untreated units.
+
+::: {.callout-note}
+### Spillovers can produce a double underestimation
+
+Angelucci and Di Maro [-@angelucci2016spillovers] illustrate this problem using a hypothetical school deworming program. Suppose that, without the program, the infection rate would be 80%. After treating some pupils, the infection rate falls to 10% among treated pupils and to 60% among untreated pupils because reduced transmission also benefits them.
+
+A naive comparison within the school estimates an effect of
+
+$$
+10\%-60\%=-50
+$$
+
+percentage points. However, relative to the no-program counterfactual, the effect on treated pupils is actually $10\%-80\%=-70$ percentage points, while the spillover effect on untreated pupils is $60\%-80\%=-20$ percentage points.
+
+Ignoring spillovers therefore creates a **double underestimation**: it understates the benefit for treated pupils and completely overlooks the benefit received by untreated pupils. Individual randomization within the same school does not solve this problem because the control group is exposed to the treatment indirectly.
 :::
 
 ## Why Spillovers Matter
@@ -195,7 +211,7 @@ $$
 
 This variable measures how much unit $i$ is exposed to treatment among connected units.
 
-A simple spatial lag of $X$ model can be written as
+A simple spatial lag of $D$ model can be written as
 
 $$
 Y_i=\alpha+\tau D_i+\theta \sum_{j\neq i}w_{ij}D_j+X_i'\beta+u_i.
@@ -227,7 +243,7 @@ A credible spillover analysis usually starts from theory. The researcher should 
 - Does exposure depend on geography, networks, markets, or institutions?
 - Are there units that are untreated and plausibly unexposed?
 
-If some untreated units are plausibly unexposed, they can be used as a control group to estimate direct effects. Treated units can then be compared with unexposed untreated units using familiar methods such as matching, DiD, RD, or SCM.
+If some untreated units are plausibly unaffected by the treatment, they can be used as a clean comparison group. In that case, the average total effect on the treated can be estimated by comparing treated units with unexposed untreated units, using familiar methods such as matching, DiD, RD, or SCM.
 
 If some untreated units are exposed to spillovers, they can be compared with unexposed untreated units to estimate indirect effects. This is the logic of applications that explicitly distinguish between treated units, neighboring exposed units, and untreated unexposed units [@cerqua2017spillovers].
 
