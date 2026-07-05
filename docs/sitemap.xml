@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/07-event-studies.html</loc>
-    <lastmod>2026-07-04T18:30:58.088Z</lastmod>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/index.html</loc>
+    <lastmod>2026-07-04T16:43:47.104Z</lastmod>
   </url>
   <url>
     <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/01-why-impact-evaluation.html</loc>
@@ -27,6 +27,10 @@
   <url>
     <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/06-difference-in-differences.html</loc>
     <lastmod>2026-07-04T16:53:25.856Z</lastmod>
+  </url>
+  <url>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/07-event-studies.html</loc>
+    <lastmod>2026-07-04T18:30:58.088Z</lastmod>
   </url>
   <url>
     <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/08-instrumental-variables.html</loc>
