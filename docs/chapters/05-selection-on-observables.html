@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Selection on observable methods – The Backbone of Impact Evaluation Methods</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/06-difference-in-differences.html" rel="next">
+<link href="../chapters/04-randomized-experiments.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-9e3e5b9121e68b3f077afb32f2c64d95.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-acff971833d9769290026d534105daaa.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-9e3e5b9121e68b3f077afb32f2c64d95.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles/styles.css">
+</head>
+
+<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/04-randomized-experiments.html">Control-based Designs</a></li><li class="breadcrumb-item"><a href="../chapters/05-selection-on-observables.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">The Backbone of Impact Evaluation Methods</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/augustocerqua/Back-to-basics-book" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Share" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Share"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About the book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Foundations</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-why-impact-evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">What Is Impact Evaluation and Why Does It Matter?</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-potential-outcomes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Potential Outcomes Framework</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-causal-parameters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Causal Parameters of Interest</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Control-based Designs</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-randomized-experiments.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Randomized Controlled Trials</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-selection-on-observables.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-difference-in-differences.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Difference-in-Differences</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-event-studies.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Event Studies</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/08-instrumental-variables.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Instrumental Variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/09-regression-discontinuity.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Regression Discontinuity Design</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/10-synthetic-control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Synthetic Control Method</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Other topics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/11-forecast-based-designs.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Forecast-Based Counterfactual Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/12-heterogeneous_treatment_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Heterogeneous Treatment Effects</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/13-spillover_effects.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Spillover Effects</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/14-continuous_treatment.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Continuous Treatments</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/15-miscellanea.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Miscellanea</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/appendix-technical-language.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">A Gentle Guide to Statistical and Econometric Language</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-linear-regression-model" id="toc-the-linear-regression-model" class="nav-link active" data-scroll-target="#the-linear-regression-model"><span class="header-section-number">5.1</span> The linear regression model</a></li>
+  <li><a href="#matching-methods" id="toc-matching-methods" class="nav-link" data-scroll-target="#matching-methods"><span class="header-section-number">5.2</span> Matching Methods</a>
+  <ul class="collapse">
+  <li><a href="#the-logic-of-matching" id="toc-the-logic-of-matching" class="nav-link" data-scroll-target="#the-logic-of-matching"><span class="header-section-number">5.2.1</span> The Logic of Matching</a></li>
+  <li><a href="#historical-intuition" id="toc-historical-intuition" class="nav-link" data-scroll-target="#historical-intuition"><span class="header-section-number">5.2.2</span> Historical Intuition</a></li>
+  <li><a href="#conditional-independence-assumption" id="toc-conditional-independence-assumption" class="nav-link" data-scroll-target="#conditional-independence-assumption"><span class="header-section-number">5.2.3</span> Conditional Independence Assumption</a></li>
+  <li><a href="#common-support" id="toc-common-support" class="nav-link" data-scroll-target="#common-support"><span class="header-section-number">5.2.4</span> Common Support</a></li>
+  <li><a href="#exact-matching" id="toc-exact-matching" class="nav-link" data-scroll-target="#exact-matching"><span class="header-section-number">5.2.5</span> Exact Matching</a></li>
+  <li><a href="#the-curse-of-dimensionality" id="toc-the-curse-of-dimensionality" class="nav-link" data-scroll-target="#the-curse-of-dimensionality"><span class="header-section-number">5.2.6</span> The Curse of Dimensionality</a></li>
+  <li><a href="#propensity-score-matching" id="toc-propensity-score-matching" class="nav-link" data-scroll-target="#propensity-score-matching"><span class="header-section-number">5.2.7</span> Propensity Score Matching</a></li>
+  <li><a href="#other-matching-approaches" id="toc-other-matching-approaches" class="nav-link" data-scroll-target="#other-matching-approaches"><span class="header-section-number">5.2.8</span> Other Matching Approaches</a></li>
+  <li><a href="#reweighting-methods" id="toc-reweighting-methods" class="nav-link" data-scroll-target="#reweighting-methods"><span class="header-section-number">5.2.9</span> Reweighting methods</a></li>
+  <li><a href="#assessing-match-quality" id="toc-assessing-match-quality" class="nav-link" data-scroll-target="#assessing-match-quality"><span class="header-section-number">5.2.10</span> Assessing Match Quality</a></li>
+  <li><a href="#what-bias-does-matching-remove" id="toc-what-bias-does-matching-remove" class="nav-link" data-scroll-target="#what-bias-does-matching-remove"><span class="header-section-number">5.2.11</span> What Bias Does Matching Remove?</a></li>
+  <li><a href="#empirical-illustration" id="toc-empirical-illustration" class="nav-link" data-scroll-target="#empirical-illustration"><span class="header-section-number">5.2.12</span> Empirical Illustration</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">5.3</span> Summary</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/04-randomized-experiments.html">Control-based Designs</a></li><li class="breadcrumb-item"><a href="../chapters/05-selection-on-observables.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Selection-on-observables methods rely on the idea that treatment assignment is non-random, but that the factors driving selection into treatment are observed in the data. If all confounders are observed and measured before treatment, where confounders are variables that jointly affect treatment assignment and potential outcomes, then differences between treated and untreated units can be adjusted for using pre-treatment covariates. Regression models implement this logic by adjusting outcome comparisons through control variables, while matching methods implement it by directly comparing treated units with untreated units that are similar in terms of observed pre-treatment characteristics. Both approaches therefore rely on the same central assumption: after conditioning on observables, there are no remaining unobserved confounders driving selection into treatment.</p>
+<section id="the-linear-regression-model" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="the-linear-regression-model"><span class="header-section-number">5.1</span> The linear regression model</h2>
+<p>The linear regression model is probably the most prominent tool in statistics and econometrics. In its simplest form, it describes the relationship between an outcome variable and one explanatory variable. In causal inference, this same tool can be used to estimate treatment effects, but only under specific assumptions. Dozens of excellent textbooks explain linear regression in detail, covering its statistical foundations, estimation, inference, diagnostics, and extensions. This chapter does not aim to provide a full treatment of the model. Instead, it focuses on its role in causal inference when embedded in the counterfactual approach. The key question is not only how to estimate a regression coefficient, but under what conditions that coefficient can be interpreted as a causal effect.</p>
+<p>Suppose we observe a post-treatment outcome <span class="math inline">\(Y_i\)</span> and a binary treatment indicator <span class="math inline">\(D_i\)</span>, where <span class="math inline">\(D_i=1\)</span> for treated units and <span class="math inline">\(D_i=0\)</span> for untreated units. A simple regression model can be written as</p>
+<p><span class="math display">\[
+Y_i = \alpha + \beta D_i + u_i.
+\]</span></p>
+<p>In this model, <span class="math inline">\(\alpha\)</span> is the average outcome for untreated units, while <span class="math inline">\(\beta\)</span> captures the difference in average observed outcomes between treated and untreated units. The term <span class="math inline">\(u_i\)</span> is the error term: it captures all factors affecting the outcome that are not included in the regression.</p>
+<p>The parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\tau\)</span> are usually estimated by <strong>ordinary least squares (OLS)</strong>. In simple terms, OLS chooses the values of <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\tau\)</span> that make the predicted outcomes as close as possible to the observed outcomes, by minimizing the sum of squared residuals.</p>
+<p>With a binary treatment and an intercept, the OLS estimate of <span class="math inline">\(\tau\)</span> is equal to the difference in sample means between treated and untreated units:</p>
+<p><span class="math display">\[
+\widehat{\tau}_{OLS}
+=
+\bar{Y}_{D=1} - \bar{Y}_{D=0}.
+\]</span></p>
+<p>At the population level, this corresponds to</p>
+<p><span class="math display">\[
+\tau = E[Y_i \mid D_i=1] - E[Y_i \mid D_i=0].
+\]</span></p>
+<p>This coefficient is simply a difference in mean outcomes between treated and untreated units. It has a causal interpretation only if this observed difference reproduces the comparison we would like to make between potential outcomes. This requires treatment assignment to be unrelated to potential outcomes, as in a randomized experiment.</p>
+<p>In observational studies, treated and untreated units often differ for reasons that are not random. In these cases, the simple regression coefficient <span class="math inline">\(\tau\)</span> does not necessarily isolate the causal effect of the treatment. It may combine the treatment effect with pre-existing differences between the two groups.</p>
+<p>For this reason, simple regression is rarely enough to identify causal effects in observational settings. A more useful starting point is the multiple regression model:</p>
+<p><span class="math display">\[
+Y_i = \alpha + \tau D_i + X_i'\beta + u_i,
+\]</span></p>
+<p>where <span class="math inline">\(Y_i\)</span> is a post-treatment outcome, <span class="math inline">\(D_i\)</span> is the treatment indicator, and <span class="math inline">\(X_i\)</span> is a vector of observed pre-treatment covariates. These covariates should include variables that affect both treatment assignment and the outcome.</p>
+<p>The timing of the variables is crucial. The covariates in <span class="math inline">\(X_i\)</span> must be measured before treatment occurs, while the outcome <span class="math inline">\(Y_i\)</span> must be measured after treatment. Otherwise, we may control for variables that are themselves affected by the treatment, changing the interpretation of the regression coefficient.</p>
+<p>In this model, <span class="math inline">\(\tau\)</span> compares treated and untreated units <strong>holding constant</strong> the covariates included in <span class="math inline">\(X_i\)</span>. The idea is that, after adjusting for relevant observed pre-treatment differences, the remaining difference in post-treatment outcomes may provide a credible estimate of the causal effect. For this interpretation to hold, several conditions are required.</p>
+<ol type="1">
+<li><p>All relevant confounders must be observed and adequately controlled for. If a variable affects both selection into treatment and the outcome but is omitted from the model, the OLS estimate may still be biased. This is the problem of <strong>omitted variable bias</strong>.</p></li>
+<li><p>Covariates must be measured before treatment occurs. If we control for variables affected by the treatment, we may remove part of the treatment effect or introduce additional bias.</p></li>
+<li><p>There must be sufficient overlap between treated and untreated units. For treated units, there should be comparable untreated units with similar values of the observed covariates. Without common support, the regression relies heavily on extrapolation.</p></li>
+<li><p>The regression specification must be credible. OLS is a <strong>parametric</strong> adjustment method: it imposes a functional form for how covariates are related to the outcome. If this functional form is too restrictive, for example because important nonlinearities or interactions are omitted, the estimate may still be misleading.</p></li>
+</ol>
+<p>For the ATT, the key selection-on-observables assumption is that, conditional on <span class="math inline">\(X_i\)</span>, treated and untreated units would have had comparable untreated potential outcomes:</p>
+<p><span class="math display">\[
+Y_i(0) \perp D_i \mid X_i.
+\]</span></p>
+<p>This means that, after conditioning on observed pre-treatment covariates, untreated units can be used to approximate the missing counterfactual outcomes of treated units. Regression implements this idea by estimating the relationship between <span class="math inline">\(Y_i\)</span>, <span class="math inline">\(D_i\)</span>, and <span class="math inline">\(X_i\)</span>, and using it to adjust for observed differences in covariates.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Worked example: speed cameras and road accidents
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose we want to estimate whether installing speed cameras reduces the number of road accidents. The unit of analysis is a road segment. The treatment variable <span class="math inline">\(D_i\)</span> is equal to 1 if road segment <span class="math inline">\(i\)</span> receives a speed camera, and 0 otherwise. The outcome <span class="math inline">\(Y_i\)</span> is the number of accidents observed after the installation period.</p>
+<p>A first approach would be to estimate a simple regression model:</p>
+<p><span class="math display">\[
+Y_i =
+\alpha
++
+\tau D_i
++
+u_i.
+\]</span></p>
+<p>In this model, <span class="math inline">\(\tau\)</span> is simply the difference in average post-treatment accidents between roads with speed cameras and roads without speed cameras. This comparison would probably be misleading. Speed cameras are often installed on roads that were already more dangerous before the policy. These roads may have higher traffic volume, higher previous accident rates, different speed limits, or a different urban location.</p>
+<p>For this reason, we may add observed pre-treatment characteristics to the model:</p>
+<p><span class="math display">\[
+Y_i =
+\alpha
++
+\tau D_i
++
+\beta_1 \text{Accidents}_{i,\text{pre}}
++
+\beta_2 \text{Traffic}_{i,\text{pre}}
++
+\beta_3 \text{SpeedLimit}_{i,\text{pre}}
++
+X_i'\gamma
++
+u_i,
+\]</span></p>
+<p>where <span class="math inline">\(X_i\)</span> may include other pre-treatment characteristics, such as road type, urban density, weather exposure, or nearby intersections. These controls are included because they may affect both the probability that a speed camera is installed and the number of accidents after installation.</p>
+<p>In this model, <span class="math inline">\(\tau\)</span> compares road segments with and without speed cameras <strong>holding constant</strong> these observed pre-treatment characteristics. The counterfactual logic is the following: for a treated road segment, the regression uses similar untreated road segments to predict how many accidents would have occurred without the camera. The estimated effect is the difference between the observed post-treatment outcome and this regression-adjusted counterfactual comparison.</p>
+<p>This interpretation is causal only if, after conditioning on the included pre-treatment variables, the installation of speed cameras is as good as random.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Extrapolation and lack of common support
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The expression “holding constant” can be misleading when treated and untreated units are very different in their pre-treatment characteristics. In some applications, there may be no untreated units that are comparable to the treated ones for relevant values of <span class="math inline">\(X_i\)</span>.</p>
+<p>For example, suppose speed cameras are installed only on extremely dangerous roads with very high pre-policy accident rates and very heavy traffic. If no untreated roads look similar, the regression model has to infer the counterfactual outcome by extrapolating from roads that are quite different. The model will still deliver an estimate of <span class="math inline">\(\tau\)</span>, because OLS always fits the best linear relationship in the available data. But the estimate may depend heavily on the imposed linear functional form rather than on an actual comparison between comparable treated and untreated units.</p>
+<p>In that case, we cannot be sure that the regression has really kept all observed pre-treatment differences constant. It may simply be projecting what would happen for treated units outside the region where the data provide credible comparisons. This is a problem of <strong>lack of common support</strong>, which will be discussed more explicitly in the matching section.</p>
+</div>
+</div>
+<p>In the end, it is important to remember that OLS regression is not born causal. It becomes a causal tool only when embedded in a credible research design and supported by assumptions that are often quite demanding. Without these assumptions, the estimated coefficient remains a conditional association, not a causal effect.</p>
+</section>
+<section id="matching-methods" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="matching-methods"><span class="header-section-number">5.2</span> Matching Methods</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Matching in a figure
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/matching_in_a_figure_slim.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption>In this example, matching methods compare each <strong>treated unit</strong> with one or more untreated <strong>control units</strong> with similar observable characteristics before treatment. Matches are selected using relevant pre-treatment features, such as <strong>age</strong>, <strong>wage</strong>, and <strong>years of education</strong>. Untreated units that are too different from the treated ones are left unmatched. Once a balanced matched sample is created, the post-treatment outcome values of treated and matched control units are compared to estimate the <strong>ATT</strong>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Matching methods are among the most intuitive tools for causal inference with observational data. Their basic idea is simple: untreated units with similar observed pre-treatment characteristics are used to approximate what would have happened to treated units in the absence of treatment.</p>
+<p>In this sense, matching constructs a control group <strong>ex post</strong>: the comparison group is formed only after treatment assignment has already taken place. Unlike in RCTs, treated and untreated units are not created by randomization. Instead, the control group is built by selecting untreated units that are comparable to the treated units in terms of observed pre-treatment characteristics.</p>
+<p>Suppose we want to evaluate the effect of a policy on an outcome <span class="math inline">\(Y_i\)</span>. Let <span class="math inline">\(D_i=1\)</span> indicate that unit <span class="math inline">\(i\)</span> receives the treatment, and <span class="math inline">\(D_i=0\)</span> otherwise. As usual, each unit has two potential outcomes:</p>
+<p><span class="math display">\[
+Y_i(1)
+\quad \text{and} \quad
+Y_i(0).
+\]</span></p>
+<p>We are interested in the <strong>average treatment effect on the treated (ATT)</strong>:</p>
+<p><span class="math display">\[
+ATT =
+E[Y_i(1)-Y_i(0)\mid D_i=1].
+\]</span></p>
+<p>Equivalently,</p>
+<p><span class="math display">\[
+ATT =
+E[Y_i(1)\mid D_i=1]
+-
+E[Y_i(0)\mid D_i=1].
+\]</span></p>
+<p>The first term is observed:</p>
+<p><span class="math display">\[
+E[Y_i(1)\mid D_i=1]
+=
+E[Y_i^{obs}\mid D_i=1].
+\]</span></p>
+<p>The second term is not observed. It is the average outcome that treated units would have experienced without treatment. Matching methods try to estimate this missing counterfactual by finding untreated units that are as similar as possible to the treated units before treatment in terms of relevant observed variables.</p>
+<section id="the-logic-of-matching" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="the-logic-of-matching"><span class="header-section-number">5.2.1</span> The Logic of Matching</h3>
+<p>The logic of matching is close to the logic of a randomized experiment. In an RCT, treated and untreated units are comparable because treatment is randomly assigned. In an observational study, treatment is not randomly assigned. Units may select into treatment, or policymakers may select units for treatment, based on characteristics that also affect the outcome.</p>
+<p>Matching tries to make treated and untreated units comparable <strong>after the data have been collected</strong>. It does so by comparing treated units only with untreated units that have similar values of observed covariates <span class="math inline">\(X_i\)</span>.</p>
+<p>For example, suppose we want to estimate the effect of an after-school tutoring program on students’ test scores. Students who attend the program may differ from non-participants in previous achievement, family background, motivation, teacher recommendations, or school attendance. Matching would compare each participating student with one or more non-participating students who are similar in terms of the observed pre-treatment variables.</p>
+<!--A classic example is the evaluation of training programmes studied by LaLonde [-@lalonde1986] and later by Dehejia and Wahba [-@dehejia1999]. LaLonde showed that estimating credible treatment effects with non-experimental data is difficult. Dehejia and Wahba then showed that matching methods, when implemented carefully and with rich pre-treatment information, can recover estimates close to experimental benchmarks.
+-->
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key idea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Matching replaces the impossible comparison between treated units and their own missing counterfactual outcomes with a comparison between treated units and untreated units with similar observed pre-treatment characteristics.</p>
+</div>
+</div>
+</section>
+<section id="historical-intuition" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="historical-intuition"><span class="header-section-number">5.2.2</span> Historical Intuition</h3>
+<p>The early intuition behind matching was close to the logic of experimental blocking. In an experiment, units may be grouped into blocks with similar characteristics before randomization. Matching applies a related idea to observational data: since treatment was not randomly assigned, the researcher tries to reconstruct comparability after the fact by pairing or grouping treated and untreated units with similar pre-treatment characteristics.</p>
+<p>Early work focused on relatively direct forms of adjustment. One approach was <strong>subclassification</strong>, where units were divided into groups based on one or more covariates and comparisons were made within those groups. Cochran <span class="citation" data-cites="cochran1968">(<a href="references.html#ref-cochran1968" role="doc-biblioref">1968</a>)</span> showed how subclassification could remove a large share of bias when the covariate used for adjustment was strongly related to selection into treatment and the outcome.</p>
+<p>Rubin’s early work developed the logic of matched sampling more explicitly within the potential outcomes framework. The key idea was that a good matched comparison should make the distribution of pre-treatment covariates similar across treated and untreated groups, so that the remaining difference in outcomes could be interpreted more plausibly as a treatment effect <span class="citation" data-cites="rubin1973a rubin1973b">(<a href="references.html#ref-rubin1973a" role="doc-biblioref">Rubin 1973a</a>, <a href="references.html#ref-rubin1973b" role="doc-biblioref">1973b</a>)</span>. Cochran and Rubin <span class="citation" data-cites="cochran1973">(<a href="references.html#ref-cochran1973" role="doc-biblioref">1973</a>)</span> also reviewed how matching, subclassification, and regression adjustment could be used to reduce bias in observational studies.</p>
+</section>
+<section id="conditional-independence-assumption" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="conditional-independence-assumption"><span class="header-section-number">5.2.3</span> Conditional Independence Assumption</h3>
+<p>Matching is based on a key identifying assumption: the <strong>Conditional Independence Assumption</strong>. This is also called <strong>selection on observables</strong> or <strong>unconfoundedness</strong>.</p>
+<p>For the ATT, the assumption can be written as</p>
+<p><span class="math display">\[
+Y_i(0) \perp D_i \mid X_i.
+\]</span></p>
+<p>This means that, conditional on observed covariates <span class="math inline">\(X_i\)</span>, treatment assignment is independent of the untreated potential outcome. In words: once we compare units with the same observed characteristics, treated and untreated units would have had the same outcome in the absence of treatment.</p>
+<p>Under this assumption,</p>
+<p><span class="math display">\[
+E[Y_i(0)\mid D_i=1, X_i=x]
+=
+E[Y_i(0)\mid D_i=0, X_i=x].
+\]</span></p>
+<p>Since untreated units reveal their untreated potential outcome,</p>
+<p><span class="math display">\[
+Y_i^{obs}=Y_i(0)
+\quad \text{when } D_i=0,
+\]</span></p>
+<p>we can estimate the missing counterfactual for treated units using the observed outcomes of comparable untreated units.</p>
+<p>Importantly, this assumption cannot be fully tested. What we can check is whether the matching process improved balance between the two groups, making them similar on average in terms of observed pre-treatment characteristics.</p>
+<p>This is the crucial limitation of matching. If treated and untreated units differ in unobserved characteristics, such as motivation, ability, managerial quality, or political connections, and these characteristics also affect the outcome, then matching on observed variables is not enough to rule out selection bias.</p>
+<div class="callout callout-style-simple callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>What matching can and cannot solve
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Matching can adjust for differences in <strong>observed</strong> pre-treatment characteristics.<br>
+It cannot remove bias due to <strong>unobserved</strong> variables that affect both treatment assignment and the outcome.</p>
+</div>
+</div>
+</section>
+<section id="common-support" class="level3" data-number="5.2.4">
+<h3 data-number="5.2.4" class="anchored" data-anchor-id="common-support"><span class="header-section-number">5.2.4</span> Common Support</h3>
+<p>For the estimation of the ATT, a second key assumption is <strong>common support</strong>, also called <strong>overlap</strong>. For each relevant value of the covariates, there must be at least one untreated unit similar to each of the treated ones.</p>
+<p>Formally,</p>
+<p><span class="math display">\[
+P(D_i=1\mid X_i=x) &lt; 1.
+\]</span></p>
+<p>This condition means that, for units with characteristics <span class="math inline">\(X_i=x\)</span>, treatment is possible but not certain. In other words, among units with the same, or sufficiently similar, observed characteristics, there must be at least some untreated units that can serve as comparisons for the treated units. If the probability of receiving treatment is equal to one for a given set of characteristics, matching cannot construct a credible counterfactual for those units.</p>
+<p>In practice, lack of common support means that some units are too different to be matched. Dropping these units can improve credibility, but it also changes the population for which the treatment effect is estimated.</p>
+<div class="callout callout-style-simple callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Common support
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Matching requires treated and untreated units to overlap in terms of observed covariates.<br>
+Units outside the common support should not be used for causal comparisons.</p>
+</div>
+</div>
+</section>
+<section id="exact-matching" class="level3" data-number="5.2.5">
+<h3 data-number="5.2.5" class="anchored" data-anchor-id="exact-matching"><span class="header-section-number">5.2.5</span> Exact Matching</h3>
+<p>In the ideal case, each treated unit would be matched with untreated units that have exactly the same values of the covariates.</p>
+<p>Suppose <span class="math inline">\(X_i\)</span> contains age, education, and previous earnings. Exact matching would compare a treated individual only with untreated individuals that have the same age, the same education level, and the same previous earnings.</p>
+<p>The matching estimator for the ATT can be described in three steps:</p>
+<ol type="1">
+<li>Divide the data into groups defined by values of <span class="math inline">\(X_i\)</span>.</li>
+<li>Within each group, compute the difference between the average outcome of treated and untreated units.</li>
+<li>Average these differences using the distribution of <span class="math inline">\(X_i\)</span> among treated units.</li>
+</ol>
+<p>The last step is important. For the ATT, each treated unit receives the same weight. Therefore, covariate cells with more treated units receive more weight in the final estimate.</p>
+<p>Formally, the ATT can be written as</p>
+<p><span class="math display">\[
+ATT =
+E_X
+\left[
+E(Y_i\mid D_i=1,X_i)
+-
+E(Y_i\mid D_i=0,X_i)
+\mid D_i=1
+\right].
+\]</span></p>
+<p>This expression highlights the core idea of matching: compare treated and untreated units <strong>within comparable covariate cells</strong>, and then average over the treated population.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>All treated units gets the same weight
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For example, suppose we want to estimate the effect of a refresher training course on participants’ earnings. We perform exact matching using two binary pre-treatment covariates: whether the worker is <strong>young</strong> or <strong>older</strong>, and whether the worker lives in an <strong>urban</strong> or <strong>rural</strong> area.</p>
+<p>This creates four covariate cells:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Covariate cell</th>
+<th style="text-align: right;">Treated workers</th>
+<th style="text-align: right;">Mean earnings (€), treated</th>
+<th style="text-align: right;">Mean earnings (€), untreated</th>
+<th style="text-align: right;">Within-cell difference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Young, urban</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td>Older, urban</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td>Young, rural</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td>Older, rural</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">4</td>
+</tr>
+</tbody>
+</table>
+<p>The ATT is not the simple average of the four within-cell differences. Averaging them mechanically would give 4.25 euros:</p>
+<p><span class="math display">\[
+\frac{4+7+2+4}{4}=4.25.
+\]</span></p>
+<p>Instead, the ATT weights each cell by its share of treated units. Since there are 100 treated workers, the weights are 0.20, 0.35, 0.10, and 0.35:</p>
+<p><span class="math display">\[
+ATT =
+0.20 \times 4
++
+0.35 \times 7
++
+0.10 \times 2
++
+0.35 \times 4
+=
+4.85.
+\]</span></p>
+<p>The reason is that the ATT asks: what is the average effect for the treated workers? Therefore, each treated worker receives the same weight. Cells with more treated workers contribute more to the final estimate.</p>
+</div>
+</div>
+</section>
+<section id="the-curse-of-dimensionality" class="level3" data-number="5.2.6">
+<h3 data-number="5.2.6" class="anchored" data-anchor-id="the-curse-of-dimensionality"><span class="header-section-number">5.2.6</span> The Curse of Dimensionality</h3>
+<p>Exact matching becomes difficult when the number of covariates increases. This is known as the <strong>curse of dimensionality</strong>.</p>
+<p>If <span class="math inline">\(X_i\)</span> contains many variables, it becomes increasingly unlikely to find untreated units with exactly the same covariate values as treated units. With continuous variables, exact matches may be almost impossible. Even with binary covariates, the number of possible covariate profiles grows very quickly.</p>
+<p>For example, with 20 binary covariates, there are</p>
+<p><span class="math display">\[
+2^{20} = 1{,}048{,}576
+\]</span></p>
+<p>possible covariate profiles.</p>
+<p>This means that a very large dataset may be needed to find treated and untreated units in the same covariate cells. In practice, this makes exact matching infeasible in most applications.</p>
+</section>
+<section id="propensity-score-matching" class="level3" data-number="5.2.7">
+<h3 data-number="5.2.7" class="anchored" data-anchor-id="propensity-score-matching"><span class="header-section-number">5.2.7</span> Propensity Score Matching</h3>
+<p>A major solution to the curse of dimensionality is <strong>propensity score matching (PSM)</strong>, introduced by Rosenbaum and Rubin <span class="citation" data-cites="rosenbaum1983">(<a href="references.html#ref-rosenbaum1983" role="doc-biblioref">1983</a>)</span>.</p>
+<p>The <strong>propensity score</strong> is the probability of receiving the treatment conditional on observed covariates:</p>
+<p><span class="math display">\[
+p(X_i) = P(D_i=1\mid X_i).
+\]</span></p>
+<p>Instead of matching units on all covariates <span class="math inline">\(X_i\)</span>, PSM matches units on the scalar index <span class="math inline">\(p(X_i)\)</span>.</p>
+<p>Rosenbaum and Rubin showed that, if treatment assignment is independent of potential outcomes conditional on <span class="math inline">\(X_i\)</span>, then it is also independent of potential outcomes conditional on the propensity score:</p>
+<p><span class="math display">\[
+(Y_i(1),Y_i(0)) \perp D_i \mid X_i
+\quad \Rightarrow \quad
+(Y_i(1),Y_i(0)) \perp D_i \mid p(X_i).
+\]</span></p>
+<p>This is the <strong>balancing property</strong> of the propensity score. Conditional on the propensity score, the distribution of observed covariates should be similar between treated and untreated units.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Why the propensity score is useful
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The propensity score reduces a multidimensional matching problem to a one-dimensional one.<br>
+Instead of matching on many covariates, we match on the probability of treatment.</p>
+</div>
+</div>
+<section id="estimating-the-propensity-score" class="level4" data-number="5.2.7.1">
+<h4 data-number="5.2.7.1" class="anchored" data-anchor-id="estimating-the-propensity-score"><span class="header-section-number">5.2.7.1</span> Estimating the Propensity Score</h4>
+<p>In practice, the true propensity score is unknown and must be estimated. This is usually done by modelling treatment assignment as a function of pre-treatment covariates.</p>
+<p>Common choices include:</p>
+<p><span class="math display">\[
+P(D_i=1\mid X_i)
+=
+\beta_0 + X_i'\beta
+\]</span></p>
+<p>for a linear probability model,</p>
+<p><span class="math display">\[
+P(D_i=1\mid X_i)
+=
+\Phi(\beta_0 + X_i'\beta)
+\]</span></p>
+<p>for a probit model, and</p>
+<p><span class="math display">\[
+P(D_i=1\mid X_i)
+=
+\frac{\exp(\beta_0+X_i'\beta)}
+{1+\exp(\beta_0+X_i'\beta)}
+\]</span></p>
+<p>for a logit model.</p>
+<p>The covariates included in <span class="math inline">\(X_i\)</span> should be chosen carefully. They should be pre-treatment variables that affect treatment assignment and are plausibly related to the outcome. If panel data are available, lagged outcomes can often be useful because they capture pre-treatment differences in outcome levels.</p>
+<p>Importantly, variables affected by the treatment should not be included in the propensity score model, because doing so would condition on post-treatment variables and may introduce bias.</p>
+</section>
+<section id="matching-rules" class="level4" data-number="5.2.7.2">
+<h4 data-number="5.2.7.2" class="anchored" data-anchor-id="matching-rules"><span class="header-section-number">5.2.7.2</span> Matching Rules</h4>
+<p>Once the propensity score has been estimated, we need to choose a criterion for matching treated and untreated units. In practice, propensity scores are usually continuous values between 0 and 1, often measured with many decimal places. For this reason, it is unlikely that one or more untreated units will have exactly the same propensity score as a treated unit.</p>
+<p>Matching therefore usually relies on approximations: untreated units are selected because their propensity score is close to that of the treated unit, not because it is exactly identical. Different matching rules define what “close” means and imply different trade-offs between bias and precision. In what follows, we briefly discuss some of the most common matching rules.</p>
+<ol type="1">
+<li><p><strong>Stratification matching.</strong> The range of the propensity score is divided into intervals, or strata. Within each stratum, treated and untreated units should have similar average propensity scores.</p>
+<p>The treatment effect is estimated within each stratum as the difference in mean outcomes between treated and untreated units. These stratum-specific effects are then averaged, weighting by the number of treated units in each stratum.</p>
+<p>If there are <span class="math inline">\(S\)</span> strata, the estimator can be written as</p>
+<p><span class="math display">\[
+\widehat{ATT}_{strat}
+=
+\sum_{s=1}^{S}
+\frac{N_{1s}}{N_1}
+\left(
+\overline{Y}_{1s}
+-
+\overline{Y}_{0s}
+\right),
+\]</span></p>
+<p>where <span class="math inline">\(N_{1s}\)</span> is the number of treated units in stratum <span class="math inline">\(s\)</span>, <span class="math inline">\(N_1\)</span> is the total number of treated units, and <span class="math inline">\(\overline{Y}_{1s}\)</span> and <span class="math inline">\(\overline{Y}_{0s}\)</span> are the average outcomes of treated and untreated units in that stratum.</p></li>
+<li><p><strong>One-nearest-neighbor matching.</strong> Each treated unit is matched to the untreated unit with the most similar propensity score.</p>
+<p>For treated unit <span class="math inline">\(i\)</span>, the matched control is</p>
+<p><span class="math display">\[
+j(i)
+=
+\arg\min_{j:D_j=0}
+\left|
+\widehat p(X_i)-\widehat p(X_j)
+\right|.
+\]</span></p>
+<p>The ATT is then estimated as the average difference between each treated unit and its matched control:</p>
+<p><span class="math display">\[
+\widehat{ATT}_{NN}
+=
+\frac{1}{N_1}
+\sum_{i:D_i=1}
+\left[
+Y_i
+-
+Y_{j(i)}
+\right].
+\]</span></p>
+<p>Nearest neighbor matching can be implemented with or without replacement. With replacement, the same untreated unit can be used as a match for multiple treated units. This generally improves match quality, reducing bias, but it may increase variance.</p>
+<p>A common extension is <strong><span class="math inline">\(K\)</span>-nearest-neighbor matching</strong>. Instead of selecting only the closest untreated unit, each treated unit is matched to the <span class="math inline">\(K\)</span> closest untreated units, with common choices being <span class="math inline">\(K=3\)</span> or <span class="math inline">\(K=5\)</span>.</p></li>
+<li><p><strong>Radius matching.</strong> Each treated unit is matched to all untreated units whose propensity score lies within a fixed distance, or radius.</p>
+<p>For treated unit <span class="math inline">\(i\)</span>, the set of matched controls contains all untreated units <span class="math inline">\(j\)</span> such that</p>
+<p><span class="math display">\[
+D_j = 0
+\quad \text{and} \quad
+\left|
+\widehat p(X_i)-\widehat p(X_j)
+\right|
+\le r.
+\]</span></p>
+<p>Here, <span class="math inline">\(r\)</span> is the radius.</p>
+<p>The choice of <span class="math inline">\(r\)</span> involves a trade-off. A smaller radius improves comparability but may leave some treated units unmatched. A larger radius increases the number of matches but may include poorer matches, increasing bias. There is no universal choice of <span class="math inline">\(r\)</span>: it should be selected based on the scale of the propensity score, the quality of overlap, and balance diagnostics.</p></li>
+<li><p><strong>Kernel matching.</strong> The counterfactual outcome for each treated unit is constructed as a weighted average of untreated outcomes. Untreated units with propensity scores closer to that of the treated unit receive larger weights, while more distant units receive smaller weights or may receive no weight.</p>
+<p>The <strong>bandwidth</strong> determines how quickly weights decline as the distance in propensity scores increases.</p>
+<p>For treated unit <span class="math inline">\(i\)</span>, the counterfactual outcome is estimated as</p>
+<p><span class="math display">\[
+\widehat{Y}_i(0)
+=
+\sum_{j:D_j=0}
+w_{ij}Y_j,
+\]</span></p>
+<p>where the weights <span class="math inline">\(w_{ij}\)</span> depend on the distance between the propensity score of treated unit <span class="math inline">\(i\)</span> and the propensity score of untreated unit <span class="math inline">\(j\)</span>.</p>
+<p>The ATT is then</p>
+<p><span class="math display">\[
+\widehat{ATT}_{kernel}
+=
+\frac{1}{N_1}
+\sum_{i:D_i=1}
+\left[
+Y_i
+-
+\widehat{Y}_i(0)
+\right].
+\]</span></p>
+<p>Kernel matching uses more information than nearest-neighbor matching because it constructs the counterfactual from a weighted average of several untreated units rather than from one or a few selected matches. However, the choice of bandwidth is important because it governs how strongly distance in the propensity score affects the weights.</p></li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Bias–precision trade-off
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Matching rules differ in how many untreated units are used to construct the counterfactual for each treated unit. Using only the closest control units can reduce bias, because comparisons are made between very similar units, but it may increase variance because little information is used.</p>
+<p>Using more control units can improve precision, because the counterfactual is averaged over more observations, but it may increase bias if some of those controls are less comparable to the treated unit.</p>
+<p>The choice of matching rule therefore reflects a trade-off: <strong>closer matches are usually more credible, while more matches usually provide more stable estimates</strong>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="other-matching-approaches" class="level3" data-number="5.2.8">
+<h3 data-number="5.2.8" class="anchored" data-anchor-id="other-matching-approaches"><span class="header-section-number">5.2.8</span> Other Matching Approaches</h3>
+<p>The matching methods discussed so far are only part of a broader family of approaches. They all share the same basic goal: to construct a credible comparison group using observed pre-treatment characteristics. What differs is how similarity is defined, how observations are weighted, and how each method balances transparency, flexibility, bias, and precision. The aim here is not to cover all matching methods in detail, but to introduce the main intuition and briefly mention a few additional approaches.</p>
+<p><strong>Mahalanobis matching</strong> matches units using a multivariate distance measure computed directly on the covariates. Unlike propensity score matching, which reduces the covariates to a single scalar, Mahalanobis matching compares units in the original covariate space. The Mahalanobis distance between two units is based on the difference in their covariate values, adjusted by the covariance matrix of the covariates. In this way, differences are standardized and correlations among covariates are taken into account. It can work well when the number of covariates is limited, but it becomes less practical as the number of covariates increases.</p>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The Mahalanobis distance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For units <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>, the Mahalanobis distance can be written as</p>
+<p><span class="math display">\[
+d(i,j)
+=
+\sqrt{(X_i-X_j)'S^{-1}(X_i-X_j)},
+\]</span></p>
+<p>where <span class="math inline">\(S\)</span> is the covariance matrix of the covariates.</p>
+</div>
+</div>
+<p><strong>Coarsened exact matching</strong> first transforms covariates into substantively meaningful categories, or bins. For example, age may be grouped into age bands, income into income brackets, and firm size into size classes. Exact matching is then performed within these coarsened covariate cells. This approach is attractive because it is transparent: the researcher explicitly defines what counts as “similar.” The cost is that results may depend on how the covariates are coarsened.</p>
+<p>Other approaches include genetic matching, entropy balancing and covariate balancing propensity scores.</p>
+</section>
+<section id="reweighting-methods" class="level3" data-number="5.2.9">
+<h3 data-number="5.2.9" class="anchored" data-anchor-id="reweighting-methods"><span class="header-section-number">5.2.9</span> Reweighting methods</h3>
+<p>Propensity scores can also be used in a different way. Instead of matching treated and untreated units with similar propensity scores, <strong>reweighting methods</strong> use the propensity score to assign different weights to observations. The goal is to create a weighted comparison group that is balanced in terms of observed pre-treatment characteristics.</p>
+<p>The most common approach is <strong>inverse probability weighting</strong> (IPW). The basic idea is simple: units that are unlikely to receive the treatment they actually received are given more weight, because they are especially informative for constructing the counterfactual comparison.</p>
+<p>For example, to estimate the average treatment effect, treated units are weighted by the inverse of their probability of receiving the treatment, while untreated units are weighted by the inverse of their probability of remaining untreated:</p>
+<p><span class="math display">\[
+w_i =
+\frac{D_i}{p(X_i)} + \frac{1-D_i}{1-p(X_i)},
+\]</span></p>
+<p>where <span class="math inline">\(p(X_i)=P(D_i=1 \mid X_i)\)</span> is the propensity score.</p>
+<p>Reweighting methods are similar to PSM because they rely on the same identifying assumptions, namely conditional independence and overlap, and use the propensity score to make treated and untreated units comparable in terms of observed pre-treatment characteristics. The difference lies in how the comparison is constructed: PSM selects untreated units that are similar to treated units, while reweighting methods usually keep all observations but change their relative importance through weights. In this way, weighting constructs a weighted pseudo-population in which treatment assignment is balanced with respect to observed covariates, rather than selecting a limited set of matched controls.</p>
+<p>A key limitation is that weighting can be sensitive to extreme propensity scores. If some treated units have a very low probability of being treated, or some untreated units have a very high probability of being treated, their weights can become very large. For this reason, checking overlap and inspecting the distribution of weights are essential diagnostic steps.</p>
+<p>In short, propensity score matching and reweighting methods share the same counterfactual logic, but implement it differently. Matching asks: <em>which untreated units look most similar to the treated units?</em> Weighting asks: <em>how much weight should each unit receive to make treated and untreated groups comparable?</em></p>
+</section>
+<section id="assessing-match-quality" class="level3" data-number="5.2.10">
+<h3 data-number="5.2.10" class="anchored" data-anchor-id="assessing-match-quality"><span class="header-section-number">5.2.10</span> Assessing Match Quality</h3>
+<p>Matching should not end after estimating the ATT. A crucial step is checking whether matching actually improved balance between treated and untreated units.</p>
+<p>The goal is not to predict treatment as well as possible. The goal is to make the distribution of pre-treatment covariates similar across groups after matching.</p>
+<p>Common diagnostics include:</p>
+<ul>
+<li>comparing covariate means before and after matching;</li>
+<li>checking standardized mean differences;</li>
+<li>inspecting the distribution of the propensity score;</li>
+<li>verifying common support;</li>
+<li>reporting how many treated units are unmatched or discarded.</li>
+</ul>
+<p>The ATT estimate produced by a matching estimator should be considered credible only if treated units and matched control units are sufficiently similar in their pre-treatment characteristics.</p>
+<div class="callout callout-style-simple callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>Balance before effects
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before interpreting the estimated treatment effect, check whether matching has balanced the covariates.<br>
+If balance remains poor, the matched comparison group is not a credible counterfactual.</p>
+</div>
+</div>
+</section>
+<section id="what-bias-does-matching-remove" class="level3" data-number="5.2.11">
+<h3 data-number="5.2.11" class="anchored" data-anchor-id="what-bias-does-matching-remove"><span class="header-section-number">5.2.11</span> What Bias Does Matching Remove?</h3>
+<p>Matching can address two important sources of bias.</p>
+<p>First, it can address lack of common support by excluding treated units that have no comparable untreated units. This avoids comparing units that are too different.</p>
+<p>Second, it can address differences in the distribution of observed covariates by reweighting or selecting controls so that they resemble treated units.</p>
+<p>However, matching cannot address selection on unobservables. If treatment assignment depends on variables that are not observed and that also affect the outcome, matching estimates may still be biased.</p>
+<p>In other words, matching can help with bias due to observed differences between treated and untreated units, but not with bias due to unobserved differences.</p>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>The main caveat
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Matching makes observational data look more like experimental data only with respect to observed variables.<br>
+It does not make treatment random with respect to variables that are unobserved.</p>
+</div>
+</div>
+</section>
+<section id="empirical-illustration" class="level3" data-number="5.2.12">
+<h3 data-number="5.2.12" class="anchored" data-anchor-id="empirical-illustration"><span class="header-section-number">5.2.12</span> Empirical Illustration</h3>
+<p>An example of matching in applied research is the study by Bovan et al. <span class="citation" data-cites="bovan2018">(<a href="references.html#ref-bovan2018" role="doc-biblioref">2018</a>)</span> on the effect of natural disasters on voting behavior. The authors study whether voters punish politicians for events outside their control, focusing on floods in Croatia.</p>
+<p>Flooded and non-flooded areas may differ systematically. For example, they may differ in socioeconomic conditions, geography, political preferences, or previous voting behavior. A simple comparison between flooded and non-flooded areas may therefore be misleading.</p>
+<p>The study uses matching to compare affected and non-affected areas with similar observed characteristics. The balancing table below illustrates the logic of the procedure. Before matching, flooded municipalities differed substantially from non-flooded municipalities in several pre-treatment characteristics. After matching, these differences became much smaller.</p>
+<table class="caption-top table">
+<caption>Balance before and after matching in the Croatian floods study. Values are sample means. Income variables are measured in HRK. Source: adapted from Bovan et al. <span class="citation" data-cites="bovan2018">(<a href="references.html#ref-bovan2018" role="doc-biblioref">2018</a>)</span>.</caption>
+<colgroup>
+<col style="width: 16%">
+<col style="width: 5%">
+<col style="width: 2%">
+<col style="width: 16%">
+<col style="width: 20%">
+<col style="width: 2%">
+<col style="width: 16%">
+<col style="width: 19%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Variable</th>
+<th style="text-align: right;">Flooded</th>
+<th style="text-align: center;"></th>
+<th style="text-align: right;">Non-flooded, before matching</th>
+<th style="text-align: right;">Absolute difference before matching</th>
+<th style="text-align: center;"></th>
+<th style="text-align: right;">Non-flooded, after matching</th>
+<th style="text-align: right;">Absolute difference after matching</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Unemployment</td>
+<td style="text-align: right;">23.46</td>
+<td style="text-align: center;"></td>
+<td style="text-align: right;">17.34</td>
+<td style="text-align: right;">6.12</td>
+<td style="text-align: center;"></td>
+<td style="text-align: right;">22.98</td>
+<td style="text-align: right;">0.48</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Income per capita</td>
+<td style="text-align: right;">19,237.45</td>
+<td style="text-align: center;"></td>
+<td style="text-align: right;">22,471.44</td>
+<td style="text-align: right;">3,233.99</td>
+<td style="text-align: center;"></td>
+<td style="text-align: right;">19,299.04</td>
+<td style="text-align: right;">61.59</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Municipal income per capita</td>
+<td style="text-align: right;">1,340.43</td>
+<td style="text-align: center;"></td>
+<td style="text-align: right;">2,220.85</td>
+<td style="text-align: right;">880.42</td>
+<td style="text-align: center;"></td>
+<td style="text-align: right;">1,196.84</td>
+<td style="text-align: right;">143.59</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Education</td>
+<td style="text-align: right;">63.23</td>
+<td style="text-align: center;"></td>
+<td style="text-align: right;">70.56</td>
+<td style="text-align: right;">7.33</td>
+<td style="text-align: center;"></td>
+<td style="text-align: right;">63.63</td>
+<td style="text-align: right;">0.40</td>
+</tr>
+</tbody>
+</table>
+<p>Before matching, floods appeared to reduce support for incumbent politicians. After accounting for differences in control variables through matching, the estimated flood effect disappeared.</p>
+<p>This example illustrates the core logic of matching: part of what looks like a treatment effect may actually reflect pre-existing differences between treated and untreated units. Matching tries to reduce this problem by constructing a comparison group that is more similar to the treated group in terms of observed pre-treatment characteristics.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Matching and Regression Adjustment
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Matching methods and regression adjustment are closely related. Both try to make treated and untreated units comparable in terms of pre-treatment characteristics. They differ mainly in <strong>how</strong> they use the covariates.</p>
+<p>Matching methods first construct a comparison group. Treated units are compared with untreated units that have similar values of the relevant pre-treatment covariates. The adjustment is therefore made by <strong>choosing which control units are used</strong> in the comparison.</p>
+<p>Regression adjustment, instead, uses all observations and controls for covariates by specifying a model for the outcome. The adjustment is therefore made by <strong>modeling the relationship between covariates and the outcome</strong>.</p>
+<p>The two approaches can also be combined. A common strategy is to first match treated and untreated units to improve covariate balance, and then estimate a regression model on the matched sample. In this case, matching reduces the dependence on functional-form assumptions, while regression adjustment can improve precision and correct remaining small imbalances.</p>
+<p>The key difference is that matching is more transparent about the comparison being made: it shows which untreated units are used to approximate the counterfactual outcomes of treated units. Regression adjustment is more model-based: it relies more heavily on the assumed relationship between covariates and outcomes.</p>
+<p>They also differ in how they handle failures of <strong>common support</strong>. With matching, lack of overlap is usually visible: treated units without comparable untreated units cannot be matched, or are matched only poorly. These units may then be excluded from the analysis, changing the population for which the effect is estimated. With regression adjustment, by contrast, the model can still produce predictions for treated units outside the support of the control group, but this requires extrapolation and makes the ATT estimate much more dependent on functional-form assumptions.</p>
+</div>
+</div>
+<!---
+::: {.callout-note appearance="simple"}
+### Example: evaluating a training program
+
+A classic application of matching methods is the evaluation of job training programs. LaLonde showed that estimating the effect of training on earnings with non-experimental data can be difficult, because participants and non-participants may differ systematically before treatment [@lalonde1986].
+
+Dehejia and Wahba revisited this problem and showed that, under suitable data conditions and careful implementation, propensity score matching can recover estimates close to those obtained from an experimental benchmark [@dehejia1999]. Their study became influential because it suggested that matching methods can help observational studies mimic some features of randomized experiments, provided that the relevant selection variables are observed.
+::: --->
+</section>
+</section>
+<section id="summary" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="summary"><span class="header-section-number">5.3</span> Summary</h2>
+<p>Matching methods estimate causal effects by comparing treated units with similar untreated units. They are especially useful when treatment is not randomly assigned but rich pre-treatment information is available.</p>
+<p>The key assumptions are:</p>
+<ul>
+<li><strong>Conditional Independence Assumption</strong>: after conditioning on observed covariates, treatment assignment is as good as random.</li>
+<li><strong>Common support</strong>: treated units have comparable untreated units.</li>
+</ul>
+<p>Matching is attractive because it is intuitive, transparent, and closely connected to the logic of randomized experiments. Its main weakness is that it relies on selection on observables. If important unobserved factors affect both treatment assignment and outcomes, matching alone cannot solve the identification problem.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Software packages
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Several software packages can be used to implement matching methods.</p>
+<ul>
+<li><strong>R</strong>
+<ul>
+<li><a href="https://cran.r-project.org/package=MatchIt"><code>MatchIt</code></a>: a widely used package for preprocessing observational data through matching before estimating treatment effects.</li>
+<li><a href="https://cran.r-project.org/package=Matching"><code>Matching</code></a>: tools for multivariate and propensity-score matching.</li>
+</ul></li>
+<li><strong>Python</strong>
+<ul>
+<li><a href="https://www.pywhy.org/dowhy/"><code>DoWhy</code></a>: a general causal inference library that includes propensity-score matching among its estimation methods.</li>
+<li><a href="https://pypi.org/project/psmpy/"><code>psmpy</code></a>: a Python package focused on propensity-score matching.</li>
+</ul></li>
+<li><strong>Stata</strong>
+<ul>
+<li><a href="https://ideas.repec.org/c/boc/bocode/s432001.html"><code>psmatch2</code></a>: a widely used Stata module for propensity-score and Mahalanobis matching.</li>
+<li><a href="https://ideas.repec.org/c/boc/bocode/s458346.html"><code>kmatch</code></a>: a Stata module for matching, weighting, and related balancing methods.</li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-bovan2018" class="csl-entry" role="listitem">
+Bovan, Kosta, Benjamin Banai, and Irena Pavela Banai. 2018. <span>“Do Natural Disasters Affect Voting Behavior? Evidence from Croatian Floods.”</span> <em>PLOS Currents Disasters</em> 10: ecurrents.dis.cbf57c8ac3b239ba51ccc801d3362c07. <a href="https://doi.org/10.1371/currents.dis.cbf57c8ac3b239ba51ccc801d3362c07">https://doi.org/10.1371/currents.dis.cbf57c8ac3b239ba51ccc801d3362c07</a>.
+</div>
+<div id="ref-cochran1968" class="csl-entry" role="listitem">
+Cochran, William G. 1968. <span>“The Effectiveness of Adjustment by Subclassification in Removing Bias in Observational Studies.”</span> <em>Biometrics</em> 24 (2): 295–313. <a href="https://doi.org/10.2307/2528036">https://doi.org/10.2307/2528036</a>.
+</div>
+<div id="ref-cochran1973" class="csl-entry" role="listitem">
+Cochran, William G., and Donald B. Rubin. 1973. <span>“Controlling Bias in Observational Studies: A Review.”</span> <em>Sankhya: The Indian Journal of Statistics, Series A</em> 35 (4): 417–46.
+</div>
+<div id="ref-rosenbaum1983" class="csl-entry" role="listitem">
+Rosenbaum, Paul R., and Donald B. Rubin. 1983. <span>“The Central Role of the Propensity Score in Observational Studies for Causal Effects.”</span> <em>Biometrika</em> 70 (1): 41–55. <a href="https://doi.org/10.1093/biomet/70.1.41">https://doi.org/10.1093/biomet/70.1.41</a>.
+</div>
+<div id="ref-rubin1973a" class="csl-entry" role="listitem">
+Rubin, Donald B. 1973a. <span>“Matching to Remove Bias in Observational Studies.”</span> <em>Biometrics</em> 29 (1): 159–83. <a href="https://doi.org/10.2307/2529684">https://doi.org/10.2307/2529684</a>.
+</div>
+<div id="ref-rubin1973b" class="csl-entry" role="listitem">
+Rubin, Donald B. 1973b. <span>“The Use of Matched Sampling and Regression Adjustment to Remove Bias in Observational Studies.”</span> <em>Biometrics</em> 29 (1): 185–203. <a href="https://doi.org/10.2307/2529685">https://doi.org/10.2307/2529685</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/augustocerqua\.github\.io\/Back-to-basics-book\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/04-randomized-experiments.html" class="pagination-link" aria-label="Randomized Controlled Trials">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Randomized Controlled Trials</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/06-difference-in-differences.html" class="pagination-link" aria-label="Difference-in-Differences">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Difference-in-Differences</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Augusto Cerqua</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>Built with Quarto</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
