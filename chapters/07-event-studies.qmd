@@ -381,4 +381,6 @@ Several software packages can be used to implement DiD and event study designs.
   - [`csdid`](https://ideas.repec.org/c/boc/bocode/s458976.html): Stata command implementing Callaway and Sant'Anna-type DiD estimators for multiple periods.
   - [`did_multiplegt_dyn`](https://ideas.repec.org/c/boc/bocode/s459222.html): Stata command implementing de Chaisemartin and D'Haultfoeuille-type dynamic DiD estimators.
   - [`eventstudyinteract`](https://ideas.repec.org/c/boc/bocode/s458978.html): implements interaction-weighted event-study estimators.
+  
+For a more detailed overview of available DiD software packages, see Asjad Naqvi’s online guide: https://asjadnaqvi.github.io/DiD/.
 :::

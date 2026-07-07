@@ -1,0 +1,16 @@
+project:
+  output-dir: _book-pdf
+
+format:
+  pdf:
+    documentclass: scrreprt
+    toc: true
+    number-sections: true
+    colorlinks: true
+    fig-cap-location: bottom
+    tbl-cap-location: top
+    include-in-header:
+      - cover.tex
+      - text: |
+          \usepackage{caption}
+          \captionsetup[figure]{font=footnotesize}

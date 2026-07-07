@@ -1,6 +1,8 @@
 project:
   type: book
   output-dir: docs
+  resources:
+    - .nojekyll
 
 book:
   title: "The Backbone of Impact Evaluation Methods"

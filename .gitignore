@@ -16,3 +16,7 @@ _book/
 **/*.quarto_ipynb
 
 private/
+
+_book-pdf/
+/docs/*.pdf
+/docs/*.epub
