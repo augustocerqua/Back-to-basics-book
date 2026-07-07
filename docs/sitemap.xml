@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/14-continuous_treatment.html</loc>
-    <lastmod>2026-07-07T07:55:06.230Z</lastmod>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/index.html</loc>
+    <lastmod>2026-07-04T16:43:47.104Z</lastmod>
   </url>
   <url>
     <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/01-why-impact-evaluation.html</loc>
@@ -55,6 +55,10 @@
   <url>
     <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/13-spillover_effects.html</loc>
     <lastmod>2026-07-04T17:38:19.994Z</lastmod>
+  </url>
+  <url>
+    <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/14-continuous_treatment.html</loc>
+    <lastmod>2026-07-07T07:55:06.230Z</lastmod>
   </url>
   <url>
     <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/15-miscellanea.html</loc>
