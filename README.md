@@ -9,11 +9,3 @@ This book is about impact evaluation and causal inference. Policies, interventio
 ## This version
 
 This is version 0.2 of the book. It is still a work in progress, so some errors, imprecisions, and unfinished parts may remain.
-
-## Publish to GitHub Pages
-
-```bash
-quarto publish gh-pages
-```
-
-Before publishing, update `site-url` and `repo-url` in `_quarto.yml`.
