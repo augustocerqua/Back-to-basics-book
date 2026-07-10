@@ -72,7 +72,7 @@ When $\ell=0$, the unit is in its first treated period. When $\ell=1$, it is one
 
 Event time is not defined for never-treated units because they do not have a treatment date. These units may nevertheless contribute as controls when cohort-specific effects are estimated.
 
-Throughout this chapter, $ATT^{ES}(\ell)$ denotes an aggregated post-treatment effect at event time $\ell\geq0$, where the superscript $ES$ stands for **event study**. Pre-treatment estimates are denoted separately by $\pi_{\ell}$ for $\ell<0$, because they are diagnostic placebo contrasts rather than treatment effects. Their sample estimates are written as $\widehat{ATT}^{ES}(\ell)$ and $\widehat{\pi}_{\ell}$, respectively.
+Throughout this chapter, $ATT^{ES}(\ell)$ denotes an aggregate post-treatment effect at event time $\ell \geq 0$, where the superscript $ES$ stands for **event study**. Pre-treatment diagnostic estimates are denoted separately by $\pi_{\ell}$ for $\ell < -1$, when $\ell=-1$ is used as the reference period. These quantities are placebo diagnostic contrasts rather than treatment effects. Their sample estimates are written as $\widehat{ATT}^{ES}(\ell)$ and $\widehat{\pi}_{\ell}$, respectively.
 
 The pre-treatment estimates are useful diagnostics. If treatment has not yet occurred, they should usually be close to zero, unless there is anticipation or treated units were already on different trends.
 
@@ -236,7 +236,7 @@ The event-study plot then becomes a compact visual summary of both pre-treatment
 
 ## Pre-Trends and Anticipation
 
-For $\ell<0$, let $\pi_{\ell}$ denote an aggregated pre-treatment placebo contrast. Its exact construction depends on the estimator, but it compares the pre-treatment evolution of future-treated cohorts with that of their comparison units. These quantities are not ATT parameters because treatment has not yet begun.
+For pre-treatment periods before the reference period, $\ell<-1$, let $\pi_{\ell}$ denote an aggregated pre-treatment placebo contrast. Its exact construction depends on the estimator, but it compares the pre-treatment evolution of future-treated cohorts with that of their comparison units. These quantities are not ATT parameters because treatment has not yet begun.
 
 Pre-treatment event-time estimates are often interpreted as tests of the parallel-trends assumption. This interpretation should be cautious.
 
@@ -254,11 +254,11 @@ Flat pre-treatment estimates make the design more credible, but they do not guar
 
 ## Choosing the Baseline Period
 
-Regression-based event studies require a reference period. A common choice is the period just before treatment, $\ell=-1$. In group-time DiD estimators, period $g-1$ similarly often serves as the baseline from which outcome changes are measured, although it is not itself an event-time treatment effect.
-
+Regression-based event studies require a reference period. A common choice is the period just before treatment, $\ell=-1$. In group-time DiD estimators, period $g-1$ similarly often serves as the baseline from which outcome changes are measured, although it is not itself an event-time treatment effect. In regression-based event studies, this period is omitted from the specification and all coefficients are interpreted relative to it. In group-time DiD estimators, the same logic appears through the baseline period (g-1), which is used to construct the relevant outcome changes. The baseline period is therefore not an estimated treatment effect; it is either omitted from the plot or shown as a normalized zero.
+<!---
 This choice is natural, but not automatic. If there is anticipation, the period immediately before treatment may already be affected. In that case, using $\ell=-1$ as the baseline can understate or distort treatment effects.
 
-Researchers should report the reference period clearly and explain why it is appropriate.
+Researchers should report the reference period clearly and explain why it is appropriate. --->
 
 ## Aggregation
 
@@ -287,7 +287,7 @@ $$
 \ell = t-g.
 $$
 
-For example, $\ell=0$ is the first treated period, $\ell=1$ is one period after treatment, and $\ell=-1$ is one period before treatment. For $\ell\geq0$, the event-study plot reports $\widehat{ATT}^{ES}(\ell)$, obtained by aggregating the available $ATT(g,g+\ell)$ values as defined above. For $\ell<0$, it reports the diagnostic estimate $\widehat{\pi}_{\ell}$.
+For example, $\ell=0$ is the first treated period, $\ell=1$ is one period after treatment, and $\ell=-1$ is one period before treatment. For $\ell\geq0$, the event-study plot reports $\widehat{ATT}^{ES}(\ell)$, obtained by aggregating the available $ATT(g,g+\ell)$ values as defined above. For pre-treatment periods before the reference period, $\ell<-1$, the plot reports the diagnostic estimate $\widehat{\pi}_{\ell}$. The reference period, $\ell=-1$, is normalized to zero and is not estimated separately.
 
 This construction is useful because it summarizes many cohort-specific comparisons in a single graph. Instead of reporting a separate estimate for every cohort and calendar period, the event-study plot shows pre-treatment diagnostics and how treatment effects evolve after treatment.
 
@@ -299,7 +299,7 @@ This changing composition matters. If cohorts differ systematically, changes in 
 
 For this reason, event-study plots should be interpreted with care. Researchers should report which cohorts contribute to each event-time estimate, whether the sample changes across horizons, and whether results are robust to using a balanced event window. A balanced event window restricts the analysis to cohorts observed for the same set of pre- and post-treatment periods. This improves comparability across event time, but it may discard many cohorts and reduce precision.
 
-![This figure illustrates how event-study estimates are constructed under staggered treatment adoption. The left panel shows that cohorts receive the treatment in different periods and may differ in the number of treated units. The upper-right panel maps these cohorts into event time: at each post-treatment value of $\ell$, the event-study estimate aggregates the available cohort-specific treatment effects, with weights proportional to cohort size. Pre-treatment points are diagnostic placebo estimates. A key point is that event-time estimates are not always based on the same set of cohorts. In the central part of the event-study window, all cohorts contribute to the aggregate estimate. At the extremes, only some cohorts are observed. As shown in the lower panel, estimates for early leads and late lags are therefore based on fewer treated units and may be less precise, as reflected in wider confidence intervals. The figure also highlights an additional issue: when treatment effects are heterogeneous across cohorts, changes in the estimated event-study profile may reflect both true effect dynamics and changes in composition. For example, the steeper increase from period $+3$ onward may partly depend on the fact that the composition of contributing cohorts changes once Cohort 4 drops out. As an alternative, researchers may restrict event-study plots to the pre- and post-treatment periods in which all cohorts are observed. In this example, this would limit the event-study window to periods from $-2$ to $+2$.](../images/event-study-building-blocks-aggregation_v4.png)
+![This figure illustrates how event-study estimates are constructed under staggered treatment adoption. The left panel shows that cohorts receive the treatment in different periods and may differ in the number of treated units. The upper-right panel maps these cohorts into event time: at each post-treatment value of $\ell$, the event-study estimate aggregates the available cohort-specific treatment effects, with weights proportional to cohort size. Pre-treatment points are diagnostic placebo estimates. A key point is that event-time estimates are not always based on the same set of cohorts. In the central part of the event-study window, all cohorts contribute to the aggregate estimate. At the extremes, only some cohorts are observed. As shown in the lower panel, estimates for early leads and late lags are therefore based on fewer treated units and may be less precise, as reflected in wider confidence intervals. The figure also highlights an additional issue: when treatment effects are heterogeneous across cohorts, changes in the estimated event-study profile may reflect both true effect dynamics and changes in composition. For example, the steeper increase from period $+3$ onward may partly depend on the fact that the composition of contributing cohorts changes once Cohort 4 drops out. As an alternative, researchers may restrict event-study plots to the pre- and post-treatment periods in which all cohorts are observed. In this example, this would limit the event-study window to periods from $-2$ to $+2$. The point at $\ell=-1$ is the reference period: it is normalized to zero and is not estimated separately.](../images/event-study-building-blocks-aggregation_v5.png)
 
 ## Empirical Example
 
