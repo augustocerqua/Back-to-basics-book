@@ -47,6 +47,9 @@ book:
 bibliography: references/references.bib
 # csl: references/american-economic-association.csl
 
+website:
+  google-analytics: "G-X0W71GV1V8"
+
 format:
   html:
     theme:
