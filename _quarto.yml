@@ -48,6 +48,8 @@ bibliography: references/references.bib
 # csl: references/american-economic-association.csl
 
 website:
+  page-navigation: true
+  back-to-top-navigation: true
   google-analytics: "G-X0W71GV1V8"
 
 format:
