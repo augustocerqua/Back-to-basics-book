@@ -9,6 +9,15 @@ book:
   subtitle: "Back to Basics"
   author: "Augusto Cerqua"
   date: "2026-06-23"
+  page-navigation: true
+  back-to-top-navigation: true
+  google-analytics:
+    tracking-id: "G-X0W71GV1V8"
+    anonymize-ip: true
+  cookie-consent:
+    type: express
+    style: simple
+    palette: light
   cover-image: images/book_cover_v2.png
   site-url: "https://augustocerqua.github.io/Back-to-basics-book/"
   repo-url: "https://github.com/augustocerqua/Back-to-basics-book"
@@ -46,11 +55,6 @@ book:
 
 bibliography: references/references.bib
 # csl: references/american-economic-association.csl
-
-website:
-  page-navigation: true
-  back-to-top-navigation: true
-  google-analytics: "G-X0W71GV1V8"
 
 format:
   html:

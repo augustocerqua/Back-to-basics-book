@@ -314,6 +314,16 @@ This distinction matters for counterfactual methods. In **control-based counterf
 In **FBCMs**, the counterfactual is not observed in another group. It is forecasted from the treated unit’s own pre-treatment history. Here, uncertainty comes not only from estimating the model, but also from predicting an unobserved counterfactual path. For this reason, FBCMs naturally rely on **prediction intervals** around the forecasted counterfactual outcome.
 :::
 
+::: {.callout-note}
+### Combining forecast- and control-based information: controlled ITS
+
+A **controlled interrupted time-series (Controlled ITS)** design combines elements of forecast-based and control-based counterfactual methods. As in a standard ITS, the pre-intervention trajectory of the treated series is used to project how its outcome would have evolved after the intervention. At the same time, one or more untreated series are used to capture contemporaneous shocks or changes that are unrelated to the intervention.
+
+The causal effect is therefore inferred from whether the treated series changes at the intervention date **relative to both its own previous trajectory and the change observed in the control series**. Compared with an uncontrolled ITS, this can make the counterfactual more credible when treated and control series would have been affected similarly by other events occurring during the study period [@lopezbernal2018controls].
+
+This advantage depends on the choice of controls. The control series should have comparable pre-intervention dynamics, should be exposed to the same relevant external shocks, and should not itself be affected by the intervention. A poorly chosen control can weaken rather than strengthen the design.
+:::
+
 ## Summary
 
 FBCMs provide a valuable alternative to CBCMs, especially when no credible control group exists. Instead of comparing treated and untreated units, they compare observed post-treatment outcomes with predicted untreated outcomes.

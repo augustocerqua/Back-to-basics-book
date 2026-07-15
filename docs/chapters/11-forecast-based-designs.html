@@ -54,6 +54,8 @@ div.csl-indent {
 <meta name="quarto:offset" content="../">
 <link href="../chapters/12-heterogeneous_treatment_effects.html" rel="next">
 <link href="../chapters/10-synthetic-control.html" rel="prev">
+<script src="../site_libs/cookie-consent/cookie-consent.js"></script>
+<link href="../site_libs/cookie-consent/cookie-consent.css" rel="stylesheet">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -95,6 +97,33 @@ div.csl-indent {
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-X0W71GV1V8"></script>
+
+<script type="text/plain" cookie-consent="tracking">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-X0W71GV1V8', { 'anonymize_ip': true});
+</script>
+
+<script type="text/javascript" charset="UTF-8">
+document.addEventListener('DOMContentLoaded', function () {
+cookieconsent.run({
+  "notice_banner_type":"simple",
+  "consent_type":"express",
+  "palette":"light",
+  "language":"en",
+  "page_load_consent_levels":["strictly-necessary"],
+  "notice_banner_reject_button_hide":false,
+  "preferences_center_close_button_hide":false,
+  "website_name":""
+  ,
+"language":"en"
+  });
+});
+</script> 
+  
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -893,6 +922,21 @@ Y_t=\alpha+\beta t+\gamma Post_t+\delta(t-T_0)Post_t+u_t,
 <p>In <strong>FBCMs</strong>, the counterfactual is not observed in another group. It is forecasted from the treated unit’s own pre-treatment history. Here, uncertainty comes not only from estimating the model, but also from predicting an unobserved counterfactual path. For this reason, FBCMs naturally rely on <strong>prediction intervals</strong> around the forecasted counterfactual outcome.</p>
 </div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Combining forecast- and control-based information: controlled ITS
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>controlled interrupted time-series (Controlled ITS)</strong> design combines elements of forecast-based and control-based counterfactual methods. As in a standard ITS, the pre-intervention trajectory of the treated series is used to project how its outcome would have evolved after the intervention. At the same time, one or more untreated series are used to capture contemporaneous shocks or changes that are unrelated to the intervention.</p>
+<p>The causal effect is therefore inferred from whether the treated series changes at the intervention date <strong>relative to both its own previous trajectory and the change observed in the control series</strong>. Compared with an uncontrolled ITS, this can make the counterfactual more credible when treated and control series would have been affected similarly by other events occurring during the study period <span class="citation" data-cites="lopezbernal2018controls">(<a href="references.html#ref-lopezbernal2018controls" role="doc-biblioref">Lopez Bernal et al. 2018</a>)</span>.</p>
+<p>This advantage depends on the choice of controls. The control series should have comparable pre-intervention dynamics, should be exposed to the same relevant external shocks, and should not itself be affected by the intervention. A poorly chosen control can weaken rather than strengthen the design.</p>
+</div>
+</div>
 </section>
 <section id="summary" class="level2" data-number="11.10">
 <h2 data-number="11.10" class="anchored" data-anchor-id="summary"><span class="header-section-number">11.10</span> Summary</h2>
@@ -913,6 +957,9 @@ Cox, David R. 1958. <em>Planning of Experiments</em>. John Wiley &amp; Sons.
 </div>
 <div id="ref-inps2020mortalita" class="csl-entry" role="listitem">
 INPS. 2020. <em>Analisi Della Mortalit<span>à</span> Nel Periodo Di Epidemia Da Covid-19</em>. Istituto Nazionale della Previdenza Sociale. <a href="https://www.inps.it/content/dam/inps-site/pdf/Mortalita_Covid19.pdf">https://www.inps.it/content/dam/inps-site/pdf/Mortalita_Covid19.pdf</a>.
+</div>
+<div id="ref-lopezbernal2018controls" class="csl-entry" role="listitem">
+Lopez Bernal, James, Steven Cummins, and Antonio Gasparrini. 2018. <span>“The Use of Controls in Interrupted Time Series Studies of Public Health Interventions.”</span> <em>International Journal of Epidemiology</em> 47 (6): 2082–93. <a href="https://doi.org/10.1093/ije/dyy135">https://doi.org/10.1093/ije/dyy135</a>.
 </div>
 <div id="ref-menchetti2023" class="csl-entry" role="listitem">
 Menchetti, Fiammetta, Fabrizio Cipollini, and Fabrizia Mealli. 2023. <span>“Combining Counterfactual Outcomes and <span>ARIMA</span> Models for Policy Evaluation.”</span> <em>The Econometrics Journal</em> 26 (1): 1–24. <a href="https://doi.org/10.1093/ectj/utac024">https://doi.org/10.1093/ectj/utac024</a>.
@@ -1359,8 +1406,8 @@ Varian, Hal R. 2016. <span>“Causal Inference in Economics and Marketing.”</s
 <p>© Augusto Cerqua</p>
 </div>   
     <div class="nav-footer-center">
-      &nbsp;
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></div>
+
+<div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div><div class="cookie-consent-footer"><a href="#" id="open_preferences_center">Cookie Preferences</a></div></div>
     <div class="nav-footer-right">
 <p>Built with Quarto</p>
 </div>
