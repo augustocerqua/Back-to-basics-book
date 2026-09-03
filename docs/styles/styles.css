@@ -18,7 +18,7 @@ blockquote {
 }
 
 .quarto-title-meta > div:nth-child(2) .date::after {
-  content: "Book Version 0.2";
+  content: "Book Version 0.3";
   font-size: 1rem;
 }
 
