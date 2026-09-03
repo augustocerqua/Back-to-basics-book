@@ -1,6 +1,6 @@
 ## Selection on observable methods
 
-Selection-on-observables methods rely on the idea that treatment assignment is non-random, but that the factors driving selection into treatment are observed in the data. If all confounders are observed and measured before treatment, where confounders are variables that jointly affect treatment assignment and potential outcomes, then differences between treated and untreated units can be adjusted for using pre-treatment covariates. Regression models implement this logic by adjusting outcome comparisons through control variables, while matching methods implement it by directly comparing treated units with untreated units that are similar in terms of observed pre-treatment characteristics. Both approaches therefore rely on the same central assumption: after conditioning on observables, there are no remaining unobserved confounders driving selection into treatment.
+Selection-on-observables methods rely on the idea that treatment assignment is non-random, but that the factors driving selection into treatment are observed in the data. If all confounders are observed and measured before treatment,^[A **confounder** is a variable that affects both whether a unit receives the treatment and the outcome it would experience. Because it influences both treatment assignment and potential outcomes, failing to account for it can make treated and untreated units systematically different even before treatment.] differences between treated and untreated units can be adjusted for using pre-treatment covariates. The two main selection-on-observables approaches are regression adjustment and matching. Regression adjustment controls for observed pre-treatment characteristics when comparing outcomes, whereas matching directly compares treated units with untreated units that have similar observed pre-treatment characteristics. Both approaches therefore rely on the same central assumption: after conditioning on observables, no unobserved confounders remain that affect both treatment assignment and potential outcomes.
 
 ## The linear regression model
 
@@ -9,14 +9,14 @@ The linear regression model is probably the most prominent tool in statistics an
 Suppose we observe a post-treatment outcome $Y_i$ and a binary treatment indicator $D_i$, where $D_i=1$ for treated units and $D_i=0$ for untreated units. A simple regression model can be written as
 
 $$
-Y_i = \alpha + \beta D_i + u_i.
+Y_i = \alpha + \tau D_i + u_i.
 $$
 
-In this model, $\alpha$ is the average outcome for untreated units, while $\beta$ captures the difference in average observed outcomes between treated and untreated units. The term $u_i$ is the error term: it captures all factors affecting the outcome that are not included in the regression.
+In this model, $\alpha$ is the average outcome for untreated units, while $\tau$ captures the difference in average observed outcomes between treated and untreated units. The term $u_i$ is the error term: it captures all factors affecting the outcome that are not included in the regression.^[Despite its name, the **error term** is not itself an error; rather, it represents the component of the outcome that is not explained by the variables included in the regression model.]
 
 The parameters $\alpha$ and $\tau$ are usually estimated by **ordinary least squares (OLS)**. In simple terms, OLS chooses the values of $\alpha$ and $\tau$ that make the predicted outcomes as close as possible to the observed outcomes, by minimizing the sum of squared residuals.
 
-With a binary treatment and an intercept, the OLS estimate of $\tau$ is equal to the difference in sample means between treated and untreated units:
+With a binary treatment ($D_i$) and an intercept ($\alpha$), the OLS estimate of $\tau$ is equal to the difference in sample means between treated and untreated units:
 
 $$
 \widehat{\tau}_{OLS}
@@ -30,9 +30,9 @@ $$
 \tau = E[Y_i \mid D_i=1] - E[Y_i \mid D_i=0].
 $$
 
-This coefficient is simply a difference in mean outcomes between treated and untreated units. It has a causal interpretation only if this observed difference reproduces the comparison we would like to make between potential outcomes. This requires treatment assignment to be unrelated to potential outcomes, as in a randomized experiment.
+This coefficient is simply the difference in mean outcomes between treated and untreated units. It has a causal interpretation only if this observed comparison reproduces the counterfactual comparison we would like to make between potential outcomes. This requires treatment assignment to be unrelated to potential outcomes, as under random assignment. Therefore, in a properly implemented RCT with full compliance, this simple regression can be used to estimate the average treatment effect.
 
-In observational studies, treated and untreated units often differ for reasons that are not random. In these cases, the simple regression coefficient $\tau$ does not necessarily isolate the causal effect of the treatment. It may combine the treatment effect with pre-existing differences between the two groups.
+In observational studies, treated and untreated units often differ for reasons unrelated to the treatment itself. In these cases, the simple regression coefficient $\tau$ does not isolate the causal effect of treatment. Instead, it combines the treatment effect with pre-existing differences between the two groups.
 
 For this reason, simple regression is rarely enough to identify causal effects in observational settings. A more useful starting point is the multiple regression model:
 
@@ -40,19 +40,19 @@ $$
 Y_i = \alpha + \tau D_i + X_i'\beta + u_i,
 $$
 
-where $Y_i$ is a post-treatment outcome, $D_i$ is the treatment indicator, and $X_i$ is a vector of observed pre-treatment covariates. These covariates should include variables that affect both treatment assignment and the outcome.
+where $X_i$ is a vector of observed pre-treatment covariates. Ideally, these covariates should include all confounders, that is, all pre-treatment variables that affect both treatment assignment and potential outcomes.
 
-The timing of the variables is crucial. The covariates in $X_i$ must be measured before treatment occurs, while the outcome $Y_i$ must be measured after treatment. Otherwise, we may control for variables that are themselves affected by the treatment, changing the interpretation of the regression coefficient.
+The timing of the variables is crucial. The covariates in $X_i$ must be measured before treatment occurs, while the outcome $Y_i$ must be measured after treatment. Otherwise, we risk controlling for variables that are themselves affected by the treatment. Doing so can change the interpretation of the regression coefficient and may prevent it from identifying the causal effect of interest.
 
-In this model, $\tau$ compares treated and untreated units **holding constant** the covariates included in $X_i$. The idea is that, after adjusting for relevant observed pre-treatment differences, the remaining difference in post-treatment outcomes may provide a credible estimate of the causal effect. For this interpretation to hold, several conditions are required.
+In this model, $\tau$ compares treated and untreated units **holding constant** the covariates included in $X_i$. The idea is that, after adjusting for relevant observed pre-treatment differences, the remaining difference in post-treatment outcomes may provide a credible estimate of the average causal effect. For this interpretation to hold, several conditions are required.
 
 1. All relevant confounders must be observed and adequately controlled for. If a variable affects both selection into treatment and the outcome but is omitted from the model, the OLS estimate may still be biased. This is the problem of **omitted variable bias**.
 
 2. Covariates must be measured before treatment occurs. If we control for variables affected by the treatment, we may remove part of the treatment effect or introduce additional bias.
 
-3. There must be sufficient overlap between treated and untreated units. For treated units, there should be comparable untreated units with similar values of the observed covariates. Without common support, the regression relies heavily on extrapolation.
+3. There must be sufficient overlap between treated and untreated units. For treated units, there should be comparable untreated units with similar values of the observed covariates. Without common support, the regression relies heavily on extrapolation.^[**Extrapolation** means using the estimated regression relationship to predict outcomes for units whose covariate values are not well represented in the comparison group. These predictions are more model-dependent because they are based on combinations of characteristics for which little or no comparable data are observed.]
 
-4. The regression specification must be credible. OLS is a **parametric** adjustment method: it imposes a functional form for how covariates are related to the outcome. If this functional form is too restrictive, for example because important nonlinearities or interactions are omitted, the estimate may still be misleading.
+4. The regression specification must be credible. OLS is a **parametric** adjustment method: it imposes a functional form for how covariates are related to the outcome. If this functional form is too restrictive, for example because important nonlinearities or interactions are omitted, the estimate may still be misleading. For instance, if the outcome rises sharply with income only above a certain threshold, a simple linear specification in income may adjust treated and untreated units incorrectly and distort the estimated treatment effect.
 
 For the ATT, the key selection-on-observables assumption is that, conditional on $X_i$, treated and untreated units would have had comparable untreated potential outcomes:
 
@@ -126,11 +126,9 @@ In the end, it is important to remember that OLS regression is not born causal. 
 ![In this example, matching methods compare each **treated unit** with one or more untreated **control units** with similar observable characteristics before treatment. Matches are selected using relevant pre-treatment features, such as **age**, **wage**, and **years of education**. Untreated units that are too different from the treated ones are left unmatched. Once a balanced matched sample is created, the post-treatment outcome values of treated and matched control units are compared to estimate the **ATT**.](../images/matching_in_a_figure_slim.png){width=80%}
 :::
 
-Matching methods are among the most intuitive tools for causal inference with observational data. Their basic idea is simple: untreated units with similar observed pre-treatment characteristics are used to approximate what would have happened to treated units in the absence of treatment.
+The idea behind matching methods is simple: after treatment assignment has occurred, the control group is constructed **ex post** by selecting untreated units that are similar to treated units in terms of observed pre-treatment characteristics. These matched untreated units are then used to approximate the counterfactual outcomes that treated units would have experienced in the absence of treatment. Unlike in an RCT, therefore, comparability is not created by randomization but by the matching procedure.
 
-In this sense, matching constructs a control group **ex post**: the comparison group is formed only after treatment assignment has already taken place. Unlike in RCTs, treated and untreated units are not created by randomization. Instead, the control group is built by selecting untreated units that are comparable to the treated units in terms of observed pre-treatment characteristics.
-
-Suppose we want to evaluate the effect of a policy on an outcome $Y_i$. Let $D_i=1$ indicate that unit $i$ receives the treatment, and $D_i=0$ otherwise. As usual, each unit has two potential outcomes:
+Suppose we want to evaluate the effect of a policy $D_i$ on an outcome $Y_i$. As usual, each unit has two potential outcomes:
 
 $$
 Y_i(1)
@@ -166,9 +164,7 @@ The second term is not observed. It is the average outcome that treated units wo
 
 ### The Logic of Matching
 
-The logic of matching is close to the logic of a randomized experiment. In an RCT, treated and untreated units are comparable because treatment is randomly assigned. In an observational study, treatment is not randomly assigned. Units may select into treatment, or policymakers may select units for treatment, based on characteristics that also affect the outcome.
-
-Matching tries to make treated and untreated units comparable **after the data have been collected**. It does so by comparing treated units only with untreated units that have similar values of observed covariates $X_i$.
+In an observational study, treatment is not randomly assigned. Units may select into treatment, or policymakers may select units for treatment, based on characteristics that also affect the outcome. Matching tries to make treated and untreated units comparable **after the data have been collected**. It does so by comparing treated units only with untreated units that have similar values of observed covariates $X_i$.
 
 For example, suppose we want to estimate the effect of an after-school tutoring program on students’ test scores. Students who attend the program may differ from non-participants in previous achievement, family background, motivation, teacher recommendations, or school attendance. Matching would compare each participating student with one or more non-participating students who are similar in terms of the observed pre-treatment variables.
 
@@ -182,7 +178,7 @@ Matching replaces the impossible comparison between treated units and their own 
 
 ### Historical Intuition
 
-The early intuition behind matching was close to the logic of experimental blocking. In an experiment, units may be grouped into blocks with similar characteristics before randomization. Matching applies a related idea to observational data: since treatment was not randomly assigned, the researcher tries to reconstruct comparability after the fact by pairing or grouping treated and untreated units with similar pre-treatment characteristics.
+The early intuition behind matching was close to the logic of experimental blocking. In an experiment, units may be grouped into blocks with similar characteristics before randomization. Matching applies a related idea to observational data: since treatment was not randomly assigned, the researcher tries to restore comparability by pairing or grouping treated and untreated units with similar pre-treatment characteristics.
 
 Early work focused on relatively direct forms of adjustment. One approach was **subclassification**, where units were divided into groups based on one or more covariates and comparisons were made within those groups. Cochran [-@cochran1968] showed how subclassification could remove a large share of bias when the covariate used for adjustment was strongly related to selection into treatment and the outcome.
 
@@ -238,9 +234,9 @@ $$
 P(D_i=1\mid X_i=x) < 1.
 $$
 
-This condition means that, for units with characteristics $X_i=x$, treatment is possible but not certain. In other words, among units with the same, or sufficiently similar, observed characteristics, there must be at least some untreated units that can serve as comparisons for the treated units. If the probability of receiving treatment is equal to one for a given set of characteristics, matching cannot construct a credible counterfactual for those units.
+This condition means that, for units with characteristics $X_i=x$, treatment is not certain. In other words, among units with the same, or sufficiently similar, observed characteristics, there must be some untreated units that can serve as comparisons for the treated units. If the probability of receiving treatment is equal to one for a given set of characteristics, matching cannot construct a credible counterfactual for treated units with those characteristics.
 
-In practice, lack of common support means that some units are too different to be matched. Dropping these units can improve credibility, but it also changes the population for which the treatment effect is estimated.
+In practice, lack of common support means that some units are too different to be matched. Dropping these units can improve credibility, but it also changes the population for which the treatment effect is estimated. For instance, if only very large firms receive a subsidy and no comparable untreated large firms exist, those treated firms may have to be excluded. The resulting estimate would then apply only to the small and medium-sized treated firms for which comparable untreated units are available, rather than to all treated firms.
 
 ::: {.callout-caution appearance="simple"}
 ### Common support
@@ -251,7 +247,7 @@ Units outside the common support should not be used for causal comparisons.
 
 ### Exact Matching
 
-In the ideal case, each treated unit would be matched with untreated units that have exactly the same values of the covariates.
+In the ideal case, each treated unit would be matched with one or more untreated units that have exactly the same values of the covariates.
 
 Suppose $X_i$ contains age, education, and previous earnings. Exact matching would compare a treated individual only with untreated individuals that have the same age, the same education level, and the same previous earnings.
 
@@ -276,10 +272,10 @@ E(Y_i\mid D_i=0,X_i)
 \right].
 $$
 
-This expression highlights the core idea of matching: compare treated and untreated units **within comparable covariate cells**, and then average over the treated population.
+This expression highlights the core idea of matching: compare treated and untreated units **within comparable covariate cells**, and then average these comparisons over the treated population, giving equal weight to each treated unit.
 
 ::: {.callout-note appearance="simple"}
-### All treated units gets the same weight
+### All treated units receive the same weight
 For example, suppose we want to estimate the effect of a refresher training course on participants' earnings. We perform exact matching using two binary pre-treatment covariates: whether the worker is **young** or **older**, and whether the worker lives in an **urban** or **rural** area.
 
 This creates four covariate cells:
@@ -312,7 +308,7 @@ ATT =
 4.85.
 $$
 
-The reason is that the ATT asks: what is the average effect for the treated workers? Therefore, each treated worker receives the same weight. Cells with more treated workers contribute more to the final estimate.
+The reason is that the ATT asks: what is the average effect for the treated workers? Therefore, each treated worker receives the same weight. Cells with more treated workers contribute more to the final ATT estimate.
 :::
 
 ### The Curse of Dimensionality
@@ -341,7 +337,7 @@ $$
 p(X_i) = P(D_i=1\mid X_i).
 $$
 
-Instead of matching units on all covariates $X_i$, PSM matches units on the scalar index $p(X_i)$.
+This probability is not directly observed. What we observe is whether each unit actually received the treatment or not. However, before treatment occurs, we can think of each unit as having some underlying probability of receiving the treatment, depending on its observed characteristics. The propensity score represents this probability and must generally be estimated from the data, for example using a logit or probit model (see below). The resulting estimated propensity score is denoted by $\widehat{p}(X_i)$. Instead of matching units on all covariates $X_i$, PSM matches them on this one-dimensional index.
 
 Rosenbaum and Rubin showed that, if treatment assignment is independent of potential outcomes conditional on $X_i$, then it is also independent of potential outcomes conditional on the propensity score:
 
@@ -391,6 +387,8 @@ $$
 
 for a logit model.
 
+In general, logit and probit models are preferred because they ensure that the estimated propensity scores, $\widehat{p}(X_i)$, lie between 0 and 1.
+
 The covariates included in $X_i$ should be chosen carefully. They should be pre-treatment variables that affect treatment assignment and are plausibly related to the outcome. If panel data are available, lagged outcomes can often be useful because they capture pre-treatment differences in outcome levels.
 
 Importantly, variables affected by the treatment should not be included in the propensity score model, because doing so would condition on post-treatment variables and may introduce bias.
@@ -399,7 +397,19 @@ Importantly, variables affected by the treatment should not be included in the p
 
 Once the propensity score has been estimated, we need to choose a criterion for matching treated and untreated units. In practice, propensity scores are usually continuous values between 0 and 1, often measured with many decimal places. For this reason, it is unlikely that one or more untreated units will have exactly the same propensity score as a treated unit.
 
-Matching therefore usually relies on approximations: untreated units are selected because their propensity score is close to that of the treated unit, not because it is exactly identical. Different matching rules define what “close” means and imply different trade-offs between bias and precision. In what follows, we briefly discuss some of the most common matching rules.
+Matching therefore usually relies on approximations: untreated units are selected because their propensity score is close to that of the treated unit, not because it is exactly identical. Different matching rules define what “close” means and imply different trade-offs between bias and precision.
+
+::: {.callout-note}
+### Bias--precision trade-off
+
+Matching rules differ in how untreated units are selected and weighted to construct the counterfactual for each treated unit, including how many control units are used. Using only the closest control units can reduce bias, because comparisons are made between very similar units, but it may increase variance because little information is used.
+
+Using more control units can improve precision, because the counterfactual is averaged over more observations, but it may increase bias if some of those controls are **more dissimilar from the treated unit**.
+
+The choice of matching rule therefore reflects a trade-off: **closer matches are usually more credible, while more matches usually provide more stable estimates**.
+:::
+
+In what follows, we briefly discuss some of the most common matching rules.
 
 1. **Stratification matching.** The range of the propensity score is divided into intervals, or strata. Within each stratum, treated and untreated units should have similar average propensity scores.
 
@@ -471,7 +481,7 @@ Matching therefore usually relies on approximations: untreated units are selecte
 
 4. **Kernel matching.** The counterfactual outcome for each treated unit is constructed as a weighted average of untreated outcomes. Untreated units with propensity scores closer to that of the treated unit receive larger weights, while more distant units receive smaller weights or may receive no weight.
 
-    The **bandwidth** determines how quickly weights decline as the distance in propensity scores increases.
+    The **bandwidth** determines how quickly weights decline as the distance in propensity scores increases.^[In kernel matching, the **bandwidth** controls how broadly control units are used around each treated unit. A smaller bandwidth gives most weight to very close matches, while a larger bandwidth allows more distant controls to receive meaningful weight.]
 
     For treated unit $i$, the counterfactual outcome is estimated as
 
@@ -500,16 +510,6 @@ Matching therefore usually relies on approximations: untreated units are selecte
 
     Kernel matching uses more information than nearest-neighbor matching because it constructs the counterfactual from a weighted average of several untreated units rather than from one or a few selected matches. However, the choice of bandwidth is important because it governs how strongly distance in the propensity score affects the weights.
 
-::: {.callout-note}
-### Bias--precision trade-off
-
-Matching rules differ in how many untreated units are used to construct the counterfactual for each treated unit. Using only the closest control units can reduce bias, because comparisons are made between very similar units, but it may increase variance because little information is used.
-
-Using more control units can improve precision, because the counterfactual is averaged over more observations, but it may increase bias if some of those controls are less comparable to the treated unit.
-
-The choice of matching rule therefore reflects a trade-off: **closer matches are usually more credible, while more matches usually provide more stable estimates**.
-:::
-
 ### Other Matching Approaches
 
 The matching methods discussed so far are only part of a broader family of approaches. They all share the same basic goal: to construct a credible comparison group using observed pre-treatment characteristics. What differs is how similarity is defined, how observations are weighted, and how each method balances transparency, flexibility, bias, and precision. The aim here is not to cover all matching methods in detail, but to introduce the main intuition and briefly mention a few additional approaches.
@@ -531,7 +531,7 @@ where $S$ is the covariance matrix of the covariates.
 
 **Coarsened exact matching** first transforms covariates into substantively meaningful categories, or bins. For example, age may be grouped into age bands, income into income brackets, and firm size into size classes. Exact matching is then performed within these coarsened covariate cells. This approach is attractive because it is transparent: the researcher explicitly defines what counts as “similar.” The cost is that results may depend on how the covariates are coarsened.
 
-Other approaches include genetic matching, entropy balancing and covariate balancing propensity scores.
+Other related balancing approaches include genetic matching, full matching, and covariate balancing propensity score methods.
 
 ### Reweighting methods
 
@@ -592,10 +592,9 @@ However, matching cannot address selection on unobservables. If treatment assign
 In other words, matching can help with bias due to observed differences between treated and untreated units, but not with bias due to unobserved differences.
 
 ::: {.callout-warning appearance="simple"}
-### The main caveat
+### The main limitation
 
-Matching makes observational data look more like experimental data only with respect to observed variables.  
-It does not make treatment random with respect to variables that are unobserved.
+Matching can improve the comparability of treated and untreated units with respect to **observed pre-treatment characteristics**. However, it cannot balance factors that are unobserved. Therefore, matching identifies a causal effect only if, after conditioning on the observed covariates, there are no remaining unobserved factors that jointly affect treatment assignment and potential outcomes.
 :::
 
 ### Empirical Illustration
@@ -604,13 +603,16 @@ An example of matching in applied research is the study by Bovan et al. [-@bovan
 
 Flooded and non-flooded areas may differ systematically. For example, they may differ in socioeconomic conditions, geography, political preferences, or previous voting behavior. A simple comparison between flooded and non-flooded areas may therefore be misleading.
 
-The study uses matching to compare affected and non-affected areas with similar observed characteristics. The balancing table below illustrates the logic of the procedure. Before matching, flooded municipalities differed substantially from non-flooded municipalities in several pre-treatment characteristics. After matching, these differences became much smaller.
+The study uses one-nearest-neighbor matching to compare affected and non-affected areas with similar observed characteristics. The balancing table below illustrates the logic of the procedure. Before matching, flooded municipalities differed substantially from non-flooded municipalities in several pre-treatment characteristics. After matching, these differences became much smaller.
 
 | Variable                    | Flooded  |     | Non-flooded, before matching | Absolute difference before matching |     | Non-flooded, after matching | Absolute difference after matching |
 |:----------------------------|---------:|:---:|-----------------------------:|------------------------------------:|:---:|----------------------------:|-----------------------------------:|
 | Unemployment                |    23.46 |     |                        17.34 |                                6.12 |     |                       22.98 |                               0.48 |
+| $\rule{0pt}{0.2em}$ |  |  |  |  |  |  |  |
 | Income per capita           | 19,237.45 |     |                    22,471.44 |                            3,233.99 |     |                   19,299.04 |                              61.59 |
+| $\rule{0pt}{0.2em}$ |  |  |  |  |  |  |  |
 | Municipal income per capita |  1,340.43 |     |                     2,220.85 |                              880.42 |     |                    1,196.84 |                             143.59 |
+| $\rule{0pt}{0.2em}$ |  |  |  |  |  |  |  |
 | Education                   |    63.23 |     |                        70.56 |                                7.33 |     |                       63.63 |                               0.40 |
 : Balance before and after matching in the Croatian floods study. Values are sample means. Income variables are measured in HRK. Source: adapted from Bovan et al. [-@bovan2018].
 
@@ -618,8 +620,7 @@ Before matching, floods appeared to reduce support for incumbent politicians. Af
 
 This example illustrates the core logic of matching: part of what looks like a treatment effect may actually reflect pre-existing differences between treated and untreated units. Matching tries to reduce this problem by constructing a comparison group that is more similar to the treated group in terms of observed pre-treatment characteristics.
 
-::: {.callout-note}
-## Matching and Regression Adjustment
+## Matching vs. Regression Adjustment
 
 Matching methods and regression adjustment are closely related. Both try to make treated and untreated units comparable in terms of pre-treatment characteristics. They differ mainly in **how** they use the covariates.
 
@@ -631,8 +632,7 @@ The two approaches can also be combined. A common strategy is to first match tre
 
 The key difference is that matching is more transparent about the comparison being made: it shows which untreated units are used to approximate the counterfactual outcomes of treated units. Regression adjustment is more model-based: it relies more heavily on the assumed relationship between covariates and outcomes.
 
-They also differ in how they handle failures of **common support**. With matching, lack of overlap is usually visible: treated units without comparable untreated units cannot be matched, or are matched only poorly. These units may then be excluded from the analysis, changing the population for which the effect is estimated. With regression adjustment, by contrast, the model can still produce predictions for treated units outside the support of the control group, but this requires extrapolation and makes the ATT estimate much more dependent on functional-form assumptions.
-:::
+They also differ in how they handle failures of **common support**. With matching, lack of overlap is usually visible: treated units without comparable untreated units cannot be matched, or are matched only poorly. These units may then be excluded from the analysis, changing the population for which the effect is estimated. With regression adjustment, by contrast, the model can still estimate counterfactual outcomes for treated units outside the support of the control group, but doing so requires extrapolation and makes the ATT estimate much more dependent on functional-form assumptions.
 <!---
 ::: {.callout-note appearance="simple"}
 ### Example: evaluating a training program

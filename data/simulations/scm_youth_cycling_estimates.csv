@@ -1,0 +1,3 @@
+"scenario","pre_treatment_rmspe","average_estimated_effect","average_true_effect","estimation_error","treated_last_pre","donor_min_last_pre","donor_max_last_pre"
+"Ideal: convex-hull support",0.019331619975127,2.60608393393038,2.61666666666667,-0.0105827327362893,7.28798004646588,6.6829154821181,7.94086436737825
+"Failure: no convex-hull support",0.854358289537608,6.82999430286342,2.61666666666667,4.21332763619675,9.78798004646588,6.6829154821181,7.94086436737825

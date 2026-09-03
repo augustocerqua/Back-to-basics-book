@@ -6,7 +6,7 @@
 ![Instrumental variables use an external source of variation, the instrument $Z$, to shift treatment status $D$. If the instrument affects the outcome $Y$ only through the treatment, the variation in $D$ induced by $Z$ can be used to estimate a causal effect, even in the presence of unobserved confounders.](../images/instrumental-variables-lever.png)
 :::
 
-In observational studies, treated and untreated units often differ in ways that are not fully observed by the researcher. If these unobserved factors affect both treatment participation and the outcome, a simple regression of the outcome on the treatment does not identify a causal effect.
+In observational studies, treated and untreated units often differ in ways that are not fully observed by the researcher. If unobserved factors affect both treatment participation and potential outcomes, a regression of the outcome on treatment does not generally identify a causal effect, even after controlling for observed pre-treatment differences.
 
 Suppose we want to estimate the effect of a treatment $D_i$ on a post-treatment outcome $Y_i$ using the linear model
 
@@ -22,7 +22,7 @@ $$
 \operatorname{Cov}(D_i,u_i) \neq 0.
 $$
 
-This means that treatment status is correlated with unobserved determinants of the outcome. In that case, ordinary least squares does not recover the causal effect of $D_i$ on $Y_i$.
+This means that treatment status is correlated with unobserved determinants of the outcome. In this case, estimating $\tau$ by ordinary least squares does not generally yield an unbiased estimate of the causal effect of $D_i$ on $Y_i$.
 
 For example, suppose we want to estimate the effect of education on wages. More educated individuals tend to earn more, but they may also differ in unobserved ability, motivation, family background, or local opportunities. If these factors affect both schooling and wages, then the estimated relationship between schooling and wages combines the causal effect of education with selection bias.
 
@@ -36,11 +36,11 @@ An instrumental variable is a variable that shifts treatment status but affects 
 
 ## Historical Intuition
 
-An early and influential example of IV logic appears in Philip G. Wright's analysis of supply and demand in agricultural commodity markets [@wright1928]. Wright studied the problem of estimating demand and supply relationships when price and quantity are jointly determined in equilibrium. A simple regression of quantity on price would not recover a demand curve, because observed prices and quantities reflect both demand shifts and supply shifts at the same time.
+An early and influential example of IV logic appears in Philip G. Wright's analysis of supply and demand in agricultural commodity markets [@wright1928]. Wright faced the problem of estimating a demand curve when price and quantity are jointly determined in market equilibrium. A simple regression of quantity on price cannot generally recover the demand relationship, because observed changes in prices and quantities may result from shifts in either demand or supply.
 
-The key insight was that some variables shift one side of the market without directly shifting the other. For example, weather conditions may affect supply by changing agricultural output, but they need not directly affect consumers' demand. Such variables create movements in price and quantity that can be used to trace out the demand curve. In modern language, weather-related supply shifters can serve as **instruments** for price.
+The key insight was to exploit variables that shift supply without directly shifting demand. Weather conditions, for example, may affect agricultural output and therefore supply, while leaving consumers' demand unchanged. These supply shifts generate changes in equilibrium prices that move the market along the demand curve, making it possible to estimate how quantity demanded responds to price. In modern terminology, weather-related supply shifters can therefore serve as **instruments** for price: they generate changes in price that originate from the supply side rather than from changes in consumers' demand. By isolating this source of price variation, we can study how quantity demanded responds to changes in price.
 
-The Wright example captures the core logic of IV well. When the treatment is not randomly assigned, ordinary comparisons are misleading. An instrument provides a source of variation that moves the treatment but is otherwise unrelated to the outcome, except through the treatment. IV then uses only this externally induced variation to estimate a causal effect.
+The Wright example captures the core logic of IV: when treatment is not randomly assigned and some confounders are unobserved, causal estimates from regression or matching methods are generally biased. A valid instrument provides a source of variation that affects treatment assignment but does not affect the outcome through any other channel. IV exploits this externally induced variation in treatment to estimate a causal effect.
 
 ## Example: College Proximity and Returns to Schooling
 
@@ -48,7 +48,7 @@ A classic example is Card's study of the returns to schooling [@card1993]. The q
 
 A simple comparison between more educated and less educated individuals may be biased because education is correlated with unobserved ability and family background. Card uses geographic proximity to college as an instrument for schooling.
 
-The argument is that individuals who grow up closer to a college face lower costs of attending college and are therefore more likely to obtain more schooling. At the same time, distance to college should affect wages only through schooling, not through other direct channels.
+The argument is that individuals who grow up closer to a college face lower costs of attending college and are therefore more likely to obtain more schooling. At the same time, proximity to college is assumed to affect wages only through schooling, rather than through other direct channels.^[This second condition is an identifying assumption, not an observable fact: proximity to college could in principle be related to other characteristics of local areas or families that also affect wages.]
 
 In this setting:
 
@@ -56,11 +56,11 @@ In this setting:
 - $D_i$ is years of schooling;
 - $Y_i$ is wages.
 
-The instrument isolates variation in schooling that comes from geographic access to college rather than from unobserved ability.
+The instrument isolates variation in schooling associated with geographic access to college rather than with unobserved determinants of schooling and wages. Using this variation, Card finds IV estimates of the return to schooling that are substantially larger than conventional OLS estimates—roughly 25–60% higher across his specifications. He also finds that the schooling effects of college proximity are concentrated among individuals from less-educated families, for whom access to a nearby college is more likely to affect educational attainment.
 
 ## The Basic IV Logic and the Key Assumptions
 
-An instrument is usually denoted by $Z_i$. The core IV idea is that $Z_i$ shifts treatment status $D_i$, and this instrument-induced variation in treatment is then used to learn about the effect of $D_i$ on the outcome $Y_i$:
+An instrument is usually denoted by $Z_i$. The core IV idea is that $Z_i$ affects treatment status $D_i$, and this instrument-induced variation in treatment is then used to learn about the effect of $D_i$ on the outcome $Y_i$:
 
 $$
 Z_i \rightarrow D_i \rightarrow Y_i.
@@ -74,7 +74,7 @@ $$
 \operatorname{Cov}(Z_i,D_i\mid X_i) \neq 0.
 $$
 
-    In practice, this means that changes in the instrument should generate changes in the probability of receiving the treatment, in the case of a binary treatment. Relevance is empirically assessable: we can estimate the first-stage relationship between $D_i$ and $Z_i$ and check whether the instrument significantly predicts treatment.
+In practice, this means that changes in the instrument should generate changes in the probability of receiving the treatment, in the case of a binary treatment. Relevance is empirically assessable: we can estimate the first-stage relationship between $D_i$ and $Z_i$ and check whether the instrument significantly predicts treatment even after controlling for $X_i$.
 
 2. The instrument must affect the outcome only through the treatment. This is the **exclusion restriction**. Conditional on covariates, the instrument should not be correlated with the unobserved determinants of the outcome:
 
@@ -82,12 +82,12 @@ $$
 \operatorname{Cov}(Z_i,u_i\mid X_i)=0.
 $$
 
-    This condition rules out any direct causal path from $Z_i$ to $Y_i$ that bypasses $D_i$. Unlike relevance, the exclusion restriction is not directly testable. The credibility of an IV strategy therefore depends heavily on whether the researcher can argue, using institutional knowledge, theory, or a credible natural experiment, that the instrument is as good as randomly assigned with respect to the outcome, except through treatment.
+This condition rules out any direct causal path from $Z_i$ to $Y_i$ that bypasses $D_i$. Unlike relevance, **the exclusion restriction is not directly testable**. The credibility of an IV strategy therefore depends heavily on whether the researcher can argue, using institutional knowledge, theory, or a credible natural experiment, that the instrument is as good as randomly assigned with respect to the outcome, except through treatment.
 
 ::: {.callout-caution}
 ### The exclusion restriction
 
-The exclusion restriction is usually the most demanding IV assumption. A strong first stage is not enough: if the instrument affects the outcome through channels other than the treatment, the IV estimate is not causal.
+The exclusion restriction is usually the most demanding IV assumption. A strong first stage is not enough: if the instrument affects the outcome through channels other than the treatment, the exclusion restriction is violated and the IV estimate cannot generally be given a causal interpretation.
 :::
 
 ## Two-Stage Least Squares and the IV Ratio
@@ -122,7 +122,7 @@ X_i'\beta
 \varepsilon_i.
 $$
 
-The estimated coefficient $\widehat{\tau}_{\text{2SLS}}$ is the IV estimate obtained by 2SLS. The intuition is simple: instead of using all variation in treatment, 2SLS uses only the variation in treatment that is generated by the instrument. If the instrument is valid, this variation can be interpreted as exogenous and used to estimate a causal effect.
+The estimated coefficient $\widehat{\tau}_{\text{2SLS}}$ is the IV estimate obtained by 2SLS. The intuition is simple: rather than relying on all observed variation in treatment, 2SLS isolates the variation associated with the instrument, after accounting for the control variables. If the instrument is valid, this variation can be interpreted as exogenous^[In this context, **exogenous variation** means variation in treatment that is generated by the instrument rather than by factors that also affect the outcome. It can therefore be treated as unrelated to the unobserved determinants of the outcome.] and used to estimate a causal effect.
 
 ::: {.callout-note appearance="simple"}
 ### Why two stages?
@@ -145,15 +145,11 @@ X_i'\rho
 e_i.
 $$
 
-Here, $\rho_1$ captures the effect of the instrument on the outcome. The IV estimate is the ratio between the reduced-form effect and the first-stage effect:
-
-$$
-\widehat{\tau}_{\text{IV}}
-=
-\frac{\widehat{\rho}_1}{\widehat{\pi}_1}.
-$$
-
-This ratio asks: how much does the outcome change per unit of treatment variation generated by the instrument?
+Here, $\rho_1$ captures the effect of the instrument on the outcome, conditional on $X_i$. With a single instrument and a single treatment, the 2SLS estimate can equivalently be written as the ratio between the reduced-form effect and the first-stage effect:
+  
+  $$ \widehat{\tau}_{\text{2SLS}} = \frac{\widehat{\rho}_1}{\widehat{\pi}_1}. $$
+    
+This ratio asks: how much does the outcome change relative to the amount of treatment variation induced by the instrument?
 
 ::: {.callout-warning appearance="simple"}
 ### Correct estimation of the standard errors
@@ -163,7 +159,7 @@ In practice, 2SLS should be estimated using an IV routine. It is not correct to 
 
 ## Example: Quarter of Birth and Education
 
-Another famous example is Angrist and Krueger's study of compulsory schooling laws [@angrist1991]. They use quarter of birth as an instrument for years of schooling.
+Another famous IV example is Angrist and Krueger's study of compulsory schooling laws [@angrist1991]. They use quarter of birth as an instrument for years of schooling.
 
 The argument is based on school-entry rules and compulsory attendance laws in the United States. Children born early in the year enter school at a slightly older age. Since students are allowed to leave school when they reach a certain age, those born later in the year may end up with slightly more schooling.
 
@@ -183,7 +179,7 @@ $$
 \frac{0.0086}{0.10} \approx 0.086.
 $$
 
-This suggests that an additional year of schooling increases wages by about 8.6% for the units whose schooling is affected by the instrument.
+This suggests that an additional year of schooling increases wages by about 8.6% for the students whose schooling is affected by the instrument.
 
 ## Weak Instruments
 
@@ -269,11 +265,15 @@ E[D_i\mid Z_i=1] - E[D_i\mid Z_i=0]
 }.
 $$
 
-The numerator is the reduced-form effect of the instrument on the outcome. The denominator is the first-stage effect of the instrument on treatment.
+The numerator is the reduced-form effect of the instrument on the outcome. The denominator is the first-stage effect of the instrument on treatment. **Intuitively, the ratio scales the change in the outcome caused by the instrument by the change in treatment participation caused by the instrument.** It therefore asks how much the outcome changes for each additional unit induced into treatment by the instrument. For example, if the instrument increases the outcome by 2 units and raises the probability of treatment by 0.25, the implied LATE is $2/0.25=8$.
 
 ### Example: Vietnam Draft Lottery
 
-A classic LATE example is Angrist's study of the effect of military service on later earnings [@angrist1990]. During the Vietnam War, the United States used a draft lottery to determine who was at risk of being drafted.
+::: {.content-visible when-format="html"}
+![**A gif representation of the IV example**.](../images/iv-draft-lottery-animation.gif)
+:::
+
+A classic example with a binary instrument is Angrist's study of the effect of military service on later earnings [@angrist1990]. During the Vietnam War, the United States used a draft lottery to determine who was at risk of being drafted.
 
 The draft lottery can be interpreted as an instrument for military service:
 
@@ -300,11 +300,11 @@ This may describe the real assignment mechanism more accurately, but it also cre
 
 ## Interpreting IV Estimates
 
-Interpreting IV estimates requires care. The estimate depends on the instrument, because the instrument determines which units are shifted into treatment.
+Interpreting IV estimates requires care. Each IV estimate depends on the instrument, because the instrument determines which units are shifted into treatment.
 
 For example, college proximity may identify the return to schooling for individuals whose education decisions are affected by geographic access to college. Quarter of birth may identify the return to schooling for individuals whose schooling is affected by compulsory schooling laws. These are not necessarily the same people.
 
-This means that IV estimates should not automatically be interpreted as average effects for everyone. They are often local effects for the units affected by the instrument.
+This means that IV estimates should not automatically be interpreted as average effects for everyone. They generally retrieve average causal effects only for the units affected by the instrument.
 
 A limitation of the IV interpretation is that we usually do not know exactly **for whom** the causal effect is being estimated. The IV estimate identifies the effect for compliers, but individual complier status is not directly observed: we do not know which specific units would change their treatment status in response to the instrument. As a result, the LATE refers to a latent subpopulation whose members cannot be precisely identified. In some applications, researchers can describe compliers on average, for example by studying whether they are more likely to come from particular socioeconomic backgrounds or locations, but this does not remove the basic limitation: the estimated causal effect applies to a group that is only indirectly observed.
 

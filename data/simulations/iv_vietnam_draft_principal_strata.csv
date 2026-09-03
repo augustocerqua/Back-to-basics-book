@@ -1,0 +1,4 @@
+"simulated_principal_stratum","individuals","share","treatment_if_ineligible","treatment_if_eligible"
+"Always-taker",500,0.1,1,1
+"Complier",1750,0.35,0,1
+"Never-taker",2750,0.55,0,0

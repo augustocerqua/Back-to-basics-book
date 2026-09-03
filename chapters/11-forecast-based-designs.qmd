@@ -1,14 +1,14 @@
 # Forecast-Based Counterfactual Methods 
 
-The methods discussed so far rely on the availability of untreated units that can be used to construct a credible counterfactual. However, in many policy settings, such units may not be available or may not provide a credible comparison group. For instance:
+The methods discussed so far rely on the availability of untreated units that can be used to construct a credible counterfactual. However, in many policy settings, such units may be unavailable or may not provide a credible comparison group. For instance, this may occur when:
 
-i) **The treatment affects all units at the same time.** This may happen in the case of nationwide reforms, macroeconomic shocks, pandemics, or policies implemented everywhere simultaneously. In these settings, there may be no untreated units left in the data.
+i) **The treatment affects all units at the same time.** This can happen with nationwide reforms, macroeconomic shocks, pandemics, or policies implemented simultaneously across all units. In such settings, no untreated units may remain in the data.
 
 ii) **Untreated units are indirectly affected by the treatment.** This may happen when a policy changes labor-market conditions, prices, commuting flows, local competition, or social interactions. In such cases, untreated units no longer represent what would have happened to treated units in the absence of the policy, because they are themselves affected by it. This violates the no-interference assumption [@cox1958].
 
 In these cases, control-based evaluation strategies cannot be leveraged to recover the causal effects of interest. To overcome such a limitation, a possible solution would be to use evaluation strategies that do not rely on the post-treatment values of the untreated units to recover the causal estimands of interest. In particular, in this chapter, we will focus on **forecast-based counterfactual methods (FBCMs), namely methods that leverage pre-treatment information to forecast the counterfactual scenario of each treated unit**.
 
-The logic is simple: if no credible control group is available, we can use the pre-treatment information of the treated units themselves to forecast the missing counterfactual.
+The logic is simple: if no credible control group is available, we can use the pre-treatment information of the treated units themselves to forecast the missing counterfactual.^[In some settings, pre-treatment information from untreated units can also be used to improve the forecast, even if those units cannot provide a credible post-treatment comparison group.]
 
 ::: {.callout-note appearance="simple"}
 ### Key idea
@@ -54,13 +54,13 @@ $$
 \widehat{Y}_t(0)=\widehat{f}(\mathcal{H}_{T_0}),
 $$
 
-where $\mathcal{H}_{T_0}$ is the information available before treatment. This information may include past values of the outcome, lagged covariates, seasonal patterns, trends, and other pre-treatment predictors.
+where $\mathcal{H}_{T_0}$ is the information available before treatment. This information may include pre-treatment values of the outcome and other covariates, time-invariant characteristics, seasonal patterns, and underlying trends.
 
 The treatment effect is then the gap between the observed post-treatment outcome and the predicted untreated path.
 
-This logic is intuitive. Suppose employment in a region was increasing steadily before a reform. If, after the reform, employment rises substantially more than predicted by its pre-treatment trend, the additional increase may be interpreted as evidence of a treatment effect.
+The logic is intuitive: the pre-treatment evolution of the outcome is used to predict what would have happened after treatment in its absence. Any systematic departure from this predicted path can then be interpreted as evidence of a treatment effect, provided the forecasting assumptions are credible (see Section 11.7).
 
-The same reasoning applies to excess mortality. If, during a pandemic, mortality in a municipality is much higher than its expected baseline---estimated using only pre-pandemic values---the difference can be interpreted as excess mortality.
+For example, suppose employment in a country had been increasing steadily before a reform. If employment rises substantially more than predicted after the reform, the additional increase may be attributed to the treatment. A similar logic is used to measure excess mortality. During a pandemic, for instance, mortality observed in a region can be compared with the baseline level predicted from pre-pandemic data; the difference is interpreted as excess mortality.
 
 However, this difference can be interpreted causally only if the forecasted counterfactual is credible.
 
@@ -128,23 +128,23 @@ This method allows for a linear trend, but it remains simplistic. If the untreat
 
 Once a counterfactual forecast is available, several causal parameters can be constructed.
 
-The point effect at post-treatment time $t$ is
+The point effect at post-treatment time $t$, with $t > T_0$ is
 
 $$
 \widehat{\tau}_t=Y_t^{obs}-\widehat{Y}_t(0).
 $$
 
-The cumulative effect up to period $t$ is
+The cumulative effect up to period $T$ is
 
 $$
-\widehat{\Delta}_t=\sum_{s=T_0+1}^{t}\widehat{\tau}_s.
+\widehat{\Delta}_T=\sum_{s=T_0+1}^{T}\widehat{\tau}_s.
 $$
 
 The temporal average effect is
 
 $$
-\widehat{\bar{\tau}}_t=
-\frac{1}{t-T_0}\sum_{s=T_0+1}^{t}\widehat{\tau}_s.
+\widehat{\bar{\tau}}_T=
+\frac{1}{T-T_0}\sum_{s=T_0+1}^{T}\widehat{\tau}_s.
 $$
 
 With several treated units, the researcher can also average across units:
@@ -155,7 +155,7 @@ $$
 \left(Y_{it}^{obs}-\widehat{Y}_{it}(0)\right).
 $$
 
-The same logic can be used to study heterogeneity, by comparing estimated effects across units or groups of units.
+The same logic can also be used to study treatment-effect heterogeneity by comparing the estimated effects across different subgroups of treated units.
 
 ## Interrupted Time-Series Design
 
@@ -165,7 +165,9 @@ The same logic can be used to study heterogeneity, by comparing estimated effect
 An interrupted time-series design compares the observed post-intervention outcome with the continuation of the pre-intervention time-series pattern.
 :::
 
-The interrupted time-series (ITS) design is probably the most common FBCM when a long pre-treatment time series is available. The idea is to model the pre-treatment dynamics of the outcome and then extrapolate them into the post-treatment period.
+The **interrupted time-series (ITS) design** is probably the most widely used FBCM. It is particularly useful when there is a single treated unit and a sufficiently long pre-treatment time series is available to model its underlying trajectory.
+
+The idea is to model the pre-treatment dynamics of the outcome and then extrapolate them into the post-treatment period.
 
 A simple ITS model can be written as
 
@@ -175,40 +177,63 @@ $$
 
 where $Post_t$ equals one after the intervention. In this specification, $\gamma$ captures an immediate level change and $\delta$ captures a change in trend after the intervention.
 
-This representation is useful pedagogically, but real applications often require more careful modeling. Outcomes may be autocorrelated, seasonal, volatile, or affected by calendar effects. For this reason, interrupted time-series analysis is often combined with time-series models such as ARIMA.
+This representation is useful pedagogically, but real applications often require more careful modeling. Outcomes may be autocorrelated, seasonal, volatile, or affected by calendar effects. For this reason, ITS analysis is often combined with time-series models such as ARIMA.
 
 The counterfactual is the predicted path that would have occurred after $T_0$ if the pre-treatment dynamics had continued without the intervention.
 
-::: {.callout-note}
-## Application: the Italian smoking ban
+The ITS design works best when the number of pre-treatment periods is large. With few pre-treatment observations, it is difficult to learn the untreated dynamics, distinguish signal from noise, and assess whether the post-treatment deviation reflects a genuine treatment effect rather than random fluctuations.
+
+### Application: the Italian smoking ban
 
 In January 2005, Italy introduced a regulation banning smoking in indoor public places. Suppose we want to study whether this policy reduced hospital admissions for acute coronary events, as in @cesaroni2008. Importantly, the smoking ban was introduced nationally, and all Italian regions were exposed to the policy at the same time.
 
-![ITS logic applied to the Italian smoking ban. The post-policy effect is estimated by comparing observed hospital admissions with a forecasted counterfactual trajectory based on pre-policy data.](../images/italian-smoking-ban-its-stylized.png)
+![ITS logic applied to the Italian smoking ban. The post-policy effect is estimated by comparing observed hospital admissions with a forecasted counterfactual trajectory based on pre-policy data.](../images/italian-smoking-ban-its-stylized.png){width="90%"}
 
-This makes the use of control-based methods difficult. Since all units in Italy were treated simultaneously, there is no obvious untreated group within the country that can be used to construct the counterfactual. One possibility would be to use similar data from other countries that did not introduce the same policy at the same time. However, this strategy would require other countries to provide a credible counterfactual for Italy, as well as almost identical data collection practices.
+Since all units in Italy were treated simultaneously, there is no obvious untreated group within the country that can be used to construct the counterfactual. One possibility would be to use similar data from other countries that did not introduce the same policy at the same time. However, this strategy would be credible only if other countries provided a suitable comparison for Italy and mortality data were measured in a sufficiently comparable way across countries.
 
 For this reason, an ITS design offers a natural alternative. Instead of relying on untreated units, this approach uses a model that exploits the pre-policy trajectory of hospital admissions in Italy to forecast what would have happened after January 2005 in the absence of the smoking ban.
 
 If post-ban admissions fall below what would have been expected from the pre-ban trend (as in the figure above), this difference can be interpreted as evidence consistent with a positive policy effect, provided that the forecasted counterfactual is credible and that no other simultaneous event explains the change.
-:::
 
-The ITS design works best when the number of pre-treatment periods is large. With few pre-treatment observations, it is difficult to learn the untreated dynamics, distinguish signal from noise, and assess whether the post-treatment deviation reflects a genuine treatment effect rather than random fluctuations.
-
-::: {.callout-note}
-## Causal ARIMA
+### Causal ARIMA
 
 Causal ARIMA extends the ITS logic by explicitly anchoring ARIMA models in the potential outcomes framework [@menchetti2023]. It is designed for settings in which no control series is available and the researcher has a sufficiently long pre-treatment time series.
 
-The key contribution is not simply the use of ARIMA. The important point is that the method defines causal estimands in a potential outcomes framework, clarifies the assumptions required to attribute deviations from the forecast to the intervention, and provides a way to conduct inference.
+The key contribution is not simply the use of ARIMA as a forecasting method. Rather, the method embeds forecasting within a causal framework: it defines causal estimands using potential outcomes, clarifies the assumptions under which deviations from the forecast can be interpreted as treatment effects, and provides a framework for statistical inference.
 
-The basic idea is:
+The basic idea can be summarized in four steps:
+
 i) estimate the untreated time-series process using pre-treatment data;
-ii) forecast the untreated post-treatment path;
-iii) compare the observed post-treatment path with the forecast;
-iv) quantify uncertainty around the estimated effects.
+ii) forecast how the outcome would have evolved after treatment in its absence;
+iii) compare the observed post-treatment outcomes with this forecast to estimate treatment effects;
+iv) quantify the uncertainty surrounding these estimates.
 
-For example, Causal ARIMA has been used by [@menchetti2023] to estimate the effect of a permanent price reduction in a retail store when only the treated product series is available. The treatment effect is the difference between actual post-treatment sales and the sales that would have been predicted under the no-policy scenario.
+For example, Causal ARIMA has been used by [@menchetti2023] to estimate the effect of a permanent price reduction on sales in a retail setting where only the treated product series is available. The treatment effect is estimated as the difference between observed post-treatment sales and the sales that would have been predicted in the absence of the price reduction.
+
+
+::: {.callout-note}
+### Confidence intervals and prediction intervals
+
+A **confidence interval** describes the uncertainty around an estimated parameter, such as an average treatment effect. It asks: how precisely have we estimated the causal effect?
+
+```{=latex}
+\smallskip
+```
+
+A **prediction interval** describes the uncertainty around a future or counterfactual outcome. It asks: how uncertain is the predicted value itself?
+
+```{=latex}
+\smallskip
+```
+
+This distinction matters for counterfactual methods. In **CBCMs**, such as DiD or matching, the main object is usually a causal parameter obtained by comparing treated units with observed control units. The uncertainty therefore concerns the estimated treatment effect, so results are typically reported using **confidence intervals**.
+
+
+```{=latex}
+\smallskip
+```
+
+In **FBCMs**, the counterfactual is not observed in another group. It is forecasted from the treated unit’s own pre-treatment history. Here, uncertainty comes not only from estimating the model, but also from predicting an unobserved counterfactual path. For this reason, FBCMs naturally rely on **prediction intervals** around the forecasted counterfactual outcome.
 :::
 
 ## Machine Learning Control Method
@@ -230,9 +255,19 @@ Compared with simple time-series methods, MLCM can exploit many predictors and f
 ::: {.callout-note}
 ### MLCM Application: COVID-19 and standardized math scores
 
-Cerqua, Letta, and Menchetti [-@cerqua2024mlcm] apply the MLCM to study the impact of the COVID-19 shock on educational achievement in Italy. This is a natural setting for the MLCM because the shock affected the whole country at the same time: there is no obvious untreated Italian control group that can be used to construct the counterfactual.
+Cerqua, Letta, and Menchetti [-@cerqua2024mlcm] apply the MLCM to study the impact of the COVID-19 shock on educational achievement in Italy. This is a natural setting for the MLCM because the shock affected the whole country at the same time: there is no obvious untreated control group that can be used to construct the counterfactual.
+
+
+```{=latex}
+\smallskip
+```
 
 The units of analysis are Italian **Local Labor Markets**. The outcome is the standardized **INVALSI mathematics test score** of fifth-grade students. The authors use a rich set of pre-COVID predictors, including past INVALSI scores, local socioeconomic conditions, demographic characteristics, labor-market indicators, and territorial features, to forecast what each local area’s math score would have been in the absence of the pandemic. The difference between the observed post-shock score and the machine-learning forecast gives the estimated local treatment effect.
+
+
+```{=latex}
+\smallskip
+```
 
 The results show a large negative effect of the COVID-19 shock on learning outcomes, averaging about **-0.76 standard deviations** relative to the forecasted counterfactual. Losses are uneven across space and are larger in already fragile areas, especially those with higher unemployment, higher inequality, and lower educational attainment.
 :::
@@ -241,18 +276,18 @@ The results show a large negative effect of the COVID-19 shock on learning outco
 
 FBCMs require a set of assumptions that is almost completely different from those used in control-group designs.
 
-1) **No anticipation**. Units should not change behavior before the official start of the intervention because they expect the treatment to occur. Anticipation contaminates the pre-treatment period and makes the estimated untreated trajectory unreliable. This assumption also underlies also most CBCMs.
+1) **Stability of the untreated outcome process**. In the absence of treatment, the relationship learned from pre-treatment data should continue to hold in the post-treatment period. If the data-generating process changes for reasons unrelated to the policy, the forecast error may capture those changes rather than the treatment effect.
 
-2) **Stability of the untreated outcome process**. In the absence of treatment, the relationship learned from pre-treatment data should continue to hold in the post-treatment period. If the data-generating process changes for reasons unrelated to the policy, the forecast error may capture those changes rather than the treatment effect.
+2) **Absence of other simultaneous shocks**. If another event that could itself affect the treated units’ outcome occurs at the same time as the treatment, it may be impossible to disentangle the effect of the treatment from that of the concurrent event.
 
-3) **Absence of other simultaneous shocks**. If another event occurs at the same time as the treatment, it may be impossible to distinguish the effect of the treatment from the effect of the other event.
+3. **Sufficient pre-treatment information**. Forecasting requires *enough* historical data to learn the relevant pattern.^[There is no universal minimum number of pre-treatment periods. What counts as *enough* depends on the complexity and stability of the outcome process: learning trends, seasonality, or other recurring patterns generally requires a longer pre-treatment series than learning a simple and stable trajectory.]
 
-4) **Sufficient pre-treatment information**. Forecasting requires enough historical data to learn the relevant pattern.
+4) **No anticipation**. Units should not change behavior before the start of the intervention because they expect the treatment to occur. Anticipation contaminates the pre-treatment period and makes the estimated untreated trajectory unreliable. This assumption also underlies also most CBCMs.
 
 ::: {.callout-warning}
 ### Machine learning and time-series models do not remove the causal problem
 
-Machine learning, time-series models, or a combination of the two can improve prediction, but causal interpretation still depends on assumptions. Even a highly accurate forecasting model may produce a misleading causal estimate if the post-treatment period contains other shocks unrelated to the treatment.
+Machine learning, time-series models, or a combination of the two can improve the accuracy of the counterfactual forecast, but accurate prediction alone is not enough for causal inference. If another event affects the treated units’ outcome after treatment, the observed deviation from the forecast may partly reflect this event rather than the treatment effect of interest.
 :::
 
 ## Diagnostics and Validation
@@ -271,9 +306,9 @@ If the model cannot predict the pre-treatment period, it is difficult to trust i
 
 Other useful checks include:
 
-- comparing the main method with simple benchmarks such as the mean, naive, and drift methods;
-- inspecting forecast errors in the pre-treatment period;
-- checking whether results depend on a few influential periods
+- inspecting forecast errors during the pre-treatment period;
+- comparing the placebo performance of the chosen method with simple forecasting benchmarks, such as the mean, naive, and drift methods;
+- checking whether the results are driven by a few influential periods;
 - examining whether other shocks occurred around the intervention date.
 
 ::: {.callout-note}
@@ -281,14 +316,30 @@ Other useful checks include:
 
 A promising recent development is the emergence of **tabular foundation models**, such as TabPFN and TabFM. Unlike conventional forecasting algorithms, these models are pretrained across millions of synthetic datasets and can transfer what they have learned to a new prediction problem through **in-context learning**, often without task-specific training or extensive hyperparameter tuning.
 
+```{=latex}
+\smallskip
+```
+
 This feature is particularly relevant when the available dataset is not large. TabPFN has shown strong predictive performance on small and medium-sized tabular datasets, including regression problems with relatively few observations ([Hollmann et al. 2025](https://doi.org/10.1038/s41586-024-08328-6)). TabPFN-TS extends this approach to forecasting by transforming time-series information into a tabular regression problem. Recent evidence indicates that it can produce competitive forecasts even without time-series-specific pretraining ([Hoo et al. 2026](https://arxiv.org/abs/2501.02945)). Newer models such as [TabFM](https://research.google/blog/introducing-tabfm-a-zero-shot-foundation-model-for-tabular-data/) further develop this zero-shot approach for tabular regression and classification.
 
+```{=latex}
+\smallskip
+```
+
 These advances could represent an important step forward for **FBCMs**. Policy evaluations often have only a limited number of pre-treatment periods or observations, but may contain many informative predictors. A pretrained foundation model could exploit complex relationships among these predictors more effectively than a model trained from scratch on the application dataset.
+
+```{=latex}
+\smallskip
+```
 
 However, it is important to keep in mind that, although tabular foundation models may substantially strengthen the forecasting component of FBCMs, they do not replace the assumptions required for causal identification.
 :::
 
 ## Worked Example
+
+::: {.content-visible when-format="html"}
+![**A gif representation of the MLCM worked example**.](../images/forecast-based-workplace-safety-animation.gif)
+:::
 
 Suppose a national reform introduces a new workplace-safety regulation for all firms at the same time. The goal is to reduce workplace accidents. Because the reform is implemented nationwide, there is no contemporaneous untreated group of comparable firms within the country.
 
@@ -303,23 +354,19 @@ For each firm, we observe monthly accident rates for several years before the re
 If observed accidents fall below the predicted counterfactual path after the reform, this is consistent with a beneficial effect. But the interpretation depends on whether other factors changed at the same time, such as new enforcement rules, reporting requirements, or macroeconomic conditions.
 
 ::: {.callout-note}
-### Confidence intervals and prediction intervals
-
-A **confidence interval** describes the uncertainty around an estimated parameter, such as an average treatment effect. It asks: how precisely have we estimated the causal effect?
-
-A **prediction interval** describes the uncertainty around a future or counterfactual outcome. It asks: how uncertain is the predicted value itself?
-
-This distinction matters for counterfactual methods. In **control-based counterfactual methods (CBCMs)**, such as DiD or matching, the main object is usually a causal parameter obtained by comparing treated units with observed control units. The uncertainty therefore concerns the estimated treatment effect, so results are typically reported using **confidence intervals**.
-
-In **FBCMs**, the counterfactual is not observed in another group. It is forecasted from the treated unit’s own pre-treatment history. Here, uncertainty comes not only from estimating the model, but also from predicting an unobserved counterfactual path. For this reason, FBCMs naturally rely on **prediction intervals** around the forecasted counterfactual outcome.
-:::
-
-::: {.callout-note}
 ### Combining forecast- and control-based information: controlled ITS
 
-A **controlled interrupted time-series (Controlled ITS)** design combines elements of forecast-based and control-based counterfactual methods. As in a standard ITS, the pre-intervention trajectory of the treated series is used to project how its outcome would have evolved after the intervention. At the same time, one or more untreated series are used to capture contemporaneous shocks or changes that are unrelated to the intervention.
+A **controlled interrupted time-series (controlled ITS)** design combines elements of forecast-based and control-based counterfactual methods. As in a standard ITS, the pre-intervention trajectory of the treated series is used to project how its outcome would have evolved after the intervention. At the same time, one or more untreated series are used to capture contemporaneous shocks or changes that are unrelated to the intervention.
+
+```{=latex}
+\smallskip
+```
 
 The causal effect is therefore inferred from whether the treated series changes at the intervention date **relative to both its own previous trajectory and the change observed in the control series**. Compared with an uncontrolled ITS, this can make the counterfactual more credible when treated and control series would have been affected similarly by other events occurring during the study period [@lopezbernal2018controls].
+
+```{=latex}
+\smallskip
+```
 
 This advantage depends on the choice of controls. The control series should have comparable pre-intervention dynamics, should be exposed to the same relevant external shocks, and should not itself be affected by the intervention. A poorly chosen control can weaken rather than strengthen the design.
 :::
@@ -328,6 +375,6 @@ This advantage depends on the choice of controls. The control series should have
 
 FBCMs provide a valuable alternative to CBCMs, especially when no credible control group exists. Instead of comparing treated and untreated units, they compare observed post-treatment outcomes with predicted untreated outcomes.
 
-The simplest versions use mean, naive, or drift forecasts. More sophisticated approaches include interrupted time-series designs, Causal ARIMA, and the MLCM.
+The simplest versions use mean, naive, or drift forecasts. More sophisticated approaches include ITS designs and the MLCM.
 
 The strength of these methods is that they can be applied in settings where standard comparison-based methods fail, especially when no credible untreated group is available. Their weakness is that causal interpretation relies heavily on the credibility of the forecasted counterfactual. The key question is therefore whether the model can accurately learn the untreated outcome dynamics from pre-treatment data and extrapolate them into the post-treatment period.

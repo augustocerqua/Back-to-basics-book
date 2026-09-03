@@ -1,0 +1,5 @@
+"assigned_small_class","scenario","group_definition","n","baseline_score","disadvantaged","female"
+0,"Ideal RCT","Random assignment",2500,49.1129725812974,0.3468,0.508
+1,"Ideal RCT","Random assignment",2500,49.2762344805744,0.3384,0.5016
+0,"Partial compliance","Treatment received",3529,48.281993400989,0.3661093794276,0.504108812694814
+1,"Partial compliance","Treatment received",1471,51.3839992811621,0.286199864038069,0.506458191706322

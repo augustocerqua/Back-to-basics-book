@@ -1,0 +1,3 @@
+"method","estimand","estimate","std_error","conf_low","conf_high","true_value"
+"Difference in means","ATE",4.10759135442228,0.263754812764645,3.59051620118063,4.62466650766393,4
+"Regression with school blocks","ATE",4.10759135442228,0.248129192694905,3.62114882248807,4.59403388635648,4

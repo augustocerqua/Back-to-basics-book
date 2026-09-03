@@ -1,8 +1,8 @@
 # Event Studies
 
-The basic DiD design compares treated and control units before and after a policy. In the simplest case, there are two groups and two periods. But many real policy settings are richer. Units may be treated at different times, treatment effects may evolve gradually, and researchers may want to know not only whether a policy had an effect, but also **when** the effect appeared and how it changed over time.
+The canonical DiD design compares treated and control units before and after treatment, in its simplest form using two groups and two periods. But many real policy settings are richer. Units may be treated at different times, treatment effects may evolve gradually, and researchers may want to know not only whether a policy had an effect, but also **when** the effect appeared and how it changed over time.
 
-This is the main motivation for **event-study designs**. In this chapter, the term event study refers to modern DiD-based approaches that estimate treatment effects relative to the timing of an event, such as the adoption of a reform, the introduction of a policy, or the occurrence of a shock.
+This is the main motivation for **event-study designs**. In this chapter, the term event study refers to modern DiD-based approaches that estimate treatment effects relative to the timing of an event, such as the adoption of a reform, the introduction of a policy, or the occurrence of a shock.^[The term **event study** is also used differently in other fields. In finance, for example, traditional event studies typically measure abnormal stock returns around a specific event by comparing observed returns with the returns predicted by a model of normal market performance. This differs from the DiD-based event-study designs discussed here, which compare outcome dynamics across groups relative to the timing of treatment.]
 
 ::: {.callout-note appearance="simple"}
 ### Key idea
@@ -20,7 +20,7 @@ Recent econometric work has shown that standard TWFE event-study regressions can
 
 Suppose we observe units $i=1,\ldots,N$ over periods $t=1,\ldots,T$. Some units become treated at different times. Once treated, they remain treated in all later periods. This is the common case of **staggered adoption**.
 
-Let $G_i$ denote the first period in which unit $i$ is treated. For never-treated units, $G_i=\infty$. Let $t$ denote calendar time. The treatment indicator is
+Let $G_i$ denote the first period in which unit $i$ is treated. For never-treated units, let $G_i=\infty$. Let $t$ denote calendar time. The treatment indicator is
 
 $$
 D_{it}=\mathbb{1}\{t\geq G_i\}.
@@ -68,20 +68,20 @@ $$
 \ell=t-g.
 $$
 
-When $\ell=0$, the unit is in its first treated period. When $\ell=1$, it is one period after treatment. When $\ell=-1$, it is one period before treatment.
+When $\ell=0$, the unit is in its first treated period; when $\ell=1$, it is one period after treatment onset; and when $\ell=-1$, it is one period before treatment.
 
 Event time is not defined for never-treated units because they do not have a treatment date. These units may nevertheless contribute as controls when cohort-specific effects are estimated.
 
-Throughout this chapter, $ATT^{ES}(\ell)$ denotes an aggregate post-treatment effect at event time $\ell \geq 0$, where the superscript $ES$ stands for **event study**. Pre-treatment diagnostic estimates are denoted separately by $\pi_{\ell}$ for $\ell < -1$, when $\ell=-1$ is used as the reference period. These quantities are placebo diagnostic contrasts rather than treatment effects. Their sample estimates are written as $\widehat{ATT}^{ES}(\ell)$ and $\widehat{\pi}_{\ell}$, respectively.
+Throughout this chapter, $ATT^{ES}(\ell)$ denotes an aggregate post-treatment effect at event time $\ell \geq 0$, where the superscript $ES$ stands for **event study**. Pre-treatment diagnostic estimates are denoted separately by $\pi_{\ell}$ for $\ell < -1$, where $\ell=-1$ is used as the reference period.^[The **reference period** is the period against which all event-study estimates are compared. Its coefficient is normalized to zero, so each estimated coefficient measures the difference relative to that period. Using $\ell=-1$ means that the period immediately before treatment serves as the baseline.] The sample estimates are written as $\widehat{ATT}^{ES}(\ell)$ and $\widehat{\pi}_{\ell}$, respectively.
 
-The pre-treatment estimates are useful diagnostics. If treatment has not yet occurred, they should usually be close to zero, unless there is anticipation or treated units were already on different trends.
+The pre-treatment estimates are useful diagnostics. Since treatment has not yet occurred, they should generally be close to zero, unless units anticipate the treatment or treated and control units were already following different trends.
 
-The post-treatment estimates describe treatment dynamics. The effect may appear immediately, grow over time, fade out, or change sign.
+The post-treatment estimates describe treatment dynamics. The effect may appear immediately, grow over time, fade out, or even change sign.
 
 ::: {.callout-note appearance="simple"}
 ### Event-time plot
 
-An event-study plot shows pre-treatment diagnostic estimates and post-treatment dynamic effects, usually with confidence intervals and a vertical line at the treatment date.
+The right-hand graph of Figure 7.1 provides a typical example of an event-study plot, showing pre-treatment diagnostic estimates and post-treatment dynamic effects, usually with confidence intervals and a vertical line at the treatment date. This visual representation makes the results particularly immediate and easy to interpret, allowing researchers to assess both pre-treatment patterns and the evolution of treatment effects at a glance. This transparency has likely contributed to the widespread adoption of event-study designs in applied research.
 :::
 
 ## Why Not Just Use TWFE?
@@ -102,15 +102,15 @@ $$
 
 Here, $\mathcal{L}$ is the set of event-time horizons included in the regression, $\alpha_i$ are unit fixed effects, $\lambda_t$ are time fixed effects, and the period just before treatment, $\ell=-1$, is omitted as the reference period. The coefficients $\beta_{\ell}$ describe outcome differences at each event-time horizon relative to the omitted period. They should not be confused with the modern event-time aggregates $ATT^{ES}(\ell)$ defined below. Under staggered adoption and heterogeneous effects, $\beta_{\ell}$ need not identify a clean weighted average of causal effects.
 
-This specification is intuitive, but it can be problematic under staggered adoption as we have already seen at the end of [Chapter 6](../chapters/06-difference-in-differences.qmd). To avoid such identification issues, modern event-study methods construct comparisons more carefully.
+This specification is intuitive, but it can be problematic under staggered adoption as we have already seen at the end of [Chapter 6](../chapters/06-difference-in-differences.qmd). To avoid such identification issues, modern event-study methods construct comparisons more carefully as shown below.
 
 ## Clean Comparisons
 
-The safest comparisons are usually those between newly treated units and units that are still untreated at the same calendar time, either because they will be treated later or because they are never treated in the analysis sample.
+The safest comparisons are usually those between newly treated units and units that are still untreated at the same calendar time, either because they will be treated later or because they remain untreated throughout the analyzed period.
 
 Suppose one group is first treated in period $g$. To estimate its effect at time $t\geq g$, we compare the change in outcomes for this group with the change in outcomes for units that are valid controls for cohort $g$ at time $t$.
 
-The identifying idea is a version of parallel trends:
+The identifying assumption is a modified version of the parallel trends assumption:
 
 $$
 E\left[Y_{it}(\infty)-Y_{i,g-1}(\infty)\mid G_i=g\right]
@@ -149,7 +149,7 @@ In staggered-adoption designs, **not-yet-treated units** can be attractive compa
 
 However, not-yet-treated units can serve as “clean” controls only up to the point at which they receive treatment. After that, their outcomes may reflect treatment effects, and using them as controls can bias ATT estimates in later periods by design.
 
-There is therefore a subtle trade-off. Eventually treated units can be used as controls only while they remain untreated; using their observations after treatment would contaminate the comparison group. Restricting the comparison group to never-treated units avoids this problem, but defines controls using their full treatment path and may leave a smaller or less comparable group. This is not, by itself, a violation of the potential outcomes framework. It changes the comparison being made and may affect the target population and the plausibility of parallel trends. Modern staggered-adoption applications should therefore state clearly which units serve as controls at each time and when they stop contributing.
+  There is therefore a trade-off between using **not-yet-treated units** and restricting the control group to **never-treated units**. Using not-yet-treated units enlarges the pool of available controls and may provide more comparable units, but each of these units can serve as a control only until it becomes treated. As treatment adoption progresses, the composition of the control group therefore changes over time. Restricting the analysis to never-treated units instead provides a stable group that remains unaffected by treatment throughout the analyzed period. However, this group may be smaller and systematically different from the treated units, making the parallel-trends assumption less plausible. Neither choice is inherently preferable: researchers should make clear which units serve as controls at each point in time and assess whether they provide a credible comparison for the treated units.
 :::
 
 In both cases, the comparison can also be adjusted for observed covariates. This means that treated units in cohort $g$ are compared with control units that are similar in terms of pre-treatment characteristics, rather than being compared mechanically with all available untreated units.
@@ -186,16 +186,16 @@ In short, Callaway and Sant'Anna start from cohort-time causal parameters and th
 
 ## Matching DiD for Panel Data
 
-Another approach is to combine matching and DiD. The basic matching DiD estimator controls for observed differences through matching and for time-invariant unobserved differences through differencing [@heckman1997].
+Another approach is to combine matching with DiD. The basic matching DiD estimator, already presented in [Chapter 6](../chapters/06-difference-in-differences.qmd), uses matching to account for observed differences between treated and control units and differencing to account for time-invariant unobserved differences [@heckman1997].
 
-Imai, Kim, and Wang extend this logic to time-series cross-sectional data through **PanelMatch** [@imai2023]. The method constructs matched sets for treated observations using their pre-treatment histories.
+Imai, Kim, and Wang extend this logic to time-series cross-sectional (TSCS) data^[**TSCS data** have essentially the same two-dimensional structure as panel data: multiple units are observed repeatedly over time. The term *TSCS* is especially common in political science, often for aggregate units such as countries, states, or municipalities observed over a relatively long time span. There is no sharp boundary between TSCS and panel data.] through **PanelMatch** [@imai2023], ], a non-parametric matching approach that provides an alternative way to estimate the dynamic treatment effects typically displayed in event-study analyses. The method constructs matched sets for treated observations using their pre-treatment histories.
 
 The procedure can be summarized in four steps:
 
-1. Identify treated unit-periods.
-2. Match treated observations to control observations with similar pre-treatment histories.
-3. Use the matched controls to construct counterfactual outcomes.
-4. Estimate dynamic treatment effects over future horizons.
+1. For each treated unit-period, construct an initial set of eligible controls observed at the same time through exact matching, requiring controls to have the same treatment history over a chosen number of pre-treatment periods and, when appropriate, the same values of selected covariates.^[**Exact matching** requires treated and control observations to have exactly the same values for the variables on which the restriction is imposed. For example, a treated municipality may be compared only with municipalities in the same region or population category. This differs from matching methods that allow controls to be similar, but not identical, on these characteristics.]
+2. Refine this initial matched set by selecting or reweighting controls to improve balance in pre-treatment outcomes and covariate histories.
+3. Use the resulting matched controls to construct counterfactual outcomes for the treated observations.
+4. Estimate treatment effects over different post-treatment horizons.
 
 This approach is attractive because it makes the construction of the control group transparent. It also allows researchers to inspect balance not only in baseline covariates, but also in lagged outcomes and covariate histories.
 
@@ -230,7 +230,7 @@ $$
 \sum_{g\in\mathcal{G}_{\ell}}\omega_{g\ell}=1.
 $$
 
-The weights determine how much each contributing cohort matters for the event-time effect. They may, for example, be proportional to cohort size. The corresponding sample estimate is denoted by $\widehat{ATT}^{ES}(\ell)$.
+The weights determine how much each contributing cohort matters for the event-time effect. A natural, and generally preferable, choice is to weight cohorts in proportion to their size, so that the aggregate effect reflects the relative number of treated units represented by each cohort. The corresponding sample estimate is denoted by $\widehat{ATT}^{ES}(\ell)$.
 
 The event-study plot then becomes a compact visual summary of both pre-treatment diagnostics and post-treatment dynamics.
 
@@ -301,15 +301,15 @@ For this reason, event-study plots should be interpreted with care. Researchers 
 
 ![This figure illustrates how event-study estimates are constructed under staggered treatment adoption. The left panel shows that cohorts receive the treatment in different periods and may differ in the number of treated units. The upper-right panel maps these cohorts into event time: at each post-treatment value of $\ell$, the event-study estimate aggregates the available cohort-specific treatment effects, with weights proportional to cohort size. Pre-treatment points are diagnostic placebo estimates. A key point is that event-time estimates are not always based on the same set of cohorts. In the central part of the event-study window, all cohorts contribute to the aggregate estimate. At the extremes, only some cohorts are observed. As shown in the lower panel, estimates for early leads and late lags are therefore based on fewer treated units and may be less precise, as reflected in wider confidence intervals. The figure also highlights an additional issue: when treatment effects are heterogeneous across cohorts, changes in the estimated event-study profile may reflect both true effect dynamics and changes in composition. For example, the steeper increase from period $+3$ onward may partly depend on the fact that the composition of contributing cohorts changes once Cohort 4 drops out. As an alternative, researchers may restrict event-study plots to the pre- and post-treatment periods in which all cohorts are observed. In this example, this would limit the event-study window to periods from $-2$ to $+2$. The point at $\ell=-1$ is the reference period: it is normalized to zero and is not estimated separately.](../images/event-study-building-blocks-aggregation_v5.png)
 
-## Empirical Example
+::: {.callout-note appearance="simple"}
+### Application: Follow up on unilateral divorce laws and dynamic effects
 
-A classic application of event-study methods is Wolfers' analysis of unilateral divorce laws in the United States [@wolfers2006]. The empirical question is whether making divorce easier by allowing unilateral divorce changed divorce rates. The setting is well suited to an event-study design because U.S. states adopted unilateral divorce laws in different years. Some states changed their divorce laws early, others later, and some did not adopt them during the same period.
+A classic application of event-study methods is Wolfers’ analysis of unilateral divorce laws in the United States [@wolfers2006]. We already introduced this application in [Chapter 6](../chapters/06-difference-in-differences.qmd) to illustrate the logic of DiD. Here, we return to the same setting from an **event-study perspective**, focusing on how the effects evolve relative to the timing of policy adoption.
 
-This staggered timing makes it possible to compare the evolution of divorce rates before and after adoption across different groups of states. The event-study framework is especially useful because the effect of the reform need not be immediate or constant over time. Divorce rates may respond gradually after the law changes, and the effect may increase, decline, or disappear several years after adoption.
+The setting is well suited to an event-study design because U.S. states adopted unilateral divorce laws in different years. This staggered timing makes it possible to compare the evolution of divorce rates before and after adoption across different groups of states. The event-study framework is especially useful because the effect of the reform need not be immediate or constant over time. Divorce rates may respond gradually after the law changes, and the effect may increase, decline, or disappear several years after adoption.
 
 The application also illustrates why modern DiD methods are needed in staggered-adoption settings. If treatment effects vary across cohorts or over time, a simple TWFE event-study regression may combine comparisons that are difficult to interpret, including comparisons between newly treated states and states that were already treated. Modern estimators instead make the comparison more explicit: they compare states adopting the reform at a given time with states that are not yet treated or never treated, and then aggregate the resulting cohort-time effects using transparent weights.
-
-This example is useful pedagogically because it shows the core purpose of event-study analysis: not only estimating whether a policy had an effect, but also examining pre-treatment diagnostics and tracing how the effect evolves after treatment adoption.
+:::
 
 ## Diagnostics and Validity Checks
 
@@ -317,15 +317,15 @@ A credible event-study analysis should report:
 
 - the timing of treatment adoption across units;
 - which units are used as controls at each horizon;
-- whether never-treated or not-yet-treated units are used;
+- whether treatment is absorbing or can turn on and off;^[An **absorbing treatment** is one that, once adopted, remains in place in all subsequent periods. By contrast, a non-absorbing treatment can switch on and off over time, so the same unit may move between treated and untreated states.]
+- whether never-treated and/or not-yet-treated units are used;
 - event-time plots with confidence intervals;
-- whether treatment is absorbing or can turn on and off;
-- whether anticipation or carryover effects are plausible;
+- whether anticipation or carryover effects are plausible;^[**Carryover effects** occur when treatment continues to affect outcomes even after it has ended. In this case, a unit that is currently untreated may still be influenced by its past treatment exposure, complicating the definition of a clean control period.]
 - how group-time effects are aggregated.
 
 The treatment variation plot is often useful. It shows when units become treated and whether enough untreated or not-yet-treated units remain available as controls at each point in time.
 
-![Generic example of a treatment variation plot for a setting with staggered treatment adoption.](../images/treatment_variation_plot.png)
+![Generic example of a treatment-variation plot in a setting with staggered adoption and an absorbing treatment.](../images/treatment_variation_plot.png)
 
 ## Worked Example
 
@@ -341,7 +341,7 @@ A modern event-study approach would instead proceed as follows:
 4. Aggregate these effects by event time.
 5. Plot pre-treatment diagnostics and post-treatment dynamic effects.
 
-If the pre-treatment estimates are close to zero and the post-treatment estimates rise gradually, the evidence would be consistent with a delayed positive employment effect. If pre-treatment estimates are already rising before adoption, the design would be less credible.
+If the pre-treatment estimates are close to zero and the post-treatment estimates increase gradually, the evidence would be consistent with a positive employment effect that emerges over time. By contrast, if the estimates are already increasing before treatment begins, the credibility of the design would be weakened.
 
 ::: {.callout-warning}
 ### A reassuring event-study plot may still be misleading
@@ -350,16 +350,18 @@ In a 2025 LinkedIn post titled *Event Studies Madness*, I construct a deliberate
 
 The conclusion is clearly not credible. Serie A and Serie B teams differ substantially in budgets, player quality, competitive environment, and many other characteristics. Similar outcome trends over a short pre-treatment period do not make these teams valid counterfactuals for one another.
 
-The example illustrates an important limitation of event-study diagnostics: pre-treatment estimates close to zero do not prove that the **parallel-trends assumption** is valid. They show only that treated and control units followed similar trends before treatment, whereas the key assumption concerns the counterfactual post-treatment period, namely how treated outcomes would have evolved relative to control outcomes *after treatment, in the absence of treatment*. Pre-treatment estimates are therefore useful diagnostic evidence, but they cannot replace a substantive justification of the comparison group. Researchers should explain why treated and control units are exposed to comparable underlying dynamics, examine differences in relevant pre-treatment characteristics, and discuss institutional reasons why their untreated outcomes should have evolved similarly.
+The example illustrates an important limitation of event-study diagnostics: pre-treatment estimates close to zero do not prove that the **parallel-trends assumption** is valid. They show only that treated and control units followed similar trends before treatment, whereas the key assumption concerns the counterfactual post-treatment period, namely how treated outcomes would have evolved relative to control outcomes *after treatment, in the absence of treatment*. Pre-treatment estimates are therefore useful diagnostic evidence, but they cannot replace a substantive justification of the comparison group. **Researchers should always explain why treated and control units are likely to be exposed to comparable underlying dynamics, examine differences in relevant pre-treatment characteristics, and discuss institutional reasons why their outcomes would have evolved similarly in the absence of treatment.**
 :::
 
 ## Summary
 
 Event studies extend DiD by organizing effects around the timing of treatment. They are especially useful for staggered adoption and dynamic treatment effects.
 
-The modern lesson is that event-study plots should not be produced mechanically with TWFE regressions. When treatment effects are heterogeneous, TWFE may use problematic comparisons and implicit weights.
+This is correct. I would make it slightly smoother and more precise:
 
-Modern event-study estimators instead build effects from clearer comparisons, such as treated cohorts versus not-yet-treated or never-treated units, and then aggregate group-time effects transparently. The central questions are always: what is the comparison group, what is the target estimand, and how are the dynamic effects aggregated?
+The lesson of recent years is that event-study estimates should not be produced mechanically using TWFE regressions. In particular, when treatment adoption is staggered and treatment effects are heterogeneous, TWFE estimators may rely on problematic comparisons and assign implicit weights that complicate the interpretation of the estimated effects.
+
+Modern event-study estimators instead build effects from clearer comparisons, such as treated cohorts versus not-yet-treated or never-treated units, and then aggregate group-time effects transparently. The central questions are: what is the comparison group, what is the target estimand, and how are the dynamic effects aggregated?
 
 ::: {.callout-note appearance="simple"}
 ## Software packages

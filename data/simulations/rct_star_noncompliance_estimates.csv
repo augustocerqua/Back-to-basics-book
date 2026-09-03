@@ -1,0 +1,5 @@
+"method","estimand","estimate","std_error","conf_low","conf_high","true_value"
+"ITT: compare assignment groups","Effect of assignment (ITT)",2.46119135442238,0.274293944479188,1.92345487906414,2.99892782978062,2.3384
+"Naive as-treated comparison","Effect of treatment receipt",7.17517190303862,0.285905129821882,6.61467241009803,7.73567139597921,4
+"Adjusted as-treated regression","Effect of treatment receipt",4.54129338487843,0.1768672757803,4.19455555397348,4.88803121578337,4
+"Wald ratio (preview of IV)","LATE for compliers",4.1828541033693,0.447660927336804,3.30545480850336,5.06025339823523,4

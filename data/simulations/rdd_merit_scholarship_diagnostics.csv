@@ -1,0 +1,3 @@
+"scenario","motivation_jump","motivation_conf_low","motivation_conf_high","density_test_statistic","density_test_p_value","manipulated_candidates","manipulated_share"
+"Ideal: no manipulation",0.183228258886721,-0.0274707045750948,0.393927222348537,0.113437540189917,0.909683679009314,0,0
+"Failure: manipulation near cutoff",1.43287885195449,1.20645161051614,1.65930609339285,8.42448323987684,3.62345863082118e-17,193,0.0193

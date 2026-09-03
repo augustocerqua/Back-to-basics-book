@@ -1,0 +1,3 @@
+"scenario","estimate","standard_error","conf_low","conf_high","bandwidth_left","bandwidth_right","observations_left","observations_right","true_effect"
+"Ideal: no manipulation",3.98441110874558,0.341609395122464,3.31486899752503,4.65395321996612,1.00737954468876,1.00737954468876,2097,2020,4
+"Failure: manipulation near cutoff",7.04975904013102,0.369420907471836,6.32570736635012,7.77381071391192,0.511267021651173,0.511267021651173,839,1227,4

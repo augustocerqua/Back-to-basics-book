@@ -77,26 +77,14 @@ $$
 DIM = ATT + Bias.
 $$
 
-This shows why a simple comparison between treated and untreated units does not generally identify the ATT. The clearest exception is the RCT: random assignment makes treated and untreated units comparable in expectation, so that
-
-$$
-E[Y_i(0) \mid D_i=1] = E[Y_i(0) \mid D_i=0].
-$$
-
-This shows why a simple comparison between treated and untreated units does not generally identify the ATT. The clearest exception is the RCT: random assignment makes treated and untreated units comparable in expectation, so that
-
-$$
-E[Y_i(0) \mid D_i=1] = E[Y_i(0) \mid D_i=0].
-$$
-
-In that case, selection bias is zero and the DIM estimator identifies the average treatment effect. More precisely, in a randomized experiment the DIM identifies the ATE for the study population; since treatment status is randomly assigned, the ATT coincides with the ATE in expectation. Therefore, in this special case, the same simple comparison can also be interpreted as identifying the ATT.
+This shows why a simple comparison between treated and untreated units does not generally identify the ATT. The clearest exception is the RCT: as shown in [Chapter 4](../chapters/04-randomized-experiments.qmd), random assignment makes treated and untreated units comparable in expectation.
 :::
 
 ## Other causal parameters of interest: LATE and ITT
 
 Besides the ATE and ATT, two other causal parameters are especially important in experimental and quasi-experimental settings: the **local average treatment effect (LATE)** and the **intention-to-treat effect (ITT)**.
 
-**The local average treatment effect (LATE)**. LATE is the average treatment effect for the subset of units whose treatment status is changed by an instrument or an assignment rule. Suppose students become eligible for a scholarship only if their test score is above a given cutoff. This creates a setting suitable for an RD design, because students just above and just below the cutoff are likely to be very similar, except for scholarship eligibility. The LATE is the effect of the scholarship for students close to the cutoff whose treatment status is changed by the eligibility rule. It is therefore a **local** effect: it applies to units near the threshold, not necessarily to all students.
+**The local average treatment effect (LATE)**. LATE is the average treatment effect for the subset of units whose treatment status is changed by an instrument or an assignment rule. Suppose students become eligible for a scholarship only if their test score is above a given cutoff. This creates a setting suitable for an RD design (see [Chapter 9](../chapters/09-regression-discontinuity.qmd)), because students just above and just below the cutoff are likely to be very similar, except for scholarship eligibility. The LATE is the effect of the scholarship for students close to the cutoff whose treatment status is changed by the eligibility rule. It is therefore a **local** effect: it applies to units near the threshold, not necessarily to all students.
 The LATE is relevant because many empirical designs do not identify the effect for the whole targeted population. Instead, they identify the effect for the units whose behavior is shifted by the source of exogenous variation (that is, a factor that changes treatment status but is otherwise unrelated to what the units' outcomes would have been). This means that the estimated effect may depend on the specific instrument or assignment rule being used.
 
 **The intention-to-treat effect (ITT)**. ITT measures the effect of being assigned or offered treatment, regardless of whether units actually receive or comply with the treatment. It is especially relevant in randomized experiments with imperfect compliance. For policy purposes, the ITT is often meaningful because it captures the effect of implementing an offer, eligibility rule, or assignment mechanism in the real world. For example, suppose a development program randomly offers farmers a voucher for improved seeds and fertilizer, but only some farmers actually redeem the voucher and use the inputs. The ITT compares the average outcomes of farmers who were offered the voucher with those who were not, regardless of actual take-up. It therefore estimates the effect of the policy offer itself, rather than the effect of actually using the improved inputs.
@@ -120,4 +108,4 @@ CATT(x) =
 E[Y_i(1)-Y_i(0) \mid D_i=1, X_i=x].
 $$
 
-These conditional parameters are useful because they tell us not only whether a policy works on average, but also for whom it works best. ([See Chapter 12 for a deeper discussion.](../chapters/12-heterogeneous_treatment_effects.qmd))
+These conditional parameters are useful because they tell us not only whether a policy works on average, but also for whom it works best. [See Chapter 12 for a deeper discussion.](../chapters/12-heterogeneous_treatment_effects.qmd)

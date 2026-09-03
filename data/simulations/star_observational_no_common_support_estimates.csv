@@ -1,0 +1,3 @@
+"method","estimand","estimate","std_error","conf_low","conf_high","true_value","analysis_sample"
+"Linear OLS on the full sample","ATT",4.85212644494281,0.263264208616459,4.33601304103351,5.36823984885211,4,"All treated pupils"
+"PSM with a 0.05 propensity-score caliper","ATT in common support",3.98141422091296,0.235591741140024,3.51966289322343,4.44316554860249,4,"Matched treated pupils"

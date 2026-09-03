@@ -3,6 +3,9 @@ project:
   output-dir: docs
   resources:
     - .nojekyll
+    - code/16-causal-methods-in-practice.R
+    - data/simulations/rct_star_ideal.csv
+    - data/simulations/rct_star_noncompliance.csv
 
 book:
   title: "The Backbone of Impact Evaluation Methods"
@@ -49,6 +52,9 @@ book:
         - chapters/13-spillover_effects.qmd
         - chapters/14-continuous_treatment.qmd
         - chapters/15-miscellanea.qmd
+    - part: "Impact evaluation methods in practice"
+      chapters:
+        - chapters/16-causal-methods-in-practice.qmd
   appendices:
     - chapters/appendix-technical-language.qmd
     - chapters/references.qmd
@@ -58,17 +64,24 @@ bibliography: references/references.bib
 
 format:
   html:
+    reference-location: margin
     theme:
       light: cosmo
       dark: darkly
     css: styles/styles.css
-    toc: true
-    toc-depth: 3
-    number-sections: true
     code-fold: false
     code-tools: false
-    fig-cap-location: bottom
-    tbl-cap-location: top
+
+  pdf:
+    reference-location: document
+    header-includes:
+      - \setlength{\LTpost}{1pt}
+
+toc: true
+toc-depth: 3
+number-sections: true
+fig-cap-location: bottom
+tbl-cap-location: top
 
 execute:
   freeze: auto

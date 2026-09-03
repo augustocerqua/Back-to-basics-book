@@ -1,6 +1,6 @@
 # Miscellanea
 
-This chapter discusses several important topics that do not fit neatly into each of the previous chapters, but are highly relevant for understanding modern causal analysis. The book has mainly focused on how to estimate causal effects using research designs such as RCTs, DiD, RDD, IV, matching, synthetic control and FBCMs. These methods are powerful because they make the counterfactual comparison explicit.
+This chapter discusses several important topics that do not fit neatly into each of the previous chapters, but are highly relevant for understanding modern causal analysis. The book has mainly focused on how to estimate causal effects using research designs such as RCTs, DiD, RD, IV, matching, synthetic control and FBCMs. These methods are powerful because they make the counterfactual comparison explicit.
 
 However, causal inference does not end with estimating one average effect. Researchers often want to understand why an effect occurs, how flexible prediction tools can help causal analysis, and what role theory should play. The topics in this chapter provide a bridge between the basic logic of impact evaluation and broader approaches to causal research.
 

@@ -12,7 +12,7 @@ This second part is the **no-interference assumption**. Spillover effects arise 
 Spillover effects occur when the treatment of one unit affects the outcomes of other units.
 :::
 
-Spillovers are not a technical nuisance only. In many policy settings, they are part of the mechanism through which the policy is expected to work. A regional development program may aim to support treated firms, but also to stimulate local suppliers, competitors, workers, and neighboring areas. A vaccination campaign may directly protect vaccinated individuals, but also indirectly protect unvaccinated individuals by reducing disease transmission.
+**Spillovers are not a technical nuisance only. In many policy settings, they are part of the mechanism through which the policy is expected to work.** A regional development program may aim to support treated firms, but also to stimulate local suppliers, competitors, workers, and neighboring areas. A vaccination campaign may directly protect vaccinated individuals, but also indirectly protect unvaccinated individuals by reducing disease transmission.
 
 ::: {.callout-note}
 ## Spillovers in a figure
@@ -27,22 +27,24 @@ When these indirect effects exist, treatment effect estimates obtained by compar
 
 Angelucci and Di Maro [-@angelucci2016spillovers] illustrate this problem using a hypothetical school deworming program. Suppose that, without the program, the infection rate would be 80%. After treating some pupils, the infection rate falls to 10% among treated pupils and to 60% among untreated pupils because reduced transmission also benefits them.
 
-A naive comparison within the school estimates an effect of
+```{=latex}
+\smallskip
+```
 
-$$
-10\%-60\%=-50
-$$
+A naive comparison within the school estimates an effect of $10\%-60\%=-50$ percentage points. However, relative to the no-program counterfactual, the effect on treated pupils is actually $10\%-80\%=-70$ percentage points, while the spillover effect on untreated pupils is $60\%-80\%=-20$ percentage points.
 
-percentage points. However, relative to the no-program counterfactual, the effect on treated pupils is actually $10\%-80\%=-70$ percentage points, while the spillover effect on untreated pupils is $60\%-80\%=-20$ percentage points.
+```{=latex}
+\smallskip
+```
 
-Ignoring spillovers therefore creates a **double underestimation**: it understates the benefit for treated pupils and completely overlooks the benefit received by untreated pupils. Individual randomization within the same school does not solve this problem because the control group is exposed to the treatment indirectly.
+Ignoring spillovers therefore creates a **double underestimation**: it understates the benefit for treated pupils and completely overlooks the benefit received by untreated pupils. Treatment randomization within the same school does not solve this problem because the control group is exposed to the treatment indirectly.
 :::
 
 ## Why Spillovers Matter
 
 Suppose a training program improves the job prospects of treated workers. If treated workers obtain jobs that would otherwise have gone to untreated workers, the program generates a **substitution effect**. The treated group benefits, but part of the gain comes at the expense of the untreated group.
 
-In this case, the untreated group no longer represents what would have happened to the treated group in the absence of the treatment. This problem can arise even under random assignment, because the control group is itself affected by the treatment.
+In this case, the untreated group no longer represents what would have happened to the treated group in the absence of the treatment.
 
 Spillovers can also be positive. For example, providing medicine to some children may reduce disease transmission and benefit untreated children as well. If better health improves learning, both treated and untreated children may experience educational gains.
 
@@ -51,7 +53,7 @@ The same logic applies to local economic policies. A subsidy to some firms may i
 ::: {.callout-warning}
 ### A contaminated control group
 
-If untreated units are affected by the treatment received by other units, they are no longer pure controls. Comparing treated and untreated units may understate or overstate the treatment effects of interest.
+If untreated units are affected by the treatment received by other units, they are no longer valid controls because their outcomes no longer represent the untreated counterfactual. This **contaminates the control group and biases the estimated treatment effect**. Depending on the direction and magnitude of the spillovers, the resulting estimate may understate or overstate the treatment effect of interest.
 :::
 
 ## Relaxing the no-interference assumption
@@ -68,7 +70,7 @@ $$
 Y_i = Y_i(D_1,D_2,\ldots,D_N).
 $$
 
-This creates a serious dimensionality problem. With $N$ units and a binary treatment, each unit may have a different potential outcome for each possible treatment allocation in the population. Instead of two potential outcomes per unit, the number of possible exposure states grows extremely quickly.
+This creates a severe dimensionality problem. With $N$ units and a binary treatment, there are $2^N$ possible treatment allocations, and unit $i$ may in principle have a different potential outcome under each of them. The potential-outcomes framework therefore expands from two potential outcomes per unit to an exponentially growing set of possibilities. **Without additional restrictions on how other units’ treatments affect unit $i$, causal inference quickly becomes intractable**, because only one treatment allocation is observed while an enormous number of counterfactual exposure configurations remain unobserved.
 
 This is why causal inference with interference requires structure. We need assumptions that reduce the number of relevant potential outcomes and define which forms of exposure matter.
 
@@ -94,13 +96,17 @@ For example, if $G_i$ is defined as the share of treated neighboring municipalit
 The credibility of the analysis therefore depends on whether the chosen exposure mapping captures the spillover channels that matter in the application.
 :::
 
-The **direct effect** compares treated and untreated status while holding exposure fixed:
+Once potential outcomes are indexed by both own treatment status and exposure to others' treatment, there is no longer a single treatment effect. Different causal questions correspond to changing different components of $(d,g)$. We can therefore distinguish between **direct**, **indirect**, **total**, and **overall effects**, depending on whether we vary the unit's own treatment, its exposure to others' treatment, or both.
+
+To make these comparisons concrete, let $g_0$ denote the **baseline exposure level**, corresponding to no exposure to others' treatment, and let $g_1$ denote a higher level of exposure.^[If exposure is measured as the share of treated neighbors, for example, $g_0=0$ corresponds to having no treated neighbors, while $g_1>0$ represents positive exposure.]
+
+The **direct effect** compares treated and untreated status while holding exposure fixed at a given level $g$, where $g$ can take any admissible exposure value, including the baseline level $g_0$:
 
 $$
 DE(g)=E[Y_i(1,g)-Y_i(0,g)].
 $$
 
-This captures the effect of receiving the treatment directly, for a given level of spillover exposure.
+This captures the effect of receiving the treatment directly for units exposed to the same level $g$ of spillovers. In particular, $DE(g_0)$ is the direct effect when units are unexposed to others' treatment.
 
 The **indirect effect** compares different exposure levels while holding the unit's own treatment status fixed. For untreated units, it can be written as
 
@@ -108,7 +114,7 @@ $$
 IE(0;g_1,g_0)=E[Y_i(0,g_1)-Y_i(0,g_0)].
 $$
 
-This captures the spillover effect on units that do not receive the treatment directly.
+This captures the spillover effect of moving an untreated unit from no exposure, $g_0$, to a higher exposure level, $g_1$.
 
 The **total effect** compares being treated and exposed to a treated environment with being untreated and unexposed:
 
@@ -116,7 +122,20 @@ $$
 TE(g_1,g_0)=E[Y_i(1,g_1)-Y_i(0,g_0)].
 $$
 
-The **overall effect** summarizes the effect of the policy on the whole population, including both directly treated units and indirectly affected untreated units.
+It therefore combines the effect of receiving the treatment directly with the effect of moving from no exposure, $g_0$, to the higher exposure level $g_1$.
+
+The **overall effect** takes a population-wide perspective. Rather than focusing on a particular combination of own treatment and exposure, it compares average outcomes under the policy with average outcomes under a counterfactual scenario in which no unit is treated and, consequently, no unit is exposed to others' treatment. If the policy generates treatment status $d_i^1$ and exposure $g_i^1$ for each unit $i$, the overall effect can be written as
+
+$$
+OE=
+\frac{1}{N}\sum_{i=1}^{N}
+\left[
+Y_i(d_i^1,g_i^1)-Y_i(0,g_0)
+\right].
+$$
+
+The overall effect therefore captures the **total impact of the policy on the population**, combining the direct effects on treated units with the spillover effects generated by their treatment on other units.^[Unlike the total effect, which compares two specific treatment-exposure states, the overall effect averages over the different treatment and exposure conditions generated by the policy across the population.]
+
 
 ::: {.callout-note}
 ### Four effects
@@ -134,13 +153,13 @@ $$
 
 Without spillovers, the average outcome of untreated units provides a reliable estimate of the missing counterfactual outcome for treated units.
 
-With spillovers, however, untreated units may be exposed to the treatment of others. If untreated units benefit from positive spillovers, their observed outcomes are higher than they would have been without the policy. The treated-control difference may then understate the total effect of the program.
+With spillovers, however, untreated units may themselves be affected by the policy and therefore no longer provide a clean untreated counterfactual. If, for instance, untreated units benefit from positive spillovers, their observed outcomes are higher than they would have been in the absence of the policy. A treated-control comparison then subtracts part of the policy-induced benefit and may **understate the total effect of the program**.
 
-If untreated units are harmed by negative spillovers, their observed outcomes are lower than they would have been without the policy. In that case, the treated-control difference may overstate the direct effect.
+Conversely, if untreated units are harmed by negative spillovers, their observed outcomes are lower than they would have been in the absence of the policy. The treated-control difference may then **overstate the effect of the program**, because part of the observed gap is generated by the negative spillover on the control group rather than by the direct effect of treatment.
 
 The bias depends on the type, direction, and intensity of interference.
 
-**Randomization does not automatically solve the problem of spillovers**. If treated units affect untreated units, then even a perfectly randomized experiment may not identify the treatment effects of interest.
+**Randomization does not automatically solve the problem of spillovers**. If treated units affect untreated units, then even a perfectly randomized experiment will not identify the treatment effects of interest.
 
 For example, in an experiment on job training, assigning some workers to training may change the labor-market opportunities of untreated workers. In an experiment on vaccination, assigning some individuals to treatment may reduce infection risk for untreated individuals.
 
@@ -209,15 +228,17 @@ $$
 G_i=\sum_{j\neq i}w_{ij}D_j.
 $$
 
-This variable measures how much unit $i$ is exposed to treatment among connected units.
+This variable measures the extent to which unit $i$ is exposed to **treatment received by other connected units**, with the weights $w_{ij}$ determining how strongly the treatment status of each unit $j$ contributes to $i$'s exposure.
 
-A simple spatial lag of $D$ model can be written as
+A simple **spatial lag of the treatment model** can be written as
 
 $$
 Y_i=\alpha+\tau D_i+\theta \sum_{j\neq i}w_{ij}D_j+X_i'\beta+u_i.
 $$
 
-Here, $\tau$ is associated with direct treatment exposure, while $\theta$ is associated with spillover exposure from connected treated units.
+The term $\sum_{j\neq i}w_{ij}D_j$ is the spatial lag of treatment and summarizes unit $i$'s exposure to treatment received by other units, with the spatial weights $w_{ij}$ determining which units are considered connected and how strongly each contributes to $i$'s exposure.^[The spatial weights matrix $W$ must be specified by the researcher. For example, units may be defined as connected when they share a border or are located within a given distance. If the weights are row-standardized, the spatial lag can often be interpreted as a weighted share of connected units that are treated.]
+
+In this specification, $\tau$ captures the effect associated with unit $i$'s **own treatment**, holding its exposure to other treated units fixed, while $\theta$ captures how the outcome changes with **spillover exposure to treatment received by connected units**, holding own treatment status fixed. A positive $\theta$, for example, indicates that greater exposure to treated neighbors is associated with higher outcomes.
 
 ### A Caution on Spatial Econometrics
 
@@ -245,7 +266,7 @@ A credible spillover analysis usually starts from theory. The researcher should 
 
 If some untreated units are plausibly unaffected by the treatment, they can be used as a clean comparison group. In that case, the average total effect on the treated can be estimated by comparing treated units with unexposed untreated units, using familiar methods such as matching, DiD, RD, or SCM.
 
-If some untreated units are exposed to spillovers, they can be compared with unexposed untreated units to estimate indirect effects. This is the logic of applications that explicitly distinguish between treated units, neighboring exposed units, and untreated unexposed units [@cerqua2017spillovers].
+If some untreated units are exposed to spillovers, they can be compared with unexposed untreated units to estimate indirect effects. This is the logic of applications that explicitly distinguish between treated units, neighboring exposed units, and untreated unexposed units [see @cerqua2017spillovers].
 
 The general empirical design should therefore classify units into meaningful exposure categories:
 
@@ -262,7 +283,15 @@ The direct effect is estimated by comparing directly treated units with credible
 
 Di Tella and Schargrodsky's study of police and crime in Buenos Aires [@ditella2004police] provides an application of this logic. After the 1994 terrorist attack on the main Jewish center, Jewish institutions received visible police protection. The authors use this sudden change to compare car thefts before and after the attack across blocks with different exposure to police protection.
 
+```{=latex}
+\smallskip
+```
+
 The key idea is similar to a **DiD rings strategy**. Blocks with protected institutions are directly treated. Nearby unprotected blocks are useful for checking whether crime was displaced just around the corner. Farther blocks provide a comparison group that is less likely to be affected by the extra police presence.
+
+```{=latex}
+\smallskip
+```
 
 This example shows why distance bands can be informative: they do not only estimate whether the intervention worked where it was implemented, but also whether its effects faded, spilled over, or displaced outcomes across nearby locations.
 :::
@@ -287,7 +316,7 @@ Positive spillovers may arise if beneficiary firms strengthen local input–outp
 
 There may also be negative spillovers if subsidized firms compete more aggressively, hire workers away from non-beneficiary firms, or increase local wages and rents.
 
-A simple evaluation that compares subsidized firms with non-subsidized firms may therefore be misleading. Some non-subsidized firms may be indirectly affected by the policy. The evaluation should distinguish:
+A simple evaluation comparing subsidized and non-subsidized firms may therefore be misleading, because some non-subsidized firms may still be indirectly affected by the policy through spillovers. The evaluation should instead distinguish between:
 
 - subsidized firms;
 - non-subsidized firms located near subsidized firms or connected to them through supply chains;
@@ -295,31 +324,45 @@ A simple evaluation that compares subsidized firms with non-subsidized firms may
 
 The policy may have a positive direct effect on subsidized firms, a positive or negative indirect effect on nearby non-subsidized firms, and an overall effect that depends on the balance between the two.
 
+If no units can be considered plausibly unexposed, however, constructing a credible counterfactual from observed control units may no longer be feasible. In such settings, **FBCMs** may provide an alternative by using pre-treatment information to forecast how outcomes would have evolved in the absence of the policy.
+
+::: {.callout-note}
+### When spillovers leave no clean controls
+
+Celli, Cerqua, and Pellegrini show that the presence of spillovers creates an important trade-off between **control-based** and **forecast-based counterfactual methods** [@celli2026spillovers].
+
+CBCMs require untreated units that can credibly represent the no-treatment, no-exposure counterfactual. When spillovers are pervasive, or when the researcher cannot reliably determine which untreated units are exposed, such **clean controls** may not exist or may not be identifiable. In these settings, cross-unit comparisons can become severely contaminated.
+
+FBCMs shift the identifying strategy. Rather than using post-treatment outcomes from other units, they forecast the no-treatment, no-exposure outcome from pre-treatment dynamics. This makes it possible to estimate aggregate policy effects even when all units are directly or indirectly affected by the intervention. The advantage, however, comes with a different identifying burden, as discussed in [Chapter 11](chapters/11-forecast-based-designs.qmd): the credibility of the analysis now depends on the stability and predictability of untreated outcomes. Moreover, exposure-specific direct and spillover effects still require information about the relevant exposure structure.
+
+The practical lesson is therefore not that one class of methods is always preferable. **When credible clean controls exist, CBCMs can use them to construct the counterfactual; when spillovers make clean controls unavailable or difficult to identify, FBCMs may provide a more credible alternative, particularly for aggregate and short-run policy effects.**
+:::
+
 ## Diagnostics and Validity Checks
 
 Several checks are useful in applications with spillovers.
 
-First, report the exposure rule clearly. Readers should understand why a unit is classified as exposed or unexposed.
+1. Report the exposure rule clearly. Readers should understand why a unit is classified as exposed or unexposed.
 
-Second, test sensitivity to alternative exposure definitions. If results change dramatically when using distance thresholds of 10, 20, or 30 kilometers, the interpretation should be cautious.
+2. Test sensitivity to alternative exposure definitions. For example, if exposure is defined using geographic distance, researchers can assess whether the results change substantially when using thresholds of 10, 20, or 30 kilometers. Strong sensitivity to these alternative definitions should lead to a more cautious interpretation.
 
-Third, examine pre-treatment balance and pre-trends across exposure groups. Exposed untreated units may differ systematically from unexposed untreated units.
+3. Examine pre-treatment balance and outcome trends across treatment and exposure groups. In particular, exposed untreated units may differ systematically from unexposed untreated units in both their pre-treatment characteristics and outcome trajectories.
 
-Fourth, check whether exposure intensity is correlated with other shocks. For example, treated areas may be located in places that were already growing faster.
+4. Check whether exposure intensity is correlated with pre-existing trends or other confounding factors. For example, treated areas may be located in places that were already growing faster.
 
-Fifth, report direct, indirect, total, and overall effects separately when possible. A policy may look successful for treated units while harming untreated units nearby.
+5. Report direct, indirect, total, and overall effects separately when possible. A policy may look successful for treated units while harming untreated units nearby.
 
 ## Common Mistakes
 
-The first mistake is to ignore spillovers when they are substantively plausible. This can contaminate the control group and distort the estimated treatment effect.
+1. **Ignoring spillovers when they are substantively plausible.** This can contaminate the control group and distort the estimated treatment effect.
 
-The second mistake is to treat spillovers as a minor robustness issue. In some policies, spillovers are central to the policy logic.
+2. **Treating spillovers as a minor robustness issue.** In some policies, spillovers are central to the policy logic.
 
-The third mistake is to define exposure mechanically without a theory of interaction. Distance, borders, and networks are not interchangeable.
+3. **Defining exposure mechanically without a theory of interaction.** Distance, borders, and networks are not interchangeable measures of exposure.
 
-The fourth mistake is to report only the direct effect. If the policy affects non-treated units, the direct effect may not describe the social value of the policy.
+4. **Reporting only the direct effect.** If the policy also affects untreated units, the direct effect may not capture the overall social value of the policy.
 
-The fifth mistake is to assume that randomization removes interference. Randomization balances treatment assignment, but it does not prevent treated units from affecting untreated units.
+5. **Assuming that randomization eliminates interference.** Randomization balances treatment assignment, but it does not prevent treated units from affecting untreated units.
 
 ## Summary
 
@@ -328,4 +371,3 @@ Spillover effects occur when the treatment of one unit affects the outcomes of o
 The presence of spillovers changes the evaluation question. The researcher should not ask only whether directly treated units benefited. The broader question is how the policy affected the entire system of treated, indirectly exposed, and unexposed units.
 
 Credible spillover analysis requires a theory of interaction, a clear exposure mapping, and an empirical design that can distinguish direct and indirect effects. Without these ingredients, what looks like a treatment effect may simply be a mixture of direct impacts, spillovers, and spatially correlated confounding.
-

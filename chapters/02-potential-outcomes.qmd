@@ -22,7 +22,7 @@ Y_i(1)
 Y_i(0).
 $$
 
-Here, $Y_i(1)$ is the outcome that unit $i$ would experience if treated, while $Y_i(0)$ is the outcome that the same unit would experience if untreated. The individual treatment effect (ITE) is therefore
+Here, $Y_i(1)$ is the outcome that unit $i$ would experience if treated in a generic post-treatment period, say $t_2$, while $Y_i(0)$ is the outcome that the same unit would experience if untreated in that same period. The individual treatment effect (ITE) is therefore
 
 $$
 \Delta_i = Y_i(1)-Y_i(0).
@@ -53,23 +53,23 @@ The reason is that, although we cannot observe both potential outcomes for the s
 
 ## Potential Outcomes and Randomized Controlled Trials
 
-In [randomized experiments](../chapters/04-randomized-experiments.qmd), treatment assignment is controlled by the researcher. In a successful RCT, treatment status is independent of the units’ potential outcomes. In simple terms, this means that the treatment is not assigned to units because they are expected to do better or worse. Randomization makes treatment assignment unrelated to the outcomes units would have experienced with or without the treatment. Formally, random assignment implies
+In [randomized experiments](../chapters/04-randomized-experiments.qmd), treatment assignment is controlled by the researcher. In a successful RCT, treatment status is independent of the units’ potential outcomes. In simple terms, this means that the treatment is not assigned to units because they are expected to do better or worse. Randomization makes treatment assignment unrelated to the outcomes units would have experienced with or without the treatment. Formally, random assignment implies^[$\perp$ denotes statistical independence] 
 
 $$
-(Y_i(1),Y_i(0)) \perp D_i.
+(Y_i(1),Y_i(0)) \perp D_i
 $$
 
-This means that treated and control groups are comparable **on average, not necessarily unit by unit**. The logic of randomization is therefore statistical: it works by making the two groups similar as groups, not by matching each treated unit with an identical untreated unit. By the **law of large numbers**, as the number of units increases, random assignment tends to balance both observed and unobserved characteristics across treatment and control groups.
+This means that treated and control groups are **comparable on average, not necessarily unit by unit**. The logic of randomization is therefore statistical: it works by making the two groups similar as groups, not by matching each treated unit with an identical untreated unit. By the **law of large numbers**, as the number of units increases, random assignment tends to balance both observed and unobserved characteristics across treatment and control groups.
 
 This also clarifies why randomizing only two units, one treated and one untreated, is not enough to make the RCT logic convincing. Even if treatment is randomly assigned, the two units may still differ substantially for reasons unrelated to the treatment. With only two units, there is no averaging that washes out individual idiosyncrasies or pre-existing differences.
 
-With larger samples, instead, the average outcome of the control group provides an estimate of what the treated group would have experienced without treatment. Similarly, the average outcome of the treated group provides information about outcomes under treatment. In formal terms,
+With larger samples, instead, the average outcome of the control group provides an increasingly accurate estimate of what the treated group would have experienced without treatment. Similarly, the average outcome of the treated group provides information about outcomes under treatment. In a realized sample, we therefore expect
 
 $$
-E[Y_i(0)\mid D_i=1] = E[Y_i(0)\mid D_i=0].
+\bar{Y}_T(0) \approx \bar{Y}_C(0).
 $$
 
-Randomization does not reveal the missing counterfactual for each individual unit. It solves the counterfactual problem **on average**, by creating a credible comparison group that reveals the missing average counterfactual.
+Randomization does not reveal the missing counterfactual for each individual unit. It solves the counterfactual problem **on average**, by creating a credible comparison group that reveals the missing average counterfactual.^[The approximate equality reflects sampling variability. Under random assignment, treated and control units are comparable **in expectation**, but their sample averages need not be exactly equal in any particular experiment. As the sample size increases, random imbalances tend to become smaller, so the two averages become increasingly similar.]
 
 This is why, under randomization, average treatment effects can be credibly estimated even when individual treatment effects cannot be observed. RCTs are therefore often considered the benchmark for causal inference: by design, they solve the counterfactual problem for average treatment effects [@neyman1990; @rubin1978].
 
@@ -77,13 +77,13 @@ This is why, under randomization, average treatment effects can be credibly esti
 
 In many social science and policy settings, random assignment is not feasible. Treatment assignment is often shaped by choices, rules, or exposure conditions that are not controlled by the researcher. Individuals, firms, schools, or neighborhoods may select into treatment; policymakers may target specific units; and some units may be more likely to experience certain shocks because of their characteristics or location. Natural disasters provide a simple example: earthquakes are more likely to affect areas near fault lines, while hurricanes are more likely to hit coastal areas exposed to tropical storm paths.
 
-As a result, treated and untreated units may differ even before the treatment occurs. Some of these differences may be observable, while others may be unobservable. If pre-existing differences also affect the outcome of interest, a simple post-treatment comparison may be misleading: it may capture not only the effect of the treatment, but also differences that were already present before treatment assignment.
+As a result, we should expect treated and untreated units to differ even before treatment occurs. Some of these differences may be observable, while others may be unobservable. If pre-existing differences also affect the outcome of interest, a simple post-treatment comparison between treated and untreated units may be misleading: it may capture not only the effect of the treatment, but also differences that were already present before treatment assignment.
 
 This is why simple comparisons may suffer from **selection bias**.
 
 It is also why many empirical researchers look for **natural experiments**. In a natural experiment, an institutional rule, a policy change, a threshold, timing, or an external shock generates variation in treatment that is plausibly unrelated to the units' potential outcomes. This does not make the study automatically equivalent to an RCT, but it can bring observational data closer to the logic of random assignment. The hope is to exploit these quasi-random sources of variation to construct a more credible counterfactual and estimate causal parameters under more plausible assumptions.
 
-Rubin's contribution was to show that the same potential outcomes logic can be applied to observational studies [@rubin1974]. The goal is to reconstruct, as closely as possible, the comparison that a randomized experiment would have produced. Different causal methods do this in different ways. Matching, weighting, DiD, RDD, IV with a binary instrument, and SCM all use information from untreated units to recover credible counterfactual outcomes, but they do so under different assumptions. Still, they share some common identifying assumptions, which are discussed in the next section.
+Rubin's contribution was to show that the same potential outcomes logic can be applied to observational studies [@rubin1974]. The goal is to reconstruct, as closely as possible, the comparison that a randomized experiment would have produced. Different causal methods do this in different ways. Matching, weighting, DiD, RD, IV with a binary instrument, and SCM all use information from untreated units to recover credible counterfactual outcomes, but they do so under different assumptions. Still, they share some common identifying assumptions, which are discussed in the next section.
 
 ## Key Assumptions
 
@@ -96,7 +96,7 @@ For example, attending a training program, receiving a subsidy, or gaining acces
 ::: {.callout-note appearance="simple"}
 ## Going deeper
 
-A related issue arises when a policy does not vary across units or over time. If all units are always observed under the same policy regime, there is no variation in treatment status that can be exploited for identification. A similar problem arises in panel-data designs when some units are always treated and others are never treated: although treatment varies across units, there is no within-unit change.
+A related issue arises when a policy does not vary across units or over time. If all units are always observed under the same policy regime, there is no variation in treatment status that can be exploited for identification. A similar problem arises in panel-data designs when units are either always treated or never treated: although treatment varies across units, it does not vary within units over time.
 
 Consider Acemoglu et al.'s study of the effect of democracy on economic growth [@acemoglu2019democracy]. Their analysis exploits transitions into and out of democracy to examine how countries' economic trajectories change following a change in political regime. Imagine instead that every country had remained either a democracy or a dictatorship throughout the entire observation period. There would be no regime transition to exploit. Researchers could still compare always-democratic countries with always-autocratic countries, but these groups might differ in history, institutions, geography, and many other determinants of economic growth. Interpreting this cross-sectional difference causally would therefore require much stronger assumptions.
 
@@ -117,13 +117,13 @@ $$
 Y_i^{obs} = Y_i(0) \quad \text{if } D_i=0.
 $$
 
-In simple terms, consistency says that the observed outcome is the potential outcome corresponding to the treatment status actually received. It is the bridge between the theoretical notation, $Y_i(1)$ and $Y_i(0)$, and the outcome observed in the dataset.
+In simple terms, consistency says that the observed outcome is the potential outcome corresponding to the treatment status actually received. It is simply the bridge between the theoretical notation, $Y_i(1)$ and $Y_i(0)$, and the outcome observed in the dataset.
 
 **3) Stable Unit Treatment Value Assumption**. A central assumption of the basic potential outcomes framework is the **Stable Unit Treatment Value Assumption (SUTVA)** [@rubin1980]. This assumption allows us to write only two potential outcomes for each unit: $Y_i(1)$ and $Y_i(0)$.
 
 SUTVA has two main components.
 
-i) There should be **no hidden versions of the treatment**. The treatment must be sufficiently homogeneous across treated units. If some units receive a light version of the program and others receive a much more intensive version, then the notation $Y_i(1)$ is too vague. There is not one treatment, but several different treatments.
+i) There should be **no hidden versions of the treatment**. The treatment must be sufficiently homogeneous across treated units. If some units receive one version of the program and others receive a different version, or the same version at a different intensity, then the notation $Y_i(1)$ is too vague because it does not specify which treatment version or intensity is being considered. There is not one treatment, but several different treatments.
 
 ii) There should be **no interference between units**. The potential outcome of one unit should depend only on that unit’s own treatment status, not on the treatment status of other units. This idea is often traced back to Cox’s discussion of interference between experimental units [@cox1958].
 
@@ -144,9 +144,9 @@ SUTVA may fail when the treatment has different versions or intensities, or when
 SUTVA can fail in two main ways:
 
 i) **Different versions or intensities of the treatment.** Suppose that a school introduces a tutoring program for students with low test scores. Some students receive one-to-one tutoring, while others receive group tutoring. If we treat all participants as if they had received the same intervention, we are mixing different versions of the treatment. In this case, the estimated effect would not refer to a clearly defined program.
-A similar problem arises when the treatment varies in intensity. For example, students may receive different amounts of tutoring depending on their needs: some may attend only one hour per week, others three, five, seven, or even more. If we collapse all these different exposure levels into a single binary indicator of participation, the notation $Y_i(1)$ becomes too vague. The problem is not that continuous treatments are incompatible with the potential outcomes framework. Rather, the treatment must be defined accordingly. For instance, we may write potential outcomes as $Y_i(d)$, where $d$ denotes treatment intensity. What violates the first component of SUTVA is treating different doses or versions as if they were the same treatment. ([See Chapter 14 for a deeper discussion.](../chapters/14-continuous_treatment.qmd))
+A similar problem arises when the treatment varies in intensity. For example, students may receive different amounts of tutoring depending on their needs: some may attend only one hour per week, others three, five, seven, or even more. If we collapse all these different exposure levels into a single binary indicator of participation, the notation $Y_i(1)$ becomes too vague. The problem is not that continuous treatments are incompatible with the potential outcomes framework. Rather, the treatment must be defined accordingly. For instance, we may write potential outcomes as $Y_i(d)$, where $d$ denotes treatment intensity. What violates the first component of SUTVA is treating different doses or versions as if they were the same treatment. [See Chapter 14 for a deeper discussion.](../chapters/14-continuous_treatment.qmd)
 
-ii) **The treatment received by one unit may affect the outcomes of other units**. Suppose that students who receive tutoring share materials, explain exercises, or study together with classmates who were not selected for the program. In this case, untreated students are no longer unaffected by the intervention: their outcomes may improve because of their interaction with treated students. This violates the no-interference component of SUTVA. The comparison between tutored and non-tutored students would therefore be contaminated: the control group is not simply untreated, but indirectly exposed to the treatment. Whether control-based methods can still be used in similar scenarios depends on the extent and structure of the spillover effects. If spillovers affect only a clearly identifiable subset of untreated units, researchers may exclude those units from the control group or explicitly treat them as indirectly exposed. In this case, unaffected untreated units may still provide a credible counterfactual. By contrast, if spillovers reach all untreated units, there may be no 'clean' control group left, and standard control-based methods cannot recover the causal parameters of interest without additional strong assumptions. Importantly, spillover effects may also affect treated units. For example, tutored students may benefit not only from the tutoring program itself, but also from interactions with other tutored students. In this case, the causal effect of the treatment on the treated no longer captures only the direct effect of receiving the treatment. It may also include indirect effects generated by the treatment status of other units. It is therefore necessary to clarify exactly which causal effect is being estimated. ([See Chapter 13 for a deeper discussion.](../chapters/13-spillover_effects.qmd))
+ii) **The treatment received by one unit may affect the outcomes of other units**. Suppose that students who receive tutoring share materials, explain exercises, or study together with classmates who were not selected for the program. In this case, untreated students are no longer unaffected by the intervention: their outcomes may improve because of their interaction with treated students. This violates the no-interference component of SUTVA. The comparison between tutored and non-tutored students would therefore be contaminated: the control group is not simply untreated, but indirectly exposed to the treatment. Whether control-based methods can still be used in similar scenarios depends on the extent and structure of the spillover effects. If spillovers affect only a clearly identifiable subset of untreated units, researchers may exclude those units from the control group or explicitly treat them as indirectly exposed. In this case, unaffected untreated units may still provide a credible counterfactual. By contrast, if spillovers reach all untreated units, there may be no 'clean' control group left, and standard control-based methods cannot recover the causal parameters of interest without additional strong assumptions. Importantly, spillover effects may also affect treated units. For example, tutored students may benefit not only from the tutoring program itself, but also from interactions with other tutored students. In this case, the causal effect of the treatment on the treated no longer captures only the direct effect of receiving the treatment. It may also include indirect effects generated by the treatment status of other units. It is therefore necessary to clarify exactly which causal effect is being estimated. [See Chapter 13 for a deeper discussion.](../chapters/13-spillover_effects.qmd)
 
 ## Assignment Mechanism
 
@@ -158,23 +158,23 @@ $$
 (Y_i(1),Y_i(0)) \perp D_i.
 $$
 
-This means that treatment assignment is unrelated to what would have happened to units under either treatment condition. In other words, units expected to do better or worse are not systematically more likely to receive the treatment. Randomization makes treatment status unrelated to the potential outcomes units would have experienced with or without the treatment. As a result, the treated and control groups are comparable on average, and the control group can be used to estimate the missing counterfactual outcome for the treated group.
+This means that treatment assignment is unrelated to the potential outcomes units would experience with or without treatment. Units expected to do better or worse are therefore not systematically more likely to receive the treatment. As a result, treated and control groups are comparable on average, allowing the control group to provide a credible estimate of the treated group’s missing counterfactual outcome.
 
-In **observational studies**, this is usually not true. For instance, let us consider the case of matching methods ([see Chapter 5 for a deeper discussion.](../chapters/05-selection-on-observables.qmd)). The key identifying assumption is the conditional independence assumption (CIA):
+In **observational studies**, this is usually not true. For instance, let us consider the case of matching methods ([see Chapter 5 for a deeper discussion](../chapters/05-selection-on-observables.qmd)). The key identifying assumption is the conditional independence assumption (CIA):
 
 $$
 (Y_i(1),Y_i(0)) \perp D_i \mid X_i.
 $$
 
-This means that, after conditioning on pre-treatment or time-invariant observed covariates $X_i$, treatment assignment is as good as random. In other words, among units with the same, or sufficiently similar, values of $X_i$, treated and untreated units are comparable, and differences in their post-treatment outcomes can be interpreted as estimates of causal effects.
+This means that, after conditioning on pre-treatment or time-invariant observed covariates $X_i$, treatment assignment is as good as random. In other words, among units with the same, or sufficiently similar, values of $X_i$^[$X_i$ should include only pre-treatment or time-invariant characteristics.], treated and untreated units are comparable, and differences in their post-treatment outcomes can be interpreted as estimates of causal effects.
 
 It is important to recognize that this assumption should generally be considered quite strong. It requires that all variables affecting both treatment assignment and potential outcomes are observed and correctly accounted for.
 
-In other words, after conditioning on $X_i$, there should be no remaining systematic differences between treated and untreated units that are related to the outcome. This is demanding because, in observational studies, treatment assignment often depends on factors that are difficult to measure. For example, workers may enter a training program because they are more motivated, firms may apply for subsidies because they have better managers, and neighborhoods may receive a policy because policymakers expect them to respond more strongly.
+In other words, after conditioning on $X_i$, there should be no remaining systematic differences between treated and untreated units that are related to the outcome. This is demanding because, in observational studies, treatment assignment often depends on factors that are difficult to measure. For example, workers may enter a training program because they are more motivated, firms may apply for subsidies because they have better managers, and neighborhoods may receive a new public service (e.g., a nursery) because policymakers expect them to respond more strongly.
 
-If these factors are unobserved and also affect the outcome, then treated and untreated units are still not comparable after conditioning on $X_i$. In that case, CIA fails, and the estimated treatment effect may still reflect selection bias rather than the causal effect of the treatment.
+If these factors are unobserved and affect both treatment assignment and the outcome, they cannot be included in $X_i$. As a result, treated and untreated units may still not be comparable even after conditioning on $X_i$. In that case, CIA fails, and the estimated treatment effect may still reflect selection bias rather than the causal effect of the treatment.
 
-A further difficulty is that, in observational studies, the assignment mechanism is often only partially understood. We usually do not know exactly why some units receive the treatment and others do not, or why they receive it at a particular time, place, or intensity. This makes it harder to assess whether the identifying assumptions behind a given evaluation strategy are plausible. For this reason, the assumptions used in observational studies should not be treated as mechanical conditions that can be satisfied by choosing a sophisticated estimator or adding many controls. They are substantive claims about how treatment assignment took place and about why the resulting comparison can be interpreted as a credible counterfactual.
+A further difficulty is that, in observational studies, the assignment mechanism is often only partially understood. We might not know exactly why some units receive the treatment and others do not, or why they receive it at a particular time, place, or intensity. This makes it harder to assess whether the identifying assumptions behind a given evaluation strategy are plausible. For this reason, the assumptions used in observational studies should not be treated as mechanical conditions that can be satisfied by choosing a sophisticated estimator or adding many controls. They are substantive claims about how treatment assignment took place and about why the resulting comparison can be interpreted as a credible counterfactual.
 
 <!--
 ### Overlap and common support
@@ -198,7 +198,7 @@ It is about comparing observed outcomes with credible counterfactual outcomes.
 
 The potential outcomes framework defines causal effects by comparing potential outcomes under treatment and no treatment. Its main contribution is to make the counterfactual problem explicit.
 
-For each unit, the individual treatment effect is
+For each unit, the individual treatment effect is defined as the difference between $Y_i(1)$ and $Y_i(0)$:
 
 $$
 \Delta_i = Y_i(1)-Y_i(0),

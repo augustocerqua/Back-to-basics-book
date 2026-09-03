@@ -1,6 +1,8 @@
 # Synthetic Control Method
 
-When a policy affects only one unit, or a small number of aggregate units, constructing a credible counterfactual becomes especially challenging. Most impact evaluation methods rely on comparisons between many treated and untreated units. This logic is harder to apply when treatment is assigned to a single country, region, city, or municipality. In such settings, no individual untreated unit is likely to provide a fully convincing representation of what would have happened to the treated unit in the absence of the intervention. The **synthetic control method (SCM)** addresses this problem by constructing the counterfactual as a weighted combination of untreated units.
+<!--When a policy affects only one unit, or a small number of aggregate units, constructing a credible counterfactual becomes especially challenging.
+-->
+Most impact evaluation methods rely on comparisons between many treated and untreated units. This logic is harder to apply when treatment is assigned to a single country, region, city, or municipality. In such settings, no individual untreated unit is likely to provide a fully convincing representation of what would have happened to the treated unit in the absence of the intervention. The **synthetic control method (SCM)** addresses this problem by constructing the counterfactual as a weighted combination of untreated units.
 
 ::: {.callout-note}
 ## SCM in a figure
@@ -11,7 +13,7 @@ When a policy affects only one unit, or a small number of aggregate units, const
 ::: {.callout-note}
 ## SCM in a figure (alternative version)
 
-![In this example, SCM constructs a **synthetic control** by taking a weighted average of untreated donor units. The weights are chosen so that the synthetic control resembles the treated unit before the intervention, in terms of relevant pre-treatment characteristics such as age, wage, and years of education. The treated unit is then compared with this synthetic counterpart after the intervention to estimate the treatment effect.](../images/SCM_in_a_figure_version3.png){width="80%"}
+![SCM constructs a **synthetic control** by taking a weighted average of untreated donor units. The weights are chosen so that the synthetic control resembles the treated unit before the intervention, in terms of relevant pre-treatment characteristics such as age, wage, and years of education. The treated unit is then compared with this synthetic counterpart after the intervention to estimate the treatment effect.](../images/SCM_in_a_figure_version3.png){width="80%"}
 :::
 
 ## The basic intuition
@@ -20,7 +22,7 @@ The idea is simple. Instead of comparing the treated unit with one untreated uni
 
 The untreated units used to build this weighted combination are called the **donor pool**. Each unit in the donor pool receives a weight. In general, units that look more similar to the treated unit before the treatment receive larger weights, while units that are less useful for reproducing the treated unit receive smaller weights or no weight at all. The resulting weighted average is the **synthetic control unit**.
 
-The goal is to construct a synthetic unit that closely reproduces the treated unit before the intervention. If the treated unit and the synthetic control follow similar trajectories before treatment, especially in terms of the key outcome variable, then the synthetic control can be interpreted as a credible approximation of what would have happened to the treated unit’s outcome in the absence of the intervention.
+The goal is to construct a synthetic unit that closely reproduces the treated unit before the intervention. If the treated unit and the synthetic control follow similar pre-treatment trajectories, especially for the outcome of interest, this provides support for using the synthetic control as an approximation of how the treated unit’s outcome would have evolved in the absence of the intervention.
 
 After the treatment occurs, the causal effect is estimated by comparing the observed outcome of the treated unit with the outcome of its synthetic counterpart.
 
@@ -36,19 +38,19 @@ The key question is whether this weighted average reproduces the treated unit we
 
 A natural alternative would be to compare the treated unit with one untreated unit that looks reasonably similar. However, in many applications, no single unit provides a convincing counterfactual. One country, region, or city may resemble the treated unit in some respects, but differ in others. Relying on a single comparison unit can therefore make the estimate highly dependent on that specific choice.
 
-Another possibility would be to compare the treated unit with the simple average of all untreated units. This is also often problematic. Untreated units may differ substantially from the treated unit in terms of economic structure, demographic characteristics, institutional setting, or pre-treatment outcome trends. A simple average may therefore provide a poor approximation of what would have happened to the treated unit in the absence of the treatment.
+Another possibility is to compare the treated unit with the simple average of all untreated units. This approach can also be problematic, because untreated units may differ substantially from the treated unit in several respects, including their pre-treatment outcome levels and trends. A simple average may therefore provide a poor approximation of what would have happened to the treated unit in the absence of the treatment.
 
 SCM offers an intermediate solution. It does not rely on a single untreated unit, nor does it give the same importance to all untreated units. Instead, it constructs a **weighted average** of untreated units, giving more weight to those that help reproduce the treated unit before the intervention and little or no weight to those that do not.
 
-In practice, the synthetic control is constructed in a **data-driven** way. The researcher starts from a pool of untreated units and defines the pre-treatment information that should be matched, typically including past values of the outcome variable and, when relevant, other predictors of the outcome. The weights assigned to the untreated units are then determined by an optimization procedure that searches for the weighted combination that best reproduces the treated unit before the intervention. Units that improve the pre-treatment fit receive positive weights, while units that do not contribute to reproducing the treated unit receive zero or very small weights. The resulting synthetic unit is therefore not selected subjectively, but built from the data to mimic the treated unit before treatment.
+In practice, the synthetic control is constructed in a **data-driven** way. The researcher starts from a pool of untreated units and defines the pre-treatment information that should be matched, typically including past values of the outcome variable and, when relevant, other covariates. The weights assigned to the untreated units are then determined by an optimization procedure that searches for the weighted combination that best reproduces the treated unit before the intervention. Units that improve the pre-treatment fit receive positive weights, while units that do not contribute to reproducing the treated unit receive zero or very small weights. The resulting synthetic unit is therefore not selected subjectively, but built from the data to mimic the treated unit before treatment.
 
 ## The donor pool
 
 The choice of the donor pool is crucial. The donor pool should include untreated units that are potentially comparable to the treated unit.
 
-Including units that are very different from the treated unit can be problematic, even if they help improve the pre-treatment fit. With a very broad or poorly selected donor pool, the algorithm may find a combination of unrelated units that reproduces the treated unit before the intervention only by chance. This is a form of **overfitting**: the synthetic control may look good in the pre-treatment period, but it may not represent a credible counterfactual after the treatment.
+Including units that are very different from the treated unit can be problematic, even if they help improve the pre-treatment fit. With a very broad or poorly selected donor pool, the algorithm may find a combination of unrelated units that reproduces the treated unit before the intervention only by chance.^[A donor unit can receive a positive weight even if it is individually quite different from the treated unit, because SCM chooses weights for the **combination** of donors rather than evaluating each donor in isolation. Differences in one donor may be offset by differences in others, so that their weighted average closely matches the treated unit.] This is a form of **overfitting**: the synthetic control may look good in the pre-treatment period, but it may not represent a credible counterfactual after the treatment.
 
-For this reason, the donor pool should not be chosen mechanically. It should be restricted to units that, based on substantive knowledge of the empirical setting, could plausibly have followed a similar trajectory to the treated unit in the absence of the intervention. The goal is not simply to obtain the best possible pre-treatment fit, but to construct a counterfactual that is both empirically accurate and substantively credible.
+For this reason, the donor pool should not be chosen mechanically or by uncritically including all available untreated units. It should be restricted to units that, based on substantive knowledge of the empirical setting, could plausibly have followed a similar trajectory to the treated unit in the absence of the intervention. The goal is not simply to obtain the best possible pre-treatment fit, but to construct a counterfactual that is both empirically accurate and substantively credible.
 
 ::: {.callout-warning}
 ## Common pitfall
@@ -62,7 +64,7 @@ The donor pool should include credible comparison units, not every untreated uni
 
 The credibility of SCM depends heavily on the quality of the **pre-treatment fit**.
 
-Before the intervention, the treated unit and the synthetic control should display similar values of the outcome and relevant predictors. If the synthetic control cannot reproduce the treated unit before the treatment, it is difficult to trust it as a counterfactual after the treatment.
+Before the intervention, the treated unit and the synthetic control should display similar values of the outcome and relevant predictors. If the synthetic control cannot reproduce the treated unit before the treatment, it is difficult to trust it as a reliable counterfactual after the treatment.
 
 This is one of the strengths of SCM: the quality of the counterfactual can be visually inspected. Researchers usually show a graph comparing the treated unit and the synthetic control over time. If the two lines are close before the treatment and diverge only after the treatment, the result is easier to interpret. In addition, researchers can report a balance table, similar to those commonly used in matching applications, to assess whether the treated unit and its synthetic counterpart are similar before the intervention in terms of the outcome and other relevant predictors.
 
@@ -83,13 +85,13 @@ Once the synthetic control has been constructed, the treatment effect is obtaine
 
 If the treated unit and the synthetic control were very similar before the treatment, but diverge after the treatment, this divergence can be interpreted as the estimated effect of the intervention.
 
-The estimated effect can vary over time. This is particularly useful when the impact of a policy is not immediate, but gradually emerges in the post-treatment period.
+The estimated effect can vary over time. This is particularly useful when the impact of a policy is not immediate but gradually emerges during the post-treatment period, or when the effect is initially strong and then fades over time.
 
 ## The peculiarity of analyzing a single treated unit
 
 Estimating a causal effect is especially challenging when there is only **one treated unit**. In this setting, the estimate may be highly sensitive to the specific way in which the counterfactual is constructed, because there is no averaging across many treated units that can smooth out unit-specific shocks or idiosyncratic patterns.
 
-For this reason, SCM applications require particular care. Having many pre-treatment periods can help reduce this volatility, because it allows the researcher to assess whether the synthetic control consistently reproduces the treated unit before the intervention. A long and informative pre-treatment period does not solve all problems, but it makes the comparison more credible and the post-treatment divergence easier to interpret.
+For this reason, SCM applications require particular care. Having many pre-treatment periods can help reduce this volatility, because it allows the researcher to assess whether the synthetic control consistently reproduces the treated unit before the intervention. A long and informative pre-treatment period does not solve all problems, but it strengthens the credibility of the comparison by showing whether the synthetic control can reproduce the treated unit over an extended period before the intervention.
 
 Statistical inference also differs from more conventional evaluation settings. Since SCM is often applied to one treated unit, traditional large-sample inference cannot be used to assess whether the estimated effect is statistically significant. A common solution is to rely on permutation or placebo tests. The same procedure is applied as if each untreated unit had been treated, generating a distribution of placebo effects. The effect estimated for the actual treated unit can then be compared with this distribution: if it is unusually large relative to the placebo effects, the evidence in favor of a genuine treatment effect is stronger.
 
@@ -97,13 +99,11 @@ Statistical inference also differs from more conventional evaluation settings. S
 
 SCM is credible only if the synthetic control provides a convincing approximation of what would have happened to the treated unit in the absence of the treatment. This requires several conditions.
 
-First, the treated unit should be comparable to the units in the donor pool. If the treated unit is very different from all available untreated units, no weighted average of them is likely to provide a credible counterfactual.
+1. **The donor pool should be carefully chosen and contain units that are reasonably comparable to the treated unit.** If the treated unit is very different from all available untreated units, no weighted average of them is likely to provide a credible counterfactual. At the same time, the goal is not merely to obtain a good statistical fit, but to construct a synthetic control from donors that are also substantively plausible comparisons.
 
-Second, the synthetic control should reproduce the treated unit well before the intervention. A good **pre-treatment fit** is essential: if the synthetic unit does not behave like the treated unit before the treatment, it is difficult to believe that it represents what would have happened after the treatment.
+2. The synthetic control should reproduce the treated unit well before the intervention. A good **pre-treatment fit** is essential: if the synthetic unit does not behave like the treated unit before treatment, it is difficult to believe that it represents what would have happened afterward in the absence of treatment.
 
-Third, the pre-treatment period should be sufficiently informative. SCM works best when we observe the treated and untreated units for several periods before the intervention, so that the algorithm has enough information to construct a credible synthetic counterpart.
-
-Finally, the donor pool should be chosen carefully. The goal is not only to find a combination of units that fits the treated unit before the intervention, but to build a counterfactual that is also substantively plausible.
+3. The pre-treatment period should be sufficiently informative. SCM works best when the treated and untreated units are observed for several periods before the intervention, so that the algorithm has enough information to construct a credible synthetic counterpart.^[With only a few pre-treatment periods, it is relatively easy for the algorithm to find a combination of donor units that fits the treated unit well, potentially even by chance. A close fit becomes more informative when it is sustained over a long pre-treatment period, because reproducing the treated unit’s trajectory across many periods is more demanding and therefore provides stronger support for the credibility of the synthetic control.]
 
 ## When SCM is useful
 
@@ -113,7 +113,7 @@ It is most appropriate when:
 
 - there is one treated unit, or a small number of treated units;
 - a credible donor pool of untreated units is available;
-- data are available for several periods before treatment, so that the credibility of the synthetic unit as a valid counterfactual can be assessed;
+- data are available for a sufficiently long pre-treatment period (e.g., at least 10 periods), allowing the credibility of the synthetic control as a counterfactual to be meaningfully assessed;
 - data are available for several periods after treatment, so that the impact of the treatment can be evaluated some time after its onset;
 - the synthetic control reproduces the treated unit well before the intervention.
 
@@ -130,6 +130,10 @@ If the pre-treatment fit is poor, the post-treatment gap is difficult to interpr
 :::
 
 ## Example: The Economic Effects of German Reunification
+
+::: {.content-visible when-format="html"}
+![**A gif representation of the SCM example**.](../images/scm-germany-reunification-animation.gif)
+:::
 
 A well-known application of SCM studies the economic effects of **German reunification** on West Germany [@abadie2015comparative].
 

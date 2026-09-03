@@ -1,0 +1,15 @@
+"scenario","donor","weight"
+"Ideal: convex-hull support","Croatia",0.23134626062519
+"Ideal: convex-hull support","Estonia",0.206224191988293
+"Ideal: convex-hull support","Latvia",0
+"Ideal: convex-hull support","Lithuania",0.232711362545996
+"Ideal: convex-hull support","Slovakia",0.0794821762869245
+"Ideal: convex-hull support","Finland",0.11940767964708
+"Ideal: convex-hull support","Ireland",0.130828328906516
+"Failure: no convex-hull support","Croatia",1.98829721591714e-15
+"Failure: no convex-hull support","Estonia",0
+"Failure: no convex-hull support","Latvia",1.37050301538278e-15
+"Failure: no convex-hull support","Lithuania",0
+"Failure: no convex-hull support","Slovakia",0
+"Failure: no convex-hull support","Finland",0.999999999999997
+"Failure: no convex-hull support","Ireland",0

@@ -1,12 +1,12 @@
 ## Randomized Controlled Trials
 
 ::: {.content-visible when-format="html"}
-![**The balancing power of randomization.** Random assignment makes treated and control units comparable in expectation: when the sample size is sufficiently large, pre-treatment characteristics should be balanced across groups on average.](../images/rct-randomization-balance-animation-v2.gif)
+![**The balancing power of randomization.** Random assignment makes treated and control units comparable in expectation: when the sample size is sufficiently large, pre-treatment characteristics should be balanced across groups on average.](../images/rct-randomization-balance-animation-v2.gif)^[This is a stylized example in which balance is perfect with $N=500$. In practice, with finite samples, we should expect some small differences between treated and control groups, although these differences tend to decrease as $N$ increases.]
 :::
 
 ::: {.content-visible when-format="pdf"}
-![**The balancing power of randomization.** Random assignment makes treated and control units comparable in expectation: when the sample size is sufficiently large, pre-treatment characteristics should be balanced across groups on average.](../images/rct-randomization-balance-three-phases.png)
-:::
+![**The balancing power of randomization.** Random assignment makes treated and control units comparable in expectation: when the sample size is sufficiently large, pre-treatment characteristics should be balanced across groups on average.](../images/rct-randomization-balance-three-phases.png)^[This is a stylized example in which balance is perfect with $N=500$. In practice, with finite samples, we should expect some small differences between treated and control groups, although these differences tend to decrease as $N$ increases.]
+::: 
 
 ## What is an RCT?
 
@@ -36,16 +36,6 @@ The control group tells us what would have happened to the treated group, on ave
 :::
 
 ### Random Assignment
-
-Let $D_i$ be the treatment indicator:
-
-$$
-D_i =
-\begin{cases}
-1 & \text{if unit } i \text{ is assigned to treatment},\\
-0 & \text{if unit } i \text{ is assigned to control}.
-\end{cases}
-$$
 
 In a randomized experiment, $D_i$ is assigned by chance. Conceptually, this is like flipping a coin: before assignment, each eligible unit has a known probability (in most cases 50%) of being allocated to the treatment or control group. In practice, randomization is usually implemented through more structured procedures, such as computer-generated random numbers, stratified randomization, or block randomization. The key point, however, is the same: treatment assignment is governed by a known random process, rather than by the choices or characteristics of the units. This implies that treatment status is independent of the potential outcomes:
 
@@ -83,7 +73,7 @@ $$
 
 That is, we compare the average observed post-treatment outcome among treated units with the average observed post-treatment outcome among control units.
 
-Because treatment is randomly assigned,
+Because treatment is randomly assigned,^[**Identification vs. estimation.** **Identification** is a population statement: under random assignment, the relevant population averages are exactly equal to the corresponding potential-outcome averages. **Estimation** uses a finite sample to approximate these population quantities, so the corresponding sample averages will generally be only approximately equal because of finite-sample variation. In what follows, we show the key identification result implied by random assignment.]
 
 $$
 E[Y_i^{obs}\mid D_i=1] = E[Y_i(1)],
@@ -165,7 +155,7 @@ An RCT requires at least two groups:
 
 The control group is not a secondary detail. It is what allows us to approximate the counterfactual outcome: what would have happened to the treated units if they had not received the treatment.
 
-For example, suppose we want to evaluate whether sending households personalized feedback on their energy consumption reduces electricity use. We randomly assign eligible households either to receive the feedback messages or not to receive them. After the intervention, we compare electricity consumption across the two groups. If randomization was successful, the difference in consumption can be interpreted as the causal effect of the feedback intervention.
+For example, suppose we want to evaluate whether sending households personalized feedback on their energy consumption reduces electricity use. We randomly assign eligible households either to receive the feedback messages or not to receive them. After the intervention, we compare electricity consumption across the two groups. If randomization was successful, the difference in consumption can be interpreted as the average causal effect of the feedback intervention.
 
 ### Why Experiments Are Powerful
 
@@ -186,14 +176,14 @@ Project STAR is especially important because it studied a policy question of dir
 
 This example illustrates the strength of RCTs. Randomization creates comparable groups before treatment, so the control group provides a credible estimate of what would have happened to students assigned to small classes if they had instead attended regular-size classes.
 
-At the same time, Project STAR also shows that even large RCTs require careful interpretation. Researchers must consider issues such as compliance, attrition, implementation quality, and whether the results can be generalized to other schools, states, or education systems.
+At the same time, Project STAR also shows that even large RCTs require careful interpretation. Researchers must consider issues such as compliance, attrition, implementation quality (see Section 4.4), and whether the results can be generalized to other schools, states, or education systems (see Section 4.5).
 :::
 
 ## Historical Intuition
 
 The logic of randomization was developed first in the context of experimental statistics. Fisher’s work on agricultural experiments showed how random assignment could be used to separate the effect of a treatment from background variation in the environment [@fisher1935]. Neyman’s earlier work on potential outcomes also provided a formal way to think about causal effects as comparisons between different possible outcomes for the same unit [@neyman1990].
 
-The idea later became central in medicine. A landmark example is the 1948 randomized trial of streptomycin for pulmonary tuberculosis, conducted by the Medical Research Council in the United Kingdom [@medicalresearchcouncil1948]. Patients were allocated to treatment or control groups using randomization, and outcomes were compared across groups. This design helped establish the randomized controlled trial as a benchmark for evaluating whether a treatment works.
+The idea later became central in medicine. A landmark example is the 1948 randomized trial of streptomycin for pulmonary tuberculosis, conducted by the Medical Research Council in the United Kingdom [@medicalresearchcouncil1948]. Patients were allocated to treatment or control groups using randomization, and outcomes were compared across groups. This design helped establish the RCT as a benchmark for evaluating whether a treatment works.
 
 ::: {.callout-note}
 ## How RCTs transformed medicine
@@ -228,7 +218,7 @@ $$
 \overline{Y}^{obs}_{A}.
 $$
 
-The key point is that the two groups should be comparable before seeing the webpage. Therefore, if version B produces a higher conversion rate, the difference can be attributed to the change being tested, rather than to pre-existing differences between users.
+The key point is that random assignment makes the two groups highly similar on average before they are exposed to the webpage. Therefore, if version B produces a higher conversion rate, the difference can be attributed to the change being tested, rather than to pre-existing differences between users.
 
 ## Threats to Internal Validity
 
@@ -238,10 +228,10 @@ The key point is that the two groups should be comparable before seeing the webp
 Randomization removes selection bias by design, but the experiment can still be threatened by failed randomization, non-compliance, attrition, behavioral responses, or small samples.
 :::
 
-Although randomized experiments are the gold standard in causal inference, random assignment alone does not automatically guarantee a valid causal estimate. Several problems can threaten the internal validity of an RCT, meaning the credibility of the claim that the estimated effect for the study population is caused by the treatment itself.
+Although randomized experiments are the gold standard in causal inference, random assignment alone does not automatically guarantee a valid causal estimate. Several problems can threaten the **internal validity** of an RCT.^[**Internal validity** refers to the credibility of the causal conclusion within the study: whether the observed difference in outcomes can truly be attributed to the treatment rather than to other factors.], meaning the credibility of the claim that the estimated effect for the study population is caused by the treatment itself.
 
 i) **Failure of Randomization**. Randomization may fail if assignment is not truly random or if the randomization procedure is poorly implemented. For example, assigning units based on surname initials may appear unrelated to the outcome, but it can create imbalances if surname initials are correlated with ethnicity, geography, or socioeconomic status.
-A first diagnostic step is therefore to check whether pre-treatment characteristics are balanced across treatment and control groups. More generally, in an RCT treatment status should be assigned through a genuine random procedure, rather than through informal, discretionary, or ad hoc allocation rules.
+A first diagnostic step is therefore to check whether pre-treatment characteristics are balanced across treatment and control groups. More generally, in an RCT treatment status should be assigned through a genuine random procedure, rather than through informal, discretionary, or ad hoc allocation rules.^[A **genuine random procedure** is one in which treatment assignment is determined by chance according to a predefined rule, for example using a random-number generator, a lottery, or another procedure that gives eligible units known probabilities of assignment and leaves no room for discretionary selection.]
 
 ii) **Non-compliance**. A second problem is **non-compliance**. Some units assigned to treatment may not actually receive the treatment, while some units assigned to control may gain access to it.
 In this case, we must distinguish between:
@@ -256,10 +246,10 @@ E[Y_i^{obs}\mid W_i=1]
 E[Y_i^{obs}\mid W_i=0],
 $$
 
-  where $W_i$ denotes assignment to treatment. The ITT measures the effect of being offered or assigned the treatment, regardless of whether units actually comply. This can be highly relevant for policy, because real-world programs often face imperfect take-up.
+  where $W_i$ denotes assignment to treatment. The ITT measures the effect of being offered or assigned the treatment, regardless of whether units actually comply. This can be highly relevant for policy, because real-world programs often face imperfect take-up, but it should not be confused with the average effect of actually receiving the treatment.
 
 iii) **Attrition**. Attrition occurs when some units leave the study before outcomes are measured. Attrition is especially problematic if it is related to treatment status or potential outcomes.
-For example, if the weakest students are more likely to drop out of a schooling experiment, the final sample may no longer be comparable across treatment and control groups. In that case, the estimated effect may reflect both the treatment and selective dropout.
+For example, suppose students with lower pre-treatment achievement are more likely to drop out of a schooling experiment. If this selection process is the same in the treatment and control groups and is not itself affected by treatment assignment, randomization can still preserve comparability among the students who remain in the sample. The estimated effect can then remain unbiased for this selected subpopulation, although it no longer necessarily represents the effect for the original experimental population. By contrast, if dropout depends differently on students’ characteristics across the treatment and control groups, or is itself affected by treatment, comparability may be lost and the resulting estimate may suffer from attrition bias.
 
 iv) **Behavioral Responses**. Participants may change their behavior simply because they know they are part of an experiment. This is often called a **Hawthorne effect**. The term comes from a series of studies conducted at the Hawthorne Works factory in Cicero (Illinois), where researchers observed that workers’ behavior and productivity changed partly because they were being studied. Similarly, researchers or administrators may behave differently toward treated and control units if they know who receives the treatment.
 In medical trials, double-blind placebo designs are often used to reduce these problems.
@@ -267,20 +257,22 @@ In medical trials, double-blind placebo designs are often used to reduce these p
 v) **Small Samples**. Randomization balances treated and control groups on average. However, in small samples, random imbalance can still occur. Treated and control units may differ by chance in important pre-treatment characteristics.
 For this reason, even in randomized experiments, researchers usually report balance checks and may adjust for pre-treatment covariates to improve precision.
 
+Beyond these threats to internal validity, RCTs may also be **infeasible for ethical or economic reasons**. Ethical constraints can make random assignment unacceptable. For example, it would be ethically problematic to randomly deny emergency food assistance to some eligible households after a natural disaster simply to create a control group. RCTs can also be very costly, as they may require recruiting participants, implementing the intervention, monitoring compliance, and collecting outcomes over time. Thus, even when randomization would be desirable from an identification perspective, ethical or financial constraints may prevent its use and make observational or quasi-experimental approaches necessary.
+
 ## Threats to External Validity
 
-RCTs are strong on internal validity, but they do not automatically answer every policy question. An experiment may identify the causal effect for a particular population, period, and implementation setting. The effect may differ elsewhere.
+An experiment may identify the causal effect for a particular population, period, and implementation setting. However, the estimated effect may differ for other populations, periods, or implementation settings.
 
 For example, a recycling campaign tested in one city may not have the same effect in another city with different waste-collection infrastructure or different social norms around recycling. An energy-saving intervention tested among households with smart meters may work less well when scaled up to areas where households do not receive real-time feedback on their electricity consumption.
 
-This is the issue of **external validity**: whether the estimated effect generalizes beyond the experimental setting.
+This is the issue of **external validity**: whether the estimated effect generalizes beyond the experimental setting.^[**External validity** refers to the extent to which a causal effect estimated in a particular study can be expected to apply to other populations, periods, or implementation settings.]
 
 External validity is especially important when RCT evidence is used to guide policy at scale. A trial may be implemented by highly motivated researchers, with careful monitoring, well-trained staff, and selected participants. Once the same intervention is implemented by ordinary institutions, with larger and more heterogeneous populations, the effect may change. For this reason, policymakers should ask not only whether the intervention worked in the experiment, but also whether the mechanisms, incentives, constraints, and implementation capacity are similar in the setting where the policy will be applied.
 
 ::: {.callout-warning}
 ## External validity in medical RCTs
 
-External validity is a central issue in medical RCTs. A drug may be shown to be effective and safe for the population included in a trial, but this does not automatically imply that the same conclusion applies to all patients.
+External validity is a central issue in medical RCTs. A drug may be shown to be effective and safe for the population included in a trial, but this does not automatically imply that the same conclusion applies to all potential patients.
 
 Clinical trials often restrict eligibility. They may exclude children, pregnant women, older patients, people with multiple health conditions, or patients taking other medications. These restrictions can improve internal validity and patient safety during the trial, but they also limit the population to which the results directly apply.
 
