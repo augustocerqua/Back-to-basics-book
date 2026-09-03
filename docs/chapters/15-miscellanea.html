@@ -129,7 +129,7 @@ cookieconsent.run({
 <link rel="stylesheet" href="../styles/styles.css">
 </head>
 
-<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-sidebar floating slimcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -525,7 +525,10 @@ cookieconsent.run({
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#causal-mechanisms" id="toc-causal-mechanisms" class="nav-link active" data-scroll-target="#causal-mechanisms"><span class="header-section-number">15.1</span> Causal Mechanisms</a></li>
+  <li><a href="#causal-mechanisms" id="toc-causal-mechanisms" class="nav-link active" data-scroll-target="#causal-mechanisms"><span class="header-section-number">15.1</span> Causal Mechanisms</a>
+  <ul class="collapse">
+  <li><a href="#why-mechanisms-matter-the-payt-policy-in-trento" id="toc-why-mechanisms-matter-the-payt-policy-in-trento" class="nav-link" data-scroll-target="#why-mechanisms-matter-the-payt-policy-in-trento"><span class="header-section-number">15.1.1</span> Why Mechanisms Matter: The PAYT Policy in Trento</a></li>
+  </ul></li>
   <li><a href="#causal-machine-learning" id="toc-causal-machine-learning" class="nav-link" data-scroll-target="#causal-machine-learning"><span class="header-section-number">15.2</span> Causal Machine Learning</a></li>
   <li><a href="#structural-models" id="toc-structural-models" class="nav-link" data-scroll-target="#structural-models"><span class="header-section-number">15.3</span> Structural Models</a></li>
   <li><a href="#parametric-vs.-non-parametric-estimation" id="toc-parametric-vs.-non-parametric-estimation" class="nav-link" data-scroll-target="#parametric-vs.-non-parametric-estimation"><span class="header-section-number">15.4</span> Parametric vs.&nbsp;Non-Parametric Estimation</a></li>
@@ -535,7 +538,7 @@ cookieconsent.run({
 <div class="toc-actions"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/11-forecast-based-designs.html">Other topics</a></li><li class="breadcrumb-item"><a href="../chapters/15-miscellanea.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Miscellanea</span></a></li></ol></nav>
@@ -565,35 +568,26 @@ cookieconsent.run({
 <p>For example, suppose a training program increases employment. This effect may arise because participants acquire new skills, because they receive a certificate that signals ability to employers, because they expand their job-search network, or because the program changes their motivation. These are different mechanisms, even if the final outcome is the same.</p>
 <p>Mechanisms matter because they help interpret results and assess external validity. If we know why a policy works, we can better understand whether it is likely to work in another setting. A training program based on local employer connections may not travel easily to places where those connections are absent.</p>
 <p>At the same time, mechanism analysis is demanding. Intermediate outcomes are often themselves affected by the treatment, so conditioning on them can block part of the treatment effect or introduce new sources of bias. For this reason, mechanisms should not be studied by simply “controlling for” post-treatment variables. They require a clear causal model, additional assumptions, and possibly ancillary quantitative and qualitative information.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Mechanisms matter: the PAYT policy in Trento
-</div>
-</div>
-<div class="callout-body-container callout-body">
+<section id="why-mechanisms-matter-the-payt-policy-in-trento" class="level3" data-number="15.1.1">
+<h3 data-number="15.1.1" class="anchored" data-anchor-id="why-mechanisms-matter-the-payt-policy-in-trento"><span class="header-section-number">15.1.1</span> Why Mechanisms Matter: The PAYT Policy in Trento</h3>
 <p>Bueno and Valente <span class="citation" data-cites="bueno2019">(<a href="references.html#ref-bueno2019" role="doc-biblioref">2019</a>)</span> study the introduction of a <strong>pay-as-you-throw (PAYT)</strong> policy in Trento, Italy, using the SCM. The policy made households pay according to the amount of <strong>unsorted waste</strong> they produced. The main effect is clear: unsorted waste fell substantially after the policy. However, this reduced-form effect does not by itself reveal the mechanism behind the change. Households may have responded in different ways. They may have recycled more, reduced overall waste generation, changed purchasing habits, reused more goods, or, in a less desirable scenario, disposed of waste illegally to avoid paying the fee.</p>
 <p>This distinction is crucial for policy interpretation. If the policy mainly shifts waste from the unsorted stream to recycling, then its effect works through <strong>waste sorting</strong>. If instead total waste also declines, the policy may be encouraging <strong>waste avoidance</strong>, for example through less packaging, more reuse, or different consumption choices. If the reduction were driven by illegal dumping, the apparent success of the policy would be much less reassuring. The ancillary evidence in Bueno and Valente <span class="citation" data-cites="bueno2019">(<a href="references.html#ref-bueno2019" role="doc-biblioref">2019</a>)</span> points mainly toward waste avoidance.</p>
 <p>This example shows why causal mechanisms matter. Estimating that a policy has an effect is only the first step. Understanding <strong>how</strong> that effect arises is essential for deciding whether the policy should be expanded, redesigned, or discontinued.</p>
-</div>
-</div>
+</section>
 </section>
 <section id="causal-machine-learning" class="level2" data-number="15.2">
 <h2 data-number="15.2" class="anchored" data-anchor-id="causal-machine-learning"><span class="header-section-number">15.2</span> Causal Machine Learning</h2>
 <p>Causal machine learning uses flexible statistical and computational tools to support causal inference. Its goal is not simply to predict outcomes well, but to estimate causal quantities more accurately, flexibly, or heterogeneously (the latter is discussed in <a href="../chapters/12-heterogeneous_treatment_effects.html">Chapter 12</a>).</p>
-<p>One important use of causal machine learning is the estimation of <strong>nuisance components</strong>. These are objects that are not the final causal parameter of interest, but are needed to estimate it. Examples include the probability of receiving treatment conditional on covariates, namely the <strong>propensity score</strong>, and the expected outcome conditional on covariates, known as the <strong>outcome regression</strong>.</p>
+<p>One important use of causal machine learning is the estimation of <strong>nuisance functions</strong>. These are quantities that are not themselves the causal parameters of interest but are needed to estimate them. Examples include the probability of receiving treatment conditional on covariates, namely the propensity score, and the expected outcome conditional on treatment status and covariates, known as the outcome regression.</p>
 <p>Machine learning is attractive in this setting because these nuisance components may be complex. Treatment assignment may depend on many variables and nonlinear relationships among them. Outcomes may also depend on covariates in flexible ways. Instead of imposing a simple linear specification, researchers can use flexible algorithms such as random forests, boosting, regularized regression, or neural networks to estimate these relationships.</p>
 <p>However, using machine learning naively can create problems for causal inference. Machine learning methods are designed primarily for prediction, not for unbiased estimation of causal parameters. They often involve regularization, variable selection, or tuning choices that can introduce bias. If this prediction error enters directly into the causal effect estimator, standard inference may become invalid. <strong>Double/debiased machine learning</strong> addresses this problem by combining flexible prediction tools with two key ideas:</p>
 <ol type="i">
 <li><strong>Orthogonalization</strong>: the estimator is constructed so that small errors in the nuisance functions have only a second-order effect on the estimated causal parameter.</li>
-<li><strong>sample splitting</strong> or <strong>cross-fitting</strong>: one part of the data is used to estimate the nuisance components, and another part is used to estimate the causal effect. This reduces overfitting bias because the same observations are not used both to learn the prediction functions and to evaluate the causal moment.</li>
+<li><strong>Sample splitting</strong> or <strong>cross-fitting</strong>: one part of the data is used to estimate the nuisance components, and another part is used to estimate the causal effect. This reduces overfitting bias because the same observations are not used both to learn the prediction functions and to evaluate the causal moment.</li>
 </ol>
 <p>The intuition is simple. Machine learning is used where flexibility is useful, namely in modeling treatment assignment and outcome prediction. But the final causal estimate is protected from the most direct consequences of prediction error. In this way, double/debiased machine learning allows researchers to use rich covariate information while still targeting a clearly defined causal estimand.</p>
 <p>This approach is especially useful in settings with many control variables, nonlinear relationships, or high-dimensional data. Yet it does not solve identification by itself. It still requires a credible causal assumption, such as conditional independence, and sufficient overlap between treated and untreated units.</p>
-<p>The key point for this book is that machine learning does not replace identification. A highly accurate prediction model cannot by itself solve confounding, selection bias, or violations of parallel trends. Causal machine learning is most useful when combined with a credible causal design. The interested reader can find a much more detailed treatment of these methods in <em>Applied Causal Inference Powered by ML and AI</em> <span class="citation" data-cites="chernozhukov2024causalml">(<a href="references.html#ref-chernozhukov2024causalml" role="doc-biblioref">Chernozhukov et al. 2024</a>)</span>.</p>
+<p>The key point for this book is that <strong>machine learning does not replace identification</strong>. Even a highly accurate predictive model cannot, by itself, eliminate confounding, correct selection bias, or restore identification when assumptions such as parallel trends fail. Causal machine learning is therefore most useful when it is embedded within a credible causal design. The interested reader can find a much more detailed treatment of these methods in <em>Applied Causal Inference Powered by ML and AI</em> <span class="citation" data-cites="chernozhukov2024causalml">(<a href="references.html#ref-chernozhukov2024causalml" role="doc-biblioref">Chernozhukov et al. 2024</a>)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -612,15 +606,15 @@ cookieconsent.run({
 </div>
 </div>
 </section>
-<section id="structural-models" class="level2" data-number="15.3">
+<section id="structural-models" class="level2 page-columns page-full" data-number="15.3">
 <h2 data-number="15.3" class="anchored" data-anchor-id="structural-models"><span class="header-section-number">15.3</span> Structural Models</h2>
-<p>Structural models use economic theory to describe how individuals, firms, or institutions make decisions. Unlike reduced-form causal designs, which often focus on estimating a specific treatment effect, structural models aim to recover deeper behavioral parameters.</p>
-<p>For example, a reduced-form evaluation may estimate whether a subsidy increases firm investment. A structural model may try to model firms’ investment decisions, expectations, constraints, and responses to alternative subsidy schemes. This can allow researchers to simulate policies that have not yet been observed.</p>
+<p>Structural models use economic theory to describe how individuals, firms, or institutions make decisions. Unlike <strong>reduced-form causal designs</strong><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>, which often focus on estimating a specific treatment effect, <strong>structural models</strong> aim to recover deeper behavioral parameters.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;In the broad sense used here, reduced-form approaches estimate causal effects without explicitly modeling the behavioral mechanisms that generate them. All the causal evaluation methods discussed in this book fall within this broad reduced-form tradition.</p></div></div><p>For example, a reduced-form evaluation may estimate whether a subsidy increases firm investment. A structural model may try to model firms’ investment decisions, expectations, constraints, and responses to alternative subsidy schemes. This can allow researchers to simulate policies that have not yet been observed.</p>
 <p>Structural models are useful when the question is not only “what was the effect of this policy?” but also “what would happen under a different policy design?” They can therefore be powerful for counterfactual simulations and welfare analysis.</p>
 <p>The cost is that structural models usually require stronger modeling assumptions. Their credibility depends on whether the behavioral model is plausible and whether the data are informative enough to discipline it. For this reason, structural and design-based approaches should be seen as complements rather than substitutes.</p>
 <p>The broader lesson is that empirical strategies often involve a trade-off: <strong>the more ambitious the causal question, the more demanding the assumptions needed to answer it credibly</strong>.</p>
-<p>Recently, several studies have tried to bridge these two traditions by using credible design-based estimates as moments to estimate or discipline structural models.</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<p>Recently, several studies have tried to bridge these two traditions by using credible design-based estimates as moments<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> to estimate or discipline structural models.</p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;Here, moments are empirical quantities—such as means, variances, covariances, or estimated treatment effects—that a structural model is asked to reproduce.</p></div></div><div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -631,17 +625,17 @@ cookieconsent.run({
 </div>
 <div class="callout-body-container callout-body">
 <p>A growing literature combines design-based causal evidence with structural modeling. The idea is to use credible causal estimates not only as final results, but also as empirical moments that help discipline the parameters of a structural model.</p>
-<p>A useful example is Flores <span class="citation" data-cites="flores2026cashtransfers">(<a href="references.html#ref-flores2026cashtransfers" role="doc-biblioref">2026</a>)</span>, who studies Mexico’s <em>Oportunidades</em> conditional cash transfer program. The paper exploits exogenous variation in the program to estimate how transfers affect household time allocation and consumption choices. These quasi-experimental responses are then used as moments in the estimation of a structural collective household model.</p>
+<p>A useful example is Flores <span class="citation" data-cites="flores2026cashtransfers">(<a href="references.html#ref-flores2026cashtransfers" role="doc-biblioref">2026</a>)</span>, who studies Mexico’s <em>Oportunidades</em> conditional cash transfer program. Flores exploits exogenous variation in the program to estimate how transfers affect household time allocation and consumption choices. These quasi-experimental responses are then used as moments in the estimation of a structural collective household model.</p>
 <p>This approach illustrates a productive bridge between design-based and structural methods. The design-based part provides credible empirical variation; the structural model gives the estimates an economic interpretation and allows the researcher to study mechanisms, welfare, and counterfactual policies that go beyond the original treatment comparison.</p>
 </div>
 </div>
 </section>
 <section id="parametric-vs.-non-parametric-estimation" class="level2" data-number="15.4">
 <h2 data-number="15.4" class="anchored" data-anchor-id="parametric-vs.-non-parametric-estimation"><span class="header-section-number">15.4</span> Parametric vs.&nbsp;Non-Parametric Estimation</h2>
-<p>A parametric approach imposes a specific functional form on the relationship between variables. For example, a linear regression assumes that the conditional expectation of the outcome changes linearly with covariates, unless interactions or nonlinear terms are added.</p>
-<p>A non-parametric approach imposes fewer functional-form restrictions. It allows the data to speak more flexibly, often by estimating relationships locally or using flexible functions. Matching, local polynomial regression in the RD design, and some machine-learning methods can be seen as moving in this direction.</p>
+<p>A <strong>parametric</strong> approach imposes a specific functional form on the relationship between variables. For example, a linear regression assumes that the conditional expectation of the outcome changes linearly with covariates, unless interactions or nonlinear terms are added.</p>
+<p>A <strong>non-parametric</strong> approach imposes fewer functional-form restrictions. It allows the data to speak more flexibly, often by estimating relationships locally or using flexible functions. Matching, local polynomial regression in the RD design, and some machine-learning methods can be seen as moving in this direction.</p>
 <p>The distinction matters because causal conclusions may be sensitive to functional-form assumptions. A parametric model can be efficient and easy to interpret when correctly specified, but misleading when the specification is incorrect. A non-parametric method can be more flexible, but may require more data and produce less precise estimates.</p>
-<p>For this book, the key lesson is practical: identification and estimation are different problems. A credible research design tells us which comparison can identify a causal effect. The estimation method determines how that comparison is implemented in the data.</p>
+<p>For this book, the key lesson is practical: <strong>identification and estimation are different problems. A credible research design tells us which comparison can identify a causal effect. The estimation method determines how that comparison is implemented in the data</strong>.</p>
 <p>When possible, this comparison should remain as transparent as possible. Strong parametric assumptions may sometimes be useful, but they can also obscure the source of identification and make it harder to understand who is being compared with whom. For this reason, the emphasis of the book is on empirical strategies that make the construction of the counterfactual explicit and the assumptions behind the comparison clearly visible.</p>
 </section>
 <section id="qualitative-ex-post-analyses" class="level2" data-number="15.5">
@@ -658,7 +652,7 @@ cookieconsent.run({
 <p><strong>Ex-ante evaluation</strong> takes place before a policy is implemented. Its purpose is to assess whether an intervention is desirable, feasible, and likely to produce benefits larger than its costs. Ex-ante analyses may rely on theory, simulations, cost-benefit analysis, previous evidence, pilot studies, or forecasts. They are especially useful when policymakers must decide whether to introduce a policy, how to design it, or which alternative intervention to choose.</p>
 <p><strong>Monitoring</strong> takes place while a policy is being implemented. Its goal is not usually to estimate causal effects, but to verify whether the program is operating as intended. Monitoring systems track inputs, activities, outputs, timelines, spending, take-up, and coverage. For example, they can show whether funds have been disbursed, whether beneficiaries have received the service, or whether implementation is delayed. A useful example is the monitoring of spending under <strong>NextGenerationEU (NGEU)</strong>. Monitoring can track whether resources are being committed and spent according to schedule, whether projects are progressing as planned, and whether implementation milestones are being met. This information is essential for accountability and program management, but it does not, by itself, tell us what effects the funded projects have produced.</p>
 <p><strong>Process evaluation</strong> focuses on how the policy is implemented. It asks whether the intervention reached the intended target population, whether local actors followed the planned procedures, and whether implementation barriers emerged. This type of evaluation is crucial because a policy may fail not because its underlying theory is wrong, but because it was not implemented properly.</p>
-<p>These approaches are complementary to ex-post impact evaluation. Ex-ante evaluation helps design the policy; monitoring follows its implementation; process evaluation explains how the intervention unfolded; and ex-post impact evaluation estimates whether it worked. Confusing these goals can lead to misleading conclusions. A well-monitored program is not necessarily effective, and an effective program may still be inefficient, poorly targeted, or difficult to scale.</p>
+<p><strong>These approaches are complementary to ex-post impact evaluation. Ex-ante evaluation helps design the policy; monitoring follows its implementation; process evaluation explains how the intervention unfolded; and ex-post impact evaluation estimates whether it worked</strong>. Confusing these goals can lead to misleading conclusions. A well-monitored program is not necessarily effective, and an effective program may still be inefficient, poorly targeted, or difficult to scale.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
@@ -676,6 +670,7 @@ Knaus, Michael C. 2022. <span>“Double Machine Learning-Based Programme Evaluat
 </div>
 </div>
 </section>
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

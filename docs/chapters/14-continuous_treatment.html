@@ -158,7 +158,7 @@ window.Quarto = {
 <link rel="stylesheet" href="../styles/styles.css">
 </head>
 
-<body class="nav-sidebar floating quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+<body class="nav-sidebar floating slimcontent quarto-light"><script id="quarto-html-before-body" type="application/javascript">
     const toggleBodyColorMode = (bsSheetEl) => {
       const mode = bsSheetEl.getAttribute("data-mode");
       const bodyEl = window.document.querySelector("body");
@@ -578,7 +578,7 @@ window.Quarto = {
 <div class="toc-actions"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content page-columns page-full" id="quarto-document-content">
 
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/11-forecast-based-designs.html">Other topics</a></li><li class="breadcrumb-item"><a href="../chapters/14-continuous_treatment.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Continuous Treatments</span></a></li></ol></nav>
@@ -712,7 +712,7 @@ Continuous-treatment analysis is therefore useful when the policy question conce
 </div>
 </div>
 </section>
-<section id="the-policy-question" class="level2" data-number="14.4">
+<section id="the-policy-question" class="level2 page-columns page-full" data-number="14.4">
 <h2 data-number="14.4" class="anchored" data-anchor-id="the-policy-question"><span class="header-section-number">14.4</span> The Policy Question</h2>
 <p>Continuous treatments shift the policy question from <strong>access</strong> to <strong>intensity</strong>.</p>
 <p>With a binary treatment, we usually ask:</p>
@@ -724,7 +724,21 @@ Continuous-treatment analysis is therefore useful when the policy question conce
 <p>What is the effect of receiving a larger dose of the policy? Is there an optimal level of treatment intensity?</p>
 </blockquote>
 <p>This distinction has direct implications for policy design. If the ADRF flattens beyond a certain treatment intensity, allocating additional resources may yield only limited marginal returns. By contrast, if the ADRF continues to rise steeply, increasing treatment intensity may generate substantial additional benefits.</p>
-</section>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Beyond continuous treatment intensity
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This chapter focuses on settings in which treatment varies <strong>continuously in intensity</strong>. A related challenge arises when treatment is <strong>discrete but has multiple versions</strong>. For instance, unemployed workers may participate in different active labor market programs, such as training, job-search assistance, or wage subsidies. In this setting, the relevant causal question is not simply whether receiving a program has an effect, but how the effects differ across alternative treatments.</p>
+<p>The methods required for multiple discrete treatments differ from those used for continuous treatment intensity, even though both settings move beyond the standard binary treatment framework.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+</div>
+</div>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;Methods for multiple discrete treatments are not discussed in this book</p></div></div></section>
 <section id="the-challenge-of-comparing-treatment-intensities" class="level2" data-number="14.5">
 <h2 data-number="14.5" class="anchored" data-anchor-id="the-challenge-of-comparing-treatment-intensities"><span class="header-section-number">14.5</span> The Challenge of Comparing Treatment Intensities</h2>
 <p>Continuous-treatment evaluation is difficult because treatment intensity is generally endogenous. Only when treatment intensity is randomly assigned can units receiving different doses be directly compared without further adjustment.</p>
@@ -1020,6 +1034,7 @@ Wu, Xiao, Fabrizia Mealli, Marianthi-Anna Kioumourtzoglou, Francesca Dominici, a
 </div>
 </div>
 </section>
+
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

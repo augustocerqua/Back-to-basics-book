@@ -112,6 +112,14 @@ With a continuous treatment, we may instead ask:
 
 This distinction has direct implications for policy design. If the ADRF flattens beyond a certain treatment intensity, allocating additional resources may yield only limited marginal returns. By contrast, if the ADRF continues to rise steeply, increasing treatment intensity may generate substantial additional benefits.
 
+::: {.callout-note appearance="simple"}
+### Beyond continuous treatment intensity
+
+This chapter focuses on settings in which treatment varies **continuously in intensity**. A related challenge arises when treatment is **discrete but has multiple versions**. For instance, unemployed workers may participate in different active labor market programs, such as training, job-search assistance, or wage subsidies. In this setting, the relevant causal question is not simply whether receiving a program has an effect, but how the effects differ across alternative treatments.
+
+The methods required for multiple discrete treatments differ from those used for continuous treatment intensity, even though both settings move beyond the standard binary treatment framework.^[Methods for multiple discrete treatments are not discussed in this book]
+:::
+
 ## The Challenge of Comparing Treatment Intensities
 
 Continuous-treatment evaluation is difficult because treatment intensity is generally endogenous. Only when treatment intensity is randomly assigned can units receiving different doses be directly compared without further adjustment.
