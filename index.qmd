@@ -8,7 +8,7 @@ In this introduction, I will mention some methods and concepts that may be unfam
 
 ## How to estimate treatment effects?
 
-The central questionquarto render --to pdf of ex-post impact evaluation is simple: **What would have happened to the outcome of interest in the absence of the treatment?** For instance, what would have happened to students’ test scores if schools had not introduced a new tutoring program? Or what would have happened to firms’ investment if they had not received a public subsidy?
+The central question of ex-post impact evaluation is simple: **What would have happened to the outcome of interest in the absence of the treatment?** For instance, what would have happened to students’ test scores if schools had not introduced a new tutoring program? Or what would have happened to firms’ investment if they had not received a public subsidy?
 
 The focus is usually on the units exposed to the treatment, such as students or firms. For these units, we observe the post-treatment outcome—for example, their test scores or investment levels—but not what would have happened had they remained untreated. The central challenge is therefore to estimate this missing counterfactual. Once it is recovered, the treatment effect is obtained by comparing the observed average post-treatment outcome with its estimated counterfactual value.
 
