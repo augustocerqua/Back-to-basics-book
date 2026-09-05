@@ -1,11 +1,30 @@
-# Section 16.3: Difference-in-differences
+# Section 16.3: Difference-in-Differences
+# ============================================================
 #
-# This self-contained script simulates a stylized application based on the
-# staggered introduction of unilateral divorce laws studied by Wolfers (2006).
-# Twenty states adopt the reform at the same time and 30 states remain
-# untreated. The ideal and failure cases use the same random draws and differ
-# only in whether control states have a different untreated outcome trend.
-# All random draws are generated from stable streams based on master seed 123.
+# This script simulates a stylized application inspired by unilateral divorce
+# laws and divorce rates.
+#
+# Example:
+#   Twenty states adopt a reform in 1979. Thirty states never adopt it during
+#   the sample period. We observe all states from 1975 to 1988.
+#
+# Goal:
+#   Show how DiD works when treated and control states would have followed
+#   parallel trends, and how it fails when the control group follows a
+#   different untreated trend.
+#
+# The script creates:
+#   1. an ideal DiD setting with credible parallel trends;
+#   2. a failure setting with non-parallel trends;
+#   3. TWFE estimates and pre-trend diagnostics saved as CSV files;
+#   4. event-study diagnostics saved as CSV files;
+#   5. a high-resolution PNG figure.
+#
+# Reproducibility:
+#   All random draws use deterministic streams based on master seed 123.
+
+
+# 0. Packages ---------------------------------------------------------------
 
 required_packages <- c("dplyr", "ggplot2", "patchwork")
 missing_packages <- required_packages[
@@ -23,6 +42,11 @@ library(dplyr)
 library(ggplot2)
 library(patchwork)
 
+
+# 1. Small helper functions -------------------------------------------------
+
+# Clustered standard errors are computed at the state level. This is important
+# because each state contributes repeated observations over time.
 did_clustered_inference <- function(model, cluster, term) {
   design_matrix <- model.matrix(model)
   residual_vector <- residuals(model)
@@ -60,6 +84,11 @@ did_clustered_inference <- function(model, cluster, term) {
   )
 }
 
+
+# 2. Simulate state-by-year panel data -------------------------------------
+
+# In the ideal case, control_differential_trend is zero. In the failure case,
+# the untreated trend of control states differs from that of treated states.
 did_simulate_panel <- function(
     seed = 123L,
     n_treated_states = 20L,
@@ -140,6 +169,9 @@ did_simulate_panel <- function(
       simulated_control_untreated_trend_change
     )
 }
+
+
+# 3. Estimate DiD and event-study models -----------------------------------
 
 did_event_term_name <- function(event_time) {
   if (event_time < 0) {
@@ -253,6 +285,9 @@ did_estimate_twfe <- function(data, setting, true_att) {
     pretrend_results = pretrend_results
   )
 }
+
+
+# 4. Prepare the figure -----------------------------------------------------
 
 did_prepare_plot_data <- function(data, setting) {
   observed_means <- data %>%
@@ -449,6 +484,12 @@ did_make_figure <- function(
     theme(legend.position = "bottom")
 }
 
+
+# 5. Main simulation function ----------------------------------------------
+
+# This is the function called from the chapter and from the master runner.
+# It returns all key objects and, by default, writes the datasets, tables,
+# and figure used in the book.
 run_did_simulation <- function(
     seed = 123L,
     n_treated_states = 20L,
@@ -460,7 +501,8 @@ run_did_simulation <- function(
     failure_control_differential_trend = -0.06,
     write_outputs = TRUE,
     data_directory = "data/simulations",
-    image_directory = "images") {
+    image_directory = "images",
+    show_plot = interactive()) {
   ideal_data <- did_simulate_panel(
     seed = seed,
     n_treated_states = n_treated_states,
@@ -560,6 +602,12 @@ run_did_simulation <- function(
     )
   }
 
+  # Display the figure in RStudio's Plots pane when the function is run
+  # interactively. The figure is still saved above when write_outputs = TRUE.
+  if (show_plot) {
+    print(did_figure)
+  }
+
   list(
     ideal_data = ideal_data,
     failure_data = failure_data,
@@ -574,8 +622,13 @@ run_did_simulation <- function(
   )
 }
 
+
+# 6. Run the script directly ------------------------------------------------
+
+# When this file is run directly, it reproduces the DiD outputs and prints the
+# main tables. When it is sourced by another file, this block is skipped.
 if (sys.nframe() == 0L) {
-  did_results <- run_did_simulation(seed = 123L)
+  did_results <- run_did_simulation(seed = 123L, show_plot = TRUE)
   cat("\nDifference-in-differences estimates\n")
   print(did_results$twfe_estimates, row.names = FALSE, digits = 3)
   cat("\nPre-treatment trend diagnostics\n")

@@ -1,10 +1,29 @@
-# Section 16.6: Regression discontinuity and merit scholarships
+# Section 16.6: Regression Discontinuity Design
+# ============================================================
 #
-# This self-contained script uses a stylized version of the Thistlethwaite and
-# Campbell (1960) merit-award design. In the ideal setting, the running variable
-# cannot be manipulated. In the failure setting, selected candidates just below
-# the threshold can move their recorded score above it. All random draws use
-# stable streams based on master seed 123.
+# This script simulates a stylized version of the Thistlethwaite and Campbell
+# merit-scholarship design.
+#
+# Example:
+#   Candidates receive a scholarship if their recorded test score is above a
+#   cutoff. The outcome is a later academic score.
+#
+# Goal:
+#   Show why a sharp RDD can identify a local causal effect at the cutoff when
+#   units cannot precisely manipulate the running variable, and how the design
+#   becomes less credible when some units sort around the threshold.
+#
+# The script creates:
+#   1. an ideal RDD setting with no manipulation;
+#   2. a failure setting with sorting just around the cutoff;
+#   3. RD estimates and manipulation diagnostics saved as CSV files;
+#   4. a high-resolution PNG figure.
+#
+# Reproducibility:
+#   All random draws use deterministic streams based on master seed 123.
+
+
+# 0. Packages ---------------------------------------------------------------
 
 required_packages <- c(
   "dplyr", "ggplot2", "patchwork", "rdrobust", "rddensity"
@@ -24,6 +43,11 @@ library(dplyr)
 library(ggplot2)
 library(patchwork)
 
+
+# 1. Simulate potential outcomes and the running variable ------------------
+
+# The true test score is the running variable. In the ideal case, this is also
+# the recorded score used to assign scholarships.
 rdd_simulate_population <- function(seed = 123L, sample_size = 10000L) {
   stopifnot(sample_size >= 500L)
 
@@ -51,6 +75,9 @@ rdd_simulate_population <- function(seed = 123L, sample_size = 10000L) {
     simulated_scholarship_effect = scholarship_effect
   )
 }
+
+
+# 2. Create ideal and manipulated assignment scenarios ---------------------
 
 rdd_create_ideal_data <- function(population) {
   population %>%
@@ -96,6 +123,9 @@ rdd_create_failure_data <- function(population, seed = 123L) {
       )
     )
 }
+
+
+# 3. Estimate RD effects and diagnostics -----------------------------------
 
 rdd_extract_estimate <- function(model, scenario, true_effect = 4.0) {
   data.frame(
@@ -162,6 +192,9 @@ rdd_estimate_scenario <- function(data) {
     diagnostic_result = motivation_result
   )
 }
+
+
+# 4. Prepare figure inputs --------------------------------------------------
 
 rdd_build_binned_outcomes <- function(data, plot_limit = 1.2, bin_width = 0.08) {
   data %>%
@@ -376,12 +409,19 @@ rdd_make_figure <- function(
     plot_layout(heights = c(1, 0.9))
 }
 
+
+# 5. Main simulation function ----------------------------------------------
+
+# This is the function called from the chapter and from the master runner.
+# It returns all key objects and, by default, writes the datasets, tables,
+# and figure used in the book.
 run_rdd_simulation <- function(
     seed = 123L,
     sample_size = 10000L,
     write_outputs = TRUE,
     data_directory = "data/simulations",
-    image_directory = "images") {
+    image_directory = "images",
+    show_plot = interactive()) {
   population <- rdd_simulate_population(
     seed = seed,
     sample_size = sample_size
@@ -440,6 +480,12 @@ run_rdd_simulation <- function(
     )
   }
 
+  # Display the figure in RStudio's Plots pane when the function is run
+  # interactively. The figure is still saved above when write_outputs = TRUE.
+  if (show_plot) {
+    print(rdd_figure)
+  }
+
   list(
     ideal_data = ideal_data,
     failure_data = failure_data,
@@ -453,8 +499,17 @@ run_rdd_simulation <- function(
   )
 }
 
+
+# 6. Run the script directly ------------------------------------------------
+
+# When this file is run directly, it reproduces the RDD outputs and prints the
+# main tables. When it is sourced by another file, this block is skipped.
 if (sys.nframe() == 0L) {
-  rdd_results <- run_rdd_simulation(seed = 123L, sample_size = 10000L)
+  rdd_results <- run_rdd_simulation(
+    seed = 123L,
+    sample_size = 10000L,
+    show_plot = TRUE
+  )
   cat("\nRegression-discontinuity estimates\n")
   print(rdd_results$estimates, row.names = FALSE, digits = 3)
   cat("\nManipulation and balance diagnostics\n")

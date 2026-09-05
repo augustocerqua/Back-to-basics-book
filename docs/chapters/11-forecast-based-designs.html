@@ -566,7 +566,7 @@ window.Quarto = {
   <li><a href="#interrupted-time-series-design" id="toc-interrupted-time-series-design" class="nav-link" data-scroll-target="#interrupted-time-series-design"><span class="header-section-number">11.5</span> Interrupted Time-Series Design</a>
   <ul class="collapse">
   <li><a href="#application-the-italian-smoking-ban" id="toc-application-the-italian-smoking-ban" class="nav-link" data-scroll-target="#application-the-italian-smoking-ban"><span class="header-section-number">11.5.1</span> Application: the Italian smoking ban</a></li>
-  <li><a href="#causal-arima" id="toc-causal-arima" class="nav-link" data-scroll-target="#causal-arima"><span class="header-section-number">11.5.2</span> Causal ARIMA</a></li>
+  <li><a href="#causal-arima" id="toc-causal-arima" class="nav-link" data-scroll-target="#causal-arima"><span class="header-section-number">11.5.2</span> Causal-ARIMA</a></li>
   </ul></li>
   <li><a href="#machine-learning-control-method" id="toc-machine-learning-control-method" class="nav-link" data-scroll-target="#machine-learning-control-method"><span class="header-section-number">11.6</span> Machine Learning Control Method</a></li>
   <li><a href="#identification-assumptions" id="toc-identification-assumptions" class="nav-link" data-scroll-target="#identification-assumptions"><span class="header-section-number">11.7</span> Identification Assumptions</a></li>
@@ -800,8 +800,8 @@ Y_t=\alpha+\beta t+\gamma Post_t+\delta(t-T_0)Post_t+u_t,
 <p>If post-ban admissions fall below what would have been expected from the pre-ban trend (as in the figure above), this difference can be interpreted as evidence consistent with a positive policy effect, provided that the forecasted counterfactual is credible and that no other simultaneous event explains the change.</p>
 </section>
 <section id="causal-arima" class="level3" data-number="11.5.2">
-<h3 data-number="11.5.2" class="anchored" data-anchor-id="causal-arima"><span class="header-section-number">11.5.2</span> Causal ARIMA</h3>
-<p>Causal ARIMA extends the ITS logic by explicitly anchoring ARIMA models in the potential outcomes framework <span class="citation" data-cites="menchetti2023">(<a href="references.html#ref-menchetti2023" role="doc-biblioref">Menchetti et al. 2023</a>)</span>. It is designed for settings in which no control series is available and the researcher has a sufficiently long pre-treatment time series.</p>
+<h3 data-number="11.5.2" class="anchored" data-anchor-id="causal-arima"><span class="header-section-number">11.5.2</span> Causal-ARIMA</h3>
+<p>Causal-ARIMA extends the ITS logic by explicitly anchoring ARIMA models in the potential outcomes framework <span class="citation" data-cites="menchetti2023">(<a href="references.html#ref-menchetti2023" role="doc-biblioref">Menchetti et al. 2023</a>)</span>. It is designed for settings in which no control series is available and the researcher has a sufficiently long pre-treatment time series.</p>
 <p>The key contribution is not simply the use of ARIMA as a forecasting method. Rather, the method embeds forecasting within a causal framework: it defines causal estimands using potential outcomes, clarifies the assumptions under which deviations from the forecast can be interpreted as treatment effects, and provides a framework for statistical inference.</p>
 <p>The basic idea can be summarized in four steps:</p>
 <ol type="i">
@@ -810,7 +810,7 @@ Y_t=\alpha+\beta t+\gamma Post_t+\delta(t-T_0)Post_t+u_t,
 <li>compare the observed post-treatment outcomes with this forecast to estimate treatment effects;</li>
 <li>quantify the uncertainty surrounding these estimates.</li>
 </ol>
-<p>For example, Causal ARIMA has been used by <span class="citation" data-cites="menchetti2023">(<a href="references.html#ref-menchetti2023" role="doc-biblioref">Menchetti et al. 2023</a>)</span> to estimate the effect of a permanent price reduction on sales in a retail setting where only the treated product series is available. The treatment effect is estimated as the difference between observed post-treatment sales and the sales that would have been predicted in the absence of the price reduction.</p>
+<p>For example, Causal-ARIMA has been used by <span class="citation" data-cites="menchetti2023">(<a href="references.html#ref-menchetti2023" role="doc-biblioref">Menchetti et al. 2023</a>)</span> to estimate the effect of a permanent price reduction on sales in a retail setting where only the treated product series is available. The treatment effect is estimated as the difference between observed post-treatment sales and the sales that would have been predicted in the absence of the price reduction.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

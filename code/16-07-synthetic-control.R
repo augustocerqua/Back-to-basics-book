@@ -1,12 +1,32 @@
-# Section 16.7: Synthetic control and the emergence of a sports star
+# Section 16.7: Synthetic Control Method
+# ============================================================
 #
-# This self-contained script studies a stylized rise in youth cycling after the
-# emergence of a Slovenian cycling star. The ideal treated path lies within the
-# convex hull of a restricted donor pool. In the failure setting, Slovenia has
-# a peculiar accelerating pre-treatment path that no convex combination of the
-# donors can reproduce. All random draws use stable streams based on seed 123.
+# This script simulates a stylized synthetic-control application.
+#
+# Example:
+#   A Slovenian cycling star emerges in 2019. We ask whether this increases
+#   youth cycling registrations in Slovenia.
+#
+# Goal:
+#   Show how SCM estimates the counterfactual outcome of one treated unit by
+#   constructing a weighted average of untreated donor units.
+#
+# The script creates:
+#   1. an ideal case, where a synthetic Slovenia can reproduce the treated
+#      unit's pre-treatment path;
+#   2. a failure case, where Slovenia's pre-treatment path is too peculiar to
+#      be approximated by any convex combination of donor countries;
+#   3. datasets and estimate tables saved as CSV files;
+#   4. a high-resolution PNG figure.
+#
+# Reproducibility:
+#   All random draws use deterministic streams based on master seed 123.
+
+
+# 0. Packages ---------------------------------------------------------------
 
 required_packages <- c("dplyr", "tidyr", "ggplot2", "patchwork", "quadprog")
+
 missing_packages <- required_packages[
   !vapply(required_packages, requireNamespace, logical(1), quietly = TRUE)
 ]
@@ -22,6 +42,14 @@ library(dplyr)
 library(ggplot2)
 library(patchwork)
 
+
+# 1. Simulate the donor pool ------------------------------------------------
+
+# SCM requires untreated units that can be combined to approximate the treated
+# unit before the intervention. Here the donor pool contains countries that are
+# plausibly comparable to Slovenia in size and broad European context.
+#
+# The outcome is youth cycling registrations per 1,000 children.
 scm_simulate_donor_pool <- function(
     seed = 123L,
     years = 2008:2024) {
@@ -29,7 +57,11 @@ scm_simulate_donor_pool <- function(
     "Croatia", "Estonia", "Latvia", "Lithuania",
     "Slovakia", "Finland", "Ireland"
   )
+
   time_index <- seq_along(years) - 1L
+
+  # Each donor follows a similar general process, but with country-specific
+  # levels, slopes, and mild cyclical movements.
   intercept_shift <- c(-0.20, 0.30, -0.10, 0.50, 0.10, 0.80, -0.40)
   slope_shift <- c(0.05, -0.02, 0.00, 0.03, 0.06, 0.02, 0.08)
   phases <- seq(0, pi, length.out = length(donor_names))
@@ -42,6 +74,7 @@ scm_simulate_donor_pool <- function(
       0.13 * sin(time_index / 2 + phases[j]) +
       rnorm(length(years), mean = 0, sd = 0.035)
   })
+
   colnames(donor_matrix) <- donor_names
   rownames(donor_matrix) <- years
 
@@ -62,12 +95,28 @@ scm_simulate_donor_pool <- function(
   )
 }
 
+
+# 2. Create the treated unit ------------------------------------------------
+
+# The treated unit is Slovenia. We create two versions of its untreated path:
+#
+#   - ideal_untreated_path:
+#       Slovenia is inside the convex hull of the donors. In practice, this
+#       means a weighted average of donor countries can reproduce Slovenia's
+#       pre-treatment outcome path.
+#
+#   - failure_untreated_path:
+#       Slovenia has an accelerating pre-treatment path that is not present in
+#       the donor pool. No valid SCM weighted average can reproduce it well.
 scm_create_treated_paths <- function(
     donor_matrix,
     years,
     seed = 123L,
     treatment_year = 2019L) {
   time_index <- seq_along(years) - 1L
+
+  # These are the population weights used only to generate the ideal untreated
+  # Slovenia path. The estimator will not be given these weights.
   ideal_population_weights <- c(
     Croatia = 0.35,
     Estonia = 0.20,
@@ -83,11 +132,12 @@ scm_create_treated_paths <- function(
     as.vector(donor_matrix %*% ideal_population_weights) +
     rnorm(length(years), mean = 0, sd = 0.025)
 
-  # The failure path has an accelerating component that is not present in any
-  # donor. By the end of the pre-treatment period, it is above every donor.
+  # The failure path deliberately violates the SCM support requirement.
+  # By the end of the pre-treatment period, Slovenia is above all donors.
   failure_untreated_path <-
     ideal_untreated_path + 0.025 * time_index^2
 
+  # The star appears in 2019 and gradually increases youth registrations.
   post_effect <- c(0.50, 1.50, 2.50, 3.20, 3.80, 4.20)
   treatment_effect <- rep(0, length(years))
   treatment_effect[years >= treatment_year] <- post_effect
@@ -100,6 +150,16 @@ scm_create_treated_paths <- function(
   )
 }
 
+
+# 3. Estimate SCM weights ---------------------------------------------------
+
+# SCM chooses donor weights that:
+#   - are non-negative;
+#   - sum to one;
+#   - minimize the pre-treatment distance between the treated unit and the
+#     weighted average of the donors.
+#
+# This is a constrained least-squares problem. The quadprog package solves it.
 scm_solve_weights <- function(treated_pre, donor_pre) {
   donor_count <- ncol(donor_pre)
   ridge <- 1e-8
@@ -108,8 +168,9 @@ scm_solve_weights <- function(treated_pre, donor_pre) {
     2 * crossprod(donor_pre) + diag(ridge, donor_count)
   linear_vector <- 2 * crossprod(donor_pre, treated_pre)
 
-  # solve.QP uses constraints t(Amat) %*% w >= bvec. The first constraint is
-  # an equality requiring weights to sum to one; the others impose w_j >= 0.
+  # solve.QP uses constraints t(Amat) %*% w >= bvec.
+  # Constraint 1: weights sum to one.
+  # Constraints 2 onward: every donor weight is non-negative.
   constraint_matrix <- cbind(rep(1, donor_count), diag(donor_count))
   constraint_vector <- c(1, rep(0, donor_count))
 
@@ -125,6 +186,9 @@ scm_solve_weights <- function(treated_pre, donor_pre) {
   weights / sum(weights)
 }
 
+
+# 4. Estimate one scenario --------------------------------------------------
+
 scm_estimate_scenario <- function(
     scenario,
     untreated_path,
@@ -135,6 +199,7 @@ scm_estimate_scenario <- function(
     treatment_year = 2019L) {
   pre_period <- years < treatment_year
   post_period <- years >= treatment_year
+
   observed_path <- untreated_path + treatment_effect
 
   weights <- scm_solve_weights(
@@ -142,12 +207,14 @@ scm_estimate_scenario <- function(
     donor_pre = donor_matrix[pre_period, , drop = FALSE]
   )
   names(weights) <- donor_names
+
   synthetic_path <- as.vector(donor_matrix %*% weights)
   estimated_gap <- observed_path - synthetic_path
 
   pre_rmspe <- sqrt(mean(
     (observed_path[pre_period] - synthetic_path[pre_period])^2
   ))
+
   average_estimated_effect <- mean(estimated_gap[post_period])
   average_true_effect <- mean(treatment_effect[post_period])
 
@@ -185,6 +252,9 @@ scm_estimate_scenario <- function(
   )
 }
 
+
+# 5. Build the figure -------------------------------------------------------
+
 scm_build_donor_envelope <- function(donor_matrix, years) {
   data.frame(
     year = years,
@@ -192,6 +262,7 @@ scm_build_donor_envelope <- function(donor_matrix, years) {
     donor_max = apply(donor_matrix, 1, max)
   )
 }
+
 
 scm_make_path_panel <- function(
     scenario_paths,
@@ -266,16 +337,20 @@ scm_make_path_panel <- function(
     )
 }
 
+
 scm_make_figure <- function(
     paths,
     weights,
     results,
     donor_envelope,
     treatment_year = 2019L) {
-  ideal_paths <- paths %>% filter(scenario == "Ideal: convex-hull support")
+  ideal_paths <- paths %>%
+    filter(scenario == "Ideal: convex-hull support")
   failure_paths <- paths %>%
     filter(scenario == "Failure: no convex-hull support")
-  ideal_result <- results %>% filter(scenario == "Ideal: convex-hull support")
+
+  ideal_result <- results %>%
+    filter(scenario == "Ideal: convex-hull support")
   failure_result <- results %>%
     filter(scenario == "Failure: no convex-hull support")
 
@@ -286,6 +361,7 @@ scm_make_figure <- function(
     panel_label = "A",
     treatment_year = treatment_year
   )
+
   failure_panel <- scm_make_path_panel(
     failure_paths,
     donor_envelope,
@@ -333,6 +409,7 @@ scm_make_figure <- function(
         "Failure SCM gap"
       )
     )
+
   true_effect_path <- paths %>%
     filter(scenario == "Ideal: convex-hull support") %>%
     transmute(
@@ -340,6 +417,7 @@ scm_make_figure <- function(
       effect = true_effect,
       series = "True star effect"
     )
+
   gap_data <- bind_rows(estimated_gaps, true_effect_path)
 
   gap_panel <- ggplot(
@@ -391,13 +469,24 @@ scm_make_figure <- function(
     plot_layout(heights = c(1, 0.95))
 }
 
+
+# 6. Main simulation function ----------------------------------------------
+
+# This is the function called from the chapter and from the master runner.
+# It returns all key objects and, by default, writes the datasets, tables,
+# and figure used in the book.
 run_scm_simulation <- function(
     seed = 123L,
     treatment_year = 2019L,
     write_outputs = TRUE,
+    show_plot = interactive(),
     data_directory = "data/simulations",
     image_directory = "images") {
+
+  # Step 1: simulate untreated donor countries.
   donor_data <- scm_simulate_donor_pool(seed = seed)
+
+  # Step 2: create ideal and failure versions of the treated country.
   treated_paths <- scm_create_treated_paths(
     donor_matrix = donor_data$matrix,
     years = donor_data$years,
@@ -405,6 +494,7 @@ run_scm_simulation <- function(
     treatment_year = treatment_year
   )
 
+  # Step 3: estimate SCM in the ideal scenario.
   ideal <- scm_estimate_scenario(
     scenario = "Ideal: convex-hull support",
     untreated_path = treated_paths$ideal_untreated_path,
@@ -414,6 +504,8 @@ run_scm_simulation <- function(
     years = donor_data$years,
     treatment_year = treatment_year
   )
+
+  # Step 4: estimate SCM in the failure scenario.
   failure <- scm_estimate_scenario(
     scenario = "Failure: no convex-hull support",
     untreated_path = treated_paths$failure_untreated_path,
@@ -427,10 +519,12 @@ run_scm_simulation <- function(
   results <- bind_rows(ideal$results, failure$results)
   paths <- bind_rows(ideal$paths, failure$paths)
   weights <- bind_rows(ideal$weights, failure$weights)
+
   donor_envelope <- scm_build_donor_envelope(
     donor_data$matrix,
     donor_data$years
   )
+
   scm_figure <- scm_make_figure(
     paths,
     weights,
@@ -449,6 +543,7 @@ run_scm_simulation <- function(
         unit_type = "Treated"
       )
   )
+
   failure_dataset <- bind_rows(
     donor_data$panel %>% mutate(unit_type = "Donor"),
     failure$paths %>%
@@ -460,34 +555,41 @@ run_scm_simulation <- function(
       )
   )
 
+  # Step 5: save book outputs.
   if (write_outputs) {
     dir.create(data_directory, recursive = TRUE, showWarnings = FALSE)
     dir.create(image_directory, recursive = TRUE, showWarnings = FALSE)
+
     write.csv(
       ideal_dataset,
       file.path(data_directory, "scm_youth_cycling_ideal.csv"),
       row.names = FALSE
     )
+
     write.csv(
       failure_dataset,
       file.path(data_directory, "scm_youth_cycling_failure.csv"),
       row.names = FALSE
     )
+
     write.csv(
       results,
       file.path(data_directory, "scm_youth_cycling_estimates.csv"),
       row.names = FALSE
     )
+
     write.csv(
       weights,
       file.path(data_directory, "scm_youth_cycling_weights.csv"),
       row.names = FALSE
     )
+
     write.csv(
       paths,
       file.path(data_directory, "scm_youth_cycling_paths.csv"),
       row.names = FALSE
     )
+
     ggsave(
       file.path(image_directory, "scm-youth-cycling-simulation.png"),
       scm_figure,
@@ -496,6 +598,12 @@ run_scm_simulation <- function(
       dpi = 320,
       bg = "white"
     )
+  }
+
+  # Display the figure in RStudio's Plots pane when the function is run
+  # interactively. The figure is still saved above when write_outputs = TRUE.
+  if (show_plot) {
+    print(scm_figure)
   }
 
   list(
@@ -509,10 +617,17 @@ run_scm_simulation <- function(
   )
 }
 
+
+# 7. Run the script directly ------------------------------------------------
+
+# When this file is run directly, it reproduces the SCM outputs and prints the
+# main tables. When it is sourced by another file, this block is skipped.
 if (sys.nframe() == 0L) {
-  scm_results <- run_scm_simulation(seed = 123L)
+  scm_results <- run_scm_simulation(seed = 123L, show_plot = TRUE)
+
   cat("\nSynthetic-control estimates\n")
   print(scm_results$estimates, row.names = FALSE, digits = 3)
+
   cat("\nSynthetic-control weights\n")
   print(scm_results$weights, row.names = FALSE, digits = 3)
 }

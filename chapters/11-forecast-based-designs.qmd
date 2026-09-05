@@ -195,9 +195,9 @@ For this reason, an ITS design offers a natural alternative. Instead of relying 
 
 If post-ban admissions fall below what would have been expected from the pre-ban trend (as in the figure above), this difference can be interpreted as evidence consistent with a positive policy effect, provided that the forecasted counterfactual is credible and that no other simultaneous event explains the change.
 
-### Causal ARIMA
+### Causal-ARIMA
 
-Causal ARIMA extends the ITS logic by explicitly anchoring ARIMA models in the potential outcomes framework [@menchetti2023]. It is designed for settings in which no control series is available and the researcher has a sufficiently long pre-treatment time series.
+Causal-ARIMA extends the ITS logic by explicitly anchoring ARIMA models in the potential outcomes framework [@menchetti2023]. It is designed for settings in which no control series is available and the researcher has a sufficiently long pre-treatment time series.
 
 The key contribution is not simply the use of ARIMA as a forecasting method. Rather, the method embeds forecasting within a causal framework: it defines causal estimands using potential outcomes, clarifies the assumptions under which deviations from the forecast can be interpreted as treatment effects, and provides a framework for statistical inference.
 
@@ -208,7 +208,7 @@ ii) forecast how the outcome would have evolved after treatment in its absence;
 iii) compare the observed post-treatment outcomes with this forecast to estimate treatment effects;
 iv) quantify the uncertainty surrounding these estimates.
 
-For example, Causal ARIMA has been used by [@menchetti2023] to estimate the effect of a permanent price reduction on sales in a retail setting where only the treated product series is available. The treatment effect is estimated as the difference between observed post-treatment sales and the sales that would have been predicted in the absence of the price reduction.
+For example, Causal-ARIMA has been used by [@menchetti2023] to estimate the effect of a permanent price reduction on sales in a retail setting where only the treated product series is available. The treatment effect is estimated as the difference between observed post-treatment sales and the sales that would have been predicted in the absence of the price reduction.
 
 
 ::: {.callout-note}

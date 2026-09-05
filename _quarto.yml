@@ -4,8 +4,15 @@ project:
   resources:
     - .nojekyll
     - code/16-causal-methods-in-practice.R
+    - code/16-09-mlcm.R
     - data/simulations/rct_star_ideal.csv
     - data/simulations/rct_star_noncompliance.csv
+    - data/simulations/mlcm_mortality_panel.csv
+    - data/simulations/mlcm_mortality_municipality_estimates.csv
+    - data/simulations/mlcm_mortality_area_estimates.csv
+    - data/simulations/mlcm_mortality_overall_estimates.csv
+    - data/simulations/mlcm_mortality_validation.csv
+    - data/simulations/mlcm_mortality_placebo_predictions.csv
 
 book:
   title: "The Backbone of Impact Evaluation Methods"

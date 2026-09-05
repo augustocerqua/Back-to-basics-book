@@ -646,13 +646,21 @@ window.Quarto = {
   <li><a href="#what-the-donor-envelope-does-and-does-not-show" id="toc-what-the-donor-envelope-does-and-does-not-show" class="nav-link" data-scroll-target="#what-the-donor-envelope-does-and-does-not-show"><span class="header-section-number">16.7.5</span> What the donor envelope does and does not show</a></li>
   <li><a href="#main-lessons-from-the-scm-simulation" id="toc-main-lessons-from-the-scm-simulation" class="nav-link" data-scroll-target="#main-lessons-from-the-scm-simulation"><span class="header-section-number">16.7.6</span> Main lessons from the SCM simulation</a></li>
   </ul></li>
-  <li><a href="#fbcms" id="toc-fbcms" class="nav-link" data-scroll-target="#fbcms"><span class="header-section-number">16.8</span> FBCMs</a>
+  <li><a href="#causal-arima" id="toc-causal-arima" class="nav-link" data-scroll-target="#causal-arima"><span class="header-section-number">16.8</span> Causal-ARIMA</a>
   <ul class="collapse">
   <li><a href="#a-national-workplace-safety-regulation" id="toc-a-national-workplace-safety-regulation" class="nav-link" data-scroll-target="#a-national-workplace-safety-regulation"><span class="header-section-number">16.8.1</span> A national workplace-safety regulation</a></li>
   <li><a href="#the-estimand-and-the-data-generating-process" id="toc-the-estimand-and-the-data-generating-process" class="nav-link" data-scroll-target="#the-estimand-and-the-data-generating-process"><span class="header-section-number">16.8.2</span> The estimand and the data-generating process</a></li>
   <li><a href="#the-ideal-setting-a-stable-untreated-process" id="toc-the-ideal-setting-a-stable-untreated-process" class="nav-link" data-scroll-target="#the-ideal-setting-a-stable-untreated-process"><span class="header-section-number">16.8.3</span> The ideal setting: a stable untreated process</a></li>
   <li><a href="#a-failure-an-additional-policy-during-the-post-treatment-period" id="toc-a-failure-an-additional-policy-during-the-post-treatment-period" class="nav-link" data-scroll-target="#a-failure-an-additional-policy-during-the-post-treatment-period"><span class="header-section-number">16.8.4</span> A failure: an additional policy during the post-treatment period</a></li>
   <li><a href="#main-lessons-from-the-causal-arima-simulation" id="toc-main-lessons-from-the-causal-arima-simulation" class="nav-link" data-scroll-target="#main-lessons-from-the-causal-arima-simulation"><span class="header-section-number">16.8.5</span> Main lessons from the Causal ARIMA simulation</a></li>
+  </ul></li>
+  <li><a href="#mlcm" id="toc-mlcm" class="nav-link" data-scroll-target="#mlcm"><span class="header-section-number">16.9</span> MLCM</a>
+  <ul class="collapse">
+  <li><a href="#local-excess-mortality-without-a-control-group" id="toc-local-excess-mortality-without-a-control-group" class="nav-link" data-scroll-target="#local-excess-mortality-without-a-control-group"><span class="header-section-number">16.9.1</span> Local excess mortality without a control group</a></li>
+  <li><a href="#the-mlcm-logic" id="toc-the-mlcm-logic" class="nav-link" data-scroll-target="#the-mlcm-logic"><span class="header-section-number">16.9.2</span> The MLCM logic</a></li>
+  <li><a href="#the-ideal-setting-the-pandemic-is-the-only-2020-shock" id="toc-the-ideal-setting-the-pandemic-is-the-only-2020-shock" class="nav-link" data-scroll-target="#the-ideal-setting-the-pandemic-is-the-only-2020-shock"><span class="header-section-number">16.9.3</span> The ideal setting: the pandemic is the only 2020 shock</a></li>
+  <li><a href="#a-failure-another-shock-affects-recorded-mortality" id="toc-a-failure-another-shock-affects-recorded-mortality" class="nav-link" data-scroll-target="#a-failure-another-shock-affects-recorded-mortality"><span class="header-section-number">16.9.4</span> A failure: another shock affects recorded mortality</a></li>
+  <li><a href="#main-lessons-from-the-mlcm-simulation" id="toc-main-lessons-from-the-mlcm-simulation" class="nav-link" data-scroll-target="#main-lessons-from-the-mlcm-simulation"><span class="header-section-number">16.9.5</span> Main lessons from the MLCM simulation</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
@@ -727,7 +735,8 @@ window.Quarto = {
 <li><a href="../code/16-05-instrumental-variables.R"><code>16-05-instrumental-variables.R</code></a> reproduces the Vietnam draft-lottery IV simulations in Section 16.5;</li>
 <li><a href="../code/16-06-regression-discontinuity.R"><code>16-06-regression-discontinuity.R</code></a> reproduces the merit-scholarship RD simulations in Section 16.6;</li>
 <li><a href="../code/16-07-synthetic-control.R"><code>16-07-synthetic-control.R</code></a> reproduces the youth-cycling SCM simulations in Section 16.7;</li>
-<li><a href="../code/16-08-causal-arima.R"><code>16-08-causal-arima.R</code></a> reproduces the national workplace-safety Causal ARIMA simulations in Section 16.8.</li>
+<li><a href="../code/16-08-causal-arima.R"><code>16-08-causal-arima.R</code></a> reproduces the national workplace-safety Causal-ARIMA simulations in Section 16.8;</li>
+<li><a href="../code/16-09-mlcm.R"><code>16-09-mlcm.R</code></a> reproduces the local-mortality MLCM simulation in Section 16.9.</li>
 </ul>
 <p>For example, the RCT section can be reproduced from the root directory of the book with:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"code/16-01-randomized-controlled-trial.R"</span>)</span>
@@ -2478,8 +2487,8 @@ Table&nbsp;16.13: SCM estimates in the youth-cycling simulation
 <p>The generated datasets are available as <a href="../data/simulations/scm_youth_cycling_ideal.csv"><code>scm_youth_cycling_ideal.csv</code></a> and <a href="../data/simulations/scm_youth_cycling_failure.csv"><code>scm_youth_cycling_failure.csv</code></a>. The complete analysis is reproduced by <a href="../code/16-07-synthetic-control.R"><code>16-07-synthetic-control.R</code></a>.</p>
 </section>
 </section>
-<section id="fbcms" class="level2" data-number="16.8">
-<h2 data-number="16.8" class="anchored" data-anchor-id="fbcms"><span class="header-section-number">16.8</span> FBCMs</h2>
+<section id="causal-arima" class="level2" data-number="16.8">
+<h2 data-number="16.8" class="anchored" data-anchor-id="causal-arima"><span class="header-section-number">16.8</span> Causal-ARIMA</h2>
 <section id="a-national-workplace-safety-regulation" class="level3" data-number="16.8.1">
 <h3 data-number="16.8.1" class="anchored" data-anchor-id="a-national-workplace-safety-regulation"><span class="header-section-number">16.8.1</span> A national workplace-safety regulation</h3>
 <p>Suppose a country introduces a new workplace-safety regulation for all firms at the same time. The policy is intended to reduce occupational accidents through stricter safety standards and prevention requirements. Because the reform is national, there is no contemporaneous untreated group within the country. The unit of analysis is therefore the country itself, observed repeatedly over time.</p>
@@ -2488,7 +2497,7 @@ Table&nbsp;16.13: SCM estimates in the youth-cycling simulation
 <blockquote class="blockquote">
 <p>How would the national workplace-accident rate have evolved from March 2022 onwards if the new safety regulation had not been introduced?</p>
 </blockquote>
-<p>A control-based method cannot answer this question when untreated units are not available. Causal ARIMA instead uses the 50 pre-treatment observations to model the untreated evolution of the national series and forecast its missing post-treatment path <span class="citation" data-cites="menchetti2023">(<a href="references.html#ref-menchetti2023" role="doc-biblioref">Menchetti et al. 2023</a>)</span>.</p>
+<p>A control-based method cannot answer this question when untreated units are not available. Causal-ARIMA instead uses the 50 pre-treatment observations to model the untreated evolution of the national series and forecast its missing post-treatment path <span class="citation" data-cites="menchetti2023">(<a href="references.html#ref-menchetti2023" role="doc-biblioref">Menchetti et al. 2023</a>)</span>.</p>
 </section>
 <section id="the-estimand-and-the-data-generating-process" class="level3" data-number="16.8.2">
 <h3 data-number="16.8.2" class="anchored" data-anchor-id="the-estimand-and-the-data-generating-process"><span class="header-section-number">16.8.2</span> The estimand and the data-generating process</h3>
@@ -2498,7 +2507,7 @@ Table&nbsp;16.13: SCM estimates in the youth-cycling simulation
 =
 Y_t(1)-Y_t(0),
 \]</span></p>
-<p>where <span class="math inline">\(Y_t(1)\)</span> is the observed accident rate under the regulation and <span class="math inline">\(Y_t(0)\)</span> is the accident rate that would have occurred without it. Causal ARIMA estimates the missing counterfactual using only pre-treatment information:</p>
+<p>where <span class="math inline">\(Y_t(1)\)</span> is the observed accident rate under the regulation and <span class="math inline">\(Y_t(0)\)</span> is the accident rate that would have occurred without it. Causal-ARIMA estimates the missing counterfactual using only pre-treatment information:</p>
 <p><span class="math display">\[
 \widehat{\tau}_t
 =
@@ -2537,16 +2546,16 @@ Y_t^{obs}-\widehat{Y}_t(0).
 <img src="../images/causal-arima-workplace-safety-simulation.png" class="img-fluid figure-img" style="width:100.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-causal-arima-workplace-safety-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;16.9: Causal ARIMA in the stylized national workplace-safety simulation. Panels A and B use the same vertical scale and compare the observed accident rate with the forecasted no-reform path; the blue areas are 95% prediction intervals. The dotted black line marks the March 2022 safety regulation, while the gold dot-dashed line in Panel B marks the additional policy introduced in June 2022. Panel C compares period-specific Causal ARIMA estimates with the true simulated policy effects. Panel D reports temporal average effects and 95% confidence intervals; the dashed green line marks the true average policy effect.
+Figure&nbsp;16.9: Causal-ARIMA in the stylized national workplace-safety simulation. Panels A and B use the same vertical scale and compare the observed accident rate with the forecasted no-reform path; the blue areas are 95% prediction intervals. The dotted black line marks the March 2022 safety regulation, while the gold dot-dashed line in Panel B marks the additional policy introduced in June 2022. Panel C compares period-specific Causal-ARIMA estimates with the true simulated policy effects. Panel D reports temporal average effects and 95% confidence intervals; the dashed green line marks the true average policy effect.
 </figcaption>
 </figure>
 </div>
-<p>Panel A shows that the observed accident rate falls below the forecasted no-reform path after the regulation. The estimated period-specific effects closely follow the true simulated policy effects in Panel C. Causal ARIMA estimates a temporal average effect of <span class="math inline">\(-1.504\)</span> accidents per 1,000 workers, almost exactly reproducing the true effect of <span class="math inline">\(-1.500\)</span>.</p>
+<p>Panel A shows that the observed accident rate falls below the forecasted no-reform path after the regulation. The estimated period-specific effects closely follow the true simulated policy effects in Panel C. Causal-ARIMA estimates a temporal average effect of <span class="math inline">\(-1.504\)</span> accidents per 1,000 workers, almost exactly reproducing the true effect of <span class="math inline">\(-1.500\)</span>.</p>
 <p>The numerical results are reported in <a href="#tbl-causal-arima-workplace-safety-results" class="quarto-xref">Table&nbsp;<span>16.14</span></a>.</p>
 <div id="tbl-causal-arima-workplace-safety-results" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-causal-arima-workplace-safety-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Table&nbsp;16.14: Causal ARIMA estimates in the national workplace-safety simulation
+Table&nbsp;16.14: Causal-ARIMA estimates in the national workplace-safety simulation
 </figcaption>
 <div aria-describedby="tbl-causal-arima-workplace-safety-results-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -2611,7 +2620,7 @@ Table&nbsp;16.14: Causal ARIMA estimates in the national workplace-safety simula
 =
 -2.200.
 \]</span></p>
-<p>Panel B shows that the divergence becomes larger from June 2022 onward. Causal ARIMA estimates an average effect of <span class="math inline">\(-2.204\)</span>, which is an accurate estimate of the <strong>total post-treatment departure from the forecast</strong> but not of the original safety regulation’s effect in isolation. The method overstates the regulation’s average effect by approximately <span class="math inline">\(0.7\)</span> accidents per 1,000 workers because it also attributes the later policy’s effect to the original intervention.</p>
+<p>Panel B shows that the divergence becomes larger from June 2022 onward. Causal-ARIMA estimates an average effect of <span class="math inline">\(-2.204\)</span>, which is an accurate estimate of the <strong>total post-treatment departure from the forecast</strong> but not of the original safety regulation’s effect in isolation. The method overstates the regulation’s average effect by approximately <span class="math inline">\(0.7\)</span> accidents per 1,000 workers because it also attributes the later policy’s effect to the original intervention.</p>
 <p>Importantly, the pre-treatment RMSE is identical in the two scenarios. Pre-treatment fit cannot reveal a shock that occurs only after treatment. A forecasting model may therefore fit the historical series extremely well and still fail to identify the policy effect when another event begins at the same time.</p>
 <div class="callout callout-style-simple callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -2623,7 +2632,7 @@ Table&nbsp;16.14: Causal ARIMA estimates in the national workplace-safety simula
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Causal ARIMA can estimate how the observed outcome departs from its forecasted no-treatment path. Interpreting this departure as the effect of a particular policy additionally requires that no other intervention, measurement change, or unexpected shock affects the outcome over the post-treatment period.</p>
+<p>Causal-ARIMA can estimate how the observed outcome departs from its forecasted no-treatment path. Interpreting this departure as the effect of a particular policy additionally requires that no other intervention, measurement change, or unexpected shock affects the outcome over the post-treatment period.</p>
 <p>With only one national series, the model cannot statistically separate the original intervention from another policy that begins later within the same post-treatment window. Institutional knowledge, alternative outcomes, sensitivity analyses, and explicit controls for known post-treatment changes are therefore essential complements to forecasting accuracy.</p>
 </div>
 </div>
@@ -2631,7 +2640,7 @@ Table&nbsp;16.14: Causal ARIMA estimates in the national workplace-safety simula
 <section id="main-lessons-from-the-causal-arima-simulation" class="level3" data-number="16.8.5">
 <h3 data-number="16.8.5" class="anchored" data-anchor-id="main-lessons-from-the-causal-arima-simulation"><span class="header-section-number">16.8.5</span> Main lessons from the Causal ARIMA simulation</h3>
 <ul>
-<li>Causal ARIMA can be used when one aggregate unit is treated and no contemporaneous control group is available.</li>
+<li>Causal-ARIMA can be used when one aggregate unit is treated and no contemporaneous control group is available.</li>
 <li>A sufficiently long and informative pre-treatment series is needed to learn the untreated dynamics.</li>
 <li>The method produces period-specific, cumulative, and temporal average causal-effect estimates.</li>
 <li>Prediction intervals quantify uncertainty about the missing counterfactual path; confidence intervals quantify uncertainty about estimated causal summaries.</li>
@@ -2639,6 +2648,265 @@ Table&nbsp;16.14: Causal ARIMA estimates in the national workplace-safety simula
 <li>Excellent pre-treatment fit does not protect the analysis from another event occurring within the post-treatment window.</li>
 </ul>
 <p>The generated datasets are available as <a href="../data/simulations/causal_arima_workplace_safety_ideal.csv"><code>causal_arima_workplace_safety_ideal.csv</code></a> and <a href="../data/simulations/causal_arima_workplace_safety_failure.csv"><code>causal_arima_workplace_safety_failure.csv</code></a>. The complete analysis is reproduced by <a href="../code/16-08-causal-arima.R"><code>16-08-causal-arima.R</code></a>.</p>
+</section>
+</section>
+<section id="mlcm" class="level2 page-columns page-full" data-number="16.9">
+<h2 data-number="16.9" class="anchored" data-anchor-id="mlcm"><span class="header-section-number">16.9</span> MLCM</h2>
+<section id="local-excess-mortality-without-a-control-group" class="level3" data-number="16.9.1">
+<h3 data-number="16.9.1" class="anchored" data-anchor-id="local-excess-mortality-without-a-control-group"><span class="header-section-number">16.9.1</span> Local excess mortality without a control group</h3>
+<p>This simulation is inspired by the application in Cerqua et al. <span class="citation" data-cites="cerqua2021mortality">(<a href="references.html#ref-cerqua2021mortality" role="doc-biblioref">2021</a>)</span>, who estimate local excess mortality during the COVID-19 pandemic in Italy. The empirical challenge is especially clear: the pandemic affected the whole country, so there is no obvious contemporaneous group of untreated municipalities that can be used as controls.</p>
+<p>The target quantity is local excess mortality: the difference between observed mortality during the pandemic and the mortality that would have occurred in an ordinary no-pandemic year. The counterfactual is not observed, so it must be predicted.</p>
+<p>In this simulation, we create 800 municipalities observed from 2015 to 2020. Municipalities differ by macro-area, population size, age structure, population density, air pollution, hospital availability, and previous mortality. The year 2020 is the pandemic year. We assume that the true pandemic effect is highly heterogeneous across areas: it is largest in the North West, still large in the North East, moderate in the Center, and much smaller in the South and Islands.</p>
+<p>The key counterfactual question is:</p>
+<blockquote class="blockquote">
+<p>What would mortality in each municipality have been in 2020 if the pandemic had not occurred?</p>
+</blockquote>
+</section>
+<section id="the-mlcm-logic" class="level3 page-columns page-full" data-number="16.9.2">
+<h3 data-number="16.9.2" class="anchored" data-anchor-id="the-mlcm-logic"><span class="header-section-number">16.9.2</span> The MLCM logic</h3>
+<p>The Machine Learning Control Method uses pre-treatment information to predict counterfactual outcomes for treated units. In this example, all municipalities are treated by the pandemic in 2020, so the model is trained on ordinary pre-pandemic years and then used to predict each municipality’s no-pandemic 2020 mortality.</p>
+<p>The script compares three predictive approaches:</p>
+<ol type="1">
+<li>the <strong>historical average</strong>, which predicts 2020 mortality using the municipality’s average mortality in previous years;</li>
+<li><strong>LASSO</strong>, estimated by trying 100 values of the penalty parameter <span class="math inline">\(\lambda\)</span> and selecting the value with the lowest cross-validation error<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>;</li>
+<li><strong>random forest</strong>, estimated by cross-validating over three values of <code>mtry</code>: all covariates, half of the covariates, and one third of the covariates.</li>
+</ol>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;Cross-validation evaluates predictive performance by repeatedly fitting the model on part of the data and assessing its performance on observations not used for estimation.</p></div></div><p>The code follows the same structure as the other simulations:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"code/16-09-mlcm.R"</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>mlcm_results <span class="ot">&lt;-</span> <span class="fu">run_mlcm_simulation</span>(<span class="at">seed =</span> <span class="dv">123</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Before estimating 2020 excess mortality, the script performs a placebo validation exercise. It trains and tunes the candidate models on ordinary years up to 2018 and asks how well they predict mortality in 2019, an ordinary year with no pandemic by construction. The best-performing ML model in this placebo year is then re-estimated using all available pre-pandemic years and used to predict the no-pandemic 2020 counterfactual.</p>
+<div id="tbl-mlcm-validation" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mlcm-validation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;16.15: Prediction accuracy in an ordinary year
+</figcaption>
+<div aria-describedby="tbl-mlcm-validation-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Method</th>
+<th style="text-align: right;">Validation year</th>
+<th style="text-align: right;">RMSE</th>
+<th style="text-align: right;">MAE</th>
+<th style="text-align: left;">Tuning choice</th>
+<th style="text-align: center;">Selected for 2020</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Historical average</td>
+<td style="text-align: right;">2019</td>
+<td style="text-align: right;">1.155</td>
+<td style="text-align: right;">0.923</td>
+<td style="text-align: left;">No tuning</td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">LASSO</td>
+<td style="text-align: right;">2019</td>
+<td style="text-align: right;">1.192</td>
+<td style="text-align: right;">0.965</td>
+<td style="text-align: left;"><span class="math inline">\(\lambda=0.322\)</span></td>
+<td style="text-align: center;">No</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Random forest</td>
+<td style="text-align: right;">2019</td>
+<td style="text-align: right;">1.066</td>
+<td style="text-align: right;">0.855</td>
+<td style="text-align: left;"><code>mtry = 3</code></td>
+<td style="text-align: center;">Yes</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p><em>Note:</em> In a random forest, <code>mtry</code> is the number of covariates randomly considered at each split of each tree. Thus, <code>mtry = 3</code> means that each tree considers only three candidate covariates at each split and chooses the best split among them. In this example, cross-validation selected <code>mtry = 3</code> because it produced the best prediction accuracy in the 2019 placebo year.</p>
+<p>Random forest performs best in the placebo year, so it is selected as the MLCM predictor for the 2020 counterfactual. This matters because the credibility of a forecast-based counterfactual method depends first on whether it can predict untreated outcomes in ordinary periods.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Why use machine learning here?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The historical average uses only one piece of information: each municipality’s past mortality. MLCM can use a richer set of predictors, such as demographic structure, pollution, population density, hospital availability, area, past mortality, and nonlinear relationships among them.</p>
+<p>This does not make the estimate automatically causal. It only improves the construction of the missing no-pandemic outcome. The causal interpretation still requires that no other unmodeled shock affects 2020 mortality in a way that the model attributes to the pandemic.</p>
+</div>
+</div>
+</section>
+<section id="the-ideal-setting-the-pandemic-is-the-only-2020-shock" class="level3" data-number="16.9.3">
+<h3 data-number="16.9.3" class="anchored" data-anchor-id="the-ideal-setting-the-pandemic-is-the-only-2020-shock"><span class="header-section-number">16.9.3</span> The ideal setting: the pandemic is the only 2020 shock</h3>
+<p>In the ideal setting, the only reason why observed 2020 mortality differs from ordinary no-pandemic mortality is the pandemic itself. For municipality <span class="math inline">\(i\)</span>, the estimated excess mortality is</p>
+<p><span class="math display">\[
+\widehat{\tau}_i
+=
+Y_i^{obs}
+-
+\widehat{Y}_i(0),
+\]</span></p>
+<p>where <span class="math inline">\(\widehat{Y}_i(0)\)</span> is the predicted no-pandemic mortality rate.</p>
+<p>The figure summarizes the simulation and shows how the estimates vary across areas.</p>
+<div id="fig-mlcm-local-mortality" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mlcm-local-mortality-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/mlcm-local-mortality-simulation.png" class="img-fluid figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mlcm-local-mortality-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16.10: MLCM in the stylized local-mortality simulation. Panel A compares true excess mortality, the historical-average estimate, and the selected MLCM estimate by area. Panel B shows the municipality-level distribution of MLCM estimates by area. Panel C shows how a non-pandemic reporting shock contaminates the estimates in the failure scenario. Panel D compares municipality-level 2020 prediction errors in the ideal scenario. Panel E reports placebo-year prediction errors for the historical average, LASSO, and random forest.
+</figcaption>
+</figure>
+</div>
+<p>Panel A shows the main message. The true excess mortality is strongly concentrated in the North West and North East. MLCM closely tracks this spatial heterogeneity, while the historical average slightly overstates excess mortality because it does not fully account for the ordinary evolution of municipal mortality.</p>
+<div id="tbl-mlcm-area-ideal" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mlcm-area-ideal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;16.16: Area-level estimates in the ideal MLCM simulation
+</figcaption>
+<div aria-describedby="tbl-mlcm-area-ideal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Area</th>
+<th style="text-align: right;">Municipalities</th>
+<th style="text-align: right;">True excess</th>
+<th style="text-align: right;">Historical average</th>
+<th style="text-align: right;">MLCM estimate</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">North West</td>
+<td style="text-align: right;">199</td>
+<td style="text-align: right;">16.495</td>
+<td style="text-align: right;">17.293</td>
+<td style="text-align: right;">16.827</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">North East</td>
+<td style="text-align: right;">183</td>
+<td style="text-align: right;">10.236</td>
+<td style="text-align: right;">10.900</td>
+<td style="text-align: right;">10.454</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Center</td>
+<td style="text-align: right;">162</td>
+<td style="text-align: right;">4.854</td>
+<td style="text-align: right;">5.520</td>
+<td style="text-align: right;">5.105</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South and Islands</td>
+<td style="text-align: right;">256</td>
+<td style="text-align: right;">1.539</td>
+<td style="text-align: right;">2.289</td>
+<td style="text-align: right;">1.756</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>At the national level, the true average excess mortality is 7.920 deaths per 10,000 inhabitants. The historical-average method estimates 8.645, while the selected MLCM method estimates 8.172.</p>
+</section>
+<section id="a-failure-another-shock-affects-recorded-mortality" class="level3" data-number="16.9.4">
+<h3 data-number="16.9.4" class="anchored" data-anchor-id="a-failure-another-shock-affects-recorded-mortality"><span class="header-section-number">16.9.4</span> A failure: another shock affects recorded mortality</h3>
+<p>We now introduce a failure scenario. The pandemic effect is unchanged, but in 2020 there is also a non-pandemic reporting shock: recorded mortality increases by one death per 10,000 inhabitants in the Center and by three deaths per 10,000 inhabitants in the South and Islands. This shock is not caused by the pandemic, but it appears in the observed outcome.</p>
+<p>This is precisely the type of problem that forecast-based methods cannot solve by prediction alone. MLCM observes a larger gap between observed mortality and predicted no-pandemic mortality, but the gap now combines the pandemic effect with the reporting shock.</p>
+<div id="tbl-mlcm-overall" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mlcm-overall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;16.17: Overall MLCM estimates
+</figcaption>
+<div aria-describedby="tbl-mlcm-overall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Setting</th>
+<th style="text-align: right;">True excess</th>
+<th style="text-align: right;">Historical average</th>
+<th style="text-align: right;">MLCM estimate</th>
+<th style="text-align: right;">Non-pandemic shock</th>
+<th style="text-align: right;">MLCM RMSE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Ideal: pandemic shock only</td>
+<td style="text-align: right;">7.920</td>
+<td style="text-align: right;">8.645</td>
+<td style="text-align: right;">8.172</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">1.033</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Failure: extra reporting shock</td>
+<td style="text-align: right;">7.920</td>
+<td style="text-align: right;">9.808</td>
+<td style="text-align: right;">9.335</td>
+<td style="text-align: right;">1.163</td>
+<td style="text-align: right;">2.160</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Panel C makes the failure visible by area. In the North West and North East, where there is no reporting shock, the MLCM estimate remains close to the true pandemic effect. In the Center and South and Islands, the estimated effect increases because the model attributes the additional non-pandemic mortality to the pandemic.</p>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>MLCM predicts counterfactuals, not causes by itself
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>MLCM can build credible unit-level counterfactual predictions when the untreated outcome process is predictable from pre-treatment information. However, the observed-minus-predicted gap is causal only if the gap is generated by the treatment of interest.</p>
+<p>If another event affects the outcome in the treatment period, MLCM will generally include that event in the estimated effect unless the researcher explicitly models it or shows that it is irrelevant.</p>
+</div>
+</div>
+</section>
+<section id="main-lessons-from-the-mlcm-simulation" class="level3" data-number="16.9.5">
+<h3 data-number="16.9.5" class="anchored" data-anchor-id="main-lessons-from-the-mlcm-simulation"><span class="header-section-number">16.9.5</span> Main lessons from the MLCM simulation</h3>
+<ul>
+<li>MLCM is particularly useful when all units are exposed to a shock and no contemporaneous untreated control group is available.</li>
+<li>The method estimates unit-level counterfactual outcomes and can therefore describe how effects vary across units.</li>
+<li>Prediction should be validated in ordinary pre-treatment periods whenever possible.</li>
+<li>Rich predictors can improve the counterfactual relative to a simple historical average.</li>
+<li>Forecast accuracy is not the same as causal identification.</li>
+<li>Additional shocks in the treatment period can contaminate the estimated effect.</li>
+</ul>
+<p>The generated datasets are available as <a href="../data/simulations/mlcm_mortality_panel.csv"><code>mlcm_mortality_panel.csv</code></a>, <a href="../data/simulations/mlcm_mortality_municipality_estimates.csv"><code>mlcm_mortality_municipality_estimates.csv</code></a>, and <a href="../data/simulations/mlcm_mortality_area_estimates.csv"><code>mlcm_mortality_area_estimates.csv</code></a>. The complete analysis is reproduced by <a href="../code/16-09-mlcm.R"><code>16-09-mlcm.R</code></a>.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
@@ -2656,6 +2924,9 @@ Callaway, Brantly, and Pedro H. C. Sant’Anna. 2021. <span>“Difference-in-Dif
 </div>
 <div id="ref-calonico2014" class="csl-entry" role="listitem">
 Calonico, Sebastian, Matias D. Cattaneo, and Rocío Titiunik. 2014. <span>“Robust Nonparametric Confidence Intervals for Regression-Discontinuity Designs.”</span> <em>Econometrica</em> 82 (6): 2295–326. <a href="https://doi.org/10.3982/ECTA11757">https://doi.org/10.3982/ECTA11757</a>.
+</div>
+<div id="ref-cerqua2021mortality" class="csl-entry" role="listitem">
+Cerqua, Augusto, Roberta Di Stefano, Marco Letta, and Sara Miccoli. 2021. <span>“Local Mortality Estimates During the <span>COVID-19</span> Pandemic in Italy.”</span> <em>Journal of Population Economics</em> 34 (4): 1189–217. <a href="https://doi.org/10.1007/s00148-021-00857-y">https://doi.org/10.1007/s00148-021-00857-y</a>.
 </div>
 <div id="ref-mccrary2008" class="csl-entry" role="listitem">
 McCrary, Justin. 2008. <span>“Manipulation of the Running Variable in the Regression Discontinuity Design: A Density Test.”</span> <em>Journal of Econometrics</em> 142 (2): 698–714. <a href="https://doi.org/10.1016/j.jeconom.2007.05.005">https://doi.org/10.1016/j.jeconom.2007.05.005</a>.

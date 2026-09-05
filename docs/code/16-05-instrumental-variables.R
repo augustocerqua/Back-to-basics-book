@@ -1,10 +1,29 @@
-# Section 16.5: Instrumental variables and the Vietnam draft lottery
+# Section 16.5: Instrumental Variables
+# ============================================================
 #
-# This self-contained script uses a stylized version of the Vietnam-era draft
-# lottery. The ideal setting has random draft eligibility. The failure setting
-# preserves a strong first stage but makes eligibility depend on latent ability,
-# violating instrument independence. All random draws use stable streams based
-# on master seed 123.
+# This script simulates a stylized version of the Vietnam-era draft lottery.
+#
+# Example:
+#   Draft eligibility is used as a binary instrument for military service.
+#   The outcome is later earnings.
+#
+# Goal:
+#   Show why IV can identify the LATE for compliers when the instrument is
+#   randomly assigned, and how the estimate fails when eligibility is related
+#   to a latent determinant of the outcome.
+#
+# The script creates:
+#   1. an ideal IV setting with random draft eligibility;
+#   2. a failure setting with non-random eligibility;
+#   3. first-stage, reduced-form, OLS, Wald, and 2SLS estimates;
+#   4. balance and principal-strata tables saved as CSV files;
+#   5. a high-resolution PNG figure.
+#
+# Reproducibility:
+#   All random draws use deterministic streams based on master seed 123.
+
+
+# 0. Packages ---------------------------------------------------------------
 
 required_packages <- c("dplyr", "ggplot2", "patchwork", "ivreg", "sandwich")
 missing_packages <- required_packages[
@@ -22,6 +41,11 @@ library(dplyr)
 library(ggplot2)
 library(patchwork)
 
+
+# 1. Simulate potential outcomes and principal strata ----------------------
+
+# Principal strata describe how each person would respond to draft
+# eligibility: comply, always serve, or never serve.
 iv_simulate_population <- function(seed = 123L, sample_size = 5000L) {
   stopifnot(sample_size >= 100L)
 
@@ -74,6 +98,12 @@ iv_simulate_population <- function(seed = 123L, sample_size = 5000L) {
   )
 }
 
+
+# 2. Apply the instrument ---------------------------------------------------
+
+# In the ideal scenario, draft eligibility is random. In the failure scenario,
+# eligibility is correlated with latent ability, so the instrument is no longer
+# as good as randomly assigned.
 iv_apply_assignment <- function(population, seed = 123L, scenario) {
   sample_size <- nrow(population)
   eligible_count <- floor(sample_size / 2)
@@ -120,6 +150,9 @@ iv_apply_assignment <- function(population, seed = 123L, scenario) {
       annual_earnings_thousands = observed_earnings
     )
 }
+
+
+# 3. Estimate OLS, first stage, reduced form, Wald, and 2SLS ----------------
 
 iv_robust_result <- function(model, term) {
   robust_vcov <- sandwich::vcovHC(model, type = "HC1")
@@ -198,6 +231,9 @@ iv_estimate_scenario <- function(data) {
     )
   )
 }
+
+
+# 4. Build diagnostics and figure inputs -----------------------------------
 
 iv_absolute_standardized_difference <- function(data, variable) {
   values <- data[[variable]]
@@ -365,12 +401,19 @@ iv_make_figure <- function(balance_results, service_rates, estimates) {
     plot_layout(heights = c(1.05, 0.8))
 }
 
+
+# 5. Main simulation function ----------------------------------------------
+
+# This is the function called from the chapter and from the master runner.
+# It returns all key objects and, by default, writes the datasets, tables,
+# and figure used in the book.
 run_iv_simulation <- function(
     seed = 123L,
     sample_size = 5000L,
     write_outputs = TRUE,
     data_directory = "data/simulations",
-    image_directory = "images") {
+    image_directory = "images",
+    show_plot = interactive()) {
   population <- iv_simulate_population(
     seed = seed,
     sample_size = sample_size
@@ -432,6 +475,12 @@ run_iv_simulation <- function(
     )
   }
 
+  # Display the figure in RStudio's Plots pane when the function is run
+  # interactively. The figure is still saved above when write_outputs = TRUE.
+  if (show_plot) {
+    print(iv_figure)
+  }
+
   list(
     ideal_data = ideal_data,
     failure_data = failure_data,
@@ -443,8 +492,17 @@ run_iv_simulation <- function(
   )
 }
 
+
+# 6. Run the script directly ------------------------------------------------
+
+# When this file is run directly, it reproduces the IV outputs and prints the
+# main tables. When it is sourced by another file, this block is skipped.
 if (sys.nframe() == 0L) {
-  iv_results <- run_iv_simulation(seed = 123L, sample_size = 5000L)
+  iv_results <- run_iv_simulation(
+    seed = 123L,
+    sample_size = 5000L,
+    show_plot = TRUE
+  )
   cat("\nPrincipal strata\n")
   print(iv_results$principal_strata, row.names = FALSE, digits = 3)
   cat("\nInstrumental-variable estimates\n")

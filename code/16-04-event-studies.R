@@ -1,9 +1,28 @@
-# Section 16.4: Event studies with staggered adoption
+# Section 16.4: Event Studies with Staggered Adoption
+# ============================================================
 #
-# This self-contained script extends the unilateral-divorce simulation to two
-# treatment cohorts. It estimates group-time effects and their dynamic
-# aggregation using the Callaway and Sant'Anna estimator implemented in the
-# did package. All random draws use stable streams based on master seed 123.
+# This script extends the unilateral-divorce simulation to staggered adoption.
+#
+# Example:
+#   Some states adopt the reform in 1979, some in 1982, and others never adopt
+#   it during the sample period.
+#
+# Goal:
+#   Show how event-study estimates are built from group-time treatment effects,
+#   and why the composition of cohorts can change across event time.
+#
+# The script creates:
+#   1. a staggered-adoption panel with two treated cohorts;
+#   2. group-time effects estimated with Callaway and Sant'Anna's method;
+#   3. aggregated dynamic event-study effects;
+#   4. cohort-composition diagnostics;
+#   5. a high-resolution PNG figure.
+#
+# Reproducibility:
+#   All random draws use deterministic streams based on master seed 123.
+
+
+# 0. Packages ---------------------------------------------------------------
 
 required_packages <- c("did", "dplyr", "ggplot2", "patchwork")
 missing_packages <- required_packages[
@@ -21,6 +40,12 @@ library(dplyr)
 library(ggplot2)
 library(patchwork)
 
+
+# 1. Simulate staggered-adoption panel data --------------------------------
+
+# The early and late cohorts have different treatment effects. This makes the
+# aggregate event-study curve sensitive to which cohorts are available at each
+# event time.
 es_simulate_panel <- function(
     seed = 123L,
     start_year = 1975L,
@@ -121,6 +146,9 @@ es_simulate_panel <- function(
     )
 }
 
+
+# 2. Estimate group-time and dynamic effects --------------------------------
+
 es_add_confidence_interval <- function(data) {
   data %>%
     mutate(
@@ -214,6 +242,11 @@ es_estimate_callaway_santanna <- function(
   )
 }
 
+
+# 3. Track event-time composition -------------------------------------------
+
+# Some event times are observed for only one treated cohort. This table makes
+# the changing composition explicit.
 es_build_composition <- function(
     data,
     first_post_event = 0L,
@@ -254,6 +287,9 @@ es_build_composition <- function(
     true_aggregate = true_aggregate
   )
 }
+
+
+# 4. Create the chapter figure ---------------------------------------------
 
 es_make_cohort_panel <- function(group_time_results) {
   plot_data <- group_time_results %>%
@@ -449,12 +485,19 @@ es_make_figure <- function(
     plot_layout(heights = c(1, 1))
 }
 
+
+# 5. Main simulation function ----------------------------------------------
+
+# This is the function called from the chapter and from the master runner.
+# It returns all key objects and, by default, writes the datasets, tables,
+# and figure used in the book.
 run_event_study_simulation <- function(
     seed = 123L,
     bootstrap_iterations = 999L,
     write_outputs = TRUE,
     data_directory = "data/simulations",
-    image_directory = "images") {
+    image_directory = "images",
+    show_plot = interactive()) {
   event_study_data <- es_simulate_panel(seed = seed)
   estimates <- es_estimate_callaway_santanna(
     event_study_data,
@@ -502,6 +545,12 @@ run_event_study_simulation <- function(
     )
   }
 
+  # Display the figure in RStudio's Plots pane when the function is run
+  # interactively. The figure is still saved above when write_outputs = TRUE.
+  if (show_plot) {
+    print(event_study_figure)
+  }
+
   list(
     data = event_study_data,
     group_time_estimates = estimates$group_time_results,
@@ -516,8 +565,17 @@ run_event_study_simulation <- function(
   )
 }
 
+
+# 6. Run the script directly ------------------------------------------------
+
+# When this file is run directly, it reproduces the event-study outputs and
+# prints the main tables. When it is sourced by another file, this block is
+# skipped.
 if (sys.nframe() == 0L) {
-  event_study_results <- run_event_study_simulation(seed = 123L)
+  event_study_results <- run_event_study_simulation(
+    seed = 123L,
+    show_plot = TRUE
+  )
   cat("\nCohort-average effects\n")
   print(event_study_results$group_estimates, row.names = FALSE, digits = 3)
   cat("\nAggregated post-treatment event-study effects\n")

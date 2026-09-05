@@ -4,7 +4,7 @@ This book is not intended to be a comprehensive textbook on impact evaluation an
 
 The purpose of this book is different. It is to go **back to basics** and offer a simple and transparent perspective on the logic behind the most widely used impact evaluation methods. Rather than emphasizing the technical aspects of evaluation methods, the book aims to clarify how each method constructs a counterfactual, what assumptions it requires, and how it works in practice, while keeping formal details to a minimum.
 
-In this introduction, I will mention some methods and concepts that may be unfamiliar to you. Do not worry: each of them will be covered in the book, assuming only very basic statistical knowledge on the part of the reader.
+In this introduction, I will mention some methods and concepts that may be unfamiliar to you. Do not worry: each of them will be covered in the book, assuming only very basic statistical knowledge on the part of the reader. If you are completely unfamiliar with these topics, you may prefer to skip this introduction on a first reading and start directly with [Chapter 1](chapters/01-why-impact-evaluation.qmd), returning to it later once the main concepts have become more familiar.
 
 ## How to estimate treatment effects?
 

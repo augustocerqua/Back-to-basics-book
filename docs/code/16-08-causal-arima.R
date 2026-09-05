@@ -1,15 +1,35 @@
-# Section 16.8: Causal ARIMA and a national workplace-safety reform
+# Section 16.8: Causal ARIMA
+# ============================================================
 #
-# This self-contained script studies one national monthly accident-rate series.
-# There are 50 pre-treatment periods and 10 post-treatment periods. In the
-# ideal setting, the national safety regulation is the only post-treatment
-# intervention. In the failure setting, an additional national enforcement
-# policy begins in June 2022 and also lowers accidents. All random draws use
-# stable streams based on seed 123.
+# This script simulates a forecast-based counterfactual method.
+#
+# Example:
+#   A national workplace-safety regulation is introduced for all firms at the
+#   same time. Since the reform is national, there is no untreated comparison
+#   group within the country.
+#
+# Goal:
+#   Show how Causal ARIMA uses the pre-treatment history of one national time
+#   series to forecast the post-treatment counterfactual path.
+#
+# The script creates:
+#   1. an ideal setting, where the safety regulation is the only relevant
+#      post-treatment intervention;
+#   2. a failure setting, where an additional national enforcement policy
+#      begins in June 2022 and also reduces accidents;
+#   3. datasets and estimate tables saved as CSV files;
+#   4. a high-resolution PNG figure.
+#
+# Reproducibility:
+#   All random draws use deterministic streams based on master seed 123.
+
+
+# 0. Packages ---------------------------------------------------------------
 
 required_packages <- c(
   "CausalArima", "dplyr", "tidyr", "ggplot2", "patchwork"
 )
+
 missing_packages <- required_packages[
   !vapply(required_packages, requireNamespace, logical(1), quietly = TRUE)
 ]
@@ -29,23 +49,37 @@ library(tidyr)
 library(ggplot2)
 library(patchwork)
 
+
+# 1. Simulate one national time series -------------------------------------
+
+# The simulated dataset has:
+#   - 50 pre-treatment monthly observations;
+#   - 10 post-treatment monthly observations;
+#   - one treated unit: the country.
+#
+# The untreated accident rate is designed to have three realistic ingredients:
+#   - a mild downward trend;
+#   - annual seasonality;
+#   - serially correlated shocks.
 causal_arima_simulate_data <- function(
     seed = 123L,
     pre_periods = 50L,
     post_periods = 10L) {
   total_periods <- pre_periods + post_periods
+
   dates <- seq.Date(
     from = as.Date("2018-01-01"),
     by = "month",
     length.out = total_periods
   )
+
   time_index <- seq_len(total_periods)
 
-  # The untreated national accident rate has a mild trend, annual seasonality,
-  # and persistent AR(1) fluctuations.
+  # Persistent AR(1) fluctuations around the systematic trend and seasonality.
   set.seed(seed + 687L)
   innovations <- rnorm(total_periods, mean = 0, sd = 0.16)
   ar_component <- numeric(total_periods)
+
   for (period in seq_len(total_periods)) {
     lagged_error <- if (period == 1L) 0 else ar_component[period - 1L]
     ar_component[period] <- 0.55 * lagged_error + innovations[period]
@@ -58,15 +92,18 @@ causal_arima_simulate_data <- function(
     0.24 * cos(2 * pi * time_index / 12) +
     ar_component
 
+  # True effect of the workplace-safety regulation.
+  # Negative values mean that the policy reduces accident rates.
   policy_effect_post <- -c(
     0.60, 0.90, 1.20, 1.50, 1.60,
     1.70, 1.80, 1.80, 1.90, 2.00
   )
   policy_effect <- c(rep(0, pre_periods), policy_effect_post)
 
-  # In the failure scenario, a separate national enforcement policy begins in
-  # June 2022, three months after the main regulation. It lowers accident rates
-  # by one additional point in the final seven post-treatment months.
+  # Failure scenario:
+  # A separate enforcement policy starts in June 2022, after the main reform.
+  # It also lowers accidents. If the model attributes this additional drop to
+  # the original regulation, the policy effect is overstated.
   concurrent_policy_effect <- ifelse(
     dates >= as.Date("2022-06-01"),
     -1.00,
@@ -83,6 +120,7 @@ causal_arima_simulate_data <- function(
     true_policy_effect = policy_effect,
     concurrent_policy_effect = 0
   )
+
   failure_data <- data.frame(
     scenario = "Failure: additional policy from June 2022",
     date = dates,
@@ -104,6 +142,12 @@ causal_arima_simulate_data <- function(
   )
 }
 
+
+# 2. Time-series covariates -------------------------------------------------
+
+# The ARIMA model includes deterministic covariates for:
+#   - a linear trend;
+#   - annual seasonality through sine and cosine terms.
 causal_arima_covariates <- function(period) {
   cbind(
     trend = period,
@@ -112,6 +156,12 @@ causal_arima_covariates <- function(period) {
   )
 }
 
+
+# 3. Estimate one scenario --------------------------------------------------
+
+# CausalArima estimates the pre-treatment outcome process and then forecasts
+# the post-treatment counterfactual path. The causal effect is the difference
+# between the observed post-treatment outcome and this forecasted path.
 causal_arima_estimate_scenario <- function(
     data,
     intervention_date,
@@ -134,6 +184,9 @@ causal_arima_estimate_scenario <- function(
 
   post_data <- data %>% filter(post_treatment)
   post_count <- nrow(post_data)
+
+  # fit$norm$inf contains normal-approximation inference for cumulative and
+  # average effects. The final row summarizes the full post-treatment window.
   normal_inference <- fit$norm$inf
   final_horizon <- normal_inference[post_count, ]
 
@@ -156,6 +209,7 @@ causal_arima_estimate_scenario <- function(
     average_effect + c(-1, 1) * qnorm(0.975) * average_effect_se
 
   pre_residuals <- as.numeric(residuals(fit$model))
+
   results <- data.frame(
     scenario = unique(data$scenario),
     pre_treatment_periods = sum(!data$post_treatment),
@@ -194,6 +248,9 @@ causal_arima_estimate_scenario <- function(
     effects = effect_path
   )
 }
+
+
+# 4. Build the figure -------------------------------------------------------
 
 causal_arima_path_panel <- function(
     paths,
@@ -299,12 +356,16 @@ causal_arima_path_panel <- function(
     )
 }
 
+
 causal_arima_make_figure <- function(paths, results, intervention_date) {
   ideal_paths <- paths %>%
     filter(scenario == "Ideal: stable untreated process")
+
   failure_paths <- paths %>%
     filter(scenario == "Failure: additional policy from June 2022")
 
+  # Use the same y-axis support in Panels A and B so the visual comparison is
+  # not driven by different axis scales.
   common_y_limits <- range(
     paths$observed_accident_rate,
     paths$prediction_interval_lower,
@@ -319,6 +380,7 @@ causal_arima_make_figure <- function(paths, results, intervention_date) {
     common_y_limits,
     additional_policy_date = NULL
   )
+
   failure_panel <- causal_arima_path_panel(
     failure_paths,
     "B. Failure: additional policy from June 2022",
@@ -333,7 +395,8 @@ causal_arima_make_figure <- function(paths, results, intervention_date) {
       scenario = recode(
         scenario,
         "Ideal: stable untreated process" = "Ideal C-ARIMA estimate",
-        "Failure: additional policy from June 2022" = "Failure C-ARIMA estimate"
+        "Failure: additional policy from June 2022" =
+          "Failure C-ARIMA estimate"
       ),
       date,
       estimated_effect,
@@ -341,6 +404,7 @@ causal_arima_make_figure <- function(paths, results, intervention_date) {
       effect_interval_upper,
       true_policy_effect
     )
+
   true_effect_data <- effect_data %>%
     filter(scenario == "Ideal C-ARIMA estimate") %>%
     select(date, true_policy_effect)
@@ -443,20 +507,32 @@ causal_arima_make_figure <- function(paths, results, intervention_date) {
     plot_layout(heights = c(1, 0.95))
 }
 
+
+# 5. Main simulation function ----------------------------------------------
+
+# This is the function called from the chapter and from the master runner.
+# It returns all key objects and, by default, writes the datasets, tables,
+# and figure used in the book.
 run_causal_arima_simulation <- function(
     seed = 123L,
     nboot = 1000L,
     write_outputs = TRUE,
+    show_plot = interactive(),
     data_directory = "data/simulations",
     image_directory = "images") {
+
+  # Step 1: simulate the ideal and failure time series.
   simulated <- causal_arima_simulate_data(seed = seed)
 
+  # Step 2: estimate Causal ARIMA in the ideal scenario.
   ideal <- causal_arima_estimate_scenario(
     data = simulated$ideal_data,
     intervention_date = simulated$intervention_date,
     seed = seed + 820L,
     nboot = nboot
   )
+
+  # Step 3: estimate Causal ARIMA in the failure scenario.
   failure <- causal_arima_estimate_scenario(
     data = simulated$failure_data,
     intervention_date = simulated$intervention_date,
@@ -466,35 +542,42 @@ run_causal_arima_simulation <- function(
 
   results <- bind_rows(ideal$results, failure$results)
   paths <- bind_rows(ideal$paths, failure$paths)
+
   causal_arima_figure <- causal_arima_make_figure(
     paths,
     results,
     simulated$intervention_date
   )
 
+  # Step 4: save book outputs.
   if (write_outputs) {
     dir.create(data_directory, recursive = TRUE, showWarnings = FALSE)
     dir.create(image_directory, recursive = TRUE, showWarnings = FALSE)
+
     write.csv(
       simulated$ideal_data,
       file.path(data_directory, "causal_arima_workplace_safety_ideal.csv"),
       row.names = FALSE
     )
+
     write.csv(
       simulated$failure_data,
       file.path(data_directory, "causal_arima_workplace_safety_failure.csv"),
       row.names = FALSE
     )
+
     write.csv(
       results,
       file.path(data_directory, "causal_arima_workplace_safety_estimates.csv"),
       row.names = FALSE
     )
+
     write.csv(
       paths,
       file.path(data_directory, "causal_arima_workplace_safety_paths.csv"),
       row.names = FALSE
     )
+
     ggsave(
       file.path(image_directory, "causal-arima-workplace-safety-simulation.png"),
       causal_arima_figure,
@@ -503,6 +586,12 @@ run_causal_arima_simulation <- function(
       dpi = 320,
       bg = "white"
     )
+  }
+
+  # Display the figure in RStudio's Plots pane when the function is run
+  # interactively. The figure is still saved above when write_outputs = TRUE.
+  if (show_plot) {
+    print(causal_arima_figure)
   }
 
   list(
@@ -516,8 +605,18 @@ run_causal_arima_simulation <- function(
   )
 }
 
+
+# 6. Run the script directly ------------------------------------------------
+
+# When this file is run directly, it reproduces the Causal ARIMA outputs and
+# prints the main estimate table. When it is sourced by another file, this
+# block is skipped.
 if (sys.nframe() == 0L) {
-  causal_arima_results <- run_causal_arima_simulation(seed = 123L)
+  causal_arima_results <- run_causal_arima_simulation(
+    seed = 123L,
+    show_plot = TRUE
+  )
+
   cat("\nCausal ARIMA estimates\n")
   print(causal_arima_results$estimates, row.names = FALSE, digits = 3)
 }

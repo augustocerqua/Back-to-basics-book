@@ -42,7 +42,8 @@ The software chosen for this book is R because it is free, open source, widely u
 - [`16-05-instrumental-variables.R`](../code/16-05-instrumental-variables.R) reproduces the Vietnam draft-lottery IV simulations in Section 16.5;
 - [`16-06-regression-discontinuity.R`](../code/16-06-regression-discontinuity.R) reproduces the merit-scholarship RD simulations in Section 16.6;
 - [`16-07-synthetic-control.R`](../code/16-07-synthetic-control.R) reproduces the youth-cycling SCM simulations in Section 16.7;
-- [`16-08-causal-arima.R`](../code/16-08-causal-arima.R) reproduces the national workplace-safety Causal ARIMA simulations in Section 16.8.
+- [`16-08-causal-arima.R`](../code/16-08-causal-arima.R) reproduces the national workplace-safety Causal-ARIMA simulations in Section 16.8;
+- [`16-09-mlcm.R`](../code/16-09-mlcm.R) reproduces the local-mortality MLCM simulation in Section 16.9.
 
 For example, the RCT section can be reproduced from the root directory of the book with:
 
@@ -1129,7 +1130,7 @@ Remaining inside the envelope in every individual year is necessary but not suff
 The generated datasets are available as [`scm_youth_cycling_ideal.csv`](../data/simulations/scm_youth_cycling_ideal.csv) and
 [`scm_youth_cycling_failure.csv`](../data/simulations/scm_youth_cycling_failure.csv). The complete analysis is reproduced by [`16-07-synthetic-control.R`](../code/16-07-synthetic-control.R).
 
-## FBCMs
+## Causal-ARIMA
 
 ### A national workplace-safety regulation
 
@@ -1141,7 +1142,7 @@ The counterfactual question is:
 
 > How would the national workplace-accident rate have evolved from March 2022 onwards if the new safety regulation had not been introduced?
 
-A control-based method cannot answer this question when untreated units are not available. Causal ARIMA instead uses the 50 pre-treatment observations to model the untreated evolution of the national series and forecast its missing post-treatment path [@menchetti2023].
+A control-based method cannot answer this question when untreated units are not available. Causal-ARIMA instead uses the 50 pre-treatment observations to model the untreated evolution of the national series and forecast its missing post-treatment path [@menchetti2023].
 
 ### The estimand and the data-generating process
 
@@ -1153,7 +1154,7 @@ $$
 Y_t(1)-Y_t(0),
 $$
 
-where $Y_t(1)$ is the observed accident rate under the regulation and $Y_t(0)$ is the accident rate that would have occurred without it. Causal ARIMA estimates the missing counterfactual using only pre-treatment information:
+where $Y_t(1)$ is the observed accident rate under the regulation and $Y_t(0)$ is the accident rate that would have occurred without it. Causal-ARIMA estimates the missing counterfactual using only pre-treatment information:
 
 $$
 \widehat{\tau}_t
@@ -1198,9 +1199,9 @@ The model is fitted only on the 50 pre-treatment outcomes. It then produces 10 f
 
 @fig-causal-arima-workplace-safety summarizes the simulation.
 
-![Causal ARIMA in the stylized national workplace-safety simulation. Panels A and B use the same vertical scale and compare the observed accident rate with the forecasted no-reform path; the blue areas are 95% prediction intervals. The dotted black line marks the March 2022 safety regulation, while the gold dot-dashed line in Panel B marks the additional policy introduced in June 2022. Panel C compares period-specific Causal ARIMA estimates with the true simulated policy effects. Panel D reports temporal average effects and 95% confidence intervals; the dashed green line marks the true average policy effect.](../images/causal-arima-workplace-safety-simulation.png){#fig-causal-arima-workplace-safety width="100%"}
+![Causal-ARIMA in the stylized national workplace-safety simulation. Panels A and B use the same vertical scale and compare the observed accident rate with the forecasted no-reform path; the blue areas are 95% prediction intervals. The dotted black line marks the March 2022 safety regulation, while the gold dot-dashed line in Panel B marks the additional policy introduced in June 2022. Panel C compares period-specific Causal-ARIMA estimates with the true simulated policy effects. Panel D reports temporal average effects and 95% confidence intervals; the dashed green line marks the true average policy effect.](../images/causal-arima-workplace-safety-simulation.png){#fig-causal-arima-workplace-safety width="100%"}
 
-Panel A shows that the observed accident rate falls below the forecasted no-reform path after the regulation. The estimated period-specific effects closely follow the true simulated policy effects in Panel C. Causal ARIMA estimates a temporal average effect of $-1.504$ accidents per 1,000 workers, almost exactly reproducing the true effect of $-1.500$.
+Panel A shows that the observed accident rate falls below the forecasted no-reform path after the regulation. The estimated period-specific effects closely follow the true simulated policy effects in Panel C. Causal-ARIMA estimates a temporal average effect of $-1.504$ accidents per 1,000 workers, almost exactly reproducing the true effect of $-1.500$.
 
 The numerical results are reported in @tbl-causal-arima-workplace-safety-results.
 
@@ -1210,7 +1211,7 @@ The numerical results are reported in @tbl-causal-arima-workplace-safety-results
 | $\rule{0pt}{0.2em}$ |  |  |  |  |  |
 | Failure: additional policy from June 2022 | 0.167 | -2.204 | [-2.410, -1.998] | -1.500 | -0.704 |
 
-: Causal ARIMA estimates in the national workplace-safety simulation {#tbl-causal-arima-workplace-safety-results}
+: Causal-ARIMA estimates in the national workplace-safety simulation {#tbl-causal-arima-workplace-safety-results}
 
 *Note:* The intervals in the table describe uncertainty around the temporal average effect. The blue areas in Panels A and B are prediction intervals for the missing counterfactual outcomes. The two intervals answer different questions and need not have the same width.
 
@@ -1228,21 +1229,21 @@ $$
 -2.200.
 $$
 
-Panel B shows that the divergence becomes larger from June 2022 onward. Causal ARIMA estimates an average effect of $-2.204$, which is an accurate estimate of the **total post-treatment departure from the forecast** but not of the original safety regulation's effect in isolation. The method overstates the regulation's average effect by approximately $0.7$ accidents per 1,000 workers because it also attributes the later policy's effect to the original intervention.
+Panel B shows that the divergence becomes larger from June 2022 onward. Causal-ARIMA estimates an average effect of $-2.204$, which is an accurate estimate of the **total post-treatment departure from the forecast** but not of the original safety regulation's effect in isolation. The method overstates the regulation's average effect by approximately $0.7$ accidents per 1,000 workers because it also attributes the later policy's effect to the original intervention.
 
 Importantly, the pre-treatment RMSE is identical in the two scenarios. Pre-treatment fit cannot reveal a shock that occurs only after treatment. A forecasting model may therefore fit the historical series extremely well and still fail to identify the policy effect when another event begins at the same time.
 
 ::: {.callout-warning appearance="simple"}
 ### A good forecast is not sufficient for causal identification
 
-Causal ARIMA can estimate how the observed outcome departs from its forecasted no-treatment path. Interpreting this departure as the effect of a particular policy additionally requires that no other intervention, measurement change, or unexpected shock affects the outcome over the post-treatment period.
+Causal-ARIMA can estimate how the observed outcome departs from its forecasted no-treatment path. Interpreting this departure as the effect of a particular policy additionally requires that no other intervention, measurement change, or unexpected shock affects the outcome over the post-treatment period.
 
 With only one national series, the model cannot statistically separate the original intervention from another policy that begins later within the same post-treatment window. Institutional knowledge, alternative outcomes, sensitivity analyses, and explicit controls for known post-treatment changes are therefore essential complements to forecasting accuracy.
 :::
 
 ### Main lessons from the Causal ARIMA simulation
 
-- Causal ARIMA can be used when one aggregate unit is treated and no contemporaneous control group is available.
+- Causal-ARIMA can be used when one aggregate unit is treated and no contemporaneous control group is available.
 - A sufficiently long and informative pre-treatment series is needed to learn the untreated dynamics.
 - The method produces period-specific, cumulative, and temporal average causal-effect estimates.
 - Prediction intervals quantify uncertainty about the missing counterfactual path; confidence intervals quantify uncertainty about estimated causal summaries.
@@ -1250,3 +1251,121 @@ With only one national series, the model cannot statistically separate the origi
 - Excellent pre-treatment fit does not protect the analysis from another event occurring within the post-treatment window.
 
 The generated datasets are available as [`causal_arima_workplace_safety_ideal.csv`](../data/simulations/causal_arima_workplace_safety_ideal.csv) and [`causal_arima_workplace_safety_failure.csv`](../data/simulations/causal_arima_workplace_safety_failure.csv). The complete analysis is reproduced by [`16-08-causal-arima.R`](../code/16-08-causal-arima.R).
+
+## MLCM
+
+### Local excess mortality without a control group
+
+This simulation is inspired by the application in Cerqua et al. [-@cerqua2021mortality], who estimate local excess mortality during the COVID-19 pandemic in Italy. The empirical challenge is especially clear: the pandemic affected the whole country, so there is no obvious contemporaneous group of untreated municipalities that can be used as controls.
+
+The target quantity is local excess mortality: the difference between observed mortality during the pandemic and the mortality that would have occurred in an ordinary no-pandemic year. The counterfactual is not observed, so it must be predicted.
+
+In this simulation, we create 800 municipalities observed from 2015 to 2020. Municipalities differ by macro-area, population size, age structure, population density, air pollution, hospital availability, and previous mortality. The year 2020 is the pandemic year. We assume that the true pandemic effect is highly heterogeneous across areas: it is largest in the North West, still large in the North East, moderate in the Center, and much smaller in the South and Islands.
+
+The key counterfactual question is:
+
+> What would mortality in each municipality have been in 2020 if the pandemic had not occurred?
+
+### The MLCM logic
+
+The Machine Learning Control Method uses pre-treatment information to predict counterfactual outcomes for treated units. In this example, all municipalities are treated by the pandemic in 2020, so the model is trained on ordinary pre-pandemic years and then used to predict each municipality's no-pandemic 2020 mortality.
+
+The script compares three predictive approaches:
+
+1. the **historical average**, which predicts 2020 mortality using the municipality's average mortality in previous years;
+2. **LASSO**, estimated by trying 100 values of the penalty parameter $\lambda$ and selecting the value with the lowest cross-validation error^[Cross-validation evaluates predictive performance by repeatedly fitting the model on part of the data and assessing its performance on observations not used for estimation.];
+3. **random forest**, estimated by cross-validating over three values of `mtry`: all covariates, half of the covariates, and one third of the covariates.
+
+The code follows the same structure as the other simulations:
+
+```r
+source("code/16-09-mlcm.R")
+mlcm_results <- run_mlcm_simulation(seed = 123)
+```
+
+Before estimating 2020 excess mortality, the script performs a placebo validation exercise. It trains and tunes the candidate models on ordinary years up to 2018 and asks how well they predict mortality in 2019, an ordinary year with no pandemic by construction. The best-performing ML model in this placebo year is then re-estimated using all available pre-pandemic years and used to predict the no-pandemic 2020 counterfactual.
+
+| Method | Validation year | RMSE | MAE | Tuning choice | Selected for 2020 |
+|:--|--:|--:|--:|:--|:--:|
+| Historical average | 2019 | 1.155 | 0.923 | No tuning | No |
+| LASSO | 2019 | 1.192 | 0.965 | $\lambda=0.322$ | No |
+| Random forest | 2019 | 1.066 | 0.855 | `mtry = 3` | Yes |
+
+: Prediction accuracy in an ordinary year {#tbl-mlcm-validation}
+
+*Note:* In a random forest, `mtry` is the number of covariates randomly considered at each split of each tree. Thus, `mtry = 3` means that each tree considers only three candidate covariates at each split and chooses the best split among them. In this example, cross-validation selected `mtry = 3` because it produced the best prediction accuracy in the 2019 placebo year.
+
+Random forest performs best in the placebo year, so it is selected as the MLCM predictor for the 2020 counterfactual. This matters because the credibility of a forecast-based counterfactual method depends first on whether it can predict untreated outcomes in ordinary periods.
+
+::: {.callout-note appearance="simple"}
+### Why use machine learning here?
+
+The historical average uses only one piece of information: each municipality's past mortality. MLCM can use a richer set of predictors, such as demographic structure, pollution, population density, hospital availability, area, past mortality, and nonlinear relationships among them.
+
+This does not make the estimate automatically causal. It only improves the construction of the missing no-pandemic outcome. The causal interpretation still requires that no other unmodeled shock affects 2020 mortality in a way that the model attributes to the pandemic.
+:::
+
+### The ideal setting: the pandemic is the only 2020 shock
+
+In the ideal setting, the only reason why observed 2020 mortality differs from ordinary no-pandemic mortality is the pandemic itself. For municipality $i$, the estimated excess mortality is
+
+$$
+\widehat{\tau}_i
+=
+Y_i^{obs}
+-
+\widehat{Y}_i(0),
+$$
+
+where $\widehat{Y}_i(0)$ is the predicted no-pandemic mortality rate.
+
+The figure summarizes the simulation and shows how the estimates vary across areas.
+
+![MLCM in the stylized local-mortality simulation. Panel A compares true excess mortality, the historical-average estimate, and the selected MLCM estimate by area. Panel B shows the municipality-level distribution of MLCM estimates by area. Panel C shows how a non-pandemic reporting shock contaminates the estimates in the failure scenario. Panel D compares municipality-level 2020 prediction errors in the ideal scenario. Panel E reports placebo-year prediction errors for the historical average, LASSO, and random forest.](../images/mlcm-local-mortality-simulation.png){#fig-mlcm-local-mortality width="100%"}
+
+Panel A shows the main message. The true excess mortality is strongly concentrated in the North West and North East. MLCM closely tracks this spatial heterogeneity, while the historical average slightly overstates excess mortality because it does not fully account for the ordinary evolution of municipal mortality.
+
+| Area | Municipalities | True excess | Historical average | MLCM estimate |
+|:--|--:|--:|--:|--:|
+| North West | 199 | 16.495 | 17.293 | 16.827 |
+| North East | 183 | 10.236 | 10.900 | 10.454 |
+| Center | 162 | 4.854 | 5.520 | 5.105 |
+| South and Islands | 256 | 1.539 | 2.289 | 1.756 |
+
+: Area-level estimates in the ideal MLCM simulation {#tbl-mlcm-area-ideal}
+
+At the national level, the true average excess mortality is 7.920 deaths per 10,000 inhabitants. The historical-average method estimates 8.645, while the selected MLCM method estimates 8.172.
+
+### A failure: another shock affects recorded mortality
+
+We now introduce a failure scenario. The pandemic effect is unchanged, but in 2020 there is also a non-pandemic reporting shock: recorded mortality increases by one death per 10,000 inhabitants in the Center and by three deaths per 10,000 inhabitants in the South and Islands. This shock is not caused by the pandemic, but it appears in the observed outcome.
+
+This is precisely the type of problem that forecast-based methods cannot solve by prediction alone. MLCM observes a larger gap between observed mortality and predicted no-pandemic mortality, but the gap now combines the pandemic effect with the reporting shock.
+
+| Setting | True excess | Historical average | MLCM estimate | Non-pandemic shock | MLCM RMSE |
+|:--|--:|--:|--:|--:|--:|
+| Ideal: pandemic shock only | 7.920 | 8.645 | 8.172 | 0.000 | 1.033 |
+| Failure: extra reporting shock | 7.920 | 9.808 | 9.335 | 1.163 | 2.160 |
+
+: Overall MLCM estimates {#tbl-mlcm-overall}
+
+Panel C makes the failure visible by area. In the North West and North East, where there is no reporting shock, the MLCM estimate remains close to the true pandemic effect. In the Center and South and Islands, the estimated effect increases because the model attributes the additional non-pandemic mortality to the pandemic.
+
+::: {.callout-warning appearance="simple"}
+### MLCM predicts counterfactuals, not causes by itself
+
+MLCM can build credible unit-level counterfactual predictions when the untreated outcome process is predictable from pre-treatment information. However, the observed-minus-predicted gap is causal only if the gap is generated by the treatment of interest.
+
+If another event affects the outcome in the treatment period, MLCM will generally include that event in the estimated effect unless the researcher explicitly models it or shows that it is irrelevant.
+:::
+
+### Main lessons from the MLCM simulation
+
+- MLCM is particularly useful when all units are exposed to a shock and no contemporaneous untreated control group is available.
+- The method estimates unit-level counterfactual outcomes and can therefore describe how effects vary across units.
+- Prediction should be validated in ordinary pre-treatment periods whenever possible.
+- Rich predictors can improve the counterfactual relative to a simple historical average.
+- Forecast accuracy is not the same as causal identification.
+- Additional shocks in the treatment period can contaminate the estimated effect.
+
+The generated datasets are available as [`mlcm_mortality_panel.csv`](../data/simulations/mlcm_mortality_panel.csv), [`mlcm_mortality_municipality_estimates.csv`](../data/simulations/mlcm_mortality_municipality_estimates.csv), and [`mlcm_mortality_area_estimates.csv`](../data/simulations/mlcm_mortality_area_estimates.csv). The complete analysis is reproduced by [`16-09-mlcm.R`](../code/16-09-mlcm.R).

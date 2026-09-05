@@ -1,9 +1,30 @@
-# Section 16.2: Selection on observables
+# Section 16.2: Selection on Observables
+# ============================================================
 #
-# This self-contained script adapts the Project STAR setting to an
-# observational study. It compares OLS and propensity-score matching when
-# all confounders are observed and when family affluence is unobserved.
-# All random draws are generated from stable streams based on master seed 123.
+# This script adapts the Project STAR setting to an observational study.
+#
+# Example:
+#   Pupils from more advantaged families are more likely to attend small
+#   classes. The analyst wants to estimate the effect of attending a small
+#   class on the end-of-year score.
+#
+# Goal:
+#   Show how OLS and propensity-score matching can recover a causal effect
+#   when all relevant confounders are observed, and how they can fail when an
+#   important confounder is latent.
+#
+# The script creates:
+#   1. an observational setting with observed confounders;
+#   2. a failure setting with an unobserved family-background variable;
+#   3. a lack-of-common-support setting;
+#   4. estimate tables saved as CSV files;
+#   5. a high-resolution PNG figure.
+#
+# Reproducibility:
+#   All random draws use deterministic streams based on master seed 123.
+
+
+# 0. Packages ---------------------------------------------------------------
 
 required_packages <- c("dplyr", "ggplot2", "patchwork", "Matching")
 missing_packages <- required_packages[
@@ -21,6 +42,11 @@ library(dplyr)
 library(ggplot2)
 library(patchwork)
 
+
+# 1. Small helper functions -------------------------------------------------
+
+# Standardized mean differences measure imbalance between treated and
+# untreated pupils in pooled-standard-deviation units.
 soo_standardized_mean_difference <- function(x, group) {
   mean_difference <- mean(x[group == 1]) - mean(x[group == 0])
   pooled_sd <- sqrt((var(x[group == 1]) + var(x[group == 0])) / 2)
@@ -67,6 +93,12 @@ soo_extract_matching_estimate <- function(
   )
 }
 
+
+# 2. Lack-of-common-support scenario ---------------------------------------
+
+# In this setting, pupils from the most advantaged families always attend a
+# small class. OLS still returns a coefficient, but it must extrapolate beyond
+# the part of the data where treated and untreated pupils are comparable.
 soo_create_no_common_support_data <- function(population, seed = 123L) {
   high_family_background <-
     population$simulated_parental_affluence > 0.8 &
@@ -168,6 +200,11 @@ soo_estimate_no_common_support <- function(
   )
 }
 
+
+# 3. Simulate the pupil population -----------------------------------------
+
+# The latent parental-affluence variable is observed by the data-generating
+# process, but it may or may not be observed by the analyst later on.
 soo_simulate_population <- function(
     n = 5000L,
     n_schools = 20L,
@@ -237,6 +274,11 @@ soo_simulate_population <- function(
   )
 }
 
+
+# 4. Create treatment assignment in the observational setting ---------------
+
+# Small-class attendance is no longer randomly assigned. It is more likely for
+# pupils with stronger observed and latent family-background advantages.
 soo_create_observational_data <- function(population, seed = 123L) {
   treatment_probability <- plogis(
     -0.25 +
@@ -260,6 +302,12 @@ soo_create_observational_data <- function(population, seed = 123L) {
     )
 }
 
+
+# 5. Estimate OLS and matching models --------------------------------------
+
+# The "complete" specifications adjust for both observed parental education
+# and simulated parental affluence. The "incomplete" specifications omit
+# parental affluence to mimic an unobserved confounder.
 soo_estimate_effects <- function(data, true_att) {
   naive_model <- lm(
     end_school_year_score ~ received_small_class,
@@ -341,6 +389,9 @@ soo_estimate_effects <- function(data, true_att) {
     incomplete_match = incomplete_match
   )
 }
+
+
+# 6. Create the chapter figure ---------------------------------------------
 
 soo_make_figure <- function(data, results) {
   matched_smd <- function(variable, match_index) {
@@ -435,12 +486,19 @@ soo_make_figure <- function(data, results) {
   balance_plot + estimates_plot + plot_layout(widths = c(1.08, 1))
 }
 
+
+# 7. Main simulation function ----------------------------------------------
+
+# This is the function called from the chapter and from the master runner.
+# It returns all key objects and, by default, writes the datasets, tables,
+# and figure used in the book.
 run_selection_on_observables_simulation <- function(
     seed = 123L,
     sample_size = 5000L,
     write_outputs = TRUE,
     data_directory = "data/simulations",
-    image_directory = "images") {
+    image_directory = "images",
+    show_plot = interactive()) {
   population <- soo_simulate_population(
     n = sample_size,
     n_schools = 20L,
@@ -509,6 +567,12 @@ run_selection_on_observables_simulation <- function(
     )
   }
 
+  # Display the figure in RStudio's Plots pane when the function is run
+  # interactively. The figure is still saved above when write_outputs = TRUE.
+  if (show_plot) {
+    print(observational_figure)
+  }
+
   list(
     observational_data = observational_data,
     observational_estimates = results$estimates,
@@ -524,8 +588,16 @@ run_selection_on_observables_simulation <- function(
   )
 }
 
+
+# 8. Run the script directly ------------------------------------------------
+
+# When this file is run directly, it reproduces the outputs and prints the
+# main tables. When it is sourced by another file, this block is skipped.
 if (sys.nframe() == 0L) {
-  selection_results <- run_selection_on_observables_simulation(seed = 123L)
+  selection_results <- run_selection_on_observables_simulation(
+    seed = 123L,
+    show_plot = TRUE
+  )
   cat("\nSelection-on-observables estimates\n")
   print(selection_results$observational_estimates, row.names = FALSE, digits = 3)
   cat("\nLack-of-common-support estimates\n")
