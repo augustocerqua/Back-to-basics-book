@@ -1,5 +1,11 @@
 # About the book {.unnumbered}
 
+::: {.content-visible when-format="html"}
+
+![](images/backbone-skeleton-mecha-3d.gif){width="100%"}
+
+:::
+
 This book is not intended to be a comprehensive textbook on impact evaluation and causal inference. Many excellent books and articles already provide rigorous and detailed accounts of causal inference, program evaluation, and econometric methods for policy analysis.
 
 The purpose of this book is different. It is to go **back to basics** and offer a simple and transparent perspective on the logic behind the most widely used impact evaluation methods. Rather than emphasizing the technical aspects of evaluation methods, the book aims to clarify how each method constructs a counterfactual, what assumptions it requires, and how it works in practice, while keeping formal details to a minimum.
