@@ -1274,7 +1274,7 @@ The script compares three predictive approaches:
 
 1. the **historical average**, which predicts 2020 mortality using the municipality's average mortality in previous years;
 2. **LASSO**, estimated by trying 100 values of the penalty parameter $\lambda$ and selecting the value with the lowest cross-validation error^[Cross-validation evaluates predictive performance by repeatedly fitting the model on part of the data and assessing its performance on observations not used for estimation.];
-3. **random forest**, estimated by cross-validating over three values of `mtry`: all covariates, half of the covariates, and one third of the covariates.
+3. **random forest**, estimated by cross-validating over three values of `mtry`: all covariates, half of the covariates, and one third of the covariates.^[MLCM can accommodate a wide range of predictive methods. For brevity, here we illustrate it using only two: LASSO and random forest.]
 
 The code follows the same structure as the other simulations:
 
