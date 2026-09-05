@@ -1,0 +1,4 @@
+"method","validation_year","rmse","mae","tuning_choice","internal_cv_rmse","selected_for_2020"
+"Historical average",2019,1.15491401885736,0.92264590623753,"No tuning",NA,FALSE
+"LASSO",2019,1.19222375641947,0.96548476674662,"lambda = 0.322",1.15538025978396,FALSE
+"Random forest",2019,1.06625377407812,0.854510427113983,"mtry = 3",1.09762034446124,TRUE

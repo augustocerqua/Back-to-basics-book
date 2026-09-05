@@ -28,7 +28,6 @@ book:
     type: express
     style: simple
     palette: light
-  cover-image: images/book_cover_v2.png
   site-url: "https://augustocerqua.github.io/Back-to-basics-book/"
   repo-url: "https://github.com/augustocerqua/Back-to-basics-book"
   repo-actions: [issue]

@@ -21,3 +21,4 @@ _book-pdf/
 /docs/*.pdf
 /docs/*.epub
 /docs_fixed_check/
+/_check-html/
