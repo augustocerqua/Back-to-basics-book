@@ -175,7 +175,7 @@ $$
 Y_t=\alpha+\beta t+\gamma Post_t+\delta(t-T_0)Post_t+u_t,
 $$
 
-where $Post_t$ equals one after the intervention. In this specification, $\gamma$ captures an immediate level change and $\delta$ captures a change in trend after the intervention.
+where $Post_t=\mathbf{1}(t\geq T_0)$ and $T_0$ denotes the first period affected by the intervention. In this specification, $\beta$ captures the pre-intervention trend, $\gamma$ captures the immediate level change at the intervention, and $\delta$ captures the change in trend after the intervention. Thus, the post-intervention trend is $\beta+\delta$.
 
 This representation is useful pedagogically, but real applications often require more careful modeling. Outcomes may be autocorrelated, seasonal, volatile, or affected by calendar effects. For this reason, ITS analysis is often combined with time-series models such as ARIMA.
 
@@ -214,26 +214,25 @@ For example, Causal-ARIMA has been used by [@menchetti2023] to estimate the effe
 ::: {.callout-note}
 ### Confidence intervals and prediction intervals
 
-A **confidence interval** describes the uncertainty around an estimated parameter, such as an average treatment effect. It asks: how precisely have we estimated the causal effect?
+A **confidence interval** describes the uncertainty around an estimated parameter or expected outcome, such as an average treatment effect. It asks: how precisely have we estimated the quantity of interest?
 
 ```{=latex}
 \smallskip
 ```
 
-A **prediction interval** describes the uncertainty around a future or counterfactual outcome. It asks: how uncertain is the predicted value itself?
+A **prediction interval** describes the uncertainty around an individual future or unobserved outcome. It accounts not only for uncertainty in the estimated model, but also for the variability of the outcome around its predicted mean. It asks: how uncertain is the outcome we are trying to predict?
 
 ```{=latex}
 \smallskip
 ```
 
-This distinction matters for counterfactual methods. In **CBCMs**, such as DiD or matching, the main object is usually a causal parameter obtained by comparing treated units with observed control units. The uncertainty therefore concerns the estimated treatment effect, so results are typically reported using **confidence intervals**.
-
+This distinction is particularly relevant for counterfactual methods. In CBCMs, such as DiD or matching, the main object is usually a causal parameter obtained by comparing treated units with observed control units. Inference therefore typically focuses on uncertainty around the estimated treatment effect, which is reported using confidence intervals.
 
 ```{=latex}
 \smallskip
 ```
 
-In **FBCMs**, the counterfactual is not observed in another group. It is forecasted from the treated unit’s own pre-treatment history. Here, uncertainty comes not only from estimating the model, but also from predicting an unobserved counterfactual path. For this reason, FBCMs naturally rely on **prediction intervals** around the forecasted counterfactual outcome.
+In FBCMs, the counterfactual is forecast from the treated unit's own pre-treatment history rather than observed in a comparison group. If the object of interest is the specific counterfactual outcome that would have occurred, uncertainty concerns an unobserved outcome itself, making a prediction interval a natural inferential object. If instead the object of interest is the expected counterfactual outcome or an average treatment effect, confidence intervals may also be appropriate.
 :::
 
 ## Machine Learning Control Method
@@ -282,7 +281,7 @@ FBCMs require a set of assumptions that is almost completely different from thos
 
 3. **Sufficient pre-treatment information**. Forecasting requires *enough* historical data to learn the relevant pattern.^[There is no universal minimum number of pre-treatment periods. What counts as *enough* depends on the complexity and stability of the outcome process: learning trends, seasonality, or other recurring patterns generally requires a longer pre-treatment series than learning a simple and stable trajectory.]
 
-4) **No anticipation**. Units should not change behavior before the start of the intervention because they expect the treatment to occur. Anticipation contaminates the pre-treatment period and makes the estimated untreated trajectory unreliable. This assumption also underlies also most CBCMs.
+4) **No anticipation**. Units should not change behavior before the start of the intervention because they expect the treatment to occur. Anticipation contaminates the pre-treatment period and makes the estimated untreated trajectory unreliable. This assumption also underlies most CBCMs.
 
 ::: {.callout-warning}
 ### Machine learning and time-series models do not remove the causal problem

@@ -428,7 +428,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/05-selection-on-observables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection-on-observables methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -648,15 +648,21 @@ Y_i = \alpha + \tau D_i + X_i'\beta + u_i,
 <section id="example-college-proximity-and-returns-to-schooling" class="level2 page-columns page-full" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="example-college-proximity-and-returns-to-schooling"><span class="header-section-number">8.2</span> Example: College Proximity and Returns to Schooling</h2>
 <p>A classic example is Card’s study of the returns to schooling <span class="citation" data-cites="card1993">(<a href="references.html#ref-card1993" role="doc-biblioref">Card 1993</a>)</span>. The question is: how much does an additional year of education increase future wages?</p>
-<p>A simple comparison between more educated and less educated individuals may be biased because education is correlated with unobserved ability and family background. Card uses geographic proximity to college as an instrument for schooling.</p>
-<p>The argument is that individuals who grow up closer to a college face lower costs of attending college and are therefore more likely to obtain more schooling. At the same time, proximity to college is assumed to affect wages only through schooling, rather than through other direct channels.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;This second condition is an identifying assumption, not an observable fact: proximity to college could in principle be related to other characteristics of local areas or families that also affect wages.</p></div></div><p>In this setting:</p>
+<p>A simple comparison between more educated and less educated individuals may be biased because schooling is associated with unobserved ability and family background. Card uses geographic proximity to college as an instrument for educational attainment.</p>
+<p>The identification argument has three components (see next section for more details):</p>
+<ol type="1">
+<li><strong>Relevance:</strong> individuals who grow up near a college face lower attendance costs, which may encourage them to obtain more schooling.</li>
+<li><strong>Exclusion:</strong> proximity to college must affect future wages only through schooling, not through other channels such as better local employment opportunities.</li>
+<li><strong>Exogeneity:</strong> after conditioning on relevant pre-treatment covariates, proximity must be unrelated to unobserved determinants of wages. This could fail, for example, if families with greater unobserved resources systematically choose to live near colleges.</li>
+</ol>
+<p>In this setting:</p>
 <ul>
-<li><span class="math inline">\(Z_i\)</span> is proximity to college;</li>
-<li><span class="math inline">\(D_i\)</span> is years of schooling;</li>
-<li><span class="math inline">\(Y_i\)</span> is wages.</li>
+<li><span class="math inline">\(Z_i\)</span> indicates whether an individual grew up near a college;</li>
+<li><span class="math inline">\(T_i\)</span> denotes years of schooling;<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+<li><span class="math inline">\(Y_i\)</span> denotes log wages;</li>
+<li><span class="math inline">\(X_i\)</span> contains observed control variables.</li>
 </ul>
-<p>The instrument isolates variation in schooling associated with geographic access to college rather than with unobserved determinants of schooling and wages. Using this variation, Card finds IV estimates of the return to schooling that are substantially larger than conventional OLS estimates—roughly 25–60% higher across his specifications. He also finds that the schooling effects of college proximity are concentrated among individuals from less-educated families, for whom access to a nearby college is more likely to affect educational attainment.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;Unlike the binary treatment indicator <span class="math inline">\(D_i\)</span> used elsewhere in this chapter, <span class="math inline">\(T_i\)</span> measures treatment intensity: years of schooling. A binary instrument can shift a treatment that takes more than two values.</p></div></div><p>Card reports IV estimates of the return to schooling that are roughly 25–60% higher than conventional OLS estimates across his specifications. He also finds that the educational gains associated with college proximity are concentrated among men from less-educated families, for whom nearby access is more likely to change educational attainment.</p>
 </section>
 <section id="the-basic-iv-logic-and-the-key-assumptions" class="level2" data-number="8.3">
 <h2 data-number="8.3" class="anchored" data-anchor-id="the-basic-iv-logic-and-the-key-assumptions"><span class="header-section-number">8.3</span> The Basic IV Logic and the Key Assumptions</h2>
@@ -673,12 +679,15 @@ Z_i \rightarrow D_i \rightarrow Y_i.
 \]</span></p>
 <p>In practice, this means that changes in the instrument should generate changes in the probability of receiving the treatment, in the case of a binary treatment. Relevance is empirically assessable: we can estimate the first-stage relationship between <span class="math inline">\(D_i\)</span> and <span class="math inline">\(Z_i\)</span> and check whether the instrument significantly predicts treatment even after controlling for <span class="math inline">\(X_i\)</span>.</p>
 <ol start="2" type="1">
-<li>The instrument must affect the outcome only through the treatment. This is the <strong>exclusion restriction</strong>. Conditional on covariates, the instrument should not be correlated with the unobserved determinants of the outcome:</li>
+<li><p>The instrument must affect the outcome <strong>only through the treatment</strong>. This is the <strong>exclusion restriction</strong>: changing <span class="math inline">\(Z_i\)</span> must not change <span class="math inline">\(Y_i\)</span> through any channel that bypasses <span class="math inline">\(D_i\)</span>.</p></li>
+<li><p>The instrument must also be <strong>exogenous</strong>: possibly after conditioning on pre-treatment covariates, it must be unrelated to unobserved factors that influence the outcome. An instrument can satisfy exclusion and still fail this condition. For example, distance to college might affect earnings only through education, yet remain associated with family background because families choose where to live.</p></li>
 </ol>
+<p>In the linear outcome model, instrument validity requires the following moment condition:</p>
 <p><span class="math display">\[
 \operatorname{Cov}(Z_i,u_i\mid X_i)=0.
 \]</span></p>
-<p>This condition rules out any direct causal path from <span class="math inline">\(Z_i\)</span> to <span class="math inline">\(Y_i\)</span> that bypasses <span class="math inline">\(D_i\)</span>. Unlike relevance, <strong>the exclusion restriction is not directly testable</strong>. The credibility of an IV strategy therefore depends heavily on whether the researcher can argue, using institutional knowledge, theory, or a credible natural experiment, that the instrument is as good as randomly assigned with respect to the outcome, except through treatment.</p>
+<p>This condition should not be interpreted as the exclusion restriction alone: both alternative causal channels and associations with unobserved outcome determinants can invalidate it.</p>
+<p>Unlike relevance, exclusion and exogeneity generally cannot be established from the observed data alone. Their credibility must be justified using institutional knowledge, theory, and a convincing account of how the instrument is generated.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -886,7 +895,7 @@ Different instruments may move different groups of units, and therefore identify
 <p>For a binary instrument, the LATE interpretation requires four main assumptions.</p>
 <ol type="1">
 <li><p>The instrument must be as good as randomly assigned, possibly after conditioning on pre-treatment covariates. In other words, the instrument should not be systematically related to the units’ potential outcomes or potential treatment statuses.</p></li>
-<li><p>The instrument must satisfy the exclusion restriction. It should affect potential outcomes only through treatment.</p></li>
+<li><p>The instrument must satisfy the <strong>exclusion restriction</strong>: holding treatment status fixed, changing the instrument must not change the outcome. In other words, the instrument can affect the outcome only by changing the treatment received.</p></li>
 <li><p>The instrument must be relevant: even after conditioning on pre-treatment covariates, variation in the instrument must generate variation in treatment status for at least some units.</p></li>
 <li><p>The instrument must satisfy <strong>monotonicity</strong>. This means that the instrument should push treatment in the same direction for all units. In other words, there should be no defiers.</p></li>
 </ol>

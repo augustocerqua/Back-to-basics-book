@@ -188,7 +188,7 @@ In short, Callaway and Sant'Anna start from cohort-time causal parameters and th
 
 Another approach is to combine matching with DiD. The basic matching DiD estimator, already presented in [Chapter 6](../chapters/06-difference-in-differences.qmd), uses matching to account for observed differences between treated and control units and differencing to account for time-invariant unobserved differences [@heckman1997].
 
-Imai, Kim, and Wang extend this logic to time-series cross-sectional (TSCS) data^[**TSCS data** have essentially the same two-dimensional structure as panel data: multiple units are observed repeatedly over time. The term *TSCS* is especially common in political science, often for aggregate units such as countries, states, or municipalities observed over a relatively long time span. There is no sharp boundary between TSCS and panel data.] through **PanelMatch** [@imai2023], ], a non-parametric matching approach that provides an alternative way to estimate the dynamic treatment effects typically displayed in event-study analyses. The method constructs matched sets for treated observations using their pre-treatment histories.
+Imai, Kim, and Wang extend this logic to time-series cross-sectional (TSCS) data^[**TSCS data** have essentially the same two-dimensional structure as panel data: multiple units are observed repeatedly over time. The term *TSCS* is especially common in political science, often for aggregate units such as countries, states, or municipalities observed over a relatively long time span. There is no sharp boundary between TSCS and panel data.] through **PanelMatch** [@imai2023], a non-parametric matching approach that provides an alternative way to estimate the dynamic treatment effects typically displayed in event-study analyses. The method constructs matched sets for treated observations using their pre-treatment histories.
 
 The procedure can be summarized in four steps:
 
@@ -356,8 +356,6 @@ The example illustrates an important limitation of event-study diagnostics: pre-
 ## Summary
 
 Event studies extend DiD by organizing effects around the timing of treatment. They are especially useful for staggered adoption and dynamic treatment effects.
-
-This is correct. I would make it slightly smoother and more precise:
 
 The lesson of recent years is that event-study estimates should not be produced mechanically using TWFE regressions. In particular, when treatment adoption is staggered and treatment effects are heterogeneous, TWFE estimators may rely on problematic comparisons and assign implicit weights that complicate the interpretation of the estimated effects.
 

@@ -115,13 +115,15 @@ is the average outcome that would be observed if all units were untreated.
 
 ### Conditional expected value
 
-A **conditional expected value** is an ordinary average calculated for a specific subgroup of units satisfying a given condition. For example,
+A **conditional expected value** is the population average of a variable among units satisfying a particular condition. For example,
 
 $$
 E[Y_i \mid D_i=1]
 $$
 
-is the average outcome among the subgroup of treated units. It is computed like a simple mean, but using only observations for which $D_i=1$. The vertical bar $\mid$ is read as “given” or “conditional on.”
+is the average potential or observed outcome among treated units. In a sample, this quantity is estimated by calculating the ordinary mean using only observations for which $D_i=1$.
+
+The vertical bar $\mid$ is read as “given” or “conditional on.”
 
 Similarly,
 
@@ -129,7 +131,7 @@ $$
 E[Y_i \mid X_i=x]
 $$
 
-is the average outcome among units whose covariates take the value $x$.
+is the average outcome among units whose covariates take the value $x$. When $X_i$ is continuous, this expression should be understood as a conditional population average, which may be estimated using observations with similar, rather than exactly identical, covariate values.
 
 ### Weighted average
 

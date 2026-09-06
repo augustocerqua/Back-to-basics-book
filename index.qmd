@@ -80,7 +80,7 @@ After covering the basic concepts of impact evaluation and the most widely used 
 
 - **Continuous treatments.** Throughout most of the book, we focus on **binary treatments**, where units are either treated or untreated. This setup makes the counterfactual logic especially clear: the goal is to compare outcomes under treatment with outcomes in the absence of treatment. In this chapter we will consider more complex settings in which the treatment varies in intensity. In this case, the causal question is not only whether the treatment has an effect, but how the outcome changes as treatment intensity increases.
 
-- **Ho to implement impact evaluation methods in practice.** Through simulated scenarios, I will show step by step how the different methods can be implemented in practice. Replication code will be provided in R.
+- **How to implement impact evaluation methods in practice.** Through simulated scenarios, I will show step by step how the different methods can be implemented in practice. Replication code will be provided in R.
 
 ::: callout-important
 ## The main message

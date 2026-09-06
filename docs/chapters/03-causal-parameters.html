@@ -409,7 +409,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/05-selection-on-observables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection-on-observables methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -582,7 +582,7 @@ ATE = E[\Delta_i] = E[Y_i(1)-Y_i(0)].
 ATE = E[Y_i(1)] - E[Y_i(0)].
 \]</span></p>
 <p>The ATE answers the question: what is the expected effect of the treatment for a randomly selected unit from the population? Using the training program example, the ATE measures the expected effect of the program for a randomly selected individual from the population.</p>
-<p>However, the ATE is usually not the most relevant parameter for policy evaluation. A program is generally designed for a specific group, rather than for the whole population. In that case, we are often more interested in the <strong>average treatment effect on the treated (ATT)</strong>:</p>
+<p>The most relevant parameter depends on the policy question. The ATE measures the average effect for a specified population. In ex-post policy evaluation, however, we are often primarily interested in how the program affected <strong>those who actually received it</strong>, rather than what its average effect would be if everyone in that population participated. For this reason, the <strong>average treatment effect on the treated (ATT)</strong> is often the main parameter of interest:</p>
 <p><span class="math display">\[
 ATT = E[\Delta_i \mid D_i=1].
 \]</span></p>

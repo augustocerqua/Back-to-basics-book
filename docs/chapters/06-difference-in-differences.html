@@ -428,7 +428,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/05-selection-on-observables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection-on-observables methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -831,7 +831,7 @@ In the simple two-group, two-period case, the TWFE coefficient coincides with th
 <section id="ashenfelters-dip" class="level2" data-number="6.10">
 <h2 data-number="6.10" class="anchored" data-anchor-id="ashenfelters-dip"><span class="header-section-number">6.10</span> Ashenfelter’s Dip</h2>
 <p>A classic threat to DiD is <strong>Ashenfelter’s dip</strong> <span class="citation" data-cites="ashenfelter1978">(<a href="references.html#ref-ashenfelter1978" role="doc-biblioref">Ashenfelter 1978</a>)</span>. This occurs when units select into treatment after experiencing a temporary negative shock.</p>
-<p>Suppose workers enter a training program after a sudden fall in earnings. Even without the program, their earnings might partially of fully recover. A DiD estimator comparing these workers with non-participants may mistakenly attribute the natural rebound to the training program.</p>
+<p>Suppose workers enter a training program after a sudden fall in earnings. Even without the program, their earnings might partially or fully recover. A DiD estimator comparing these workers with non-participants may mistakenly attribute the natural rebound to the training program.</p>
 <p>The problem is that treatment timing is related to a temporary shock in the untreated potential outcome. A simple DiD design differences out time-invariant unobserved heterogeneity, not temporary shocks that affect treatment participation.</p>
 <p>Longer panels can help diagnose the problem. If outcomes fall sharply just before treatment and then recover, the design may be capturing mean reversion rather than a causal effect.</p>
 </section>
@@ -957,7 +957,7 @@ u_{st},
 <div class="callout-body-container callout-body">
 <p>In staggered-adoption DiD designs, not all comparisons are equally credible. A particularly important problem arises when <strong>already-treated units are used as controls</strong> for units that are treated later.</p>
 <p>Suppose one group is treated in period <span class="math inline">\(g\)</span> and another group is treated in a later period <span class="math inline">\(g'\)</span>. Before period <span class="math inline">\(g'\)</span>, the later-treated group can still serve as a comparison group for the earlier-treated group, because it has not yet received the treatment. This is a <strong>not-yet-treated comparison</strong> and is often useful.</p>
-<p>The problem appears after both groups have been treated. Once the earlier-treated group has already been exposed to the policy, its outcomes may include treatment effects. UUsing this group as a control for the later-treated group means comparing treated units with other treated units, rather than with units that remain untreated throughout the analyzed period. These comparisons are often called <strong>forbidden comparisons</strong>. They are problematic because they may subtract part of the treatment effect from the estimate, especially when treatment effects grow, fade, or otherwise evolve over time. In that case, the comparison no longer isolates the untreated potential outcome trend.</p>
+<p>The problem appears after both groups have been treated. Once the earlier-treated group has already been exposed to the policy, its outcomes may include treatment effects. Using this group as a control for the later-treated group means comparing treated units with other treated units, rather than with units that remain untreated throughout the analyzed period. These comparisons are often called <strong>forbidden comparisons</strong>. They are problematic because they may subtract part of the treatment effect from the estimate, especially when treatment effects grow, fade, or otherwise evolve over time. In that case, the comparison no longer isolates the untreated potential outcome trend.</p>
 </div>
 </div>
 <p>In recent years, several estimators have been proposed as alternatives to the standard TWFE model, especially in settings with staggered treatment adoption and heterogeneous treatment effects. These approaches are often discussed within the broader <strong>event-study</strong> literature, because they estimate how treatment effects evolve before and after treatment adoption while avoiding some of the problematic comparisons embedded in TWFE regressions. We will discuss these methods in (<a href="../chapters/07-event-studies.html">Chapter 7.</a>)</p>
@@ -1475,8 +1475,8 @@ Wolfers, Justin. 2006. <span>“Did Unilateral Divorce Laws Raise Divorce Rates?
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../chapters/05-selection-on-observables.html" class="pagination-link" aria-label="Selection on observable methods">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></span>
+      <a href="../chapters/05-selection-on-observables.html" class="pagination-link" aria-label="Selection-on-observables methods">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection-on-observables methods</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

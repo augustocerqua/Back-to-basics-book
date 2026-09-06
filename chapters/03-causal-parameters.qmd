@@ -28,7 +28,7 @@ $$
 
 The ATE answers the question: what is the expected effect of the treatment for a randomly selected unit from the population? Using the training program example, the ATE measures the expected effect of the program for a randomly selected individual from the population.
 
-However, the ATE is usually not the most relevant parameter for policy evaluation. A program is generally designed for a specific group, rather than for the whole population. In that case, we are often more interested in the **average treatment effect on the treated (ATT)**:
+The most relevant parameter depends on the policy question. The ATE measures the average effect for a specified population. In ex-post policy evaluation, however, we are often primarily interested in how the program affected **those who actually received it**, rather than what its average effect would be if everyone in that population participated. For this reason, the **average treatment effect on the treated (ATT)** is often the main parameter of interest:
 
 $$
 ATT = E[\Delta_i \mid D_i=1].

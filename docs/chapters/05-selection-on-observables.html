@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; Selection on observable methods – The Backbone of Impact Evaluation Methods</title>
+<title>5&nbsp; Selection-on-observables methods – The Backbone of Impact Evaluation Methods</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -329,7 +329,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/04-randomized-experiments.html">Control-based Designs</a></li><li class="breadcrumb-item"><a href="../chapters/05-selection-on-observables.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/04-randomized-experiments.html">Control-based Designs</a></li><li class="breadcrumb-item"><a href="../chapters/05-selection-on-observables.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection-on-observables methods</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -428,7 +428,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/05-selection-on-observables.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection-on-observables methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -579,9 +579,9 @@ window.Quarto = {
 <main class="content page-columns page-full" id="quarto-document-content">
 
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/04-randomized-experiments.html">Control-based Designs</a></li><li class="breadcrumb-item"><a href="../chapters/05-selection-on-observables.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/04-randomized-experiments.html">Control-based Designs</a></li><li class="breadcrumb-item"><a href="../chapters/05-selection-on-observables.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection-on-observables methods</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></h1>
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection-on-observables methods</span></h1>
 </div>
 
 
@@ -772,12 +772,12 @@ E[Y_i^{obs}\mid D_i=1].
 </section>
 <section id="conditional-independence-assumption" class="level3" data-number="5.2.3">
 <h3 data-number="5.2.3" class="anchored" data-anchor-id="conditional-independence-assumption"><span class="header-section-number">5.2.3</span> Conditional Independence Assumption</h3>
-<p>Matching is based on a key identifying assumption: the <strong>Conditional Independence Assumption</strong>. This is also called <strong>selection on observables</strong> or <strong>unconfoundedness</strong>.</p>
+<p>Matching is based on a key identifying assumption: the <strong>Conditional Independence Assumption</strong>. This is also called <strong>selection-on-observables</strong> or <strong>unconfoundedness</strong>.</p>
 <p>For the ATT, the assumption can be written as</p>
 <p><span class="math display">\[
 Y_i(0) \perp D_i \mid X_i.
 \]</span></p>
-<p>This means that, conditional on observed covariates <span class="math inline">\(X_i\)</span>, treatment assignment is independent of the untreated potential outcome. In words: once we compare units with the same observed characteristics, treated and untreated units would have had the same outcome in the absence of treatment.</p>
+<p>This means that, conditional on observed covariates <span class="math inline">\(X_i\)</span>, treatment assignment is independent of the untreated potential outcome. In words: once we compare treated and untreated units with the same observed characteristics, they are assumed to have had the same average outcome in the absence of treatment.</p>
 <p>Under this assumption,</p>
 <p><span class="math display">\[
 E[Y_i(0)\mid D_i=1, X_i=x]
@@ -815,7 +815,7 @@ It cannot remove bias due to <strong>unobserved</strong> variables that affect b
 P(D_i=1\mid X_i=x) &lt; 1.
 \]</span></p>
 <p>This condition means that, for units with characteristics <span class="math inline">\(X_i=x\)</span>, treatment is not certain. In other words, among units with the same, or sufficiently similar, observed characteristics, there must be some untreated units that can serve as comparisons for the treated units. If the probability of receiving treatment is equal to one for a given set of characteristics, matching cannot construct a credible counterfactual for treated units with those characteristics.</p>
-<p>In practice, lack of common support means that some units are too different to be matched. Dropping these units can improve credibility, but it also changes the population for which the treatment effect is estimated. For instance, if only very large firms receive a subsidy and no comparable untreated large firms exist, those treated firms may have to be excluded. The resulting estimate would then apply only to the small and medium-sized treated firms for which comparable untreated units are available, rather than to all treated firms.</p>
+<p>In practice, lack of common support means that some treated units have no comparable untreated units. Excluding these units can improve credibility, but it also changes the population for which the treatment effect is estimated. For instance, if firms of all sizes receive a subsidy but no comparable untreated large firms exist, the treated large firms may have to be excluded. The resulting estimate would then represent the ATT among small and medium-sized treated firms with common support, rather than the ATT for all treated firms.</p>
 <div class="callout callout-style-simple callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

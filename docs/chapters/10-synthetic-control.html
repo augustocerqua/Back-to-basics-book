@@ -428,7 +428,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/05-selection-on-observables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection-on-observables methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -802,11 +802,11 @@ Figure&nbsp;10.1: Before reunification, actual West Germany and synthetic West G
 </div>
 <p>Moreover, the most recent extensions to SCM extend the synthetic control logic beyond the canonical case of a single treated unit. Recent synthetic-control-based estimators can accommodate <strong>multiple treated units</strong>, including settings in which treatment adoption is <strong>staggered</strong>, meaning that different units may become treated at different points in time <span class="citation" data-cites="cattaneo2025uncertainty">(<a href="references.html#ref-cattaneo2025uncertainty" role="doc-biblioref">Cattaneo et al. 2025</a>)</span>. This makes synthetic-control-inspired methods applicable to a broader range of policy evaluation settings, where several regions, municipalities, firms, or individuals may be exposed to the treatment either simultaneously or sequentially. The basic logic, however, remains the same: the goal is to construct credible counterfactual trajectories against which the observed post-treatment outcomes of treated units can be compared. In this sense, the event-study and synthetic-control literatures are increasingly converging toward a unified framework for estimating dynamic treatment effects in panel data settings.</p>
 </section>
-<section id="summing-up" class="level2" data-number="10.11">
+<section id="summing-up" class="level2 page-columns page-full" data-number="10.11">
 <h2 data-number="10.11" class="anchored" data-anchor-id="summing-up"><span class="header-section-number">10.11</span> Summing up</h2>
 <p>SCM is a powerful way to make counterfactual construction explicit. It is particularly useful when the treatment affects one aggregate unit and no single untreated unit provides a convincing comparison.</p>
-<p>Its main strengths are that, among CBCMs, it is the only method in the evaluator’s toolkit that is suitable for estimating causal effects when there is a single treated unit, and that it constructs the synthetic counterfactual in a transparent manner. SCM shows which untreated units contribute to the counterfactual, how much weight they receive, and how well the resulting synthetic unit reproduces the treated unit before the intervention.</p>
-<p>At the same time, SCM is not a magic formula. Its credibility depends on the quality of the donor pool, the length and informativeness of the pre-treatment period, the absence of spillovers (as for all control-based counterfactual methods), and the ability of the synthetic control to reproduce the treated unit before the treatment.</p>
+<p>Its main strengths are that, among CBCMs, it is the only method in the evaluator’s toolkit that is suitable for estimating causal effects when there is a single treated unit, and that it constructs the synthetic counterfactual in a transparent manner.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> SCM shows which untreated units contribute to the counterfactual, how much weight they receive, and how well the resulting synthetic unit reproduces the treated unit before the intervention.</p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;Other CBCMs can in principle be adapted to settings with a single treated unit, but unlike SCM they are not specifically designed to construct a counterfactual for one treated unit.</p></div></div><p>At the same time, SCM is not a magic formula. Its credibility depends on the quality of the donor pool, the length and informativeness of the pre-treatment period, the absence of spillovers (as for all control-based counterfactual methods), and the ability of the synthetic control to reproduce the treated unit before the treatment.</p>
 <div class="callout callout-style-simple callout-note callout-titled" title="Key SCM formulae">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

@@ -2,7 +2,7 @@
 
 The **potential outcomes framework** provides the basic language of causal inference. Its central idea is simple: to define a causal effect, we must compare what would happen to the same unit under different treatment states. These alternative outcomes are called **potential outcomes**.
 
-The origins of this framework go back to the work of **Jerzy Neyman** on randomized agricultural experiments first published in 1927 [@neyman1990]. Neyman introduced the idea that each experimental unit has potential outcomes under different treatments, even though only one of them is observed. Later, **Donald Rubin** extended this logic beyond randomized experiments, turning it into a general framework for causal inference in both experimental and observational studies [@rubin1974; @rubin1978]. For this reason, the approach is often called the **Neyman--Rubin potential outcomes framework** or the **Rubin causal model**.
+The origins of this framework go back to the work of **Jerzy Neyman** on randomized agricultural experiments first published in 1923 [@neyman1990]. Neyman introduced the idea that each experimental unit has potential outcomes under different treatments, even though only one of them is observed. Later, **Donald Rubin** extended this logic beyond randomized experiments, turning it into a general framework for causal inference in both experimental and observational studies [@rubin1974; @rubin1978]. For this reason, the approach is often called the **Neyman--Rubin potential outcomes framework** or the **Rubin causal model**.
 
 Suppose we are interested in the effect of a binary treatment $D_i$ on an outcome $Y_i$ for unit $i$, where:
 

@@ -171,7 +171,7 @@ Moreover, the most recent extensions to SCM extend the synthetic control logic b
 
 SCM is a powerful way to make counterfactual construction explicit. It is particularly useful when the treatment affects one aggregate unit and no single untreated unit provides a convincing comparison.
 
-Its main strengths are that, among CBCMs, it is the only method in the evaluator’s toolkit that is suitable for estimating causal effects when there is a single treated unit, and that it constructs the synthetic counterfactual in a transparent manner. SCM shows which untreated units contribute to the counterfactual, how much weight they receive, and how well the resulting synthetic unit reproduces the treated unit before the intervention.
+Its main strengths are that, among CBCMs, it is the only method in the evaluator’s toolkit that is suitable for estimating causal effects when there is a single treated unit, and that it constructs the synthetic counterfactual in a transparent manner.^[Other CBCMs can in principle be adapted to settings with a single treated unit, but unlike SCM they are not specifically designed to construct a counterfactual for one treated unit.] SCM shows which untreated units contribute to the counterfactual, how much weight they receive, and how well the resulting synthetic unit reproduces the treated unit before the intervention.
 
 At the same time, SCM is not a magic formula. Its credibility depends on the quality of the donor pool, the length and informativeness of the pre-treatment period, the absence of spillovers (as for all control-based counterfactual methods), and the ability of the synthetic control to reproduce the treated unit before the treatment.
 

@@ -428,7 +428,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/05-selection-on-observables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection-on-observables methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -778,7 +778,7 @@ Y_{it}(g)=Y_{it}(\infty)
 <section id="matching-did-for-panel-data" class="level2 page-columns page-full" data-number="7.7">
 <h2 data-number="7.7" class="anchored" data-anchor-id="matching-did-for-panel-data"><span class="header-section-number">7.7</span> Matching DiD for Panel Data</h2>
 <p>Another approach is to combine matching with DiD. The basic matching DiD estimator, already presented in <a href="../chapters/06-difference-in-differences.html">Chapter 6</a>, uses matching to account for observed differences between treated and control units and differencing to account for time-invariant unobserved differences <span class="citation" data-cites="heckman1997">(<a href="references.html#ref-heckman1997" role="doc-biblioref">Heckman et al. 1997</a>)</span>.</p>
-<p>Imai, Kim, and Wang extend this logic to time-series cross-sectional (TSCS) data<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> through <strong>PanelMatch</strong> <span class="citation" data-cites="imai2023">(<a href="references.html#ref-imai2023" role="doc-biblioref">Imai et al. 2023</a>)</span>, ], a non-parametric matching approach that provides an alternative way to estimate the dynamic treatment effects typically displayed in event-study analyses. The method constructs matched sets for treated observations using their pre-treatment histories.</p>
+<p>Imai, Kim, and Wang extend this logic to time-series cross-sectional (TSCS) data<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> through <strong>PanelMatch</strong> <span class="citation" data-cites="imai2023">(<a href="references.html#ref-imai2023" role="doc-biblioref">Imai et al. 2023</a>)</span>, a non-parametric matching approach that provides an alternative way to estimate the dynamic treatment effects typically displayed in event-study analyses. The method constructs matched sets for treated observations using their pre-treatment histories.</p>
 <div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;<strong>TSCS data</strong> have essentially the same two-dimensional structure as panel data: multiple units are observed repeatedly over time. The term <em>TSCS</em> is especially common in political science, often for aggregate units such as countries, states, or municipalities observed over a relatively long time span. There is no sharp boundary between TSCS and panel data.</p></div></div><p>The procedure can be summarized in four steps:</p>
 <ol type="1">
 <li>For each treated unit-period, construct an initial set of eligible controls observed at the same time through exact matching, requiring controls to have the same treatment history over a chosen number of pre-treatment periods and, when appropriate, the same values of selected covariates.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></li>
@@ -951,7 +951,6 @@ Researchers should report the reference period clearly and explain why it is app
 <section id="summary" class="level2" data-number="7.15">
 <h2 data-number="7.15" class="anchored" data-anchor-id="summary"><span class="header-section-number">7.15</span> Summary</h2>
 <p>Event studies extend DiD by organizing effects around the timing of treatment. They are especially useful for staggered adoption and dynamic treatment effects.</p>
-<p>This is correct. I would make it slightly smoother and more precise:</p>
 <p>The lesson of recent years is that event-study estimates should not be produced mechanically using TWFE regressions. In particular, when treatment adoption is staggered and treatment effects are heterogeneous, TWFE estimators may rely on problematic comparisons and assign implicit weights that complicate the interpretation of the estimated effects.</p>
 <p>Modern event-study estimators instead build effects from clearer comparisons, such as treated cohorts versus not-yet-treated or never-treated units, and then aggregate group-time effects transparently. The central questions are: what is the comparison group, what is the target estimand, and how are the dynamic effects aggregated?</p>
 <div class="callout callout-style-simple callout-note callout-titled">

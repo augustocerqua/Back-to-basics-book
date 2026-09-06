@@ -428,7 +428,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/05-selection-on-observables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection-on-observables methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -821,10 +821,10 @@ Y_t=\alpha+\beta t+\gamma Post_t+\delta(t-T_0)Post_t+u_t,
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A <strong>confidence interval</strong> describes the uncertainty around an estimated parameter, such as an average treatment effect. It asks: how precisely have we estimated the causal effect?</p>
-<p>A <strong>prediction interval</strong> describes the uncertainty around a future or counterfactual outcome. It asks: how uncertain is the predicted value itself?</p>
-<p>This distinction matters for counterfactual methods. In <strong>CBCMs</strong>, such as DiD or matching, the main object is usually a causal parameter obtained by comparing treated units with observed control units. The uncertainty therefore concerns the estimated treatment effect, so results are typically reported using <strong>confidence intervals</strong>.</p>
-<p>In <strong>FBCMs</strong>, the counterfactual is not observed in another group. It is forecasted from the treated unit’s own pre-treatment history. Here, uncertainty comes not only from estimating the model, but also from predicting an unobserved counterfactual path. For this reason, FBCMs naturally rely on <strong>prediction intervals</strong> around the forecasted counterfactual outcome.</p>
+<p>A <strong>confidence interval</strong> describes the uncertainty around an estimated parameter or expected outcome, such as an average treatment effect. It asks: how precisely have we estimated the quantity of interest?</p>
+<p>A prediction interval describes the uncertainty around an individual future or unobserved outcome. It accounts not only for uncertainty in the estimated model, but also for the variability of the outcome around its predicted mean. It asks: how uncertain is the outcome we are trying to predict?</p>
+<p>This distinction is particularly relevant for counterfactual methods. In CBCMs, such as DiD or matching, the main object is usually a causal parameter obtained by comparing treated units with observed control units. Inference therefore typically focuses on uncertainty around the estimated treatment effect, which is reported using confidence intervals.</p>
+<p>In FBCMs, the counterfactual is forecast from the treated unit’s own pre-treatment history rather than observed in a comparison group. If the object of interest is the specific counterfactual outcome that would have occurred, uncertainty concerns an unobserved outcome itself, making a prediction interval a natural inferential object. If instead the object of interest is the expected counterfactual outcome or an average treatment effect, confidence intervals may also be appropriate.</p>
 </div>
 </div>
 </section>
@@ -866,7 +866,7 @@ Y_t=\alpha+\beta t+\gamma Post_t+\delta(t-T_0)Post_t+u_t,
 <li><strong>Sufficient pre-treatment information</strong>. Forecasting requires <em>enough</em> historical data to learn the relevant pattern.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></li>
 </ol>
 <div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;There is no universal minimum number of pre-treatment periods. What counts as <em>enough</em> depends on the complexity and stability of the outcome process: learning trends, seasonality, or other recurring patterns generally requires a longer pre-treatment series than learning a simple and stable trajectory.</p></div></div><ol start="4" type="1">
-<li><strong>No anticipation</strong>. Units should not change behavior before the start of the intervention because they expect the treatment to occur. Anticipation contaminates the pre-treatment period and makes the estimated untreated trajectory unreliable. This assumption also underlies also most CBCMs.</li>
+<li><strong>No anticipation</strong>. Units should not change behavior before the start of the intervention because they expect the treatment to occur. Anticipation contaminates the pre-treatment period and makes the estimated untreated trajectory unreliable. This assumption also underlies most CBCMs.</li>
 </ol>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">

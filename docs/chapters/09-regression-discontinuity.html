@@ -428,7 +428,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/05-selection-on-observables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection-on-observables methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -739,7 +739,7 @@ D_i g(S_i-c)
 +
 u_i,
 \]</span></p>
-<p>where <span class="math inline">\(f(\cdot)\)</span> and <span class="math inline">\(g(\cdot)\)</span> are parametric functions of the running variable on the two sides of the cutoff. This model allows the relationship between the running variable and the outcome to differ on either side of the cutoff, thereby accommodating potential nonlinearities around the threshold.</p>
+<p>where (f()) and (g()) are parametric functions of the centered running variable, specified without intercept terms. The function (f()) describes how the outcome varies with the running variable below the cutoff, while (g()) allows this relationship to differ above the cutoff. Because the running variable is centered at (c), (_{sharpRD}) captures the discontinuity in the conditional mean of the outcome at the threshold.</p>
 <p>In modern applications, however, <strong>non-parametric</strong> local polynomial methods are usually preferred. These methods focus on observations close to the cutoff and give greater weight to those nearest to it, so that identification comes from local comparisons around the threshold.</p>
 <p>A common local linear specification estimates separate lines on the two sides of the cutoff within a selected <strong>bandwidth</strong>:</p>
 <p><span class="math display">\[

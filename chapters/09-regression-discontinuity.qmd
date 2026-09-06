@@ -132,7 +132,7 @@ D_i g(S_i-c)
 u_i,
 $$
 
-where $f(\cdot)$ and $g(\cdot)$ are parametric functions of the running variable on the two sides of the cutoff. This model allows the relationship between the running variable and the outcome to differ on either side of the cutoff, thereby accommodating potential nonlinearities around the threshold.
+where $f(\cdot)$ and $g(\cdot)$ are parametric functions of the centered running variable, specified without intercept terms. The function $f(\cdot)$ describes how the outcome varies with the running variable below the cutoff, while $g(\cdot)$ allows this relationship to differ above the cutoff. Because the running variable is centered at $c$, $\tau_{\text{sharp RD}}$ captures the discontinuity in the conditional mean of the outcome at the threshold.
 
 In modern applications, however, **non-parametric** local polynomial methods are usually preferred. These methods focus on observations close to the cutoff and give greater weight to those nearest to it, so that identification comes from local comparisons around the threshold.
 

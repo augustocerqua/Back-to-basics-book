@@ -314,7 +314,7 @@ The simulation highlights four general points:
 - With partial compliance, the ITT remains causally interpretable but answers a policy question about assignment or access.
 - Estimating the effect of treatment receipt requires additional assumptions and methods; a naive as-treated comparison generally produces a biased estimate of the treatment effect of interest because it conflates the effect of treatment with pre-existing differences in outcomes between those who receive the treatment and those who do not.
 
-## Selection on observable methods
+## Selection-on-observables methods
 
 ### Small Classes in an Observational Study
 
@@ -418,14 +418,17 @@ OLS and matching use different adjustment procedures, but both rely on the same 
 ::: {.callout-warning appearance="simple"}
 ### Lack of common support: OLS extrapolation and matching with a caliper
 
-Consider a more extreme assignment mechanism. Families with both a high affluence index and more than 14 years of parental education send their children to small classes with probability one. No comparable pupils attend regular classes in this region, so the overlap assumption fails. Moreover, even in the absence of treatment, pupils from these especially advantaged families would have particularly high test scores, and this increase becomes stronger at high levels of affluence and parental education. Estimating their untreated counterfactual therefore requires extrapolating beyond the characteristics observed in the control group. Linear OLS must therefore extrapolate into a region containing no untreated observations and estimates 4.85 rather than four. PSM instead applies an absolute caliper of 0.05 on the propensity-score scale, equivalent to five percentage points. A treated pupil can therefore be matched only with an untreated pupil whose estimated propensity score differs by no more than 0.05. This reduces poor matches but may leave some treated pupils unmatched and therefore excluded from the analysis.
+Consider a more extreme assignment mechanism. Pupils from families with both a high affluence index and more than 14 years of parental education are assigned to small classes with probability one. No comparable pupils from these families attend regular classes, so the overlap assumption fails.
 
-| Estimator | Analysis sample | Estimate | 95% confidence interval | True effect |
-|:--|:--|--:|:--:|--:|
-| Linear OLS | All treated pupils | 4.85 | [4.34, 5.37] | 4.00 |
-| $\rule{0pt}{0.2em}$ |  |  |  |  |
-| PSM with a 0.05 caliper | Matched treated pupils | 3.98 | [3.52, 4.44] | 4.00 |
-|:--|:--|--:|:--:|--:|
+The problem is especially serious because, even without treatment, pupils from these highly advantaged families would have higher test scores, and the relationship becomes increasingly nonlinear at high levels of affluence and parental education. Estimating their untreated counterfactual therefore requires extrapolating beyond the covariate values observed among control pupils. In this simulation, the linear OLS model extrapolates into this unsupported region and estimates an effect of 4.85 points instead of the true effect of four.
+
+Propensity-score matching uses an absolute caliper of 0.05, corresponding to five percentage points on the propensity-score scale. A treated pupil is matched only if an untreated pupil has an estimated propensity score within 0.05 of theirs. This avoids poor matches, but treated pupils without an eligible match are discarded. The resulting estimate therefore applies only to the treated pupils retained within the region of common support, not to all treated pupils.
+
+| Estimator               | Analysis sample        | Estimate | 95% confidence interval | True effect |
+|:------------------------|:-----------------------|---------:|:----------------------:|------------:|
+| Linear OLS              | All treated pupils     |     4.85 |       [4.34, 5.37]     |        4.00 |
+| $\rule{0pt}{0.2em}$     |                        |          |                        |             |
+| PSM with a 0.05 caliper | Matched treated pupils |     3.98 |       [3.52, 4.44]     |        4.00 |
 
 *Note:* Of 2,239 treated pupils, the caliper retains 1,775 and excludes 464. It recovers an effect close to four by avoiding unsupported comparisons, whereas OLS relies on functional-form extrapolation.
 
@@ -750,25 +753,33 @@ $$
 D_i=\pi_0+\pi_1 Z_i+v_i,
 $$
 
-where $\pi_1$ measures the change in military service caused by draft eligibility. The reduced form is
+where $\pi_1$ measures the change in the probability of military service caused by draft eligibility.
+
+The reduced-form regression is
 
 $$
 Y_i=\rho_0+\rho_1 Z_i+e_i,
 $$
 
-where $\rho_1$ measures how draft eligibility changes earnings. With one binary instrument and no covariates, the Wald estimator is
+where $\rho_1$ measures the effect of draft eligibility on earnings.
+
+With one binary instrument, one treatment, and no covariates, the Wald estimator is
 
 $$
-\widehat{LATE}_{Wald}
+\widehat{\operatorname{LATE}}_{\text{Wald}}
 =
 \frac{
-E[Y_i\mid Z_i=1]-E[Y_i\mid Z_i=0]
+\overline{Y}_{Z=1}-\overline{Y}_{Z=0}
 }{
-E[D_i\mid Z_i=1]-E[D_i\mid Z_i=0]
+\overline{D}_{Z=1}-\overline{D}_{Z=0}
 }
 =
-\frac{\widehat{\rho}_1}{\widehat{\pi}_1}.
+\frac{\widehat{\rho}_1}{\widehat{\pi}_1},
 $$
+
+where $\overline{Y}_{Z=z}$ is the average observed earnings of individuals with instrument value $Z_i=z$, and $\overline{D}_{Z=z}$ is their average probability of serving in the military.
+
+The numerator is the reduced-form effect of eligibility on earnings, while the denominator is the first-stage effect of eligibility on military service. Their ratio estimates the average effect of military service for compliers.
 
 In R, these components and the equivalent just-identified 2SLS estimator can be obtained as follows:
 
@@ -1293,7 +1304,7 @@ Before estimating 2020 excess mortality, the script performs a placebo validatio
 
 : Prediction accuracy in an ordinary year {#tbl-mlcm-validation}
 
-*Note:* In a random forest, `mtry` is the number of covariates randomly considered at each split of each tree. Thus, `mtry = 3` means that each tree considers only three candidate covariates at each split and chooses the best split among them. In this example, cross-validation selected `mtry = 3` because it produced the best prediction accuracy in the 2019 placebo year.
+*Note:* In a random forest, `mtry` is the number of covariates randomly considered at each split of each tree. Here, `mtry = 3` was selected through internal cross-validation using pre-2019 data. The tuned random forest and LASSO models were then compared on their predictions for the **2019 placebo year**. Random forest achieved the lower prediction error and was therefore selected to forecast the 2020 counterfactual.
 
 Random forest performs best in the placebo year, so it is selected as the MLCM predictor for the 2020 counterfactual. This matters because the credibility of a forecast-based counterfactual method depends first on whether it can predict untreated outcomes in ordinary periods.
 
@@ -1334,7 +1345,7 @@ Panel A shows the main message. The true excess mortality is strongly concentrat
 
 : Area-level estimates in the ideal MLCM simulation {#tbl-mlcm-area-ideal}
 
-At the national level, the true average excess mortality is 7.920 deaths per 10,000 inhabitants. The historical-average method estimates 8.645, while the selected MLCM method estimates 8.172.
+Averaging across municipalities with equal weights, the estimated average excess mortality is 7.92 deaths per 10,000 inhabitants. This is the effect for the average municipality, not the population-weighted national excess-mortality rate.^[The population-weighted national excess-mortality rate would require weighting each municipality by its population, or aggregating deaths and population directly.]
 
 ### A failure: another shock affects recorded mortality
 

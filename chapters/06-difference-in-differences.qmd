@@ -232,7 +232,7 @@ The interpretation is that the subsidy reduced accidents by 4 per 1,000 workers,
 
 A classic threat to DiD is **Ashenfelter's dip** [@ashenfelter1978]. This occurs when units select into treatment after experiencing a temporary negative shock.
 
-Suppose workers enter a training program after a sudden fall in earnings. Even without the program, their earnings might partially of fully recover. A DiD estimator comparing these workers with non-participants may mistakenly attribute the natural rebound to the training program.
+Suppose workers enter a training program after a sudden fall in earnings. Even without the program, their earnings might partially or fully recover. A DiD estimator comparing these workers with non-participants may mistakenly attribute the natural rebound to the training program.
 
 The problem is that treatment timing is related to a temporary shock in the untreated potential outcome. A simple DiD design differences out time-invariant unobserved heterogeneity, not temporary shocks that affect treatment participation.
 
@@ -357,7 +357,7 @@ In staggered-adoption DiD designs, not all comparisons are equally credible. A p
 
 Suppose one group is treated in period $g$ and another group is treated in a later period $g'$. Before period $g'$, the later-treated group can still serve as a comparison group for the earlier-treated group, because it has not yet received the treatment. This is a **not-yet-treated comparison** and is often useful.
 
-The problem appears after both groups have been treated. Once the earlier-treated group has already been exposed to the policy, its outcomes may include treatment effects. UUsing this group as a control for the later-treated group means comparing treated units with other treated units, rather than with units that remain untreated throughout the analyzed period. These comparisons are often called **forbidden comparisons**. They are problematic because they may subtract part of the treatment effect from the estimate, especially when treatment effects grow, fade, or otherwise evolve over time. In that case, the comparison no longer isolates the untreated potential outcome trend.
+The problem appears after both groups have been treated. Once the earlier-treated group has already been exposed to the policy, its outcomes may include treatment effects. Using this group as a control for the later-treated group means comparing treated units with other treated units, rather than with units that remain untreated throughout the analyzed period. These comparisons are often called **forbidden comparisons**. They are problematic because they may subtract part of the treatment effect from the estimate, especially when treatment effects grow, fade, or otherwise evolve over time. In that case, the comparison no longer isolates the untreated potential outcome trend.
 :::
 
 In recent years, several estimators have been proposed as alternatives to the standard TWFE model, especially in settings with staggered treatment adoption and heterogeneous treatment effects. These approaches are often discussed within the broader **event-study** literature, because they estimate how treatment effects evolve before and after treatment adoption while avoiding some of the problematic comparisons embedded in TWFE regressions. We will discuss these methods in ([Chapter 7.](../chapters/07-event-studies.qmd))

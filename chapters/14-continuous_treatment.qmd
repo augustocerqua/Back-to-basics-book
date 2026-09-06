@@ -138,7 +138,7 @@ This is why, in observational studies, estimating an ADRF is not simply a matter
 
 ## The Generalized Propensity Score
 
-The propensity score was originally introduced for binary treatments [@rosenbaum1983], as shown in [Chapter 5](chapters/05-selection-on.observables.qmd). Hirano and Imbens extended this idea to continuous treatments through the **generalized propensity score**, or **GPS** [@hirano2004].
+The propensity score was originally introduced for binary treatments [@rosenbaum1983], as shown in [Chapter 5](../chapters/05-selection-on.observables.qmd). Hirano and Imbens extended this idea to continuous treatments through the **generalized propensity score**, or **GPS** [@hirano2004].
 
 In the binary case, the propensity score is the probability of receiving treatment conditional on covariates. In the continuous case, the GPS is the conditional density of the treatment level actually received:
 
@@ -252,7 +252,7 @@ With continuous treatments, common support means having comparable units observe
 
 ### Application: GPS matching with continuous air-pollution exposure
 
-Wu et al. [-@wu2022gps] propose a matching approach for **continuous treatments** based on the **GPS**. This differs from the classical GPS approach of Hirano and Imbens, where the GPS is typically included as an adjustment variable in an outcome model to estimate the ADRF. In Wu et al.'s approach, the GPS is used more directly to construct matched comparisons among units with similar exposure levels and similar GPS values. The goal is to preserve the design-based intuition of matching while extending it beyond the binary treatment setting.
+Wu et al. [-@wu2024gps] propose a matching approach for **continuous treatments** based on the **GPS**. This differs from the classical GPS approach of Hirano and Imbens, where the GPS is typically included as an adjustment variable in an outcome model to estimate the ADRF. In Wu et al.'s approach, the GPS is used more directly to construct matched comparisons among units with similar exposure levels and similar GPS values. The goal is to preserve the design-based intuition of matching while extending it beyond the binary treatment setting.
 
 Their application studies the causal relationship between long-term exposure to fine particulate matter, PM$_{2.5}$, and all-cause mortality among Medicare enrollees in the United States. Here, the treatment is not whether a unit is exposed to pollution, since everyone is exposed to some level of air pollution. The treatment is instead the **intensity of exposure**, measured by annual average PM$_{2.5}$.
 
@@ -329,7 +329,7 @@ $$
 
 where $Y_i(t)$ is the accident rate that firm $i$ would have under subsidy intensity $t$.
 
-If the ADRF declines sharply at low subsidy levels and then flattens, this suggests that modest subsidies may generate most of the safety gains. If the function continues to decline at higher doses, larger subsidies may be justified. If the curve becomes flat or even increases, additional funding may be inefficient or targeted to firms with more severe baseline risks.
+If the ADRF declines sharply at low subsidy levels and then flattens, this suggests that modest subsidies may generate most of the safety gains. If the function continues to decline at higher doses, larger subsidies may be justified. If the curve becomes flat or even increases, additional funding may be inefficient.
 
 The credibility of this analysis depends on whether firms receiving different subsidy amounts are comparable after conditioning on pre-treatment characteristics such as firm size, sector, baseline accident rate, investment capacity, and previous safety inspections.
 

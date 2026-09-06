@@ -172,7 +172,7 @@ One of the largest and most influential RCTs in education is **Project STAR** (*
 
 The experiment randomly assigned students and teachers to different classroom types: small classes, regular-size classes, and regular-size classes with a teacher aide. Because assignment was randomized, differences in later outcomes across these groups can be interpreted as causal effects of class size, under the usual assumptions of the randomized design.
 
-Project STAR is especially important because it studied a policy question of direct relevance for education policy: whether reducing class size improves student achievement. The results showed that students assigned to smaller classes performed better on standardized tests, especially in the early grades. Later research also found that the benefits of small classes persisted over time, affecting outcomes such as test scores, college attendance, and earnings.
+Project STAR is especially important because it studied a policy question of direct relevance for education policy: whether reducing class size improves student achievement. The results showed that students assigned to smaller classes performed better on standardized tests, especially in the early grades.
 
 This example illustrates the strength of RCTs. Randomization creates comparable groups before treatment, so the control group provides a credible estimate of what would have happened to students assigned to small classes if they had instead attended regular-size classes.
 

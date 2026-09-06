@@ -428,7 +428,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/05-selection-on-observables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection-on-observables methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -761,7 +761,7 @@ Continuous-treatment analysis is therefore useful when the policy question conce
 </section>
 <section id="the-generalized-propensity-score" class="level2" data-number="14.6">
 <h2 data-number="14.6" class="anchored" data-anchor-id="the-generalized-propensity-score"><span class="header-section-number">14.6</span> The Generalized Propensity Score</h2>
-<p>The propensity score was originally introduced for binary treatments <span class="citation" data-cites="rosenbaum1983">(<a href="references.html#ref-rosenbaum1983" role="doc-biblioref">Rosenbaum and Rubin 1983</a>)</span>, as shown in <a href="chapters/05-selection-on.observables.qmd">Chapter 5</a>. Hirano and Imbens extended this idea to continuous treatments through the <strong>generalized propensity score</strong>, or <strong>GPS</strong> <span class="citation" data-cites="hirano2004">(<a href="references.html#ref-hirano2004" role="doc-biblioref">Hirano and Imbens 2004</a>)</span>.</p>
+<p>The propensity score was originally introduced for binary treatments <span class="citation" data-cites="rosenbaum1983">(<a href="references.html#ref-rosenbaum1983" role="doc-biblioref">Rosenbaum and Rubin 1983</a>)</span>, as shown in <a href="../chapters/05-selection-on.observables.qmd">Chapter 5</a>. Hirano and Imbens extended this idea to continuous treatments through the <strong>generalized propensity score</strong>, or <strong>GPS</strong> <span class="citation" data-cites="hirano2004">(<a href="references.html#ref-hirano2004" role="doc-biblioref">Hirano and Imbens 2004</a>)</span>.</p>
 <p>In the binary case, the propensity score is the probability of receiving treatment conditional on covariates. In the continuous case, the GPS is the conditional density of the treatment level actually received:</p>
 <p><span class="math display">\[
 r(t,x)=f_{T\mid X}(t\mid x).
@@ -862,7 +862,7 @@ Y_i(t) \perp T_i \mid X_i
 </section>
 <section id="application-gps-matching-with-continuous-air-pollution-exposure" class="level3" data-number="14.7.3">
 <h3 data-number="14.7.3" class="anchored" data-anchor-id="application-gps-matching-with-continuous-air-pollution-exposure"><span class="header-section-number">14.7.3</span> Application: GPS matching with continuous air-pollution exposure</h3>
-<p>Wu et al. <span class="citation" data-cites="wu2022gps">(<a href="references.html#ref-wu2022gps" role="doc-biblioref">2022</a>)</span> propose a matching approach for <strong>continuous treatments</strong> based on the <strong>GPS</strong>. This differs from the classical GPS approach of Hirano and Imbens, where the GPS is typically included as an adjustment variable in an outcome model to estimate the ADRF. In Wu et al.’s approach, the GPS is used more directly to construct matched comparisons among units with similar exposure levels and similar GPS values. The goal is to preserve the design-based intuition of matching while extending it beyond the binary treatment setting.</p>
+<p>Wu et al. <span class="citation" data-cites="wu2024gps">(<a href="references.html#ref-wu2024gps" role="doc-biblioref">2024</a>)</span> propose a matching approach for <strong>continuous treatments</strong> based on the <strong>GPS</strong>. This differs from the classical GPS approach of Hirano and Imbens, where the GPS is typically included as an adjustment variable in an outcome model to estimate the ADRF. In Wu et al.’s approach, the GPS is used more directly to construct matched comparisons among units with similar exposure levels and similar GPS values. The goal is to preserve the design-based intuition of matching while extending it beyond the binary treatment setting.</p>
 <p>Their application studies the causal relationship between long-term exposure to fine particulate matter, PM<span class="math inline">\(_{2.5}\)</span>, and all-cause mortality among Medicare enrollees in the United States. Here, the treatment is not whether a unit is exposed to pollution, since everyone is exposed to some level of air pollution. The treatment is instead the <strong>intensity of exposure</strong>, measured by annual average PM<span class="math inline">\(_{2.5}\)</span>.</p>
 <p>The method first estimates the GPS. Units are then matched so that, across different pollution levels, the distribution of observed covariates becomes more comparable. This produces a matched dataset that can be used to estimate an ADRF.</p>
 <p>In the empirical application, the authors use data on 68.5 million Medicare enrollees from 2000 to 2016. Matching substantially improves covariate balance. The estimated exposure-response function shows that long-term PM<span class="math inline">\(_{2.5}\)</span> exposure increases mortality, with evidence of adverse effects even at pollution levels below the national standard.</p>
@@ -954,7 +954,7 @@ Y_i(t) \perp T_i \mid X_i
 \mu(t)=E[Y_i(t)],
 \]</span></p>
 <p>where <span class="math inline">\(Y_i(t)\)</span> is the accident rate that firm <span class="math inline">\(i\)</span> would have under subsidy intensity <span class="math inline">\(t\)</span>.</p>
-<p>If the ADRF declines sharply at low subsidy levels and then flattens, this suggests that modest subsidies may generate most of the safety gains. If the function continues to decline at higher doses, larger subsidies may be justified. If the curve becomes flat or even increases, additional funding may be inefficient or targeted to firms with more severe baseline risks.</p>
+<p>If the ADRF declines sharply at low subsidy levels and then flattens, this suggests that modest subsidies may generate most of the safety gains. If the function continues to decline at higher doses, larger subsidies may be justified. If the curve becomes flat or even increases, additional funding may be inefficient.</p>
 <p>The credibility of this analysis depends on whether firms receiving different subsidy amounts are comparable after conditioning on pre-treatment characteristics such as firm size, sector, baseline accident rate, investment capacity, and previous safety inspections.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1029,8 +1029,8 @@ Rosenbaum, Paul R., and Donald B. Rubin. 1983. <span>“The Central Role of the 
 <div id="ref-tubbicke2022" class="csl-entry" role="listitem">
 Tübbicke, Stefan. 2022. <span>“Entropy Balancing for Continuous Treatments.”</span> <em>Journal of Econometric Methods</em> 11 (1): 71–89. <a href="https://doi.org/10.1515/jem-2021-0002">https://doi.org/10.1515/jem-2021-0002</a>.
 </div>
-<div id="ref-wu2022gps" class="csl-entry" role="listitem">
-Wu, Xiao, Fabrizia Mealli, Marianthi-Anna Kioumourtzoglou, Francesca Dominici, and Danielle Braun. 2022. <span>“Matching on Generalized Propensity Scores with Continuous Exposures.”</span> <em>Journal of the American Statistical Association</em> 0 (0): 1–29. <a href="https://doi.org/10.1080/01621459.2022.2144737">https://doi.org/10.1080/01621459.2022.2144737</a>.
+<div id="ref-wu2024gps" class="csl-entry" role="listitem">
+Wu, Xiao, Fabrizia Mealli, Marianthi-Anna Kioumourtzoglou, Francesca Dominici, and Danielle Braun. 2024. <span>“Matching on Generalized Propensity Scores with Continuous Exposures.”</span> <em>Journal of the American Statistical Association</em> 119 (545): 757–72. <a href="https://doi.org/10.1080/01621459.2022.2144737">https://doi.org/10.1080/01621459.2022.2144737</a>.
 </div>
 </div>
 </section>

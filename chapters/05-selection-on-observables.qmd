@@ -1,4 +1,4 @@
-## Selection on observable methods
+## Selection-on-observables methods
 
 Selection-on-observables methods rely on the idea that treatment assignment is non-random, but that the factors driving selection into treatment are observed in the data. If all confounders are observed and measured before treatment,^[A **confounder** is a variable that affects both whether a unit receives the treatment and the outcome it would experience. Because it influences both treatment assignment and potential outcomes, failing to account for it can make treated and untreated units systematically different even before treatment.] differences between treated and untreated units can be adjusted for using pre-treatment covariates. The two main selection-on-observables approaches are regression adjustment and matching. Regression adjustment controls for observed pre-treatment characteristics when comparing outcomes, whereas matching directly compares treated units with untreated units that have similar observed pre-treatment characteristics. Both approaches therefore rely on the same central assumption: after conditioning on observables, no unobserved confounders remain that affect both treatment assignment and potential outcomes.
 
@@ -186,7 +186,7 @@ Rubin’s early work developed the logic of matched sampling more explicitly wit
 
 ### Conditional Independence Assumption
 
-Matching is based on a key identifying assumption: the **Conditional Independence Assumption**. This is also called **selection on observables** or **unconfoundedness**.
+Matching is based on a key identifying assumption: the **Conditional Independence Assumption**. This is also called **selection-on-observables** or **unconfoundedness**.
 
 For the ATT, the assumption can be written as
 
@@ -194,7 +194,7 @@ $$
 Y_i(0) \perp D_i \mid X_i.
 $$
 
-This means that, conditional on observed covariates $X_i$, treatment assignment is independent of the untreated potential outcome. In words: once we compare units with the same observed characteristics, treated and untreated units would have had the same outcome in the absence of treatment.
+This means that, conditional on observed covariates $X_i$, treatment assignment is independent of the untreated potential outcome. In words: once we compare treated and untreated units with the same observed characteristics, they are assumed to have had the same average outcome in the absence of treatment.
 
 Under this assumption,
 
@@ -236,7 +236,7 @@ $$
 
 This condition means that, for units with characteristics $X_i=x$, treatment is not certain. In other words, among units with the same, or sufficiently similar, observed characteristics, there must be some untreated units that can serve as comparisons for the treated units. If the probability of receiving treatment is equal to one for a given set of characteristics, matching cannot construct a credible counterfactual for treated units with those characteristics.
 
-In practice, lack of common support means that some units are too different to be matched. Dropping these units can improve credibility, but it also changes the population for which the treatment effect is estimated. For instance, if only very large firms receive a subsidy and no comparable untreated large firms exist, those treated firms may have to be excluded. The resulting estimate would then apply only to the small and medium-sized treated firms for which comparable untreated units are available, rather than to all treated firms.
+In practice, lack of common support means that some treated units have no comparable untreated units. Excluding these units can improve credibility, but it also changes the population for which the treatment effect is estimated. For instance, if firms of all sizes receive a subsidy but no comparable untreated large firms exist, the treated large firms may have to be excluded. The resulting estimate would then represent the ATT among small and medium-sized treated firms with common support, rather than the ATT for all treated firms.
 
 ::: {.callout-caution appearance="simple"}
 ### Common support

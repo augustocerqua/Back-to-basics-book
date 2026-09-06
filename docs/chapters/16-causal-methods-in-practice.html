@@ -463,7 +463,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/05-selection-on-observables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection-on-observables methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -599,7 +599,7 @@ window.Quarto = {
   <li><a href="#why-the-wald-ratio-recovers-the-late" id="toc-why-the-wald-ratio-recovers-the-late" class="nav-link" data-scroll-target="#why-the-wald-ratio-recovers-the-late"><span class="header-section-number">16.1.5</span> Why the Wald ratio recovers the LATE</a></li>
   <li><a href="#main-lessons-from-the-rct-simulation" id="toc-main-lessons-from-the-rct-simulation" class="nav-link" data-scroll-target="#main-lessons-from-the-rct-simulation"><span class="header-section-number">16.1.6</span> Main lessons from the RCT simulation</a></li>
   </ul></li>
-  <li><a href="#selection-on-observable-methods" id="toc-selection-on-observable-methods" class="nav-link" data-scroll-target="#selection-on-observable-methods"><span class="header-section-number">16.2</span> Selection on observable methods</a>
+  <li><a href="#selection-on-observables-methods" id="toc-selection-on-observables-methods" class="nav-link" data-scroll-target="#selection-on-observables-methods"><span class="header-section-number">16.2</span> Selection-on-observables methods</a>
   <ul class="collapse">
   <li><a href="#small-classes-in-an-observational-study" id="toc-small-classes-in-an-observational-study" class="nav-link" data-scroll-target="#small-classes-in-an-observational-study"><span class="header-section-number">16.2.1</span> Small Classes in an Observational Study</a></li>
   <li><a href="#ideal-case-both-confounders-are-observed" id="toc-ideal-case-both-confounders-are-observed" class="nav-link" data-scroll-target="#ideal-case-both-confounders-are-observed"><span class="header-section-number">16.2.2</span> Ideal case: both confounders are observed</a></li>
@@ -1108,8 +1108,8 @@ Table&nbsp;16.2: Estimates under selective non-compliance
 </ul>
 </section>
 </section>
-<section id="selection-on-observable-methods" class="level2" data-number="16.2">
-<h2 data-number="16.2" class="anchored" data-anchor-id="selection-on-observable-methods"><span class="header-section-number">16.2</span> Selection on observable methods</h2>
+<section id="selection-on-observables-methods" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="selection-on-observables-methods"><span class="header-section-number">16.2</span> Selection-on-observables methods</h2>
 <section id="small-classes-in-an-observational-study" class="level3" data-number="16.2.1">
 <h3 data-number="16.2.1" class="anchored" data-anchor-id="small-classes-in-an-observational-study"><span class="header-section-number">16.2.1</span> Small Classes in an Observational Study</h3>
 <p>We now adapt the same small-class setting to an observational study. The potential outcomes and the true treatment effect remain unchanged: attending a small class raises every pupil’s end-of-year score by four points. What changes is the treatment-assignment mechanism.</p>
@@ -1278,14 +1278,16 @@ Table&nbsp;16.3: OLS and matching estimates in the observational small-class stu
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Consider a more extreme assignment mechanism. Families with both a high affluence index and more than 14 years of parental education send their children to small classes with probability one. No comparable pupils attend regular classes in this region, so the overlap assumption fails. Moreover, even in the absence of treatment, pupils from these especially advantaged families would have particularly high test scores, and this increase becomes stronger at high levels of affluence and parental education. Estimating their untreated counterfactual therefore requires extrapolating beyond the characteristics observed in the control group. Linear OLS must therefore extrapolate into a region containing no untreated observations and estimates 4.85 rather than four. PSM instead applies an absolute caliper of 0.05 on the propensity-score scale, equivalent to five percentage points. A treated pupil can therefore be matched only with an untreated pupil whose estimated propensity score differs by no more than 0.05. This reduces poor matches but may leave some treated pupils unmatched and therefore excluded from the analysis.</p>
+<p>Consider a more extreme assignment mechanism. Pupils from families with both a high affluence index and more than 14 years of parental education are assigned to small classes with probability one. No comparable pupils from these families attend regular classes, so the overlap assumption fails.</p>
+<p>The problem is especially serious because, even without treatment, pupils from these highly advantaged families would have higher test scores, and the relationship becomes increasingly nonlinear at high levels of affluence and parental education. Estimating their untreated counterfactual therefore requires extrapolating beyond the covariate values observed among control pupils. In this simulation, the linear OLS model extrapolates into this unsupported region and estimates an effect of 4.85 points instead of the true effect of four.</p>
+<p>Propensity-score matching uses an absolute caliper of 0.05, corresponding to five percentage points on the propensity-score scale. A treated pupil is matched only if an untreated pupil has an estimated propensity score within 0.05 of theirs. This avoids poor matches, but treated pupils without an eligible match are discarded. The resulting estimate therefore applies only to the treated pupils retained within the region of common support, not to all treated pupils.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 18%">
-<col style="width: 18%">
-<col style="width: 18%">
+<col style="width: 26%">
 <col style="width: 25%">
-<col style="width: 18%">
+<col style="width: 10%">
+<col style="width: 25%">
+<col style="width: 13%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1317,13 +1319,6 @@ Table&nbsp;16.3: OLS and matching estimates in the observational small-class stu
 <td style="text-align: right;">3.98</td>
 <td style="text-align: center;">[3.52, 4.44]</td>
 <td style="text-align: right;">4.00</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">:–</td>
-<td style="text-align: left;">:–</td>
-<td style="text-align: right;">–:</td>
-<td style="text-align: center;">:–:</td>
-<td style="text-align: right;">–:</td>
 </tr>
 </tbody>
 </table>
@@ -1832,22 +1827,26 @@ E[Y_i(1)-Y_i(0)\mid D_i(1)&gt;D_i(0)]
 <p><span class="math display">\[
 D_i=\pi_0+\pi_1 Z_i+v_i,
 \]</span></p>
-<p>where <span class="math inline">\(\pi_1\)</span> measures the change in military service caused by draft eligibility. The reduced form is</p>
+<p>where <span class="math inline">\(\pi_1\)</span> measures the change in the probability of military service caused by draft eligibility.</p>
+<p>The reduced-form regression is</p>
 <p><span class="math display">\[
 Y_i=\rho_0+\rho_1 Z_i+e_i,
 \]</span></p>
-<p>where <span class="math inline">\(\rho_1\)</span> measures how draft eligibility changes earnings. With one binary instrument and no covariates, the Wald estimator is</p>
+<p>where <span class="math inline">\(\rho_1\)</span> measures the effect of draft eligibility on earnings.</p>
+<p>With one binary instrument, one treatment, and no covariates, the Wald estimator is</p>
 <p><span class="math display">\[
-\widehat{LATE}_{Wald}
+\widehat{\operatorname{LATE}}_{\text{Wald}}
 =
 \frac{
-E[Y_i\mid Z_i=1]-E[Y_i\mid Z_i=0]
+\overline{Y}_{Z=1}-\overline{Y}_{Z=0}
 }{
-E[D_i\mid Z_i=1]-E[D_i\mid Z_i=0]
+\overline{D}_{Z=1}-\overline{D}_{Z=0}
 }
 =
-\frac{\widehat{\rho}_1}{\widehat{\pi}_1}.
+\frac{\widehat{\rho}_1}{\widehat{\pi}_1},
 \]</span></p>
+<p>where <span class="math inline">\(\overline{Y}_{Z=z}\)</span> is the average observed earnings of individuals with instrument value <span class="math inline">\(Z_i=z\)</span>, and <span class="math inline">\(\overline{D}_{Z=z}\)</span> is their average probability of serving in the military.</p>
+<p>The numerator is the reduced-form effect of eligibility on earnings, while the denominator is the first-stage effect of eligibility on military service. Their ratio estimates the average effect of military service for compliers.</p>
 <p>In R, these components and the equivalent just-identified 2SLS estimator can be obtained as follows:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>first_stage_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(served_military <span class="sc">~</span> draft_eligible,</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> ideal_data)</span>
@@ -2730,7 +2729,7 @@ Table&nbsp;16.15: Prediction accuracy in an ordinary year
 </div>
 </figure>
 </div>
-<p><em>Note:</em> In a random forest, <code>mtry</code> is the number of covariates randomly considered at each split of each tree. Thus, <code>mtry = 3</code> means that each tree considers only three candidate covariates at each split and chooses the best split among them. In this example, cross-validation selected <code>mtry = 3</code> because it produced the best prediction accuracy in the 2019 placebo year.</p>
+<p><em>Note:</em> In a random forest, <code>mtry</code> is the number of covariates randomly considered at each split of each tree. Here, <code>mtry = 3</code> was selected through internal cross-validation using pre-2019 data. The tuned random forest and LASSO models were then compared on their predictions for the <strong>2019 placebo year</strong>. Random forest achieved the lower prediction error and was therefore selected to forecast the 2020 counterfactual.</p>
 <p>Random forest performs best in the placebo year, so it is selected as the MLCM predictor for the 2020 counterfactual. This matters because the credibility of a forecast-based counterfactual method depends first on whether it can predict untreated outcomes in ordinary periods.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -2747,7 +2746,7 @@ Table&nbsp;16.15: Prediction accuracy in an ordinary year
 </div>
 </div>
 </section>
-<section id="the-ideal-setting-the-pandemic-is-the-only-2020-shock" class="level3" data-number="16.9.3">
+<section id="the-ideal-setting-the-pandemic-is-the-only-2020-shock" class="level3 page-columns page-full" data-number="16.9.3">
 <h3 data-number="16.9.3" class="anchored" data-anchor-id="the-ideal-setting-the-pandemic-is-the-only-2020-shock"><span class="header-section-number">16.9.3</span> The ideal setting: the pandemic is the only 2020 shock</h3>
 <p>In the ideal setting, the only reason why observed 2020 mortality differs from ordinary no-pandemic mortality is the pandemic itself. For municipality <span class="math inline">\(i\)</span>, the estimated excess mortality is</p>
 <p><span class="math display">\[
@@ -2827,8 +2826,8 @@ Table&nbsp;16.16: Area-level estimates in the ideal MLCM simulation
 </div>
 </figure>
 </div>
-<p>At the national level, the true average excess mortality is 7.920 deaths per 10,000 inhabitants. The historical-average method estimates 8.645, while the selected MLCM method estimates 8.172.</p>
-</section>
+<p>Averaging across municipalities with equal weights, the estimated average excess mortality is 7.92 deaths per 10,000 inhabitants. This is the effect for the average municipality, not the population-weighted national excess-mortality rate.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;The population-weighted national excess-mortality rate would require weighting each municipality by its population, or aggregating deaths and population directly.</p></div></div></section>
 <section id="a-failure-another-shock-affects-recorded-mortality" class="level3" data-number="16.9.4">
 <h3 data-number="16.9.4" class="anchored" data-anchor-id="a-failure-another-shock-affects-recorded-mortality"><span class="header-section-number">16.9.4</span> A failure: another shock affects recorded mortality</h3>
 <p>We now introduce a failure scenario. The pandemic effect is unchanged, but in 2020 there is also a non-pandemic reporting shock: recorded mortality increases by one death per 10,000 inhabitants in the Center and by three deaths per 10,000 inhabitants in the South and Islands. This shock is not caused by the pandemic, but it appears in the observed outcome.</p>

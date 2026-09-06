@@ -409,7 +409,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../chapters/05-selection-on-observables.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection on observable methods</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Selection-on-observables methods</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -743,16 +743,17 @@ E[Y_i(0)]
 </section>
 <section id="conditional-expected-value" class="level3" data-number="A.2.3">
 <h3 data-number="A.2.3" class="anchored" data-anchor-id="conditional-expected-value"><span class="header-section-number">A.2.3</span> Conditional expected value</h3>
-<p>A <strong>conditional expected value</strong> is an ordinary average calculated for a specific subgroup of units satisfying a given condition. For example,</p>
+<p>A <strong>conditional expected value</strong> is the population average of a variable among units satisfying a particular condition. For example,</p>
 <p><span class="math display">\[
 E[Y_i \mid D_i=1]
 \]</span></p>
-<p>is the average outcome among the subgroup of treated units. It is computed like a simple mean, but using only observations for which <span class="math inline">\(D_i=1\)</span>. The vertical bar <span class="math inline">\(\mid\)</span> is read as “given” or “conditional on.”</p>
+<p>is the average potential or observed outcome among treated units. In a sample, this quantity is estimated by calculating the ordinary mean using only observations for which <span class="math inline">\(D_i=1\)</span>.</p>
+<p>The vertical bar <span class="math inline">\(\mid\)</span> is read as “given” or “conditional on.”</p>
 <p>Similarly,</p>
 <p><span class="math display">\[
 E[Y_i \mid X_i=x]
 \]</span></p>
-<p>is the average outcome among units whose covariates take the value <span class="math inline">\(x\)</span>.</p>
+<p>is the average outcome among units whose covariates take the value <span class="math inline">\(x\)</span>. When <span class="math inline">\(X_i\)</span> is continuous, this expression should be understood as a conditional population average, which may be estimated using observations with similar, rather than exactly identical, covariate values.</p>
 </section>
 <section id="weighted-average" class="level3" data-number="A.2.4">
 <h3 data-number="A.2.4" class="anchored" data-anchor-id="weighted-average"><span class="header-section-number">A.2.4</span> Weighted average</h3>
