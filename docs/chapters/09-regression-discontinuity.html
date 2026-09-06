@@ -750,19 +750,22 @@ u_i,
 <p>Local RD estimators also require a <strong>kernel</strong>, which determines how observations are weighted within the bandwidth.</p>
 <p>Observations closer to the cutoff typically receive more weight, while observations farther away receive less weight. Common choices include triangular and Epanechnikov kernels.</p>
 <p>The triangular kernel is often used in applied work because it gives the largest weight to observations closest to the cutoff.</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Bandwidth and kernel
+<span class="screen-reader-only">Note</span>The bias–variance trade-off: bandwidth and kernel
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A small bandwidth compares units very close to the cutoff, reducing bias but increasing variance. A large bandwidth uses more observations, increasing precision but potentially comparing less similar units.</p>
-<p>The kernel determines how observations within the bandwidth are weighted. A common choice is the triangular kernel, which gives the highest weight to observations at the cutoff and then decreases the weight linearly as observations move farther away, reaching zero at the edge of the bandwidth.</p>
-<p>Together, the bandwidth and the kernel define the local comparison used to estimate the LATE.</p>
+<p>An RD estimator must balance two objectives: approximating the outcome relationship accurately near the cutoff and using enough observations to obtain a precise estimate.</p>
+<p><strong>Bias</strong> is a systematic tendency to overestimate or underestimate the true effect. <strong>Variance</strong> describes how much the estimate would change across repeated samples. Ideally, we would like an estimator with both zero bias and zero variance, but in practice this is unattainable. Instead, estimation often involves a <strong>bias–variance trade-off</strong>: reducing bias may come at the cost of greater variance, while reducing variance may require accepting some bias.</p>
+<p>The <strong>bandwidth</strong> determines the estimation window around the cutoff: - A <strong>smaller bandwidth</strong> uses observations closer to the threshold. Over this narrower range, a local linear approximation is generally more credible, reducing approximation bias. However, fewer observations are available, so estimates tend to be less precise. - A <strong>larger bandwidth</strong> includes more observations and generally reduces variance. However, if the outcome relationship is curved, fitting a straight line over a wider range may poorly approximate its value at the cutoff, increasing bias.</p>
+<p>For example, with a test-score cutoff of 70, using scores between 69 and 71 provides a very local comparison but may leave few students. Using scores between 60 and 80 provides more data, but requires the fitted lines to approximate the outcome relationship over a much wider range.</p>
+<p>The <strong>kernel</strong> determines how observations within the bandwidth are weighted. A uniform kernel assigns equal weight to all included observations, whereas a triangular kernel gives more weight to observations closer to the cutoff and progressively less weight to those farther away. Different kernels therefore handle the bias–variance trade-off differently, although the choice of bandwidth is typically more consequential.</p>
+<p>Modern RD methods combine data-driven bandwidth selection with <strong>robust bias-corrected confidence intervals</strong>, which account for the uncertainty introduced by estimating and correcting approximation bias <span class="citation" data-cites="calonico2014">(<a href="references.html#ref-calonico2014" role="doc-biblioref">Calonico et al. 2014</a>)</span>. These tools improve estimation and inference, but cannot repair a design whose identifying assumptions fail.</p>
 </div>
 </div>
 </section>

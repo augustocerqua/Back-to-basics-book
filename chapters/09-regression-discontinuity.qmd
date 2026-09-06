@@ -152,16 +152,22 @@ Observations closer to the cutoff typically receive more weight, while observati
 
 The triangular kernel is often used in applied work because it gives the largest weight to observations closest to the cutoff.
 
-::: {.callout-note}
-### Bandwidth and kernel
+::: {.callout-note appearance="simple"}
+### The bias–variance trade-off: bandwidth and kernel
 
-A small bandwidth compares units very close to the cutoff, reducing bias but increasing variance. 
-A large bandwidth uses more observations, increasing precision but potentially comparing less similar units.
+An RD estimator must balance two objectives: approximating the outcome relationship accurately near the cutoff and using enough observations to obtain a precise estimate.
 
+**Bias** is a systematic tendency to overestimate or underestimate the true effect. **Variance** describes how much the estimate would change across repeated samples. Ideally, we would like an estimator with both zero bias and zero variance, but in practice this is unattainable. Instead, estimation often involves a **bias–variance trade-off**: reducing bias may come at the cost of greater variance, while reducing variance may require accepting some bias.
 
-The kernel determines how observations within the bandwidth are weighted. A common choice is the triangular kernel, which gives the highest weight to observations at the cutoff and then decreases the weight linearly as observations move farther away, reaching zero at the edge of the bandwidth.
+The **bandwidth** determines the estimation window around the cutoff:
+- A **smaller bandwidth** uses observations closer to the threshold. Over this narrower range, a local linear approximation is generally more credible, reducing approximation bias. However, fewer observations are available, so estimates tend to be less precise.
+- A **larger bandwidth** includes more observations and generally reduces variance. However, if the outcome relationship is curved, fitting a straight line over a wider range may poorly approximate its value at the cutoff, increasing bias.
 
-Together, the bandwidth and the kernel define the local comparison used to estimate the LATE.
+For example, with a test-score cutoff of 70, using scores between 69 and 71 provides a very local comparison but may leave few students. Using scores between 60 and 80 provides more data, but requires the fitted lines to approximate the outcome relationship over a much wider range.
+
+The **kernel** determines how observations within the bandwidth are weighted. A uniform kernel assigns equal weight to all included observations, whereas a triangular kernel gives more weight to observations closer to the cutoff and progressively less weight to those farther away. Different kernels therefore handle the bias–variance trade-off differently, although the choice of bandwidth is typically more consequential.
+
+Modern RD methods combine data-driven bandwidth selection with **robust bias-corrected confidence intervals**, which account for the uncertainty introduced by estimating and correcting approximation bias [@calonico2014]. These tools improve estimation and inference, but cannot repair a design whose identifying assumptions fail.
 :::
 
 ## Validity Checks
