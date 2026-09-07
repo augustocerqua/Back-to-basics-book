@@ -18,7 +18,7 @@ book:
   title: "The Backbone of Impact Evaluation Methods"
   subtitle: "Back to Basics"
   author: "Augusto Cerqua"
-  date: "September 2026 version"
+  date: "2026-09-01"
   page-navigation: true
   back-to-top-navigation: true
   google-analytics:
@@ -65,6 +65,7 @@ book:
     - chapters/appendix-technical-language.qmd
     - chapters/references.qmd
 
+date-format: "MMMM YYYY [version]"
 bibliography: references/references.bib
 # csl: references/american-economic-association.csl
 
