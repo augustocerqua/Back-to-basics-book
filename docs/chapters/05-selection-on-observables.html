@@ -954,13 +954,18 @@ ATT =
 p(X_i) = P(D_i=1\mid X_i).
 \]</span></p>
 <p>This probability is not directly observed. What we observe is whether each unit actually received the treatment or not. However, before treatment occurs, we can think of each unit as having some underlying probability of receiving the treatment, depending on its observed characteristics. The propensity score represents this probability and must generally be estimated from the data, for example using a logit or probit model (see below). The resulting estimated propensity score is denoted by <span class="math inline">\(\widehat{p}(X_i)\)</span>. Instead of matching units on all covariates <span class="math inline">\(X_i\)</span>, PSM matches them on this one-dimensional index.</p>
-<p>Rosenbaum and Rubin showed that, if treatment assignment is independent of potential outcomes conditional on <span class="math inline">\(X_i\)</span>, then it is also independent of potential outcomes conditional on the propensity score:</p>
+<p>Rosenbaum and Rubin showed that the propensity score is a <strong>balancing score</strong>: conditional on its true value, treated and untreated units have the same distribution of observed covariates:</p>
+<p><span class="math display">\[
+X_i \perp D_i \mid p(X_i).
+\]</span></p>
+<p>This is the <strong>balancing property</strong> of the propensity score. It does not, by itself, imply balance in unobserved characteristics.</p>
+<p>They also showed that, if treatment assignment is independent of potential outcomes conditional on <span class="math inline">\(X_i\)</span>, this independence holds conditional on the propensity score:</p>
 <p><span class="math display">\[
 (Y_i(1),Y_i(0)) \perp D_i \mid X_i
 \quad \Rightarrow \quad
 (Y_i(1),Y_i(0)) \perp D_i \mid p(X_i).
 \]</span></p>
-<p>This is the <strong>balancing property</strong> of the propensity score. Conditional on the propensity score, the distribution of observed covariates should be similar between treated and untreated units.</p>
+<p>Together with overlap, this result provides the identifying foundation for propensity-score matching. In practice, the propensity score must be estimated, so covariate balance should be checked rather than assumed.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">

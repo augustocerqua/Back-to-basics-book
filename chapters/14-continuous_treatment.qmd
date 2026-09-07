@@ -138,7 +138,7 @@ This is why, in observational studies, estimating an ADRF is not simply a matter
 
 ## The Generalized Propensity Score
 
-The propensity score was originally introduced for binary treatments [@rosenbaum1983], as shown in [Chapter 5](../chapters/05-selection-on.observables.qmd). Hirano and Imbens extended this idea to continuous treatments through the **generalized propensity score**, or **GPS** [@hirano2004].
+The propensity score was originally introduced for binary treatments [@rosenbaum1983], as shown in [Chapter 5](../chapters/05-selection-on-observables.qmd). Hirano and Imbens extended this idea to continuous treatments through the **generalized propensity score**, or **GPS** [@hirano2004].
 
 In the binary case, the propensity score is the probability of receiving treatment conditional on covariates. In the continuous case, the GPS is the conditional density of the treatment level actually received:
 
@@ -343,7 +343,7 @@ A single ADRF summarizes how the outcome changes with treatment intensity for th
 \smallskip
 ```
 
-A useful alternative is to estimate dose-response functions separately for theoretically defined or data-driven subgroups, as in the Clustered Dose-Response Function approach [@cerqua2026cldrf]. The target then shifts from one population-average curve to a set of subgroup-specific curves, which may be more informative for policy design. This can also make the unconfoundedness assumption less demanding, because identification is required within more homogeneous groups rather than across the full population.
+A useful alternative is to estimate dose-response functions separately for theoretically defined or data-driven subgroups, as in the Clustered Dose-Response Function approach [@cerqua2026cldrf]. The target then shifts from one population-average curve to a set of subgroup-specific curves, which may be more informative for policy design. However, creating more homogeneous groups does not automatically make the unconfoundedness assumption less demanding. Within each subgroup, treatment intensity may still be related to unobserved determinants of the outcome. A causal interpretation therefore still requires a credible justification for unconfoundedness and sufficient overlap over the doses being compared.
 :::
 
 ## Summary

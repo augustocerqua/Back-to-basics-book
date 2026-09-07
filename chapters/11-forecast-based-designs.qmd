@@ -172,10 +172,10 @@ The idea is to model the pre-treatment dynamics of the outcome and then extrapol
 A simple ITS model can be written as
 
 $$
-Y_t=\alpha+\beta t+\gamma Post_t+\delta(t-T_0)Post_t+u_t,
+Y_t=\alpha+\beta t+\gamma Post_t+\delta(t-T_0-1)Post_t+u_t,
 $$
 
-where $Post_t=\mathbf{1}(t\geq T_0)$ and $T_0$ denotes the first period affected by the intervention. In this specification, $\beta$ captures the pre-intervention trend, $\gamma$ captures the immediate level change at the intervention, and $\delta$ captures the change in trend after the intervention. Thus, the post-intervention trend is $\beta+\delta$.
+where $T_0$ denotes the last pre-treatment period and $Post_t=\mathbf{1}(t>T_0)$. The intervention therefore starts at $T_0+1$. In this specification, $\beta$ captures the pre-intervention trend, $\gamma$ captures the immediate level change relative to the counterfactual trend in the first treated period, and $\delta$ captures the change in trend after the intervention. The term $(t-T_0-1)Post_t$ equals zero in the first treated period, so the intervention-related change at that point is $\gamma$. Thereafter, the post-intervention trend is $\beta+\delta$.
 
 This representation is useful pedagogically, but real applications often require more careful modeling. Outcomes may be autocorrelated, seasonal, volatile, or affected by calendar effects. For this reason, ITS analysis is often combined with time-series models such as ARIMA.
 
@@ -189,7 +189,7 @@ In January 2005, Italy introduced a regulation banning smoking in indoor public 
 
 ![ITS logic applied to the Italian smoking ban. The post-policy effect is estimated by comparing observed hospital admissions with a forecasted counterfactual trajectory based on pre-policy data.](../images/italian-smoking-ban-its-stylized.png){width="90%"}
 
-Since all units in Italy were treated simultaneously, there is no obvious untreated group within the country that can be used to construct the counterfactual. One possibility would be to use similar data from other countries that did not introduce the same policy at the same time. However, this strategy would be credible only if other countries provided a suitable comparison for Italy and mortality data were measured in a sufficiently comparable way across countries.
+Since all units in Italy were treated simultaneously, there is no obvious untreated group within the country that can be used to construct the counterfactual. One possibility would be to use similar data from other countries that did not introduce the same policy at the same time. However, this strategy would be credible only if other countries provided a suitable comparison for Italy and hospital admission data were measured in a sufficiently comparable way across countries.
 
 For this reason, an ITS design offers a natural alternative. Instead of relying on untreated units, this approach uses a model that exploits the pre-policy trajectory of hospital admissions in Italy to forecast what would have happened after January 2005 in the absence of the smoking ban.
 

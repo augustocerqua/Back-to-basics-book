@@ -424,11 +424,11 @@ The problem is especially serious because, even without treatment, pupils from t
 
 Propensity-score matching uses an absolute caliper of 0.05, corresponding to five percentage points on the propensity-score scale. A treated pupil is matched only if an untreated pupil has an estimated propensity score within 0.05 of theirs. This avoids poor matches, but treated pupils without an eligible match are discarded. The resulting estimate therefore applies only to the treated pupils retained within the region of common support, not to all treated pupils.
 
-| Estimator               | Analysis sample        | Estimate | 95% confidence interval | True effect |
-|:------------------------|:-----------------------|---------:|:----------------------:|------------:|
-| Linear OLS              | All treated pupils     |     4.85 |       [4.34, 5.37]     |        4.00 |
+| Estimator               | Analysis sample                   | Estimate | 95% confidence interval | True effect |
+|:------------------------|:----------------------------------|---------:|:----------------------:|------------:|
+| Linear OLS              | All pupils (treated and controls) |     4.85 |       [4.34, 5.37]     |        4.00 |
 | $\rule{0pt}{0.2em}$     |                        |          |                        |             |
-| PSM with a 0.05 caliper | Matched treated pupils |     3.98 |       [3.52, 4.44]     |        4.00 |
+| PSM with a 0.05 caliper | Matched treated pupils and controls |     3.98 |       [3.52, 4.44]     |        4.00 |
 
 *Note:* Of 2,239 treated pupils, the caliper retains 1,775 and excludes 464. It recovers an effect close to four by avoiding unsupported comparisons, whereas OLS relies on functional-form extrapolation.
 
@@ -777,7 +777,7 @@ $$
 \frac{\widehat{\rho}_1}{\widehat{\pi}_1},
 $$
 
-where $\overline{Y}_{Z=z}$ is the average observed earnings of individuals with instrument value $Z_i=z$, and $\overline{D}_{Z=z}$ is their average probability of serving in the military.
+where $\overline{Y}_{Z=z}$ is the average observed earnings of individuals with instrument value $Z_i=z$, and $\overline{D}_{Z=z}$ is the proportion of individuals with $Z_i=z$ who served in the military.
 
 The numerator is the reduced-form effect of eligibility on earnings, while the denominator is the first-stage effect of eligibility on military service. Their ratio estimates the average effect of military service for compliers.
 
@@ -1345,7 +1345,7 @@ Panel A shows the main message. The true excess mortality is strongly concentrat
 
 : Area-level estimates in the ideal MLCM simulation {#tbl-mlcm-area-ideal}
 
-Averaging across municipalities with equal weights, the estimated average excess mortality is 7.92 deaths per 10,000 inhabitants. This is the effect for the average municipality, not the population-weighted national excess-mortality rate.^[The population-weighted national excess-mortality rate would require weighting each municipality by its population, or aggregating deaths and population directly.]
+Averaging across municipalities with equal weights, the true simulated excess mortality is 7.920 deaths per 10,000 inhabitants, while MLCM estimates 8.172. These quantities describe the effect for the average municipality, not the population-weighted national excess-mortality rate.^[The population-weighted national excess-mortality rate would require weighting each municipality by its population, or aggregating deaths and population directly.]
 
 ### A failure: another shock affects recorded mortality
 

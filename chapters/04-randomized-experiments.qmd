@@ -170,7 +170,7 @@ Randomization breaks this link between treatment assignment and potential outcom
 
 One of the largest and most influential RCTs in education is **Project STAR** (*Student/Teacher Achievement Ratio*), conducted in Tennessee in the 1980s.
 
-The experiment randomly assigned students and teachers to different classroom types: small classes, regular-size classes, and regular-size classes with a teacher aide. Because assignment was randomized, differences in later outcomes across these groups can be interpreted as causal effects of class size, under the usual assumptions of the randomized design.
+The experiment randomly assigned students and teachers to different classroom types: small classes, regular-size classes, and regular-size classes with a teacher aide. Because assignment was randomized, differences in later outcomes across these groups can be interpreted as causal effects of the different classroom arrangements, under the usual assumptions of the randomized design.
 
 Project STAR is especially important because it studied a policy question of direct relevance for education policy: whether reducing class size improves student achievement. The results showed that students assigned to smaller classes performed better on standardized tests, especially in the early grades.
 
@@ -228,7 +228,7 @@ The key point is that random assignment makes the two groups highly similar on a
 Randomization removes selection bias by design, but the experiment can still be threatened by failed randomization, non-compliance, attrition, behavioral responses, or small samples.
 :::
 
-Although randomized experiments are the gold standard in causal inference, random assignment alone does not automatically guarantee a valid causal estimate. Several problems can threaten the **internal validity** of an RCT.^[**Internal validity** refers to the credibility of the causal conclusion within the study: whether the observed difference in outcomes can truly be attributed to the treatment rather than to other factors.], meaning the credibility of the claim that the estimated effect for the study population is caused by the treatment itself.
+Although randomized experiments are the gold standard in causal inference, random assignment alone does not automatically guarantee a valid causal estimate. Several problems can threaten the **internal validity** of an RCT:^[**Internal validity** refers to the credibility of the causal conclusion within the study: whether the observed difference in outcomes can truly be attributed to the treatment rather than to other factors.]
 
 i) **Failure of Randomization**. Randomization may fail if assignment is not truly random or if the randomization procedure is poorly implemented. For example, assigning units based on surname initials may appear unrelated to the outcome, but it can create imbalances if surname initials are correlated with ethnicity, geography, or socioeconomic status.
 A first diagnostic step is therefore to check whether pre-treatment characteristics are balanced across treatment and control groups. More generally, in an RCT treatment status should be assigned through a genuine random procedure, rather than through informal, discretionary, or ad hoc allocation rules.^[A **genuine random procedure** is one in which treatment assignment is determined by chance according to a predefined rule, for example using a random-number generator, a lottery, or another procedure that gives eligible units known probabilities of assignment and leaves no room for discretionary selection.]

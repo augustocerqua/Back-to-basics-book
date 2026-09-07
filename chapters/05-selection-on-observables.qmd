@@ -339,7 +339,15 @@ $$
 
 This probability is not directly observed. What we observe is whether each unit actually received the treatment or not. However, before treatment occurs, we can think of each unit as having some underlying probability of receiving the treatment, depending on its observed characteristics. The propensity score represents this probability and must generally be estimated from the data, for example using a logit or probit model (see below). The resulting estimated propensity score is denoted by $\widehat{p}(X_i)$. Instead of matching units on all covariates $X_i$, PSM matches them on this one-dimensional index.
 
-Rosenbaum and Rubin showed that, if treatment assignment is independent of potential outcomes conditional on $X_i$, then it is also independent of potential outcomes conditional on the propensity score:
+Rosenbaum and Rubin showed that the propensity score is a **balancing score**: conditional on its true value, treated and untreated units have the same distribution of observed covariates:
+
+$$
+X_i \perp D_i \mid p(X_i).
+$$
+
+This is the **balancing property** of the propensity score. It does not, by itself, imply balance in unobserved characteristics.
+
+They also showed that, if treatment assignment is independent of potential outcomes conditional on $X_i$, this independence holds conditional on the propensity score:
 
 $$
 (Y_i(1),Y_i(0)) \perp D_i \mid X_i
@@ -347,7 +355,7 @@ $$
 (Y_i(1),Y_i(0)) \perp D_i \mid p(X_i).
 $$
 
-This is the **balancing property** of the propensity score. Conditional on the propensity score, the distribution of observed covariates should be similar between treated and untreated units.
+Together with overlap, this result provides the identifying foundation for propensity-score matching. In practice, the propensity score must be estimated, so covariate balance should be checked rather than assumed.
 
 ::: {.callout-note appearance="simple"}
 ### Why the propensity score is useful

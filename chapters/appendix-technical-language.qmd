@@ -121,7 +121,7 @@ $$
 E[Y_i \mid D_i=1]
 $$
 
-is the average potential or observed outcome among treated units. In a sample, this quantity is estimated by calculating the ordinary mean using only observations for which $D_i=1$.
+is the average observed outcome among treated units. In a sample, this quantity is estimated by calculating the ordinary mean using only observations for which $D_i=1$. It is distinct from $E[Y_i(0)\mid D_i=1]$, the average counterfactual outcome those units would have experienced without treatment.
 
 The vertical bar $\mid$ is read as “given” or “conditional on.”
 
@@ -506,7 +506,7 @@ With a single binary instrument and a single treatment, the **Wald ratio** divid
 
 **Two-stage least squares (2SLS)** is the standard regression-based IV estimator. The first stage predicts treatment using the instrument and covariates. The second stage relates the outcome to the instrument-induced part of treatment variation.
 
-**Compliers**, **always-takers**, **never-takers**, and **defiers** are principal strata. They describe how units' treatment status would respond to different values of a binary instrument. In the usual LATE framework, IV identifies the effect for compliers, namely units whose treatment status is changed by the instrument.
+**Compliers**, **always-takers**, **never-takers**, and **defiers** are principal strata. They describe how units' treatment status would respond to different values of a binary instrument. In the usual LATE framework, IV identifies the effect for compliers: units that would receive treatment when $Z_i=1$ but not when $Z_i=0$. Defiers respond in the opposite direction.
 
 ### Running variable, cutoff, and bandwidth
 
@@ -609,7 +609,7 @@ Notation is not completely universal. For example, $T$ may denote time in one so
 
 **Common support.** The region in which comparable treated and untreated observations exist.
 
-**Compliers.** Units whose treatment status changes in response to an instrument or assignment rule.
+**Compliers.** In a binary-instrument, binary-treatment setting, units that would receive treatment when $Z_i=1$ but not when $Z_i=0$: $D_i(1)=1$ and $D_i(0)=0$. These are potential treatment statuses, not two observed decisions for the same unit.
 
 **Confidence interval.** A range expressing uncertainty about an estimated parameter.
 
@@ -665,7 +665,7 @@ Notation is not completely universal. For example, $T$ may denote time in one so
 
 **Latent variable.** A variable that affects the data-generating process but is not directly observed by the analyst.
 
-**LATE (local average treatment effect).** The average treatment effect for a specific local group of units. In an IV design, this group consists of units whose treatment status is affected by the instrument; in a sharp RD design, it consists of units at or near the assignment cutoff; and in a fuzzy RD design, it consists of units near the cutoff whose treatment status is affected by crossing it.
+**LATE (local average treatment effect).** In a binary-instrument, binary-treatment IV design, the average treatment effect for compliers, under the relevant identifying assumptions. A sharp RD design identifies the average treatment effect at the assignment cutoff; a fuzzy RD design identifies the effect for compliers at that cutoff. Observations near the cutoff are used to estimate these effects, but the causal target is defined at the cutoff itself.
 
 **mtry.** In a random forest, the number of covariates randomly considered at each split of each tree.
 

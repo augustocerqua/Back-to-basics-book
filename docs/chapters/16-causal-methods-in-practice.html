@@ -1283,11 +1283,11 @@ Table&nbsp;16.3: OLS and matching estimates in the observational small-class stu
 <p>Propensity-score matching uses an absolute caliper of 0.05, corresponding to five percentage points on the propensity-score scale. A treated pupil is matched only if an untreated pupil has an estimated propensity score within 0.05 of theirs. This avoids poor matches, but treated pupils without an eligible match are discarded. The resulting estimate therefore applies only to the treated pupils retained within the region of common support, not to all treated pupils.</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 26%">
-<col style="width: 25%">
-<col style="width: 10%">
-<col style="width: 25%">
-<col style="width: 13%">
+<col style="width: 23%">
+<col style="width: 32%">
+<col style="width: 9%">
+<col style="width: 22%">
+<col style="width: 12%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1301,7 +1301,7 @@ Table&nbsp;16.3: OLS and matching estimates in the observational small-class stu
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Linear OLS</td>
-<td style="text-align: left;">All treated pupils</td>
+<td style="text-align: left;">All pupils (treated and controls)</td>
 <td style="text-align: right;">4.85</td>
 <td style="text-align: center;">[4.34, 5.37]</td>
 <td style="text-align: right;">4.00</td>
@@ -1315,7 +1315,7 @@ Table&nbsp;16.3: OLS and matching estimates in the observational small-class stu
 </tr>
 <tr class="odd">
 <td style="text-align: left;">PSM with a 0.05 caliper</td>
-<td style="text-align: left;">Matched treated pupils</td>
+<td style="text-align: left;">Matched treated pupils and controls</td>
 <td style="text-align: right;">3.98</td>
 <td style="text-align: center;">[3.52, 4.44]</td>
 <td style="text-align: right;">4.00</td>
@@ -1845,7 +1845,7 @@ Y_i=\rho_0+\rho_1 Z_i+e_i,
 =
 \frac{\widehat{\rho}_1}{\widehat{\pi}_1},
 \]</span></p>
-<p>where <span class="math inline">\(\overline{Y}_{Z=z}\)</span> is the average observed earnings of individuals with instrument value <span class="math inline">\(Z_i=z\)</span>, and <span class="math inline">\(\overline{D}_{Z=z}\)</span> is their average probability of serving in the military.</p>
+<p>where <span class="math inline">\(\overline{Y}_{Z=z}\)</span> is the average observed earnings of individuals with instrument value <span class="math inline">\(Z_i=z\)</span>, and <span class="math inline">\(\overline{D}_{Z=z}\)</span> is the proportion of individuals with <span class="math inline">\(Z_i=z\)</span> who served in the military.</p>
 <p>The numerator is the reduced-form effect of eligibility on earnings, while the denominator is the first-stage effect of eligibility on military service. Their ratio estimates the average effect of military service for compliers.</p>
 <p>In R, these components and the equivalent just-identified 2SLS estimator can be obtained as follows:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>first_stage_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(served_military <span class="sc">~</span> draft_eligible,</span>
@@ -2826,7 +2826,7 @@ Table&nbsp;16.16: Area-level estimates in the ideal MLCM simulation
 </div>
 </figure>
 </div>
-<p>Averaging across municipalities with equal weights, the estimated average excess mortality is 7.92 deaths per 10,000 inhabitants. This is the effect for the average municipality, not the population-weighted national excess-mortality rate.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
+<p>Averaging across municipalities with equal weights, the true simulated excess mortality is 7.920 deaths per 10,000 inhabitants, while MLCM estimates 8.172. These quantities describe the effect for the average municipality, not the population-weighted national excess-mortality rate.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></p>
 <div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;The population-weighted national excess-mortality rate would require weighting each municipality by its population, or aggregating deaths and population directly.</p></div></div></section>
 <section id="a-failure-another-shock-affects-recorded-mortality" class="level3" data-number="16.9.4">
 <h3 data-number="16.9.4" class="anchored" data-anchor-id="a-failure-another-shock-affects-recorded-mortality"><span class="header-section-number">16.9.4</span> A failure: another shock affects recorded mortality</h3>

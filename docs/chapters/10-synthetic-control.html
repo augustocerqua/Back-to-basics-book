@@ -833,12 +833,12 @@ w_j \ge 0
 \qquad
 \sum_{j=2}^{J+1} w_j = 1.
 \]</span></p>
-<p>The synthetic control outcome, interpreted as the estimated untreated potential outcome for unit 1, is</p>
+<p>The synthetic control outcome estimates the untreated potential outcome for unit 1 at time <span class="math inline">\(t\)</span>:</p>
 <p><span class="math display">\[
-\widehat{Y}_{1t}^{N}
-=
-\sum_{j=2}^{J+1} \widehat{w}_j Y_{jt}.
+\widehat{Y}_{1t}(0) =
+\sum_{j=2}^{J+1} \widehat{w}_j Y_{jt},
 \]</span></p>
+<p>Here, <span class="math inline">\(\widehat{Y}_{1t}(0)\)</span> estimates what unit 1, the treated unit, would have experienced at time <span class="math inline">\(t\)</span> without the intervention. The hat indicates an estimate, while <span class="math inline">\((0)\)</span> denotes the absence of treatment. Each donor’s observed outcome, <span class="math inline">\(Y_{jt}\)</span>, contributes according to its estimated weight, <span class="math inline">\(\widehat{w}_j\)</span>. The weights are non-negative and sum to one.</p>
 <p>For each post-treatment period <span class="math inline">\(t&gt;T_0\)</span>, the estimated treatment effect is</p>
 <p><span class="math display">\[
 \widehat \tau_{1t}
