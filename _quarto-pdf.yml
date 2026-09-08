@@ -3,6 +3,9 @@ project:
 
 format:
   pdf:
+    reference-location: document
+    header-includes:
+      - \setlength{\LTpost}{1pt}
     documentclass: scrreprt
     toc: true
     number-sections: true

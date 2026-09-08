@@ -79,11 +79,6 @@ format:
     code-fold: false
     code-tools: false
 
-  pdf:
-    reference-location: document
-    header-includes:
-      - \setlength{\LTpost}{1pt}
-
 toc: true
 toc-depth: 3
 number-sections: true
