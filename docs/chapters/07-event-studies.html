@@ -829,17 +829,20 @@ ATT^{ES}(\ell)
 <p>If estimates before treatment are far from zero, this is a warning sign. Treated units may have been on different trends, or the policy may have been anticipated before formal implementation.</p>
 <p>If pre-treatment estimates are close to zero, this supports the design, but it does not prove parallel trends. The counterfactual post-treatment trend remains unobserved.</p>
 <p>Anticipation is especially important in event studies. If units change behavior before the treatment date because they expect the policy, then periods just before treatment are no longer untreated in a substantive sense.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout callout-style-simple callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>The limits of pre-trend evidence
+<span class="screen-reader-only">Warning</span>Non-significant pre-trends are not evidence of equivalence
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Flat pre-treatment estimates make the design more credible, but they do not guarantee that post-treatment counterfactual trends are parallel.</p>
+<p>Too much emphasis is often placed on whether pre-treatment event-study estimates are statistically significant. <strong>Failure to reject zero is not evidence that departures from parallel trends are negligible.</strong> Wide confidence intervals can include both zero and differences large enough to undermine the causal interpretation. This reflects low statistical power, not necessarily a credible comparison group.</p>
+<p>For a stylized example, suppose an employment-rate pre-treatment contrast is estimated at zero, with a 95% confidence interval from -5 to +5 percentage points. It is not statistically significant, but it does not rule out substantial pre-treatment divergence. That uncertainty is particularly concerning if the estimated post-treatment effect is only two percentage points. The comparison is a diagnostic warning, not a direct calculation of post-treatment bias.</p>
+<p>Bilinski and Hatfield <span class="citation" data-cites="bilinski2026parallel">(<a href="references.html#ref-bilinski2026parallel" role="doc-biblioref">2026</a>)</span> propose a non-inferiority/equivalence approach: ask whether the data can rule out violations large enough to matter, using a substantively justified threshold. <strong>The practical lesson is to assess the magnitude and precision of pre-treatment estimates, not simply whether their intervals contain zero</strong>.</p>
+<p>Even precise evidence of similar pre-treatment trends cannot establish that untreated trends would have remained parallel after treatment. Institutional reasoning and sensitivity analysis remain essential.</p>
 </div>
 </div>
 </section>
@@ -993,6 +996,9 @@ Researchers should report the reference period clearly and explain why it is app
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-baker2026didguide" class="csl-entry" role="listitem">
 Baker, Andrew C., Brantly Callaway, Scott Cunningham, Andrew Goodman-Bacon, and Pedro H. C. Sant’Anna. 2026. <em>Difference-in-Differences Designs: A Practitioner’s Guide</em>. <a href="https://arxiv.org/abs/2503.13323">https://arxiv.org/abs/2503.13323</a>.
+</div>
+<div id="ref-bilinski2026parallel" class="csl-entry" role="listitem">
+Bilinski, Alyssa, and Laura A. Hatfield. 2026. <span>“Nothing to See Here? A Non-Inferiority Approach to Parallel Trends.”</span> <em>Statistics in Medicine</em> 45 (3–5): e70296. <a href="https://doi.org/10.1002/sim.70296">https://doi.org/10.1002/sim.70296</a>.
 </div>
 <div id="ref-callaway2021" class="csl-entry" role="listitem">
 Callaway, Brantly, and Pedro H. C. Sant’Anna. 2021. <span>“Difference-in-Differences with Multiple Time Periods.”</span> <em>Journal of Econometrics</em> 225 (2): 200–230. <a href="https://doi.org/10.1016/j.jeconom.2020.12.001">https://doi.org/10.1016/j.jeconom.2020.12.001</a>.

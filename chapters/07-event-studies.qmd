@@ -246,10 +246,16 @@ If pre-treatment estimates are close to zero, this supports the design, but it d
 
 Anticipation is especially important in event studies. If units change behavior before the treatment date because they expect the policy, then periods just before treatment are no longer untreated in a substantive sense.
 
-::: {.callout-warning}
-### The limits of pre-trend evidence
+::: {.callout-warning appearance="simple"}
+### Non-significant pre-trends are not evidence of equivalence
 
-Flat pre-treatment estimates make the design more credible, but they do not guarantee that post-treatment counterfactual trends are parallel.
+Too much emphasis is often placed on whether pre-treatment event-study estimates are statistically significant. **Failure to reject zero is not evidence that departures from parallel trends are negligible.** Wide confidence intervals can include both zero and differences large enough to undermine the causal interpretation. This reflects low statistical power, not necessarily a credible comparison group.
+
+For a stylized example, suppose an employment-rate pre-treatment contrast is estimated at zero, with a 95% confidence interval from -5 to +5 percentage points. It is not statistically significant, but it does not rule out substantial pre-treatment divergence. That uncertainty is particularly concerning if the estimated post-treatment effect is only two percentage points. The comparison is a diagnostic warning, not a direct calculation of post-treatment bias.
+
+Bilinski and Hatfield [-@bilinski2026parallel] propose a non-inferiority/equivalence approach: ask whether the data can rule out violations large enough to matter, using a substantively justified threshold. **The practical lesson is to assess the magnitude and precision of pre-treatment estimates, not simply whether their intervals contain zero**.
+
+Even precise evidence of similar pre-treatment trends cannot establish that untreated trends would have remained parallel after treatment. Institutional reasoning and sensitivity analysis remain essential.
 :::
 
 ## Choosing the Baseline Period
