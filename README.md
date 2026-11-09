@@ -17,6 +17,12 @@ to `_book-pdf`, keeping the published HTML site separate. Do not run
 directory. Before publishing, check that `docs/index.html` contains the book
 homepage, not a redirect to itself.
 
+This working copy uses a pre-commit check to prevent publishing a missing
+homepage, a redirect page, or a page without the main book content. If the check
+fails, render the full HTML book and select the regenerated `docs` files in
+GitHub Desktop before committing again. To enable the same check in another
+clone, run `git config core.hooksPath .githooks` once in that clone.
+
 ## This version
 
 This is version 0.3 of the book. It is still a work in progress, so some errors, imprecisions, and unfinished parts may remain.

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Check the staged homepage, since that is what the commit will publish.
+homepage=$(git show :docs/index.html 2>/dev/null) || {
+    echo "Book website check failed: docs/index.html is missing from the commit." >&2
+    echo "Run: quarto render --to html, then stage the regenerated docs files." >&2
+    exit 1
+}
+
+if printf '%s' "$homepage" | grep -Eiq "http-equiv[[:space:]]*=[[:space:]]*['\"]?refresh"; then
+    echo "Book website check failed: docs/index.html contains a redirect." >&2
+    echo "Run: quarto render --to html, then stage the regenerated docs files." >&2
+    exit 1
+fi
+
+if ! printf '%s' "$homepage" | grep -Eiq '<main([[:space:]>])'; then
+    echo "Book website check failed: docs/index.html has no main page content." >&2
+    echo "Run: quarto render --to html, then stage the regenerated docs files." >&2
+    exit 1
+fi
