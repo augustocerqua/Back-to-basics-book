@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://augustocerqua.github.io/Back-to-basics-book/index.html</loc>
-    <lastmod>2026-09-06T16:26:34.590Z</lastmod>
-  </url>
-  <url>
     <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/01-why-impact-evaluation.html</loc>
-    <lastmod>2026-09-06T16:28:10.982Z</lastmod>
+    <lastmod>2026-11-05T14:22:17.506Z</lastmod>
   </url>
   <url>
     <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/02-potential-outcomes.html</loc>
-    <lastmod>2026-09-06T16:29:14.815Z</lastmod>
+    <lastmod>2026-11-06T10:30:30.787Z</lastmod>
   </url>
   <url>
     <loc>https://augustocerqua.github.io/Back-to-basics-book/chapters/03-causal-parameters.html</loc>

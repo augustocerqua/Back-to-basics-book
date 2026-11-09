@@ -10,7 +10,9 @@ But how can we answer such questions in a credible way?
 
 Consider the first example. Suppose that, at time $t_0$, a neighborhood has no nursery school. At time $t_1$, a new nursery school opens. By time $t_2$, we observe the employment status of parents of young children in that neighborhood.
 
-Nursery schools may serve several purposes, from supporting child development to helping families manage care responsibilities. In this example, however, we focus on one specific mechanism: access to childcare may free up parents’ time and make it easier for them to participate in the labor market.
+Sì, ha senso, soprattutto perché le responsabilità di cura ricadono spesso maggiormente sulle madri. Lo inserirei senza appesantire la frase:
+
+Nursery schools may serve several purposes, from supporting child development to helping families manage care responsibilities. In this example, however, we focus on one specific mechanism: access to childcare may free up parents’ time and make it easier for them, especially mothers, to participate in the labor market.
 
 However, observing what happens after the nursery school opens is not enough to establish whether it caused a change in parents' employment. To answer this question, we need to think in **counterfactual terms**.
 
@@ -36,9 +38,9 @@ There are several intuitive ways one might try to estimate the effect of the nur
 
 **Option A**: We could use **a before–after comparison.** We could compare parents’ employment in the neighborhood before the nursery school opened, at $t_0$, with parents’ employment after the opening, at $t_2$.
 
-**Option B**: We could use **a cross-sectional comparison**. We could compare parents’ employment in the treated neighborhood after the nursery school opened, at $t_2$, with parents’ employment in other neighborhoods where no nursery school opened during the same period.
+**Option B**: We could use **a cross-sectional comparison**.^[The term *cross-sectional* refers to data collected on different units at a single point in time, providing a snapshot rather than tracking changes over time.] We could compare parents’ employment in the treated neighborhood after the nursery school opened, at $t_2$, with parents’ employment in other neighborhoods where no nursery school opened during the same period.
 
-**Option C**: We could use **a difference-in-differences comparison.** We could compare the change in parents’ employment in the treated neighborhood between $t_0$ and $t_2$ with the change in parents’ employment over the same period in neighborhoods that did not receive a new nursery school.
+**Option C**: We could use **a difference-in-differences comparison**.^[The term *difference-in-differences* refers to a method that compares changes in outcomes over time between treated and untreated units, rather than simply comparing their outcome levels.] We could compare the change in parents’ employment in the treated neighborhood between $t_0$ and $t_2$ with the change in parents’ employment over the same period in neighborhoods that did not receive a new nursery school.
 
 Each of these approaches is intuitive. Yet each can also be misleading.
 
@@ -60,27 +62,29 @@ Each of these approaches is intuitive. Yet each can also be misleading.
 
 Constructing a credible counterfactual is not easy, especially when working with **observational data**, as in the examples above. In observational settings, policies are not usually assigned at random. Nursery schools may open in neighborhoods with specific characteristics. Workplace-safety subsidies may be received by firms that are more proactive, more exposed to risk, or better informed about public programs. Municipal amalgamations may involve municipalities with particular administrative or political characteristics.
 
-For this reason, a simple comparison between treated and untreated units may be misleading: it may reflect pre-existing differences between the two groups rather than the causal effect of the treatment.
+Sì, lo aggiungerei perché rende l'affermazione più precisa, senza suggerire che l'intera differenza dipenda necessariamente da caratteristiche preesistenti.
+
+For this reason, a simple comparison between treated and untreated units may be misleading: it may reflect, at least in part, pre-existing differences between the two groups rather than solely the causal effect of the treatment.
 
 ## Why randomized controlled trials help
 
 Estimating the causal effect would be easier in a randomized controlled trial (**RCT**). Suppose, for example, that a large number of neighborhoods applied to receive a new nursery school, but budget constraints allowed the government to build only some of them.
 
-If the neighborhoods receiving the new facility were chosen at random, then, on average, the treated and untreated neighborhoods would be comparable before the policy. This is because random assignment breaks the link between treatment status and the pre-existing characteristics of neighborhoods: richer and poorer areas, neighborhoods with higher or lower employment, and places with stronger or weaker demand for childcare would all have the same probability of receiving the new nursery school.
+If the neighborhoods receiving the new facility were chosen at random, as if by flipping a coin, then, on average, the treated and untreated neighborhoods would be comparable before the policy. This is because random assignment breaks the link between treatment status and the pre-existing characteristics of neighborhoods: richer and poorer areas, neighborhoods with higher or lower employment, and places with stronger or weaker demand for childcare would all have the same probability of receiving the new nursery school.
 
-With a sufficiently large number of neighborhoods, say a few hundred, the law of large numbers helps make the treated and untreated groups similar, on average, in terms of these characteristics (we will see this in [Chapter 4](../chapters/04-randomized-experiments.qmd)). In that case, neighborhoods without a new facility would provide, on average, a credible approximation of the counterfactual outcome for the treated neighborhoods in the absence of the policy.
+With a sufficiently large number of neighborhoods, say a few hundred, the law of large numbers helps make the treated and untreated groups similar, on average, in terms of these and all other pre-treatment characteristics, whether observed or unobserved (we will see this in [Chapter 4](../chapters/04-randomized-experiments.qmd)). In that case, the average outcome of neighborhoods without a new facility would provide a credible approximation of the average outcome that treated neighborhoods would have experienced in the absence of the policy.
 
 ::: {.callout-important appearance="simple"}
 ## Why randomization is powerful
 
-Randomization is powerful because it creates treated and untreated groups that are comparable **by design**, before the intervention takes place. Differences observed after the intervention can then be more plausibly attributed to the intervention itself, rather than to pre-existing differences between the two groups.
+Randomization is powerful because it creates treated and untreated groups that are comparable on average, by design, before the intervention takes place. Differences in average outcomes observed after the intervention can then be plausibly attributed to the intervention itself, rather than to systematic pre-existing differences between the two groups.
 
-This is why RCTs are often considered the benchmark for causal evaluation.
+This is why RCTs are widely regarded as the gold standard for causal inference.
 :::
 
 ## What Can We Do When an RCT Is Not an Option?
 
-In many policy contexts, however, randomization is not feasible. It may be too costly, politically unacceptable, ethically problematic, or simply impossible because the policy has already been implemented.
+In many policy contexts, however, randomization is not feasible. It may be too costly, politically unacceptable, ethically problematic^[For example, randomly withholding emergency assistance from some disaster-affected communities would raise serious ethical concerns.], or simply impossible because the policy has already been implemented.
 
 Much of impact evaluation therefore deals with a practical question:
 
@@ -90,7 +94,7 @@ Much of impact evaluation therefore deals with a practical question:
 How can we construct a credible counterfactual when random assignment is not available?
 :::
 
-The methods discussed in this book can be seen as different answers to this question. Each method tries, in its own way, to approximate the missing counterfactual under certain assumptions. The key issue is not to choose the most sophisticated method, but to understand **which available method is supported by the most credible assumptions in the empirical setting under analysis**.
+The methods discussed in this book offer different ways of answering this question. Each method tries, in its own way, to approximate the missing counterfactual under certain assumptions. The key issue is not to choose the most sophisticated method, but to understand **which available method is supported by the most credible assumptions in the empirical setting under analysis**.
 
 ::: {.callout-important}
 ## RCT thinking in observational studies
@@ -128,11 +132,11 @@ Pearl and Mackenzie [-@pearl2018] describe causal reasoning as a **ladder of cau
 ![The ladder of causality distinguishes between observing associations, evaluating interventions, and reasoning about counterfactuals.](../images/ladder-of-causality-wooden_slim.png){width="70%"}
 
 ::: {.less-indented-list}
-1. The first level is **association**. At this level, we ask whether two variables move together. For example: are firms that receive public subsidies less likely to have workplace accidents? This is an associational question. It can be answered by comparing observed accident rates, or by estimating a regression that relates accident rates to subsidy receipt. However, it does not tell us whether the subsidy caused the difference. Many empirical analyses stop at this level. They document that a treatment variable is statistically associated with an outcome and then interpret the estimated coefficient as if it were a causal effect. This is tempting, but it leaves the key causal question unanswered: whether the observed association reflects the treatment itself or pre-existing differences between treated and untreated units. One of the main aims of this book is to convince the reader that this is not a reliable way to estimate causal effects. To do so, we need to move up the ladder...
+1. The first level is association. At this level, we ask whether two variables are related in the observed data. For example, do firms receiving public subsidies have lower workplace accident rates than firms that do not? This is an associational question. We can answer it by comparing accident rates between the two groups or by estimating a regression that relates accident rates to subsidy receipt. However, neither approach, by itself, tells us whether subsidies actually reduce workplace accidents. Firms receiving subsidies may differ from those that do not in ways that also affect workplace safety. A common mistake is to interpret an observed association, perhaps supported by a statistically significant coefficient, as evidence of a causal effect without establishing why that interpretation is justified. The real causal question is not simply whether subsidized firms have fewer accidents, but whether those same firms would have experienced different accident rates without the subsidy. Answering this question requires moving up the ladder.
 
-2. The second level is **intervention**. At this level, we ask what would happen if we actively changed something. For example: what would happen to workplace accidents if a firm received a public subsidy for safety investments? This is the level of causal questions: it asks about the effects of actions, treatments, and policies.
+2. The second level is intervention. At this level, we ask what would happen if we actively changed something. For example, how would workplace accident rates change if firms were given public subsidies for safety investments? This is the level of causal questions: rather than simply observing what happens, we ask about the consequences of deliberately introducing a treatment or policy.
 
-3. The third level is **counterfactuals**. At this level, we ask what would have happened under an alternative state of the world. For example: for a firm that received the subsidy, how many workplace accidents would have occurred if that same firm had not received it? This is the level of potential outcomes, because it compares the observed outcome with the missing counterfactual outcome.
+3. The third level is counterfactuals. At this level, we ask what would have happened under an alternative state of the world. For example, consider a firm that received a subsidy for safety investments: how many workplace accidents would it have experienced if it had not received the subsidy? This question concerns the same firm under two alternative scenarios: what actually happened and what would have happened otherwise. We observe the first outcome, but the second remains counterfactual.
 :::
-In this sense, the potential outcomes framework works at the counterfactual level of the ladder. It defines causal effects by comparing what happened with what would have happened under a different treatment status.
+In this sense, the potential outcomes framework, which we introduce in the next chapter, operates at the counterfactual level of the ladder. It defines causal effects by comparing the outcomes that the same unit would experience with and without treatment, even though only one of these outcomes can be observed.
 :::
