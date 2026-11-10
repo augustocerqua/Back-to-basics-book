@@ -538,6 +538,7 @@ window.Quarto = {
   <li><a href="#the-most-common-causal-parameters-of-interest-ate-and-att" id="toc-the-most-common-causal-parameters-of-interest-ate-and-att" class="nav-link active" data-scroll-target="#the-most-common-causal-parameters-of-interest-ate-and-att"><span class="header-section-number">3.1</span> The most common causal parameters of interest: ATE and ATT</a></li>
   <li><a href="#other-causal-parameters-of-interest-late-and-itt" id="toc-other-causal-parameters-of-interest-late-and-itt" class="nav-link" data-scroll-target="#other-causal-parameters-of-interest-late-and-itt"><span class="header-section-number">3.2</span> Other causal parameters of interest: LATE and ITT</a></li>
   <li><a href="#conditional-average-treatment-effects" id="toc-conditional-average-treatment-effects" class="nav-link" data-scroll-target="#conditional-average-treatment-effects"><span class="header-section-number">3.3</span> Conditional average treatment effects</a></li>
+  <li><a href="#from-individual-effects-to-different-averages" id="toc-from-individual-effects-to-different-averages" class="nav-link" data-scroll-target="#from-individual-effects-to-different-averages"><span class="header-section-number">3.4</span> From Individual Effects to Different Averages</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/augustocerqua/Back-to-basics-book/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -564,16 +565,16 @@ window.Quarto = {
 </header>
 
 
-<p>The previous chapter introduced potential outcomes and the fundamental problem of causal inference. Having established how causal effects are defined, we can now address a different question: <strong>whose causal effect do we want to estimate?</strong></p>
-<p>There is no single treatment-effect parameter that answers every policy question. We may be interested in the effect for the whole population, for those who actually received the treatment, for the units whose treatment status was changed by a particular instrument or assignment rule, or for groups with specific characteristics. These parameters summarize different parts of the treatment-effect distribution and need not have the same value.</p>
+<p>The previous chapter introduced potential outcomes and the fundamental problem of causal inference. Now that we understand how causal effects are defined, we turn to another important question: <strong>for whom do we want to estimate these effects?</strong></p>
+<p>There is no single treatment-effect parameter that answers every policy question. We may be interested in the effect for the population as a whole, for those who actually received treatment, for units whose treatment status is influenced by a particular assignment rule, or for groups with specific characteristics. These parameters summarize different parts of the treatment-effect distribution and need not have the same value.</p>
 <p>The conceptual building block remains the individual treatment effect (ITE) introduced in <a href="../chapters/02-potential-outcomes.html">Chapter 2</a>:</p>
 <p><span class="math display">\[
 \Delta_i = Y_i(1) - Y_i(0).
 \]</span></p>
-<p>Although <span class="math inline">\(\Delta_i\)</span> is generally unobservable, it allows us to define causal parameters by averaging individual effects over different target populations. Choosing the appropriate parameter, or <strong>estimand</strong>, is therefore a substantive step that should come before choosing an estimator.</p>
+<p>Although <span class="math inline">\(\Delta_i\)</span> is generally unobservable, it allows us to define causal parameters by averaging individual effects over different target populations. Choosing the appropriate <strong>causal estimand</strong>, that is, the average causal effect for the population or subgroup of interest, is therefore a substantive step that should come before choosing an <strong>estimator</strong>, namely, the statistical procedure used to estimate that effect from the available data.</p>
 <section id="the-most-common-causal-parameters-of-interest-ate-and-att" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="the-most-common-causal-parameters-of-interest-ate-and-att"><span class="header-section-number">3.1</span> The most common causal parameters of interest: ATE and ATT</h2>
-<p>Because individual treatment effects are generally unobservable, empirical work typically focuses on average causal effects. The broadest of these is the <strong>average treatment effect (ATE)</strong>:</p>
+<p>Because ITEs are generally unobservable, empirical work typically focuses on average causal effects. The broadest of these is the <strong>average treatment effect (ATE)</strong>:</p>
 <p><span class="math display">\[
 ATE = E[\Delta_i] = E[Y_i(1)-Y_i(0)].
 \]</span></p>
@@ -581,8 +582,8 @@ ATE = E[\Delta_i] = E[Y_i(1)-Y_i(0)].
 <p><span class="math display">\[
 ATE = E[Y_i(1)] - E[Y_i(0)].
 \]</span></p>
-<p>The ATE answers the question: what is the expected effect of the treatment for a randomly selected unit from the population? Using the training program example, the ATE measures the expected effect of the program for a randomly selected individual from the population.</p>
-<p>The most relevant parameter depends on the policy question. The ATE measures the average effect for a specified population. In ex-post policy evaluation, however, we are often primarily interested in how the program affected <strong>those who actually received it</strong>, rather than what its average effect would be if everyone in that population participated. For this reason, the <strong>average treatment effect on the treated (ATT)</strong> is often the main parameter of interest:</p>
+<p>The ATE answers the question: what is the expected effect of the treatment for a randomly selected unit from the population? Using the training program example, the ATE measures the expected effect of the training program for a randomly selected individual from the population.</p>
+<p>The most relevant parameter depends on the policy question. The ATE measures the average treatment effect for a specified population. In ex-post policy evaluation, however, we are often more interested in how the program affected <strong>those who actually received it</strong> than in the average effect it would have had if everyone in the population had participated. For this reason, the <strong>average treatment effect on the treated (ATT)</strong> is often the main parameter of interest:</p>
 <p><span class="math display">\[
 ATT = E[\Delta_i \mid D_i=1].
 \]</span></p>
@@ -590,7 +591,7 @@ ATT = E[\Delta_i \mid D_i=1].
 <p><span class="math display">\[
 ATT = E[Y_i(1) \mid D_i=1] - E[Y_i(0) \mid D_i=1].
 \]</span></p>
-<p>The ATT answers the question: what is the expected effect of the treatment for units that received the treatment? Using the training program example, the ATT measures the expected effect of the program for individuals who actually participated in it. Therefore, the ATT is especially useful when evaluating whether a program generated benefits for its participants.</p>
+<p>The ATT answers the question: what is the average effect of treatment for units that actually received it? Unlike the ATE, which refers to the entire population of interest, the ATT focuses only on the treated units, who represent a subset of that population. Using the training program example, the ATT measures the average effect of the program for individuals who actually participated in it, rather than for all eligible individuals. The ATT is therefore especially useful when evaluating whether a program generated benefits for its participants and, if so, how large those benefits were.</p>
 <p>The first component, <span class="math inline">\(E[Y_i(1) \mid D_i=1]\)</span>, is observed in the data:</p>
 <p><span class="math display">\[
 E[Y_i(1) \mid D_i=1] = E[Y_i^{obs} \mid D_i=1].
@@ -646,6 +647,26 @@ CATT(x) =
 E[Y_i(1)-Y_i(0) \mid D_i=1, X_i=x].
 \]</span></p>
 <p>These conditional parameters are useful because they tell us not only whether a policy works on average, but also for whom it works best. <a href="../chapters/12-heterogeneous_treatment_effects.html">See Chapter 12 for a deeper discussion.</a></p>
+</section>
+<section id="from-individual-effects-to-different-averages" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="from-individual-effects-to-different-averages"><span class="header-section-number">3.4</span> From Individual Effects to Different Averages</h2>
+<p>The animation below illustrates how the same individual treatment effects can produce different average effects when we change the target population. Consider a hypothetical population of 12 units. Each unit has an individual treatment effect, <span class="math inline">\(\Delta_i=Y_i(1)-Y_i(0)\)</span>, a treatment indicator <span class="math inline">\(D_i\)</span>, and a binary pre-treatment characteristic <span class="math inline">\(X_i\)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/causal-parameters-ite-ate-att-cate.gif" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>The individual effects remain fixed. ATE averages over all 12 units, ATT over the six treated units, and CATE(1) over the four units with the characteristic <span class="math inline">\(X_i=1\)</span>. Each unit receives equal weight within its target group. The individual effects are assumed known only for illustration.</figcaption>
+</figure>
+</div>
+<p>The population ATE gives equal weight to all 12 individual effects, whose sum is 24. The ATT averages only the six effects among treated units, whose sum is 21. Finally, CATE(1) averages the four effects among units with <span class="math inline">\(X_i=1\)</span>, whose sum is 2:</p>
+<p><span class="math display">\[
+ATE=\frac{24}{12}=2,
+\qquad
+ATT=\frac{21}{6}=3.5,
+\qquad
+CATE(1)=\frac{2}{4}=0.5.
+\]</span></p>
+<p>These are averages for the complete hypothetical population and its subgroups, rather than estimates from a sample. The CATE subgroup includes both treated and untreated units: it is defined by the characteristic <span class="math inline">\(X_i=1\)</span>, not by treatment receipt. The differences between these averages reflect heterogeneous individual effects and different target groups; no individual effect changes during the animation.</p>
+<p>In a real application, we do not observe both potential outcomes for each unit and therefore cannot simply calculate these averages from known individual effects. The animation explains <strong>which causal quantity we want to estimate</strong>. Identifying and estimating that quantity from observed data requires a credible evaluation design, as discussed in the following chapters.</p>
 
 
 </section>
