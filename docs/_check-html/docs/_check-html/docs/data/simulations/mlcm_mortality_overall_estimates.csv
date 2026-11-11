@@ -1,0 +1,3 @@
+"scenario","municipalities","true_excess","intuitive_excess","mlcm_excess","average_non_pandemic_shock","intuitive_rmse","mlcm_rmse"
+"Ideal: pandemic shock only",800,7.92,8.64513704197529,8.17242704714491,0,1.15547827307072,1.0328611251556
+"Failure: extra reporting shock",800,7.92,9.80763704197529,9.33492704714491,1.1625,2.4754190500836,2.16028702236821

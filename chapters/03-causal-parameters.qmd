@@ -82,11 +82,11 @@ This shows why a simple comparison between treated and untreated units does not 
 
 ## Other causal parameters of interest: LATE and ITT
 
-Besides the ATE and ATT, two other causal parameters are especially important in experimental and quasi-experimental settings: the **local average treatment effect (LATE)** and the **intention-to-treat effect (ITT)**.
+Besides the ATE and ATT, two other causal parameters are especially important in experimental and certain observational designs: the **local average treatment effect (LATE)** and the **intention-to-treat effect (ITT)**.
 
 **The local average treatment effect (LATE)**. The LATE measures the average causal effect for a specific subgroup of units, rather than for the entire population of interest. For example, suppose students automatically receive a scholarship if their test score exceeds a given cutoff. This creates a setting suitable for an RD design (see [Chapter 9](../chapters/09-regression-discontinuity.qmd)), because students just above and just below the cutoff are expected to be very similar, except for scholarship receipt. Under appropriate assumptions, RD identifies the LATE at the cutoff, rather than the average effect for all students. More generally, the subgroup for which a causal effect can be identified depends on the research design and the source of variation in treatment assignment.
 
-**The intention-to-treat effect (ITT)**. ITT measures the effect of being assigned or offered treatment, regardless of whether units actually receive or comply with the treatment. It is especially relevant in randomized experiments with imperfect compliance. For policy purposes, the ITT is often meaningful because it captures the effect of implementing an offer, eligibility rule, or assignment mechanism in the real world. For example, suppose a development program randomly offers farmers a voucher for improved seeds and fertilizer, but only some farmers actually redeem the voucher and use the inputs. The ITT compares the average outcomes of farmers who were offered the voucher with those who were not, regardless of actual take-up. It therefore estimates the effect of the policy offer itself, rather than the effect of actually using the improved inputs.
+**The intention-to-treat effect (ITT)**. ITT measures the effect of being assigned or offered treatment, regardless of whether units actually comply with their assignment.^[The term *compliance* refers to whether units follow their assigned treatment status. For example, some units assigned to treatment may not receive it, while some assigned to the control group may receive it anyway.] It is especially relevant in randomized experiments with imperfect compliance. For policy purposes, the ITT is often meaningful because it captures the effect of implementing an offer, eligibility rule, or assignment mechanism in the real world. For example, suppose a development program randomly offers farmers a voucher for improved seeds and fertilizer, but only some farmers actually redeem the voucher and use the inputs. The ITT compares the average outcomes of farmers who were offered the voucher with those who were not, regardless of actual take-up. It therefore estimates the effect of the policy offer itself, rather than the effect of actually using the improved inputs.
 
 ## Conditional average treatment effects
 
@@ -107,7 +107,7 @@ $$
 
 These conditional parameters are useful because they tell us not only whether a policy works on average, but also for whom it works best. [See Chapter 12 for a deeper discussion.](../chapters/12-heterogeneous_treatment_effects.qmd)
 
-## From Individual Effects to Different Averages
+## From Individual Treatment Effects to Average Causal Estimands
 
 The causal estimands discussed in this chapter share a common logic: **they summarize individual causal effects by averaging them over a particular population or subgroup**. To interpret each estimand, we must specify both the intervention whose effect is being evaluated and whose effects enter the average.
 

@@ -594,16 +594,16 @@ window.Quarto = {
 
 
 <p><img src="../images/rct-randomization-balance-animation-v2.gif" class="img-fluid" alt="The balancing power of randomization. Random assignment makes treated and control units comparable in expectation: when the sample size is sufficiently large, pre-treatment characteristics should be balanced across groups on average."><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;This is a stylized example in which balance is perfect with <span class="math inline">\(N=500\)</span>. In practice, with finite samples, we should expect some small differences between treated and control groups, although these differences tend to decrease as <span class="math inline">\(N\)</span> increases.</p></div></div><section id="what-is-an-rct" class="level2 page-columns page-full" data-number="4.1">
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;The two groups have the same mean age in the stylized example with <span class="math inline">\(N=500\)</span>. In practice, with finite samples, we should expect some small differences between treated and control groups, although these differences tend to decrease as <span class="math inline">\(N\)</span> increases.</p></div></div><section id="what-is-an-rct" class="level2 page-columns page-full" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="what-is-an-rct"><span class="header-section-number">4.1</span> What is an RCT?</h2>
-<p>A <strong>randomized controlled trial (RCT)</strong> is the benchmark research design for causal inference. It is so central to the logic of causal analysis that we have already briefly discussed it in each of the previous chapters. Its logic is simple: if treatment is assigned randomly, treated and untreated units are comparable in expectation before the intervention. Therefore, under a properly implemented RCT, systematic differences in outcomes observed after the intervention can be interpreted as causal effects of the treatment rather than as the result of pre-existing differences between the two groups.</p>
+<p>A <strong>randomized controlled trial (RCT)</strong> is the benchmark research design for causal inference. It is so central to the logic of causal analysis that we have already briefly discussed it in each of the previous chapters. Its logic is simple: if treatment is assigned randomly, treated and untreated units are expected to be similar, on average, before the intervention. Therefore, in a properly implemented RCT, differences in average outcomes between treated and untreated units after the intervention can be attributed to the treatment rather than to systematic pre-existing differences between the two groups.</p>
 <p>In the potential outcomes framework, each unit <span class="math inline">\(i\)</span> has two potential outcomes:</p>
 <p><span class="math display">\[
 Y_i(1)
 \quad \text{and} \quad
 Y_i(0),
 \]</span></p>
-<p>where <span class="math inline">\(Y_i(1)\)</span> is the outcome under treatment and <span class="math inline">\(Y_i(0)\)</span> is the outcome without treatment. The individual treatment effect is</p>
+<p>where <span class="math inline">\(Y_i(1)\)</span> is the outcome under treatment and <span class="math inline">\(Y_i(0)\)</span> is the outcome without treatment. The ITE is</p>
 <p><span class="math display">\[
 \Delta_i = Y_i(1)-Y_i(0).
 \]</span></p>
@@ -624,7 +624,7 @@ The control group tells us what would have happened to the treated group, on ave
 </div>
 <section id="random-assignment" class="level3" data-number="4.1.1">
 <h3 data-number="4.1.1" class="anchored" data-anchor-id="random-assignment"><span class="header-section-number">4.1.1</span> Random Assignment</h3>
-<p>In a randomized experiment, <span class="math inline">\(D_i\)</span> is assigned by chance. Conceptually, this is like flipping a coin: before assignment, each eligible unit has a known probability (in most cases 50%) of being allocated to the treatment or control group. In practice, randomization is usually implemented through more structured procedures, such as computer-generated random numbers, stratified randomization, or block randomization. The key point, however, is the same: treatment assignment is governed by a known random process, rather than by the choices or characteristics of the units. This implies that treatment status is independent of the potential outcomes:</p>
+<p>We begin with a randomized experiment in which all units have the same probability of being assigned to treatment and everyone complies with their assignment. In this setting, treatment receipt <span class="math inline">\(D_i\)</span> coincides with randomized assignment <span class="math inline">\(W_i\)</span>. Conceptually, randomization is like flipping a coin: if the probability of treatment is 50%, each unit has an equal chance of being assigned to the treatment or control group. In practice, researchers typically use computer-generated random numbers and may adopt procedures such as stratified or block randomization. The key point, however, is the same: treatment assignment is governed by a known random process, rather than by the choices or characteristics of the units. This implies that treatment status is independent of the potential outcomes:</p>
 <p><span class="math display">\[
 (Y_i(1),Y_i(0)) \perp D_i.
 \]</span></p>
@@ -641,7 +641,7 @@ E[Y_i(1)\mid D_i=1] = E[Y_i(1)\mid D_i=0].
 </section>
 <section id="estimating-the-treatment-effect" class="level3 page-columns page-full" data-number="4.1.2">
 <h3 data-number="4.1.2" class="anchored" data-anchor-id="estimating-the-treatment-effect"><span class="header-section-number">4.1.2</span> Estimating the Treatment Effect</h3>
-<p>In the simplest randomized experiment, the treatment effect can be estimated using a difference in mean outcomes:</p>
+<p>In a randomized experiment, the treatment effect can be estimated by comparing the average outcomes of treated and control units:</p>
 <p><span class="math display">\[
 \widehat{\tau}_{RCT}
 =
@@ -658,15 +658,17 @@ E[Y_i^{obs}\mid D_i=1] = E[Y_i(1)],
 <p><span class="math display">\[
 E[Y_i^{obs}\mid D_i=0] = E[Y_i(0)].
 \]</span></p>
-<p>Therefore,</p>
+<p>Therefore, the difference in population means (DIM) identifies the ATE:</p>
 <p><span class="math display">\[
-E[\widehat{\tau}_{RCT}]
+DIM
+=
+E[Y_i^{obs}\mid D_i=1] - E[Y_i^{obs}\mid D_i=0]
 =
 E[Y_i(1)] - E[Y_i(0)]
 =
 ATE.
 \]</span></p>
-<p>This is the central strength of randomized experiments: a simple comparison of means identifies the ATE, provided that the experiment is properly implemented.</p>
+<p>This is the central strength of the randomized design described above: a simple comparison of means identifies the ATE for the experimental population.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -677,14 +679,13 @@ ATE.
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Without randomization, treated and untreated units may differ for many reasons other than the treatment.<br>
-With randomization, these differences are balanced on average, so the control group provides a credible counterfactual.</p>
+<p>Without randomization, treated and untreated units may differ even before the intervention, making it difficult to determine whether differences in their outcomes are caused by the treatment or by these pre-existing differences. Randomization addresses this problem by making the two groups comparable on average, so the average outcome of the control group provides a credible estimate of what would have happened to the treated group without treatment.</p>
 </div>
 </div>
 </section>
 <section id="randomization-and-selection-bias" class="level3" data-number="4.1.3">
 <h3 data-number="4.1.3" class="anchored" data-anchor-id="randomization-and-selection-bias"><span class="header-section-number">4.1.3</span> Randomization and Selection Bias</h3>
-<p>In observational studies, treated and untreated units often differ before the treatment. This creates selection bias. A simple difference in means can be written as</p>
+<p>In observational studies, treated and untreated units often differ in their characteristics even before treatment begins. When these differences also affect outcomes, a simple comparison may suffer from selection bias. The difference in population means is</p>
 <p><span class="math display">\[
 DIM =
 E[Y_i^{obs}\mid D_i=1]
@@ -693,11 +694,11 @@ E[Y_i^{obs}\mid D_i=0].
 \]</span></p>
 <p>In general,</p>
 <p><span class="math display">\[
-DIM = ATT + Bias,
+DIM = ATT + \text{Selection bias},
 \]</span></p>
 <p>where</p>
 <p><span class="math display">\[
-Bias =
+\text{Selection bias} =
 E[Y_i(0)\mid D_i=1]
 -
 E[Y_i(0)\mid D_i=0].
@@ -710,9 +711,27 @@ E[Y_i(0)\mid D_i=0].
 \]</span></p>
 <p>Therefore,</p>
 <p><span class="math display">\[
-Bias = 0.
+\text{Selection bias} = 0.
 \]</span></p>
 <p>This is why randomized controlled trials are often described as the <strong>gold standard</strong> of causal inference: they remove selection bias by design.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Does an RCT identify the ATE or the ATT?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When all units have the same probability of being assigned to treatment and comply with their assignment, the difference in mean outcomes identifies the <strong>ATE for the experimental population</strong>. In practice, the difference between the observed sample means provides an unbiased estimate of this effect.</p>
+<p>This is consistent with the result <span class="math inline">\(DIM=ATT\)</span> discussed above. Randomization makes treatment assignment independent of individual treatment effects, so the average effect among treated units equals the average effect in the overall population:</p>
+<p><span class="math display">\[
+ATT=E[\Delta_i\mid D_i=1]=E[\Delta_i]=ATE.
+\]</span></p>
+<p>This population-level equality does not require individual treatment effects to be identical. In a particular random assignment, the average individual effect among the units assigned to treatment may differ by chance from the average across all units in the experiment.</p>
+</div>
+</div>
 </section>
 <section id="treatment-and-control-groups" class="level3" data-number="4.1.4">
 <h3 data-number="4.1.4" class="anchored" data-anchor-id="treatment-and-control-groups"><span class="header-section-number">4.1.4</span> Treatment and Control Groups</h3>
@@ -850,11 +869,11 @@ E[Y_i^{obs}\mid W_i=0],
 </section>
 <section id="summary" class="level2" data-number="4.6">
 <h2 data-number="4.6" class="anchored" data-anchor-id="summary"><span class="header-section-number">4.6</span> Summary</h2>
-<p>RCTs provide the cleanest design for estimating causal effects. By randomly assigning units to treatment and control groups, they make treatment status independent of potential outcomes:</p>
+<p>In the randomized design considered here, all units have the same probability of treatment assignment and comply with their assignment. Treatment receipt <span class="math inline">\(D_i\)</span> therefore coincides with randomized assignment <span class="math inline">\(W_i\)</span> and is independent of potential outcomes:</p>
 <p><span class="math display">\[
 (Y_i(1),Y_i(0)) \perp D_i.
 \]</span></p>
-<p>This allows the researcher to estimate the ATE using a simple difference in mean outcomes:</p>
+<p>This allows the researcher to estimate the ATE for the experimental population using a simple difference in mean outcomes:</p>
 <p><span class="math display">\[
 \widehat{\tau}_{RCT}
 =

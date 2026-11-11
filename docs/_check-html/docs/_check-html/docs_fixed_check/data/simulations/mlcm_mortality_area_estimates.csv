@@ -1,0 +1,9 @@
+"scenario","area","municipalities","true_excess","intuitive_excess","mlcm_excess","average_non_pandemic_shock","mlcm_standard_error","mlcm_conf_low","mlcm_conf_high"
+"Ideal: pandemic shock only","North West",199,16.4954252309077,17.2927745434539,16.8265869079624,0,NA,NA,NA
+"Ideal: pandemic shock only","North East",183,10.2356911809263,10.8997066381713,10.4537563612113,0,NA,NA,NA
+"Ideal: pandemic shock only","Center",162,4.85413950524593,5.52000092972663,5.10533840002283,0,NA,NA,NA
+"Ideal: pandemic shock only","South and Islands",256,1.5387042698829,2.28891028918688,1.75526800049235,0,NA,NA,NA
+"Failure: extra reporting shock","North West",199,16.4954252309077,17.2927745434539,16.8265869079624,0,NA,NA,NA
+"Failure: extra reporting shock","North East",183,10.2356911809263,10.8997066381713,10.4537563612113,0,NA,NA,NA
+"Failure: extra reporting shock","Center",162,4.85413950524593,6.52000092972663,6.10533840002283,1,NA,NA,NA
+"Failure: extra reporting shock","South and Islands",256,1.5387042698829,5.28891028918688,4.75526800049235,3,NA,NA,NA
