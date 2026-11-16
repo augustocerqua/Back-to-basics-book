@@ -560,11 +560,11 @@ window.Quarto = {
   <li><a href="#the-parallel-trends-assumption" id="toc-the-parallel-trends-assumption" class="nav-link" data-scroll-target="#the-parallel-trends-assumption"><span class="header-section-number">6.4</span> The Parallel Trends Assumption</a></li>
   <li><a href="#regression-form" id="toc-regression-form" class="nav-link" data-scroll-target="#regression-form"><span class="header-section-number">6.5</span> Regression Form</a></li>
   <li><a href="#covariates-and-conditional-parallel-trends" id="toc-covariates-and-conditional-parallel-trends" class="nav-link" data-scroll-target="#covariates-and-conditional-parallel-trends"><span class="header-section-number">6.6</span> Covariates and Conditional Parallel Trends</a></li>
-  <li><a href="#functional-form-limitation" id="toc-functional-form-limitation" class="nav-link" data-scroll-target="#functional-form-limitation"><span class="header-section-number">6.7</span> Functional Form Limitation</a></li>
-  <li><a href="#diagnostics-and-validity-checks" id="toc-diagnostics-and-validity-checks" class="nav-link" data-scroll-target="#diagnostics-and-validity-checks"><span class="header-section-number">6.8</span> Diagnostics and Validity Checks</a></li>
+  <li><a href="#diagnostics-and-validity-checks" id="toc-diagnostics-and-validity-checks" class="nav-link" data-scroll-target="#diagnostics-and-validity-checks"><span class="header-section-number">6.7</span> Diagnostics and Validity Checks</a></li>
+  <li><a href="#functional-form-limitation" id="toc-functional-form-limitation" class="nav-link" data-scroll-target="#functional-form-limitation"><span class="header-section-number">6.8</span> Functional Form Limitation</a></li>
   <li><a href="#worked-example" id="toc-worked-example" class="nav-link" data-scroll-target="#worked-example"><span class="header-section-number">6.9</span> Worked Example</a></li>
   <li><a href="#ashenfelters-dip" id="toc-ashenfelters-dip" class="nav-link" data-scroll-target="#ashenfelters-dip"><span class="header-section-number">6.10</span> Ashenfelter’s Dip</a></li>
-  <li><a href="#a-did-extension-the-triple-differences-estimator" id="toc-a-did-extension-the-triple-differences-estimator" class="nav-link" data-scroll-target="#a-did-extension-the-triple-differences-estimator"><span class="header-section-number">6.11</span> A DiD extension: The Triple Differences Estimator</a></li>
+  <li><a href="#a-did-extension-the-triple-differences-estimator" id="toc-a-did-extension-the-triple-differences-estimator" class="nav-link" data-scroll-target="#a-did-extension-the-triple-differences-estimator"><span class="header-section-number">6.11</span> A DiD Extension: The Triple Differences Estimator</a></li>
   <li><a href="#matching-difference-in-differences" id="toc-matching-difference-in-differences" class="nav-link" data-scroll-target="#matching-difference-in-differences"><span class="header-section-number">6.12</span> Matching Difference-in-Differences</a></li>
   <li><a href="#twfe-with-staggered-adoption" id="toc-twfe-with-staggered-adoption" class="nav-link" data-scroll-target="#twfe-with-staggered-adoption"><span class="header-section-number">6.13</span> TWFE With Staggered Adoption</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">6.14</span> Summary</a></li>
@@ -677,7 +677,7 @@ ATT = E[Y_{i,post}(1)-Y_{i,post}(0)\mid D_i=1].
 \]</span></p>
 <p>These two expressions are algebraically equivalent. The first emphasizes changes over time within each group. The second emphasizes how the treated-control gap changes after treatment.</p>
 </section>
-<section id="the-parallel-trends-assumption" class="level2" data-number="6.4">
+<section id="the-parallel-trends-assumption" class="level2 page-columns page-full" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="the-parallel-trends-assumption"><span class="header-section-number">6.4</span> The Parallel Trends Assumption</h2>
 <p>The central identifying assumption is the <strong>parallel-trends assumption</strong>. It states that, in the absence of treatment, the treated and control groups would have experienced the same average change in outcomes. Formally,</p>
 <p><span class="math display">\[
@@ -694,10 +694,10 @@ E[Y_{i,pre}(0)\mid D_i=1]
 +
 E[Y_{i,post}(0)-Y_{i,pre}(0)\mid D_i=0].
 \]</span></p>
-<p>In words, the counterfactual post-treatment outcome for the treated group is obtained by taking its pre-treatment outcome and adding the change observed in the control group.</p>
+<p>In words, the counterfactual post-treatment outcome for the treated group is obtained by taking its pre-treatment outcome and adding the change observed in the control group.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <!--Importantly, the parallel trends assumption cannot be fully tested. We cannot observe how treated units would have evolved after the intervention in the absence of treatment. What we can check is whether treated and untreated units followed similar trends before the intervention, using pre-treatment outcomes as indirect evidence in support of the assumption.
 -->
-<div class="callout callout-style-default callout-warning callout-titled">
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;In addition to parallel trends, identifying the ATT requires the <strong>no-anticipation</strong> assumption and <strong>SUTVA</strong>, both introduced in Chapter 2.</p></div></div><div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -717,19 +717,20 @@ E[Y_{i,post}(0)-Y_{i,pre}(0)\mid D_i=0].
 </figure>
 </div>
 </section>
-<section id="regression-form" class="level2" data-number="6.5">
+<section id="regression-form" class="level2 page-columns page-full" data-number="6.5">
 <h2 data-number="6.5" class="anchored" data-anchor-id="regression-form"><span class="header-section-number">6.5</span> Regression Form</h2>
 <p>The two-period DiD estimator can also be obtained from the following regression:</p>
 <p><span class="math display">\[
-Y_{it} = \alpha + \beta Treat_i + \gamma Post_t + \tau_{\text{DiD}} (Treat_i \times Post_t) + \varepsilon_{it}.
+Y_{it} = \alpha + \beta D_i + \gamma Post_t + \tau_{\text{DiD}} (D_i \times Post_t) + \varepsilon_{it}.
 \]</span></p>
-<p>The coefficient <span class="math inline">\(\tau_{\text{DiD}}\)</span> provides the ATT estimate. In the simple two-group, two-period case, this regression coefficient is numerically equivalent to the traditional DiD formula:</p>
+<p>Here, <span class="math inline">\(D_i\)</span> equals 1 for units in the treated group and 0 for units in the control group, while <span class="math inline">\(Post_t\)</span> equals 1 in the post-treatment period and 0 in the pre-treatment period.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> The interaction term <span class="math inline">\(D_i \times Post_t\)</span> therefore equals 1 only for treated units in the post-treatment period and 0 otherwise.</p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;Note that, in this setting, <span class="math inline">\(D_i\)</span> does not vary over time: it indicates group membership rather than whether a unit is receiving treatment in a given period.</p></div></div><p>Under the identifying assumptions of DiD, the estimated coefficient <span class="math inline">\(\widehat{\tau}_{\text{DiD}}\)</span> provides an estimate of the ATT. In the simple two-group, two-period case, this coefficient is numerically equivalent to the traditional DiD estimator:</p>
 <p><span class="math display">\[
-\widehat{\tau}_{DiD}
+\widehat{\tau}_{\text{DiD}}
 =
-\left(\bar{Y}_{1,post}-\bar{Y}_{1,pre}\right)
+\left(\bar{Y}_{1,\text{post}}-\bar{Y}_{1,\text{pre}}\right)
 -
-\left(\bar{Y}_{0,post}-\bar{Y}_{0,pre}\right).
+\left(\bar{Y}_{0,\text{post}}-\bar{Y}_{0,\text{pre}}\right).
 \]</span></p>
 <p>The regression coefficients have a straightforward interpretation:</p>
 <ul>
@@ -740,40 +741,21 @@ Y_{it} = \alpha + \beta Treat_i + \gamma Post_t + \tau_{\text{DiD}} (Treat_i \ti
 </ul>
 <p>Why use a regression model if the DiD estimate can be obtained simply by calculating differences between four means? One of the main advantages of the regression framework is that it facilitates statistical inference. Rather than providing only a point estimate of the treatment effect, it allows us to compute standard errors and confidence intervals for <span class="math inline">\(\widehat{\tau}_{\text{DiD}}\)</span> and to test hypotheses about the underlying causal effect, <span class="math inline">\(\tau_{\text{DiD}}\)</span>.</p>
 <p>Moreover, the regression framework makes it easier to extend the basic DiD design, for example by including covariates or accommodating multiple time periods, as we will see in the following sections.</p>
-<!--With panel data and more than two periods, a common extension is
-
-$$
-Y_{it}
-=
-\alpha_i
-+
-\lambda_t
-+
-\gamma D_{it}
-+
-X_{it}'\beta
-+
-u_{it},
-$$
-
-where $\alpha_i$ are unit fixed effects and $\lambda_t$ are time fixed effects. This is the **two-way fixed effects (TWFE)** specification.
-
-In the simple two-group, two-period case, the TWFE coefficient coincides with the basic DiD estimator. In more complex settings, especially with staggered treatment adoption, this equivalence no longer guarantees a clean causal interpretation.-->
 </section>
-<section id="covariates-and-conditional-parallel-trends" class="level2" data-number="6.6">
+<section id="covariates-and-conditional-parallel-trends" class="level2 page-columns page-full" data-number="6.6">
 <h2 data-number="6.6" class="anchored" data-anchor-id="covariates-and-conditional-parallel-trends"><span class="header-section-number">6.6</span> Covariates and Conditional Parallel Trends</h2>
-<p>The basic DiD regression model can be extended to include observed pre-treatment covariates. These covariates may improve precision and make the parallel trends assumption more plausible by accounting for differences in characteristics that influence how outcomes evolve over time.</p>
-<p>Let <span class="math inline">\(X_i\)</span> denote a vector of observed characteristics measured before treatment. Importantly, we use the same pre-treatment values of these characteristics in both periods, even if the characteristics themselves change over time. An extended regression specification is</p>
+<p>The basic DiD regression model can be extended to account for observed pre-treatment characteristics that help explain how outcomes would have evolved in the absence of treatment. This may improve precision and support a conditional parallel-trends assumption when unconditional parallel trends is implausible.</p>
+<p>Consider a two-period panel in which the same units are observed before and after treatment. Let <span class="math inline">\(X_i\)</span> denote a vector of observed characteristics measured before treatment. We use the same pre-treatment values in both periods, even if the characteristics themselves subsequently change. An extended regression specification is</p>
 <p><span class="math display">\[
 Y_{it}
 =
 \alpha
 +
-\beta Treat_i
+\beta D_i
 +
 \gamma Post_t
 +
-\tau_{\text{DiD}}(Treat_i \times Post_t)
+\tau_{\text{DiD}}(D_i \times Post_t)
 +
 X_i'\delta
 +
@@ -786,57 +768,52 @@ Post_t \times X_i'\theta
 <li><span class="math inline">\(X_i'\delta\)</span> allows units with different pre-treatment characteristics to have different outcome levels.</li>
 <li><span class="math inline">\(Post_t \times X_i'\theta\)</span> allows units with different pre-treatment characteristics to experience different changes in outcomes over time.</li>
 </ul>
-<p>The second term is particularly important in a DiD design. Simply including pre-treatment covariates in the regression accounts for differences in outcome levels, but not for differences in outcome trends associated with these characteristics. By interacting the covariates with <span class="math inline">\(Post_t\)</span>, we allow units with different characteristics to follow different trends.</p>
-<p>To see why this matters, suppose we are evaluating the effect of a subsidy on firms’ employment. Even in the absence of the subsidy, large firms may tend to grow faster than small firms. If subsidized firms are generally larger than unsubsidized firms, the two groups may have experienced different employment trends even without the policy. By allowing pre-treatment firm size to influence employment growth, rather than just employment levels, we may construct a more credible counterfactual.</p>
-<p>Importantly, this does not mean that we control for firm size measured after the intervention. We use firm size measured before the subsidy was received and allow its relationship with employment to differ between the pre-treatment and post-treatment periods. Controlling for post-treatment firm size could instead introduce bias, because firm size may itself be affected by the subsidy.</p>
-<p>The logic of this specification becomes particularly clear if we express the model in first differences. With two periods, subtracting the pre-treatment equation from the post-treatment equation gives</p>
+<p>The second term is particularly important in a DiD design. Simply including pre-treatment covariates accounts for differences in outcome levels, but not for differences in outcome changes associated with these characteristics. Interacting the covariates with <span class="math inline">\(Post_t\)</span> addresses this distinction. In this specification, differences in untreated outcome changes are modeled as linear functions of the covariates, with the same coefficients for treated and untreated units.</p>
+<p>To see why this matters, suppose we are evaluating the effect of a subsidy on firms’ employment. Even in the absence of the subsidy, large firms may tend to experience larger increases in employment than small firms. If subsidized firms are generally larger than unsubsidized firms, the two groups may therefore have followed different employment trends even without the policy. By allowing pre-treatment firm size to explain differences in employment growth, rather than just differences in employment levels, we may construct a more credible counterfactual.</p>
+<p>Importantly, we do not control for firm size measured after the intervention. We use firm size measured before the subsidy and allow its relationship with employment to differ between periods. Controlling for post-treatment firm size could introduce bias because firm size may itself be affected by the subsidy.</p>
+<p>The logic becomes particularly clear when we express the model in first differences. Subtracting the pre-treatment equation from the post-treatment equation gives</p>
 <p><span class="math display">\[
 \Delta Y_i
 =
 \gamma
 +
-\tau_{\text{DiD}}Treat_i
+\tau_{\text{DiD}}D_i
 +
 X_i'\theta
 +
 \Delta\varepsilon_i,
 \]</span></p>
-<p>where <span class="math inline">\(\Delta Y_i=Y_{i,\text{post}}-Y_{i,\text{pre}}\)</span> is the change in the outcome between the two periods. We can now see that the model compares changes in outcomes between treated and untreated units, accounting for pre-treatment characteristics that may influence these changes.</p>
-<p>The underlying identifying assumption is now <strong>conditional parallel trends</strong>: in the absence of treatment, treated and untreated units with the same observed pre-treatment characteristics would have experienced the same average change in outcomes. Formally,</p>
+<p>where <span class="math inline">\(\Delta Y_i=Y_{i,\text{post}}-Y_{i,\text{pre}}\)</span>. The time-invariant terms, including <span class="math inline">\(X_i'\delta\)</span>, disappear.The model therefore compares changes in outcomes between treated and untreated units while accounting for pre-treatment characteristics that may influence how outcomes evolve over time in the absence of treatment.</p>
+<p>The underlying identifying assumption is <strong>conditional parallel trends</strong>: in the absence of treatment, treated and untreated units with the same observed pre-treatment characteristics would have experienced the same average change in outcomes. Formally,</p>
 <p><span class="math display">\[
-E[Y_{i,\text{post}}(0)-Y_{i,\text{pre}}(0)\mid Treat_i=1,X_i]
+E[Y_{i,\text{post}}(0)-Y_{i,\text{pre}}(0)\mid D_i=1,X_i]
 =
-E[Y_{i,\text{post}}(0)-Y_{i,\text{pre}}(0)\mid Treat_i=0,X_i].
+E[Y_{i,\text{post}}(0)-Y_{i,\text{pre}}(0)\mid D_i=0,X_i].
 \]</span></p>
-<p>Under this assumption, together with the other identifying assumptions of DiD, sufficient common support, and a correctly specified regression model, <span class="math inline">\(\tau_{\text{DiD}}\)</span> identifies the ATT if the average treatment effect is constant across covariate values. If treatment effects vary with these characteristics, the model can be extended to account for such heterogeneity, and the estimated effects can then be averaged over the treated population.</p>
-<div class="callout callout-style-simple callout-note callout-titled">
+<p>This assumption allows untreated outcome trends to differ across covariate values, but not between treated and untreated units with the same covariate values.</p>
+<p>Under conditional parallel trends, no anticipation, no interference, and sufficient common support<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>, outcome changes among comparable untreated units identify the average counterfactual changes for treated units with the same characteristics. By comparing these counterfactual changes with the observed changes among treated units and averaging the resulting differences over the treated population, we can identify the ATT.</p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;As in matching methods, <em>common support</em> requires that treated units have comparable untreated units in terms of their observed pre-treatment characteristics. Without common support, estimating the missing counterfactual changes for treated units would require extrapolation.</p></div></div><div class="callout callout-style-simple callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Good covariates
+<span class="screen-reader-only">Warning</span>Avoid post-treatment covariates
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Covariates in DiD are most convincing when they measure pre-treatment characteristics that help explain different outcome trends.</p>
+<p>In DiD, covariates should be measured before treatment and their pre-treatment values should be used throughout the analysis. Controlling for characteristics measured after treatment may introduce bias if these characteristics are themselves affected by the intervention.</p>
 </div>
 </div>
 </section>
-<section id="functional-form-limitation" class="level2" data-number="6.7">
-<h2 data-number="6.7" class="anchored" data-anchor-id="functional-form-limitation"><span class="header-section-number">6.7</span> Functional Form Limitation</h2>
-<p>Parallel trends can depend on the scale of the outcome. Parallel trends in levels do not automatically imply parallel trends in logs, and parallel trends in logs do not automatically imply parallel trends in levels.</p>
-<p>For example, suppose the outcome is wages. If wages grow by the same absolute amount in treated and control groups, trends may be parallel in levels. If wages grow by the same percentage amount, trends may be parallel in logs. These are different assumptions and imply different causal estimands.</p>
-<p>This is why the choice between levels, logs, rates, and other transformations should be substantive rather than mechanical, and ideally made before examining the results to avoid cherry-picking the specification that produces the most favorable estimate.</p>
-</section>
-<section id="diagnostics-and-validity-checks" class="level2" data-number="6.8">
-<h2 data-number="6.8" class="anchored" data-anchor-id="diagnostics-and-validity-checks"><span class="header-section-number">6.8</span> Diagnostics and Validity Checks</h2>
+<section id="diagnostics-and-validity-checks" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="diagnostics-and-validity-checks"><span class="header-section-number">6.7</span> Diagnostics and Validity Checks</h2>
 <p>The parallel-trends assumption is fundamentally about an unobserved counterfactual, so it cannot be tested directly. However, if at least two pre-treatment periods are available, its plausibility can be assessed indirectly by examining whether treated and control units followed similar trends before the treatment. If treated and control groups move very differently before treatment, the parallel-trends assumption becomes less credible.</p>
-<p>With several pre-treatment periods, researchers can estimate placebo DiD effects using periods before the treatment actually occurred. If the method finds large <strong>pre-treatment placebo estimates</strong>, this suggests that the design may be capturing pre-existing differences in trends rather than the causal effect of the treatment.</p>
+<p>With several pre-treatment periods, researchers can estimate placebo DiD effects using periods before the treatment actually occurred. If the method finds large <strong>pre-treatment placebo estimates</strong>, this raises the concern that part of the estimated effect may be driven by differences in trends that were already present before treatment.</p>
 <p>Other useful checks include:</p>
 <ul>
 <li>plotting average outcomes for treated and control groups over time, rather than only the differences between them;</li>
-<li>checking sensitivity to alternative comparison groups;</li>
+<li>checking sensitivity to alternative comparison groups (if available);</li>
 <li>checking whether the estimated effect changes when adding relevant pre-treatment covariates;</li>
 <li>checking whether other policies or shocks occurred at the same time.</li>
 </ul>
@@ -854,6 +831,27 @@ E[Y_{i,\text{post}}(0)-Y_{i,\text{pre}}(0)\mid Treat_i=0,X_i].
 </div>
 </div>
 </section>
+<section id="functional-form-limitation" class="level2 page-columns page-full" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="functional-form-limitation"><span class="header-section-number">6.8</span> Functional Form Limitation</h2>
+<p>Parallel trends can depend on the scale of the outcome. Parallel trends in levels do not automatically imply parallel trends in logs<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a>, and parallel trends in logs do not automatically imply parallel trends in levels.</p>
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;Researchers often use the natural logarithm (logarithm to base <span class="math inline">\(e\)</span>) of an outcome because changes in natural logs, multiplied by 100, approximately represent percentage changes rather than absolute changes (this approximation is accurate for small percentage changes but becomes less accurate as the magnitude of the change increases). For example, two firms of different sizes may experience similar percentage increases in employment but very different increases in the number of employees. Logarithmic transformations may also reduce the influence of extremely large outcome values.</p></div></div><p>To see why, consider two examples of hourly wage growth before treatment (<a href="#fig-did-levels-vs-logs" class="quarto-xref">Figure&nbsp;<span>6.1</span></a>):</p>
+<ul>
+<li><strong>Same increase in euros (A).</strong> Wages rise by €5 per hour in both groups: from €20 to €25 (+25%) in the group that will be treated and from €10 to €15 (+50%) in the control group. The trends are parallel in levels but not in logs.</li>
+<li><strong>Same percentage increase (B).</strong> Wages rise by 50% in both groups. This is a €10 increase in the group that will be treated and a €5 increase in the control group. The trends are parallel in logs but not in levels.</li>
+</ul>
+<div id="fig-did-levels-vs-logs" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Four line plots show that equal euro increases yield parallel trends only in levels, while equal percentage increases yield parallel trends only in logs.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-did-levels-vs-logs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/did-parallel-trends-levels-vs-logs.png" class="img-fluid figure-img" style="width:100.0%" alt="Four line plots show that equal euro increases yield parallel trends only in levels, while equal percentage increases yield parallel trends only in logs.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-did-levels-vs-logs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.1: The same hourly wage changes shown in levels (left) and natural logs (right). Both examples show pre-treatment changes, not treatment effects.
+</figcaption>
+</figure>
+</div>
+<p>The scale matters for both the identifying assumption and the quantity we estimate. A DiD in levels targets an effect on hourly wages in euros, whereas a DiD in logs targets an effect on log hourly wages. The pre-treatment patterns in the figure illustrate the difference between the two scales.</p>
+<p>This is why the choice between levels, logs, and other transformations should be substantive rather than mechanical, and ideally made before examining the results to avoid <em>cherry-picking</em><a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> the specification that produces the most favorable estimate.</p>
+<div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;In empirical research, <em>cherry-picking</em> refers to selectively choosing specifications or results that support a desired conclusion while disregarding those that do not. This practice can produce misleading evidence about the effect of a policy.</p></div></div></section>
 <section id="worked-example" class="level2" data-number="6.9">
 <h2 data-number="6.9" class="anchored" data-anchor-id="worked-example"><span class="header-section-number">6.9</span> Worked Example</h2>
 <p>Suppose a public subsidy for workplace safety is introduced in one region but not in a neighboring region. The policy starts in 2024 and aims to reduce workplace accidents.</p>
@@ -882,23 +880,36 @@ E[Y_{i,\text{post}}(0)-Y_{i,\text{pre}}(0)\mid Treat_i=0,X_i].
 <p>A classic threat to DiD is <strong>Ashenfelter’s dip</strong> <span class="citation" data-cites="ashenfelter1978">(<a href="references.html#ref-ashenfelter1978" role="doc-biblioref">Ashenfelter 1978</a>)</span>. This occurs when units select into treatment after experiencing a temporary negative shock.</p>
 <p>Suppose workers enter a training program after a sudden fall in earnings. Even without the program, their earnings might partially or fully recover. A DiD estimator comparing these workers with non-participants may mistakenly attribute the natural rebound to the training program.</p>
 <p>The problem is that treatment timing is related to a temporary shock in the untreated potential outcome. A simple DiD design differences out time-invariant unobserved heterogeneity, not temporary shocks that affect treatment participation.</p>
-<p>Longer panels can help diagnose the problem. If outcomes fall sharply just before treatment and then recover, the design may be capturing mean reversion rather than a causal effect.</p>
+<p>In <a href="#fig-did-ashenfelter-dip" class="quarto-xref">Figure&nbsp;<span>6.2</span></a>, participants’ average earnings fall from €24,000 to €18,000 just before training and then recover to €24,000. Because non-participants’ earnings stay flat, a DiD that uses the dip as its baseline predicts that participants would have stayed at €18,000 without training (gray dashed line). The resulting estimate is <strong>+€6,000</strong>, even though the true effect in this example is <strong>zero</strong>: participants would have recovered to €24,000 without training (green dotted line).</p>
+<div id="fig-did-ashenfelter-dip" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Participants' earnings fall from 24,000 to 18,000 euros just before training and then return to 24,000 euros, while non-participants' earnings stay flat. DiD predicts no rebound and estimates an effect of 6,000 euros, but the true effect is zero because the same rebound would have occurred without training.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-did-ashenfelter-dip-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/did-ashenfelter-dip.png" class="img-fluid figure-img" style="width:100.0%" alt="Participants' earnings fall from 24,000 to 18,000 euros just before training and then return to 24,000 euros, while non-participants' earnings stay flat. DiD predicts no rebound and estimates an effect of 6,000 euros, but the true effect is zero because the same rebound would have occurred without training.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-did-ashenfelter-dip-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.2: Ashenfelter’s dip in a stylized training example. The last pre-treatment period is the low point in participants’ earnings, so the two-period DiD attributes their natural rebound to training.
+</figcaption>
+</figure>
+</div>
+<p>Longer panels can help diagnose this problem. If outcomes fall sharply just before treatment and then recover, the estimated effect may capture mean reversion rather than a causal effect. The pre-treatment placebo tests discussed above can help detect an Ashenfelter’s dip by revealing whether the treated group’s outcome declined unusually just before treatment.</p>
 </section>
 <section id="a-did-extension-the-triple-differences-estimator" class="level2" data-number="6.11">
-<h2 data-number="6.11" class="anchored" data-anchor-id="a-did-extension-the-triple-differences-estimator"><span class="header-section-number">6.11</span> A DiD extension: The Triple Differences Estimator</h2>
-<p>The <strong>triple difference</strong> estimator, or DDD, extends DiD by adding a third comparison dimension <span class="citation" data-cites="olden2022">(<a href="references.html#ref-olden2022" role="doc-biblioref">Olden and Møen 2022</a>)</span>.</p>
-<p>Suppose a parental leave reform is introduced in some states but not others, and applies mainly to mothers rather than fathers. A DiD comparing mothers in treated and control states may be biased if mothers in treated states were already on a different trend. A second DiD for fathers can help capture state-specific changes that are not specific to mothers.</p>
-<p>The triple difference is the difference between two DiD estimators:</p>
+<h2 data-number="6.11" class="anchored" data-anchor-id="a-did-extension-the-triple-differences-estimator"><span class="header-section-number">6.11</span> A DiD Extension: The Triple Differences Estimator</h2>
+<p>The <strong>triple differences (DDD) estimator</strong> extends DiD by adding a third dimension of comparison <span class="citation" data-cites="olden2022">(<a href="references.html#ref-olden2022" role="doc-biblioref">Olden and Møen 2022</a>)</span>.</p>
+<p>Suppose a parental leave reform is introduced in some states but not others and applies only to mothers. We want to estimate its effect on mothers’ employment. A standard DiD would compare changes in mothers’ employment between states that introduce the reform and states that do not. However, this comparison may be misleading if employment would have evolved differently across the two groups of states even in the absence of the reform.</p>
+<p>A possible solution is to introduce an additional comparison group: fathers. If fathers are unaffected by the reform, a DiD comparing their employment changes across the same states can help us account for differences in employment trends that are unrelated to the reform but common to mothers and fathers.</p>
+<p>The triple differences estimator is therefore the difference between two DiD estimates:</p>
 <p><span class="math display">\[
-DDD = DiD_{mothers} - DiD_{fathers}.
+DDD = DiD_{\text{mothers}} - DiD_{\text{fathers}}.
 \]</span></p>
-<p>The intuition is that if the bias is common to both comparisons, subtracting the second DiD removes it.</p>
-<p>Triple differences do not eliminate the need for identifying assumptions. Instead, they require a <strong>parallel-trends assumption for the difference between two DiD comparisons</strong>: in the absence of the policy, the gap between these two DiD effects would have remained unchanged over time. Under this assumption, which is not fully testable, any post-treatment change in this gap can be attributed to the policy-specific effect of interest.</p>
+<p>The intuition is simple: if the DiD estimates for mothers and fathers suffer from the same bias due to differences in employment trends across states, subtracting the second estimate from the first removes this bias.</p>
+<p>DDD therefore relies on a different version of the <strong>parallel-trends assumption</strong>: in the absence of the reform, the difference in employment between mothers and fathers would have evolved in the same way in treated and control states. Importantly, this assumption does not require mothers in treated and control states to have parallel trends, nor does it require fathers to have parallel trends. It requires that any differences in trends across states be the same for mothers and fathers.</p>
+<p>Under this assumption, together with the other identifying assumptions of DiD and provided that fathers are unaffected by the reform, the DDD estimator identifies the ATT for mothers.</p>
 </section>
 <section id="matching-difference-in-differences" class="level2 page-columns page-full" data-number="6.12">
 <h2 data-number="6.12" class="anchored" data-anchor-id="matching-difference-in-differences"><span class="header-section-number">6.12</span> Matching Difference-in-Differences</h2>
-<p>Matching DiD combines the logic of matching with the logic of DiD. It is useful when treated and control units differ in observed characteristics, but panel or repeated cross-sectional data are available.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
-<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;<strong>Repeated cross-sectional data</strong> consist of separate samples drawn from the same population at different points in time. Unlike panel data, the same units do not need to be observed in every period.</p></div></div><p>The matching step makes treated and control units more comparable in terms of observed pre-treatment covariates. The DiD step then differences out time-invariant unobserved heterogeneity.</p>
+<p>Matching DiD combines the logic of matching with the logic of DiD. It is useful when treated and control units differ in observed characteristics, but panel or repeated cross-sectional data are available.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;<strong>Repeated cross-sectional data</strong> consist of samples drawn from the same population at different points in time. For example, a survey may collect information on a different sample of households each year. Unlike panel data, repeated cross-sectional data do not follow the same units over time.</p></div></div><p>The matching step makes treated and control units more comparable in terms of observed pre-treatment covariates. The DiD step then accounts for the influence of unobserved characteristics whose effects on the outcome remain constant over time.</p>
 <p>A key contribution to this literature is Heckman, Ichimura, and Todd <span class="citation" data-cites="heckman1997">(<a href="references.html#ref-heckman1997" role="doc-biblioref">Heckman et al. 1997</a>)</span>.</p>
 <p>For the two-period case, a matching DiD estimator for the ATT can be written as</p>
 <p><span class="math display">\[
@@ -913,12 +924,8 @@ DDD = DiD_{mothers} - DiD_{fathers}.
 \right],
 \]</span></p>
 <p>where <span class="math inline">\(w_{ij}\)</span> is the weight given to control unit <span class="math inline">\(j\)</span> when constructing the counterfactual trend for treated unit <span class="math inline">\(i\)</span>.</p>
-<p>Matching DiD relies on two main conditions:</p>
-<ul>
-<li><strong>conditional parallel trends</strong>: after conditioning on covariates, treated and matched control units would have followed the same untreated trend;</li>
-<li><strong>common support</strong>: for each treated unit, at least 1 comparable untreated unit must exist.</li>
-</ul>
-<p>Importantly, matching is not automatically an improvement. If the matching variables are poorly chosen, if they are affected by treatment anticipation, or if matching discards many informative control units, the resulting DiD estimate may become less precise or even more biased. Matching can also worsen balance on pre-treatment outcome trends if it focuses only on baseline covariates. For this reason, matching DiD should be assessed empirically by checking common support, covariate balance, and especially the similarity of pre-treatment trends after matching.</p>
+<p>Matching DiD relies on the conditional parallel trends and common support assumptions introduced above. The matching step helps make these assumptions more plausible by constructing a comparison group of untreated units with similar pre-treatment characteristics.</p>
+<p>Matching can strengthen a DiD design by constructing a more comparable control group before estimating the treatment effect. To fully benefit from this approach, researchers should carefully select matching variables that are relevant to the evolution of the outcome and are not affected by treatment or its anticipation. It is also important to retain enough informative control units to ensure adequate precision. The quality of the resulting comparison should be assessed by checking common support, covariate balance, and, especially, the similarity of pre-treatment outcome trends after matching. These diagnostics help establish whether matching has made the parallel trends assumption more plausible and the resulting DiD estimates more credible.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -936,7 +943,7 @@ DDD = DiD_{mothers} - DiD_{fathers}.
 <section id="twfe-with-staggered-adoption" class="level2 page-columns page-full" data-number="6.13">
 <h2 data-number="6.13" class="anchored" data-anchor-id="twfe-with-staggered-adoption"><span class="header-section-number">6.13</span> TWFE With Staggered Adoption</h2>
 <p>In the canonical DiD setting, there are two groups and two periods: one group becomes treated, the other remains untreated, and the DiD estimand compares the change in outcomes for the treated group with the change in outcomes for the control group. In such a simple setting, the DiD parameter has a transparent interpretation: it estimates the ATT under the parallel-trends assumption.</p>
-<p>However, many empirical applications are more complex. Units may adopt the treatment at different times: some are treated early, others later, and some may never be treated. This setting is known as <strong>staggered adoption</strong>. In this case, the causal effects of interest are often <strong>group-time average treatment effects</strong>, usually denoted as <span class="math inline">\(ATT(g,t)\)</span>. These parameters measure the average effect of the treatment at time <span class="math inline">\(t\)</span> for the group of units first treated in period <span class="math inline">\(g\)</span>.</p>
+<p>However, many empirical applications are more complex because units adopt the treatment at different points in time. Some units receive treatment earlier, others later, and some may never receive it. This setting is known as <strong>staggered adoption</strong>. In this case, the causal effects of interest are often <strong>group-time average treatment effects</strong>, usually denoted as <span class="math inline">\(ATT(g,t)\)</span>. These parameters measure the average effect of the treatment at time <span class="math inline">\(t\)</span> for the group of units first treated in period <span class="math inline">\(g\)</span>.</p>
 <p>For example, <span class="math inline">\(ATT(g,t)\)</span> asks: among units first treated in period <span class="math inline">\(g\)</span>, what is the average difference at time <span class="math inline">\(t\)</span> between their observed outcome under treatment and the outcome they would have experienced if they had not yet been treated?</p>
 <p>For many years, the standard empirical approach in staggered-adoption settings was to estimate a <strong>two-way fixed effects (TWFE)</strong> model:</p>
 <p><span class="math display">\[
@@ -946,20 +953,20 @@ Y_{it}
 +
 \lambda_t
 +
-\tau D_{it}
+\tau_{\text{TWFE}} D_{it}
 +
 X_{it}'\beta
 +
 u_{it}.
 \]</span></p>
-<p>Here, <span class="math inline">\(\alpha_i\)</span> are unit fixed effects, which absorb time-invariant differences across units. The terms <span class="math inline">\(\lambda_t\)</span> are time fixed effects, which absorb shocks common to all units in a given period.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> The variable <span class="math inline">\(D_{it}\)</span> indicates whether unit <span class="math inline">\(i\)</span> is treated at time <span class="math inline">\(t\)</span>. The coefficient <span class="math inline">\(\tau\)</span> is often interpreted as the ATT.</p>
-<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;In practice, <strong>fixed effects</strong> can be thought of as a set of dummy variables. Unit fixed effects include a separate indicator for each unit, while time fixed effects include a separate indicator for each period. These dummies absorb persistent differences across units and common differences across periods.</p></div></div><div class="callout callout-style-simple callout-note callout-titled">
+<p>Here, <span class="math inline">\(\alpha_i\)</span> are unit fixed effects, which absorb time-invariant differences across units. The terms <span class="math inline">\(\lambda_t\)</span> are time fixed effects, which absorb shocks common to all units in a given period.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> The variable <span class="math inline">\(D_{it}\)</span> is time varying and indicates whether unit <span class="math inline">\(i\)</span> is treated at time <span class="math inline">\(t\)</span>. The coefficient <span class="math inline">\(\tau_{\text{TWFE}}\)</span> is often interpreted as the ATT.</p>
+<div class="no-row-height column-margin column-container"><div id="fn8"><p><sup>8</sup>&nbsp;In practice, <strong>fixed effects</strong> can be thought of as sets of dummy variables. Unit fixed effects allow each unit to have its own baseline outcome level, accounting for differences across units that remain constant over time. Time fixed effects allow each period to have its own outcome level, accounting for changes over time that are common to all units.</p></div></div><div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Application: unilateral divorce laws and dynamic effects
+<span class="screen-reader-only">Note</span>TWFE application: unilateral divorce laws and dynamic effects
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -971,15 +978,15 @@ DivorceRate_{st}
 +
 \lambda_t
 +
-\tau Unilateral_{st}
+\tau_{\text{TWFE}} Unilateral_{st}
 +
 u_{st},
 \]</span></p>
-<p>where state fixed effects <span class="math inline">\(\alpha_s\)</span> absorb permanent differences across states, year fixed effects <span class="math inline">\(\lambda_t\)</span> absorb common national shocks, and <span class="math inline">\(Unilateral_{st}\)</span> indicates whether unilateral divorce was available in state <span class="math inline">\(s\)</span> and year <span class="math inline">\(t\)</span>. The coefficient <span class="math inline">\(\tau\)</span> compresses the effects observed at all post-reform horizons into a single estimate.</p>
+<p>where state fixed effects <span class="math inline">\(\alpha_s\)</span> absorb permanent differences across states, year fixed effects <span class="math inline">\(\lambda_t\)</span> absorb common national shocks, and <span class="math inline">\(Unilateral_{st}\)</span> indicates whether unilateral divorce was available in state <span class="math inline">\(s\)</span> and year <span class="math inline">\(t\)</span>. The coefficient <span class="math inline">\(\tau_{\text{TWFE}}\)</span> compresses the effects observed at all post-reform horizons into a single estimate.</p>
 <p>This restriction is consequential because the effect was not constant over time. In Wolfers’s dynamic specification, divorce rates increased by approximately <strong>0.27 divorces per 1,000 people</strong> during the first two years after reform and by <strong>0.22</strong> during years three and four. The estimated increase then became smaller, and by years nine and ten the estimate was approximately <strong>-0.10</strong>, providing no evidence of a persistent positive effect.</p>
 </div>
 </div>
-<p>However, in staggered-adoption designs, <span class="math inline">\(\tau\)</span> does not generally estimate a single traditional DiD effect. It is instead a weighted average of many underlying comparisons across groups and time periods. Some of these comparisons use not-yet-treated units as controls, which is often natural. Others use already-treated units as controls for newly treated units. These comparisons can be problematic when treatment effects are heterogeneous, and especially when they evolve over time after treatment, because already-treated units are themselves experiencing treatment effects while serving as controls.</p>
+<p>However, in staggered-adoption designs, <span class="math inline">\(\tau_{\text{TWFE}}\)</span> does not generally identify the ATT. Instead, it combines multiple DiD comparisons across groups and time periods. Some of these comparisons use never-treated or not-yet-treated units as controls, which is consistent with the traditional logic of DiD. Others, however, use already-treated units as controls for newly treated units. The latter comparisons can be particularly problematic when treatment effects evolve over time: changes in outcomes among already-treated units may themselves reflect the effects of treatment, rather than how outcomes would have evolved in its absence. As a result, even when the parallel trends assumption holds, the TWFE estimator does not generally identify the ATT in staggered-adoption designs if treatment effects vary across groups or over time.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -993,7 +1000,7 @@ u_{st},
 <p>With staggered treatment timing and heterogeneous treatment effects, a TWFE coefficient may not estimate the policy-relevant ATT.</p>
 </div>
 </div>
-<p>Therefore, the TWFE coefficient <span class="math inline">\(\tau\)</span> should not be interpreted mechanically as the DiD estimand from the simple two-group, two-period design. When treatment effects are heterogeneous across groups or over time, <span class="math inline">\(\tau\)</span> may combine different <span class="math inline">\(ATT(g,t)\)</span> parameters with non-transparent weights, and in some cases even with negative weights. This can make the estimate difficult to interpret and potentially misleading <span class="citation" data-cites="dechaisemartin2020 goodmanbacon2021 callaway2021 sun2021 imai2021">(<a href="references.html#ref-dechaisemartin2020" role="doc-biblioref">Chaisemartin and D’Haultfœuille 2020</a>; <a href="references.html#ref-goodmanbacon2021" role="doc-biblioref">Goodman-Bacon 2021</a>; <a href="references.html#ref-callaway2021" role="doc-biblioref">Callaway and Sant’Anna 2021</a>; <a href="references.html#ref-sun2021" role="doc-biblioref">Sun and Abraham 2021</a>; <a href="references.html#ref-imai2021" role="doc-biblioref">Imai and Kim 2021</a>)</span>.</p>
+<p>Therefore, the TWFE coefficient <span class="math inline">\(\tau_{\text{TWFE}}\)</span> should not be interpreted as having the same causal meaning as the DiD estimand in the simple two-group, two-period design. Even when the parallel trends assumption holds, the TWFE coefficient may combine different group-time average treatment effects, <span class="math inline">\(ATT(g,t)\)</span>, using weights that are difficult to interpret and may even be negative. When treatment effects vary across groups or over time, the resulting estimate may therefore differ substantially from the ATT and lead to misleading conclusions <span class="citation" data-cites="dechaisemartin2020 goodmanbacon2021 callaway2021 sun2021 imai2021">(<a href="references.html#ref-dechaisemartin2020" role="doc-biblioref">Chaisemartin and D’Haultfœuille 2020</a>; <a href="references.html#ref-goodmanbacon2021" role="doc-biblioref">Goodman-Bacon 2021</a>; <a href="references.html#ref-callaway2021" role="doc-biblioref">Callaway and Sant’Anna 2021</a>; <a href="references.html#ref-sun2021" role="doc-biblioref">Sun and Abraham 2021</a>; <a href="references.html#ref-imai2021" role="doc-biblioref">Imai and Kim 2021</a>)</span>.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1004,12 +1011,26 @@ u_{st},
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In staggered-adoption DiD designs, not all comparisons are equally credible. A particularly important problem arises when <strong>already-treated units are used as controls</strong> for units that are treated later.</p>
-<p>Suppose one group is treated in period <span class="math inline">\(g\)</span> and another group is treated in a later period <span class="math inline">\(g'\)</span>. Before period <span class="math inline">\(g'\)</span>, the later-treated group can still serve as a comparison group for the earlier-treated group, because it has not yet received the treatment. This is a <strong>not-yet-treated comparison</strong> and is often useful.</p>
-<p>The problem appears after both groups have been treated. Once the earlier-treated group has already been exposed to the policy, its outcomes may include treatment effects. Using this group as a control for the later-treated group means comparing treated units with other treated units, rather than with units that remain untreated throughout the analyzed period. These comparisons are often called <strong>forbidden comparisons</strong>. They are problematic because they may subtract part of the treatment effect from the estimate, especially when treatment effects grow, fade, or otherwise evolve over time. In that case, the comparison no longer isolates the untreated potential outcome trend.</p>
+<p>Imagine two groups of schools introduce a tutoring program at different times: one group starts in 2024, while the other starts in 2025. Suppose that, without tutoring, average test scores would increase by one point per year in both groups. The program has a growing effect: it increases test scores by three points in the first year and by five points in the second year, relative to what scores would have been without tutoring.</p>
+<p><a href="#fig-did-forbidden-comparisons" class="quarto-xref">Figure&nbsp;<span>6.3</span></a> illustrates what happens when we use each group in turn as the control group for the other:</p>
+<ul>
+<li><p><strong>2024: using not-yet-treated schools as controls.</strong> Average test scores increase by four points in the schools that introduce tutoring: one point due to the underlying trend and three points due to the program. In the schools that have not yet introduced tutoring, scores increase by only one point. The DiD estimate correctly recovers the treatment effect: <span class="math inline">\(4-1=3\)</span>.</p></li>
+<li><p><strong>2025: using already-treated schools as controls.</strong> Average test scores increase by four points in the schools that introduce tutoring in 2025. The schools used as controls are now in their second year of tutoring. Their scores rise by three points: one point they would have gained anyway and two more because the tutoring effect grows from three to five points. The DiD estimate is therefore <span class="math inline">\(4-3=1\)</span>, even though the program increases test scores by three points in the newly treated schools.</p></li>
+</ul>
+<p>The second comparison is <strong>forbidden</strong> because the change in outcomes among the control schools no longer reflects only what would have happened without treatment. It also captures the growth of their own treatment effect. In this example, subtracting the control schools’ gain makes the DiD estimate two points too small.</p>
+<div id="fig-did-forbidden-comparisons" class="quarto-float quarto-figure quarto-figure-center anchored" alt="In 2024 the schools starting tutoring gain four points and schools with no tutoring yet gain one, so DiD recovers the three-point effect. In 2025 the schools starting tutoring gain four points and the schools used as controls gain three, including two extra points from tutoring. DiD estimates one point instead of three.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-did-forbidden-comparisons-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="../images/did-forbidden-comparisons.png" class="img-fluid figure-img" style="width:100.0%" alt="In 2024 the schools starting tutoring gain four points and schools with no tutoring yet gain one, so DiD recovers the three-point effect. In 2025 the schools starting tutoring gain four points and the schools used as controls gain three, including two extra points from tutoring. DiD estimates one point instead of three.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-did-forbidden-comparisons-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6.3: Year-to-year changes in the hypothetical tutoring example. The light segments show the gains that would have occurred without tutoring, and the dark segments show the extra gains due to tutoring. In real data, we observe only the total change.
+</figcaption>
+</figure>
 </div>
 </div>
-<p>In recent years, several estimators have been proposed as alternatives to the standard TWFE model, especially in settings with staggered treatment adoption and heterogeneous treatment effects. These approaches are often discussed within the broader <strong>event-study</strong> literature, because they estimate how treatment effects evolve before and after treatment adoption while avoiding some of the problematic comparisons embedded in TWFE regressions. We will discuss these methods in (<a href="../chapters/07-event-studies.html">Chapter 7.</a>)</p>
+</div>
+<p>In recent years, several estimators have been proposed as alternatives to the standard TWFE model, particularly in settings with staggered treatment adoption and heterogeneous treatment effects. These methods address the limitations of TWFE by avoiding forbidden comparisons, allowing treatment effects to vary across cohorts and over time, and providing more transparent ways of aggregating these effects into meaningful causal estimands. They are often discussed within the broader <strong>event-study</strong> literature because they allow researchers to examine how treatment effects evolve after treatment adoption and to assess pre-treatment trends. We will discuss these methods in <a href="../chapters/07-event-studies.html">Chapter 7</a>.</p>
 <!--## PanelMatch
 
 PanelMatch is a non-parametric generalization of matching DiD for time-series cross-sectional data [@imai2023].
@@ -1031,9 +1052,9 @@ An example is the study by Acemoglu, Naidu, Restrepo, and Robinson on the effect
 </section>
 <section id="summary" class="level2" data-number="6.14">
 <h2 data-number="6.14" class="anchored" data-anchor-id="summary"><span class="header-section-number">6.14</span> Summary</h2>
-<p>DiD estimates the ATT by comparing changes over time in treated and control groups.</p>
-<p>Its main strength is that it removes time-invariant differences between groups and common shocks affecting both groups over time. Its main weakness is that it relies on the parallel-trends assumption, which cannot be tested directly: in the absence of treatment, treated and control groups should have followed the same average trend.</p>
-<p>In the simple two-group, two-period case, DiD is transparent and intuitive. In richer panel settings with staggered adoption and heterogeneous treatment effects, researchers must be more careful, as detailed in the next chapter.</p>
+<p>DiD estimates the ATT by comparing changes in average outcomes over time between treated and control groups.</p>
+<p>Its main strength is that it accounts for persistent differences between groups and shocks that affect both groups in the same way. Its main limitation is that it relies on the <strong>parallel trends assumption</strong>, which requires that, in the absence of treatment, the average outcomes of treated and control groups would have changed by the same amount over time. Crucially, this assumption cannot be tested directly.</p>
+<p>In the simple two-group, two-period setting, DiD is transparent and intuitive. In more complex settings with staggered treatment adoption and heterogeneous treatment effects, additional challenges arise, requiring more sophisticated estimators, as discussed in the next chapter.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
