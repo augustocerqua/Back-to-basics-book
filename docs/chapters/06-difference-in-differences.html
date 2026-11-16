@@ -557,7 +557,7 @@ window.Quarto = {
   <li><a href="#the-evaluation-problem" id="toc-the-evaluation-problem" class="nav-link active" data-scroll-target="#the-evaluation-problem"><span class="header-section-number">6.1</span> The Evaluation Problem</a></li>
   <li><a href="#historical-intuition" id="toc-historical-intuition" class="nav-link" data-scroll-target="#historical-intuition"><span class="header-section-number">6.2</span> Historical Intuition</a></li>
   <li><a href="#the-basic-did-estimator" id="toc-the-basic-did-estimator" class="nav-link" data-scroll-target="#the-basic-did-estimator"><span class="header-section-number">6.3</span> The Basic DiD Estimator</a></li>
-  <li><a href="#parallel-trends" id="toc-parallel-trends" class="nav-link" data-scroll-target="#parallel-trends"><span class="header-section-number">6.4</span> Parallel Trends</a></li>
+  <li><a href="#the-parallel-trends-assumption" id="toc-the-parallel-trends-assumption" class="nav-link" data-scroll-target="#the-parallel-trends-assumption"><span class="header-section-number">6.4</span> The Parallel Trends Assumption</a></li>
   <li><a href="#regression-form" id="toc-regression-form" class="nav-link" data-scroll-target="#regression-form"><span class="header-section-number">6.5</span> Regression Form</a></li>
   <li><a href="#covariates-and-conditional-parallel-trends" id="toc-covariates-and-conditional-parallel-trends" class="nav-link" data-scroll-target="#covariates-and-conditional-parallel-trends"><span class="header-section-number">6.6</span> Covariates and Conditional Parallel Trends</a></li>
   <li><a href="#functional-form-limitation" id="toc-functional-form-limitation" class="nav-link" data-scroll-target="#functional-form-limitation"><span class="header-section-number">6.7</span> Functional Form Limitation</a></li>
@@ -607,13 +607,13 @@ window.Quarto = {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../images/DiD_in_a_figure.png" class="img-fluid figure-img"></p>
-<figcaption>DiD compares the change in outcomes for the <strong>treated group</strong> before and after the policy with the change in outcomes for the <strong>control group</strong> over the same period. The control group’s trend is used to construct the treated group’s <strong>counterfactual</strong> outcome. The <strong>DiD estimate</strong> is the gap between the treated group’s observed post-policy outcome and this counterfactual outcome.</figcaption>
+<figcaption>DiD compares the change in the average outcome of the <strong>treated group</strong> before and after the policy with the corresponding change in the <strong>control group</strong> over the same period. The control group’s trend is used to construct the treated group’s <strong>counterfactual</strong> outcome. The <strong>DiD estimate</strong> is the difference between the treated group’s observed average post-policy outcome and its estimated counterfactual.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Difference-in-differences (DiD) is one of the most widely used research designs in impact evaluation. It is useful when a policy affects one group of units but not another, and when we observe both groups before and after the treatment.</p>
-<p>The basic idea is simple. We compare the change in outcomes for the treated group with the change in outcomes for a comparison group over the same period. The first difference removes time-invariant differences between treated and control units. The second difference removes shocks that are common to both groups.</p>
+<p>Difference-in-differences (DiD) is one of the most widely used research designs in impact evaluation. DiD is particularly suited to settings in which a policy affects one group of units but not another, and both groups are observed before and after the intervention.</p>
+<p>The basic idea is simple. We compare the change in the average outcome of the treated group with the corresponding change in the control group over the same period. The first step—calculating the change within each group—eliminates pre-existing differences in outcome levels that remain constant over time. The second step—subtracting the change in the control group from that in the treated group—accounts for shocks and other changes that affect both groups in the same way.</p>
 <section id="the-evaluation-problem" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="the-evaluation-problem"><span class="header-section-number">6.1</span> The Evaluation Problem</h2>
 <p>Suppose there are two groups: a treated group and a control group. We observe both groups in two periods:</p>
@@ -622,7 +622,7 @@ window.Quarto = {
 <li>a post-treatment period, after the policy starts.</li>
 </ul>
 <p>Let <span class="math inline">\(D_i=1\)</span> for units in the treated group and <span class="math inline">\(D_i=0\)</span> for units in the control group. Let <span class="math inline">\(Post_t=1\)</span> in the post-treatment period and <span class="math inline">\(Post_t=0\)</span> in the pre-treatment period.</p>
-<p>The target parameter is usually the <strong>ATT</strong> in the post-treatment period:</p>
+<p>The target parameter is usually the ATT in the post-treatment period:</p>
 <p><span class="math display">\[
 ATT = E[Y_{i,post}(1)-Y_{i,post}(0)\mid D_i=1].
 \]</span></p>
@@ -638,7 +638,7 @@ ATT = E[Y_{i,post}(1)-Y_{i,post}(0)\mid D_i=1].
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>DiD does not require treated and control units to have the same outcome levels before treatment. It requires them to have comparable trends in the absence of treatment.</p>
+<p>DiD does not require treated and control groups to have the same average outcome before treatment. Instead, it requires that, in the absence of treatment, their average outcomes would have changed in the same way over time.</p>
 </div>
 </div>
 </section>
@@ -646,14 +646,14 @@ ATT = E[Y_{i,post}(1)-Y_{i,post}(0)\mid D_i=1].
 <h2 data-number="6.2" class="anchored" data-anchor-id="historical-intuition"><span class="header-section-number">6.2</span> Historical Intuition</h2>
 <p>An early example of DiD logic can be found in John Snow’s analysis of cholera in nineteenth-century London <span class="citation" data-cites="snow1855">(<a href="references.html#ref-snow1855" role="doc-biblioref">Snow 1855</a>)</span>. At the time, cholera was often explained by the dominant miasma theory, according to which disease spread through “bad air.” Snow instead argued that cholera was transmitted through contaminated water, but he needed empirical evidence to support his theory.</p>
 <p>The empirical setting was unusually informative. In parts of London, households were served by different water companies. Before the relevant change, both the Lambeth Company and the Southwark &amp; Vauxhall Company drew water from polluted sections of the River Thames. Later, Lambeth moved its water intake upstream,<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> to a cleaner part of the river, while Southwark &amp; Vauxhall continued to draw water from a more contaminated downstream source.</p>
-<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;Lambeth had moved its water intake upstream in 1852 to improve water quality, relocating it beyond the main influence of London’s sewage. This change provided the crucial variation Snow exploited to test the waterborne-transmission hypothesis.</p></div></div><p>This created a comparison across two dimensions: <strong>before versus after</strong> the change in water supply, and <strong>households served by Lambeth versus households served by Southwark &amp; Vauxhall</strong>. If cholera mortality declined more among households served by Lambeth than among households served by Southwark &amp; Vauxhall, this difference could be interpreted as evidence that cleaner water reduced cholera mortality.</p>
+<div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;Lambeth had moved its water intake upstream in 1852 to improve water quality, relocating it beyond the main influence of London’s sewage. This change provided the crucial variation Snow exploited to test the waterborne-transmission hypothesis.</p></div></div><p>This setting allowed for two comparisons: <strong>over time</strong>, before and after the change in water supply, and <strong>across groups</strong>, between households served by Lambeth and those served by Southwark &amp; Vauxhall. The key question was whether cholera mortality declined more among households served by Lambeth, which switched to cleaner water, than among households served by Southwark &amp; Vauxhall, which did not. A greater decline in mortality among Lambeth households would provide evidence that access to cleaner water reduced cholera mortality.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../images/snow_DID_example.png" class="img-fluid figure-img" style="width:85.0%"></p>
 <figcaption>John Snow’s study of cholera in London provides an early illustration of DiD logic. The numbers reported in the bottom-left figure are not Snow’s original data; they are purely illustrative and serve only to make the DiD comparison transparent.</figcaption>
 </figure>
 </div>
-<p>The logic is that of the traditional DiD design. The Southwark &amp; Vauxhall households provide a comparison group, because they remained exposed to polluted water. The Lambeth households provide the treated group, because their water source changed. The key comparison is not simply whether cholera mortality was lower among Lambeth households after the change. Instead, the question is whether mortality declined <strong>more</strong> for Lambeth households than for households whose water supply did not change.</p>
+<p>This example illustrates the logic of the traditional DiD design. Households served by Lambeth constitute the treated group because their water supply became cleaner, while those served by Southwark &amp; Vauxhall constitute the control group because they remained exposed to polluted water. The key question is not simply whether cholera mortality was lower among Lambeth households after the change, but whether it declined <strong>more</strong> among these households than among those whose water supply remained unchanged.</p>
 <p>In economics, classic applications include Card’s study of the Mariel Boatlift and the Miami labor market <span class="citation" data-cites="card1990">(<a href="references.html#ref-card1990" role="doc-biblioref">Card 1990</a>)</span>, and Card and Krueger’s study of the employment effects of the 1992 minimum wage increase in New Jersey relative to Pennsylvania <span class="citation" data-cites="card1994">(<a href="references.html#ref-card1994" role="doc-biblioref">Card and Krueger 1994</a>)</span>.</p>
 </section>
 <section id="the-basic-did-estimator" class="level2" data-number="6.3">
@@ -666,7 +666,7 @@ ATT = E[Y_{i,post}(1)-Y_{i,post}(0)\mid D_i=1].
 -
 \left(\bar{Y}_{0,\text{post}}-\bar{Y}_{0,\text{pre}}\right).
 \]</span></p>
-<p>where <span class="math inline">\(\bar{Y}_{1,post}\)</span> is the average post-treatment outcome for the treated group, <span class="math inline">\(\bar{Y}_{1,pre}\)</span> is the average pre-treatment outcome for the treated group, and similarly for the control group.</p>
+<p>The causal estimand of interest is the ATT. Here, <span class="math inline">\(\bar{Y}_{1,\text{post}}\)</span> and <span class="math inline">\(\bar{Y}_{1,\text{pre}}\)</span> denote the average outcomes of the treated group in the post-treatment and pre-treatment periods, respectively, while <span class="math inline">\(\bar{Y}_{0,\text{post}}\)</span> and <span class="math inline">\(\bar{Y}_{0,\text{pre}}\)</span> denote the corresponding averages for the control group.</p>
 <p>This can also be written as</p>
 <p><span class="math display">\[
 \widehat{\tau}_{\text{DiD}}
@@ -677,10 +677,9 @@ ATT = E[Y_{i,post}(1)-Y_{i,post}(0)\mid D_i=1].
 \]</span></p>
 <p>These two expressions are algebraically equivalent. The first emphasizes changes over time within each group. The second emphasizes how the treated-control gap changes after treatment.</p>
 </section>
-<section id="parallel-trends" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="parallel-trends"><span class="header-section-number">6.4</span> Parallel Trends</h2>
-<p>The central identifying assumption is the <strong>parallel-trends assumption</strong>. It states that, in the absence of treatment, the treated and control groups would have experienced the same average change in outcomes.</p>
-<p>Formally,</p>
+<section id="the-parallel-trends-assumption" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="the-parallel-trends-assumption"><span class="header-section-number">6.4</span> The Parallel Trends Assumption</h2>
+<p>The central identifying assumption is the <strong>parallel-trends assumption</strong>. It states that, in the absence of treatment, the treated and control groups would have experienced the same average change in outcomes. Formally,</p>
 <p><span class="math display">\[
 E[Y_{i,post}(0)-Y_{i,pre}(0)\mid D_i=1]
 =
@@ -708,8 +707,14 @@ E[Y_{i,post}(0)-Y_{i,pre}(0)\mid D_i=0].
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The assumption is not that treated and control groups have the same outcome levels. The assumption is that, without treatment, their outcomes would have moved in parallel.</p>
+<p>The parallel trends assumption does not require treated and control groups to have the same average outcome before treatment. It requires that, in the absence of treatment, their average outcomes would have changed by the same amount over time. Crucially, this assumption concerns what would have happened without treatment, not necessarily what we observe after treatment.</p>
 </div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../images/did-parallel-trends-identification.gif" class="img-fluid figure-img" style="width:100.0%"></p>
+<figcaption>How parallel trends identify the ATT. The control mean rises from 5 to 8. If the treated group would have grown by the same amount without treatment, its post-treatment mean would have been 13 rather than the observed 17. The DiD estimate is therefore 4.</figcaption>
+</figure>
 </div>
 </section>
 <section id="regression-form" class="level2" data-number="6.5">
@@ -722,19 +727,19 @@ Y_{it} = \alpha + \beta Treat_i + \gamma Post_t + \tau_{\text{DiD}} (Treat_i \ti
 <p><span class="math display">\[
 \widehat{\tau}_{DiD}
 =
-\left(\bar{Y}_{T,post}-\bar{Y}_{T,pre}\right)
+\left(\bar{Y}_{1,post}-\bar{Y}_{1,pre}\right)
 -
-\left(\bar{Y}_{C,post}-\bar{Y}_{C,pre}\right).
+\left(\bar{Y}_{0,post}-\bar{Y}_{0,pre}\right).
 \]</span></p>
-<p>The regression terms have a simple interpretation:</p>
+<p>The regression coefficients have a straightforward interpretation:</p>
 <ul>
-<li><span class="math inline">\(\alpha\)</span> captures the average outcome of the control group before the policy;</li>
-<li><span class="math inline">\(\beta\)</span> captures baseline differences between treated and control units;</li>
-<li><span class="math inline">\(\gamma\)</span> captures the common change from the pre-treatment to the post-treatment period;</li>
-<li><span class="math inline">\(\tau_{\text{DiD}}\)</span> captures the additional change experienced by the treated group after the policy, namely the ATT.</li>
+<li><span class="math inline">\(\alpha\)</span> represents the average outcome of the control group before the policy (<span class="math inline">\(5\)</span> in the example);</li>
+<li><span class="math inline">\(\beta\)</span> represents the difference in average outcomes between the treated and control groups before the policy (<span class="math inline">\(10-5=5\)</span>);</li>
+<li><span class="math inline">\(\gamma\)</span> represents the change in the average outcome of the control group from the pre-treatment to the post-treatment period (<span class="math inline">\(8-5=3\)</span>). Under the parallel trends assumption, this is also the change that the treated group would have experienced in the absence of the policy;</li>
+<li><span class="math inline">\(\tau_{\text{DiD}}\)</span> represents the additional change in the average outcome of the treated group relative to the control group (<span class="math inline">\((17-10)-(8-5)=4\)</span>). Under the identifying assumptions of DiD, this coefficient captures the ATT.</li>
 </ul>
-<p>Why use a regression if the coefficient is equivalent to a simple difference between four means? The main reason is that the regression framework also provides an estimate of uncertainty around the DiD estimate. It allows us to compute standard errors and confidence intervals for <span class="math inline">\(\widehat{\tau}_{\text{DiD}}\)</span>, and to test hypotheses about the underlying causal parameter <span class="math inline">\(\tau_{\text{DiD}}\)</span>.</p>
-<p>Moreover, the regression formulation is easy to extend as shown in the following section.</p>
+<p>Why use a regression model if the DiD estimate can be obtained simply by calculating differences between four means? One of the main advantages of the regression framework is that it facilitates statistical inference. Rather than providing only a point estimate of the treatment effect, it allows us to compute standard errors and confidence intervals for <span class="math inline">\(\widehat{\tau}_{\text{DiD}}\)</span> and to test hypotheses about the underlying causal effect, <span class="math inline">\(\tau_{\text{DiD}}\)</span>.</p>
+<p>Moreover, the regression framework makes it easier to extend the basic DiD design, for example by including covariates or accommodating multiple time periods, as we will see in the following sections.</p>
 <!--With panel data and more than two periods, a common extension is
 
 $$
@@ -757,9 +762,53 @@ In the simple two-group, two-period case, the TWFE coefficient coincides with th
 </section>
 <section id="covariates-and-conditional-parallel-trends" class="level2" data-number="6.6">
 <h2 data-number="6.6" class="anchored" data-anchor-id="covariates-and-conditional-parallel-trends"><span class="header-section-number">6.6</span> Covariates and Conditional Parallel Trends</h2>
-<p>The DiD regression model can be estimated with additional covariates. Covariates may improve precision and help make the parallel-trends assumption more credible.</p>
-<p>The relevant assumption then becomes <strong>conditional parallel trends</strong>: after conditioning on pre-treatment characteristics, the treated and control groups would have followed the same average trend in <span class="math inline">\(Y\)</span> in the absence of treatment.</p>
-<p>Covariates should be handled with care. They should typically be measured before treatment or otherwise be unaffected by treatment. Including post-treatment variables can introduce severe sources of bias.</p>
+<p>The basic DiD regression model can be extended to include observed pre-treatment covariates. These covariates may improve precision and make the parallel trends assumption more plausible by accounting for differences in characteristics that influence how outcomes evolve over time.</p>
+<p>Let <span class="math inline">\(X_i\)</span> denote a vector of observed characteristics measured before treatment. Importantly, we use the same pre-treatment values of these characteristics in both periods, even if the characteristics themselves change over time. An extended regression specification is</p>
+<p><span class="math display">\[
+Y_{it}
+=
+\alpha
++
+\beta Treat_i
++
+\gamma Post_t
++
+\tau_{\text{DiD}}(Treat_i \times Post_t)
++
+X_i'\delta
++
+Post_t \times X_i'\theta
++
+\varepsilon_{it}.
+\]</span></p>
+<p>The two additional terms serve different purposes:</p>
+<ul>
+<li><span class="math inline">\(X_i'\delta\)</span> allows units with different pre-treatment characteristics to have different outcome levels.</li>
+<li><span class="math inline">\(Post_t \times X_i'\theta\)</span> allows units with different pre-treatment characteristics to experience different changes in outcomes over time.</li>
+</ul>
+<p>The second term is particularly important in a DiD design. Simply including pre-treatment covariates in the regression accounts for differences in outcome levels, but not for differences in outcome trends associated with these characteristics. By interacting the covariates with <span class="math inline">\(Post_t\)</span>, we allow units with different characteristics to follow different trends.</p>
+<p>To see why this matters, suppose we are evaluating the effect of a subsidy on firms’ employment. Even in the absence of the subsidy, large firms may tend to grow faster than small firms. If subsidized firms are generally larger than unsubsidized firms, the two groups may have experienced different employment trends even without the policy. By allowing pre-treatment firm size to influence employment growth, rather than just employment levels, we may construct a more credible counterfactual.</p>
+<p>Importantly, this does not mean that we control for firm size measured after the intervention. We use firm size measured before the subsidy was received and allow its relationship with employment to differ between the pre-treatment and post-treatment periods. Controlling for post-treatment firm size could instead introduce bias, because firm size may itself be affected by the subsidy.</p>
+<p>The logic of this specification becomes particularly clear if we express the model in first differences. With two periods, subtracting the pre-treatment equation from the post-treatment equation gives</p>
+<p><span class="math display">\[
+\Delta Y_i
+=
+\gamma
++
+\tau_{\text{DiD}}Treat_i
++
+X_i'\theta
++
+\Delta\varepsilon_i,
+\]</span></p>
+<p>where <span class="math inline">\(\Delta Y_i=Y_{i,\text{post}}-Y_{i,\text{pre}}\)</span> is the change in the outcome between the two periods. We can now see that the model compares changes in outcomes between treated and untreated units, accounting for pre-treatment characteristics that may influence these changes.</p>
+<p>The underlying identifying assumption is now <strong>conditional parallel trends</strong>: in the absence of treatment, treated and untreated units with the same observed pre-treatment characteristics would have experienced the same average change in outcomes. Formally,</p>
+<p><span class="math display">\[
+E[Y_{i,\text{post}}(0)-Y_{i,\text{pre}}(0)\mid Treat_i=1,X_i]
+=
+E[Y_{i,\text{post}}(0)-Y_{i,\text{pre}}(0)\mid Treat_i=0,X_i].
+\]</span></p>
+<p>Under this assumption, together with the other identifying assumptions of DiD, sufficient common support, and a correctly specified regression model, <span class="math inline">\(\tau_{\text{DiD}}\)</span> identifies the ATT if the average treatment effect is constant across covariate values. If treatment effects vary with these characteristics, the model can be extended to account for such heterogeneity, and the estimated effects can then be averaged over the treated population.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
