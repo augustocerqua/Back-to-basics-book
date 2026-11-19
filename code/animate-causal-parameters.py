@@ -1,7 +1,8 @@
 """Update the supplied teaching animation to Chapter 3 notation.
 
 Run with the original GIF path as the first argument. The original unit cards,
-moving dots, frame durations, and loop are retained; notation is redrawn at 2x.
+moving dots and loop are retained; notation is redrawn at 2x and frame
+durations are extended by 50% to give readers more time.
 """
 import io
 import sys
@@ -19,6 +20,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE = Path(sys.argv[1])
 DEST = ROOT / 'images'
 SCALE = 2
+TIMING_MULTIPLIER = 1.5
 BG = (248, 250, 252)
 INK = (24, 48, 64)
 MUTED = (80, 102, 120)
@@ -132,7 +134,7 @@ for i in range(source.n_frames):
     if stage not in samples or i==source.n_frames-1:
         samples[stage]=updated.copy()
     frames.append(updated.quantize(palette=palette, dither=Image.Dither.NONE))
-    durations.append(source.info.get('duration',100))
+    durations.append(round(source.info.get('duration',100) * TIMING_MULTIPLIER / 10) * 10)
 
 DEST.mkdir(exist_ok=True)
 gif=DEST/'causal-parameters-ite-ate-att-cate.gif'

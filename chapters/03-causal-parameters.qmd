@@ -10,7 +10,8 @@ $$
 \Delta_i = Y_i(1) - Y_i(0).
 $$
 
-Although $\Delta_i$ is generally unobservable, it allows us to define causal parameters by averaging individual effects over different target populations. Choosing the appropriate **causal estimand**, that is, the average causal effect for the population or subgroup of interest, is therefore a substantive step that should come before choosing an **estimator**, namely, the statistical procedure used to estimate that effect from the available data.
+
+Because we cannot observe both potential outcomes for the same unit, individual treatment effects, $\Delta_i$, are unobservable. Rather than attempting to identify these individual treatment effects, causal inference therefore typically focuses on average treatment effects defined over different target populations. Choosing the appropriate **causal estimand** (also called a **causal parameter**), that is, the causal effect for the population or subgroup of interest, is therefore a substantive step that should come before choosing an **estimator**, namely, the statistical procedure used to estimate that effect from the available data.
 
 ## The most common causal parameters of interest: ATE and ATT
 
@@ -48,7 +49,7 @@ $$
 E[Y_i(1) \mid D_i=1] = E[Y_i^{obs} \mid D_i=1].
 $$
 
-The second component, $E[Y_i(0) \mid D_i=1]$, is not observed. It is the mean outcome that treated units would have experienced without treatment. Estimating this counterfactual is the central empirical challenge.
+The second component, $E[Y_i(0) \mid D_i=1]$, is not observed because we cannot see what would have happened to the treated units had they not received treatment. Although we observe untreated outcomes for control units, these do not necessarily represent what treated units would have experienced without treatment. Estimating this missing counterfactual mean is the central empirical challenge.
 
 ::: {.callout-caution appearance="simple"}
 ### The difficulties in estimating $E[Y_i(0) \mid D_i=1]$
@@ -84,7 +85,7 @@ This shows why a simple comparison between treated and untreated units does not 
 
 Besides the ATE and ATT, two other causal parameters are especially important in experimental and certain observational designs: the **local average treatment effect (LATE)** and the **intention-to-treat effect (ITT)**.
 
-**The local average treatment effect (LATE)**. The LATE measures the average causal effect for a specific subgroup of units, rather than for the entire population of interest. For example, suppose students automatically receive a scholarship if their test score exceeds a given cutoff. This creates a setting suitable for an RD design (see [Chapter 9](../chapters/09-regression-discontinuity.qmd)), because students just above and just below the cutoff are expected to be very similar, except for scholarship receipt. Under appropriate assumptions, RD identifies the LATE at the cutoff, rather than the average effect for all students. More generally, the subgroup for which a causal effect can be identified depends on the research design and the source of variation in treatment assignment.
+**The local average treatment effect (LATE)**. Unlike the ATT, which focuses on all treated units, the LATE measures the average causal effect for a specific subgroup identified by the research design. In instrumental variable settings (see [Chapter 8](../chapters/08-instrumental-variables.qmd)), this subgroup consists of units whose treatment status is influenced by the instrument (known as *compliers*). Consider, instead, a setting in which students automatically receive a scholarship if their test score exceeds a given cutoff. This is suitable for a regression discontinuity (RD) design (see [Chapter 9](../chapters/09-regression-discontinuity.qmd)), because students just above and just below the cutoff are expected to be very similar, except for scholarship receipt. Under appropriate assumptions, RD identifies the treatment effect at the cutoff, rather than the average effect for all students. Thus, the population for which a causal effect can be identified depends on the research design and the source of variation in treatment assignment.
 
 **The intention-to-treat effect (ITT)**. ITT measures the effect of being assigned or offered treatment, regardless of whether units actually comply with their assignment.^[The term *compliance* refers to whether units follow their assigned treatment status. For example, some units assigned to treatment may not receive it, while some assigned to the control group may receive it anyway.] It is especially relevant in randomized experiments with imperfect compliance. For policy purposes, the ITT is often meaningful because it captures the effect of implementing an offer, eligibility rule, or assignment mechanism in the real world. For example, suppose a development program randomly offers farmers a voucher for improved seeds and fertilizer, but only some farmers actually redeem the voucher and use the inputs. The ITT compares the average outcomes of farmers who were offered the voucher with those who were not, regardless of actual take-up. It therefore estimates the effect of the policy offer itself, rather than the effect of actually using the improved inputs.
 
@@ -118,7 +119,7 @@ Their individual treatment effects remain fixed; what changes is which units con
 
 ::: {.content-visible when-format="html"}
 
-![The ITEs remain fixed. ATE averages over all 12 units, ATT over the six treated units, and CATE(1) over the four units with the characteristic $X_i=1$. Each unit receives equal weight within its target group. The ITEs are assumed known only for illustration.](../images/causal-parameters-ite-ate-att-cate.gif){width="100%"}
+![The ITEs remain fixed and are all measured at the same point in time. ATE averages over all 12 units, ATT over the six treated units, and CATE(1) over the four units with the characteristic $X_i=1$. Each unit receives equal weight within its target group. The ITEs are assumed known only for illustration.](../images/causal-parameters-ite-ate-att-cate.gif){width="100%"}
 
 :::
 

@@ -1,3 +1,11 @@
+::: {.text-center style="display: flex; justify-content: center; column-gap: 2cm; flex-wrap: wrap;"}
+
+First version: July 8, 2026
+
+Latest update: November 16, 2026
+
+:::
+
 # About the book {.unnumbered}
 
 ::: {.content-visible when-format="html"}

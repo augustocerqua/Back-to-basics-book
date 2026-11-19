@@ -13,6 +13,10 @@ blockquote {
   margin-bottom: 1.2em;
 }
 
+#title-block-header .quarto-title-meta {
+  text-align: center;
+}
+
 .quarto-title-meta > div:nth-child(2) .date {
   font-size: 0;
 }
