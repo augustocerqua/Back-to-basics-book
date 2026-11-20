@@ -4,6 +4,11 @@ project:
 format:
   pdf:
     reference-location: document
+    geometry:
+      - left=25mm
+      - right=25mm
+      - top=25mm
+      - bottom=25mm
     header-includes:
       - \setlength{\LTpost}{1pt}
     documentclass: scrreprt

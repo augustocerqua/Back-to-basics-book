@@ -76,11 +76,7 @@ $$
 \ell=t-g.
 $$
 
-When $\ell=0$, the unit is in its first treated period; when $\ell=1$, it is one period after treatment onset; and when $\ell=-1$, it is one period before treatment.
-
-::: {.column-margin}
-**Leads and lags.** *Leads* refer to periods before treatment ($\ell<0$), whereas *lags* refer to periods after treatment onset ($\ell>0$). For example, $\ell=-2$ is a two-period lead and $\ell=2$ is a two-period lag. The treatment-onset period, $\ell=0$, is often called *lag zero*.
-:::
+When $\ell=0$, the unit is in its first treated period; when $\ell=1$, it is one period after treatment onset; and when $\ell=-1$, it is one period before treatment.^[**Leads and lags.** *Leads* refer to periods before treatment ($\ell<0$), whereas *lags* refer to periods after treatment onset ($\ell>0$). For example, $\ell=-2$ is a two-period lead and $\ell=2$ is a two-period lag. The treatment-onset period, $\ell=0$, is often called *lag zero*.]
 
 Event time is not defined for never-treated units because they do not have a treatment date. These units may nevertheless contribute as controls when cohort-specific effects are estimated.
 

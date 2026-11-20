@@ -608,23 +608,19 @@ Note
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../images/instrumental-variables-lever.png" class="img-fluid figure-img"></p>
-<figcaption>Instrumental variables use an external source of variation, the instrument <span class="math inline">\(Z\)</span>, to shift treatment status <span class="math inline">\(D\)</span>. If the instrument affects the outcome <span class="math inline">\(Y\)</span> only through the treatment, the variation in <span class="math inline">\(D\)</span> induced by <span class="math inline">\(Z\)</span> can be used to estimate a causal effect, even in the presence of unobserved confounders.</figcaption>
+<figcaption>With a binary treatment, the instrument <span class="math inline">\(Z\)</span> changes participation for some units, the compliers, while other units do not switch. With a binary instrument, relevance, exogeneity, exclusion, and monotonicity identify the average treatment effect for compliers (LATE). The labels illustrate potential treatment statuses under <span class="math inline">\(Z=0\)</span> and <span class="math inline">\(Z=1\)</span>.</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>In observational studies, treated and untreated units often differ in ways that are not fully observed by the researcher. If unobserved factors affect both treatment participation and potential outcomes, a regression of the outcome on treatment does not generally identify a causal effect, even after controlling for observed pre-treatment differences.</p>
-<p>Suppose we want to estimate the effect of a treatment <span class="math inline">\(D_i\)</span> on a post-treatment outcome <span class="math inline">\(Y_i\)</span> using the linear model</p>
+<p>In observational studies, treated and untreated units often differ in ways that are not fully observed by the researcher. If unobserved factors influence both treatment participation and potential outcomes, the methods introduced in Section 5, such as matching and regression adjustment, will generally produce biased estimates of causal effects. This is because controlling for observed pre-treatment characteristics alone cannot eliminate selection bias arising from unobserved differences between treated and untreated units.</p>
+<p>Suppose we want to estimate the effect of a treatment <span class="math inline">\(D_i\)</span> on a post-treatment outcome <span class="math inline">\(Y_i\)</span> using the linear model already presented in Chapter 5:</p>
 <p><span class="math display">\[
-Y_i = \alpha + \tau D_i + X_i'\beta + u_i,
+Y_i = \alpha + \tau D_i + X_i'\beta + u_i.
 \]</span></p>
-<p>where <span class="math inline">\(X_i\)</span> is a vector of observed covariates and <span class="math inline">\(u_i\)</span> contains all unobserved determinants of the outcome.</p>
-<p>The problem is that, in many applications,</p>
-<p><span class="math display">\[
-\operatorname{Cov}(D_i,u_i) \neq 0.
-\]</span></p>
+<p>The problem is that, in many applications, <span class="math display">\[\operatorname{Cov}(D_i,u_i) \neq 0.\]</span></p>
 <p>This means that treatment status is correlated with unobserved determinants of the outcome. In this case, estimating <span class="math inline">\(\tau\)</span> by ordinary least squares does not generally yield an unbiased estimate of the causal effect of <span class="math inline">\(D_i\)</span> on <span class="math inline">\(Y_i\)</span>.</p>
-<p>For example, suppose we want to estimate the effect of education on wages. More educated individuals tend to earn more, but they may also differ in unobserved ability, motivation, family background, or local opportunities. If these factors affect both schooling and wages, then the estimated relationship between schooling and wages combines the causal effect of education with selection bias.</p>
+<p>For example, suppose we want to estimate the effect of obtaining a university degree on wages. University graduates tend to earn more than non-graduates, but they may also differ in unobserved characteristics such as ability, motivation, family background, or local employment opportunities. If these factors influence both the likelihood of obtaining a university degree and potential wages, the observed wage difference between graduates and non-graduates reflects not only the causal effect of education but also selection bias.</p>
 <p>Instrumental variables (IV) provide a way to isolate a source of variation in treatment that is plausibly unrelated to these unobserved determinants of the outcome.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -636,12 +632,12 @@ Y_i = \alpha + \tau D_i + X_i'\beta + u_i,
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>An instrumental variable is a variable that shifts treatment status but affects the outcome only through the treatment. In other words, it should not have any direct effect on the outcome.</p>
+<p>A valid instrumental variable (IV) influences treatment participation but affects the outcome only through treatment.</p>
 </div>
 </div>
 <section id="historical-intuition" class="level2" data-number="8.1">
 <h2 data-number="8.1" class="anchored" data-anchor-id="historical-intuition"><span class="header-section-number">8.1</span> Historical Intuition</h2>
-<p>An early and influential example of IV logic appears in Philip G. Wright’s analysis of supply and demand in agricultural commodity markets <span class="citation" data-cites="wright1928">(<a href="references.html#ref-wright1928" role="doc-biblioref">Wright 1928</a>)</span>. Wright faced the problem of estimating a demand curve when price and quantity are jointly determined in market equilibrium. A simple regression of quantity on price cannot generally recover the demand relationship, because observed changes in prices and quantities may result from shifts in either demand or supply.</p>
+<p>An early and influential example of IV logic appears in Philip G. Wright’s analysis of supply and demand in agricultural commodity markets <span class="citation" data-cites="wright1928">(<a href="references.html#ref-wright1928" role="doc-biblioref">Wright 1928</a>)</span>. Wright faced the challenge of estimating a demand curve when prices and quantities are jointly determined by supply and demand in market equilibrium. A simple regression of quantity on price cannot generally identify the demand curve because observed changes in prices and quantities reflect shifts in both supply and demand. As a result, the estimated relationship does not isolate how the quantity demanded responds to changes in price.</p>
 <p>The key insight was to exploit variables that shift supply without directly shifting demand. Weather conditions, for example, may affect agricultural output and therefore supply, while leaving consumers’ demand unchanged. These supply shifts generate changes in equilibrium prices that move the market along the demand curve, making it possible to estimate how quantity demanded responds to price. In modern terminology, weather-related supply shifters can therefore serve as <strong>instruments</strong> for price: they generate changes in price that originate from the supply side rather than from changes in consumers’ demand. By isolating this source of price variation, we can study how quantity demanded responds to changes in price.</p>
 <p>The Wright example captures the core logic of IV: when treatment is not randomly assigned and some confounders are unobserved, causal estimates from regression or matching methods are generally biased. A valid instrument provides a source of variation that affects treatment assignment but does not affect the outcome through any other channel. IV exploits this externally induced variation in treatment to estimate a causal effect.</p>
 </section>
@@ -649,11 +645,11 @@ Y_i = \alpha + \tau D_i + X_i'\beta + u_i,
 <h2 data-number="8.2" class="anchored" data-anchor-id="example-college-proximity-and-returns-to-schooling"><span class="header-section-number">8.2</span> Example: College Proximity and Returns to Schooling</h2>
 <p>A classic example is Card’s study of the returns to schooling <span class="citation" data-cites="card1993">(<a href="references.html#ref-card1993" role="doc-biblioref">Card 1993</a>)</span>. The question is: how much does an additional year of education increase future wages?</p>
 <p>A simple comparison between more educated and less educated individuals may be biased because schooling is associated with unobserved ability and family background. Card uses geographic proximity to college as an instrument for educational attainment.</p>
-<p>The identification argument has three components (see next section for more details):</p>
+<p>The identification argument has three components (see the next section for more details):</p>
 <ol type="1">
 <li><strong>Relevance:</strong> individuals who grow up near a college face lower attendance costs, which may encourage them to obtain more schooling.</li>
-<li><strong>Exclusion:</strong> proximity to college must affect future wages only through schooling, not through other channels such as better local employment opportunities.</li>
-<li><strong>Exogeneity:</strong> after conditioning on relevant pre-treatment covariates, proximity must be unrelated to unobserved determinants of wages. This could fail, for example, if families with greater unobserved resources systematically choose to live near colleges.</li>
+<li><strong>Exclusion:</strong> proximity to college must affect future wages only through schooling. For example, this assumption would be violated if living near a college also provided better employment opportunities or professional networks that increased wages independently of educational attainment.</li>
+<li><strong>Exogeneity:</strong> after conditioning on relevant pre-treatment covariates, proximity to college must be unrelated to factors that independently influence potential wages. For example, this assumption would be violated if families with greater unobserved resources, whose children would tend to earn more regardless of their education, systematically chose to live near colleges.</li>
 </ol>
 <p>In this setting:</p>
 <ul>
@@ -664,7 +660,7 @@ Y_i = \alpha + \tau D_i + X_i'\beta + u_i,
 </ul>
 <div class="no-row-height column-margin column-container"><div id="fn1"><p><sup>1</sup>&nbsp;Unlike the binary treatment indicator <span class="math inline">\(D_i\)</span> used elsewhere in this chapter, <span class="math inline">\(T_i\)</span> measures treatment intensity: years of schooling. A binary instrument can shift a treatment that takes more than two values.</p></div></div><p>Card reports IV estimates of the return to schooling that are roughly 25–60% higher than conventional OLS estimates across his specifications. He also finds that the educational gains associated with college proximity are concentrated among men from less-educated families, for whom nearby access is more likely to change educational attainment.</p>
 </section>
-<section id="the-basic-iv-logic-and-the-key-assumptions" class="level2" data-number="8.3">
+<section id="the-basic-iv-logic-and-the-key-assumptions" class="level2 page-columns page-full" data-number="8.3">
 <h2 data-number="8.3" class="anchored" data-anchor-id="the-basic-iv-logic-and-the-key-assumptions"><span class="header-section-number">8.3</span> The Basic IV Logic and the Key Assumptions</h2>
 <p>An instrument is usually denoted by <span class="math inline">\(Z_i\)</span>. The core IV idea is that <span class="math inline">\(Z_i\)</span> affects treatment status <span class="math inline">\(D_i\)</span>, and this instrument-induced variation in treatment is then used to learn about the effect of <span class="math inline">\(D_i\)</span> on the outcome <span class="math inline">\(Y_i\)</span>:</p>
 <p><span class="math display">\[
@@ -672,22 +668,20 @@ Z_i \rightarrow D_i \rightarrow Y_i.
 \]</span></p>
 <p>For this logic to identify a causal effect, the instrument must satisfy three conditions at the same time.</p>
 <ol type="1">
-<li>The instrument must affect the treatment. This is the <strong>relevance condition</strong>. After controlling for observed covariates <span class="math inline">\(X_i\)</span>, the instrument must still be correlated with treatment status:</li>
-</ol>
-<p><span class="math display">\[
-\operatorname{Cov}(Z_i,D_i\mid X_i) \neq 0.
-\]</span></p>
-<p>In practice, this means that changes in the instrument should generate changes in the probability of receiving the treatment, in the case of a binary treatment. Relevance is empirically assessable: we can estimate the first-stage relationship between <span class="math inline">\(D_i\)</span> and <span class="math inline">\(Z_i\)</span> and check whether the instrument significantly predicts treatment even after controlling for <span class="math inline">\(X_i\)</span>.</p>
-<ol start="2" type="1">
+<li><p>The instrument must affect the treatment. This is the <strong>relevance condition</strong>. After controlling for observed covariates <span class="math inline">\(X_i\)</span>, the instrument must still be correlated with treatment status: <span class="math display">\[\operatorname{Cov}(Z_i,D_i\mid X_i) \neq 0.\]</span> In practice, this means that changes in the instrument should generate changes in the probability of receiving the treatment, in the case of a binary treatment. Relevance is empirically assessable: we can estimate the first-stage relationship between <span class="math inline">\(D_i\)</span> and <span class="math inline">\(Z_i\)</span> (see next section) and check whether the instrument significantly predicts treatment even after controlling for <span class="math inline">\(X_i\)</span>.</p></li>
 <li><p>The instrument must affect the outcome <strong>only through the treatment</strong>. This is the <strong>exclusion restriction</strong>: changing <span class="math inline">\(Z_i\)</span> must not change <span class="math inline">\(Y_i\)</span> through any channel that bypasses <span class="math inline">\(D_i\)</span>.</p></li>
-<li><p>The instrument must also be <strong>exogenous</strong>: possibly after conditioning on pre-treatment covariates, it must be unrelated to unobserved factors that influence the outcome. An instrument can satisfy exclusion and still fail this condition. For example, distance to college might affect earnings only through education, yet remain associated with family background because families choose where to live.</p></li>
+<li><p>The instrument must also be <strong>exogenous</strong>: it must be unrelated to unobserved factors that influence potential outcomes, possibly after conditioning on relevant pre-treatment covariates. An instrument can satisfy the exclusion restriction but still violate exogeneity. For example, distance to college might affect wages only through education, yet remain correlated with family background if families with different resources systematically choose where to live.</p></li>
 </ol>
-<p>In the linear outcome model, instrument validity requires the following moment condition:</p>
+<p>To connect these assumptions to regression, recall the <strong>linear outcome model</strong><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> introduced at the beginning of the chapter:</p>
+<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;It is called an <em>outcome model</em> because it describes the outcome <span class="math inline">\(Y_i\)</span> as a function of treatment status <span class="math inline">\(D_i\)</span> and observed pre-treatment covariates <span class="math inline">\(X_i\)</span>. The model is linear in these coefficients.</p></div></div><p><span class="math display">\[
+Y_i = \alpha + \tau D_i + X_i'\beta + u_i.
+\]</span></p>
+<p>For <span class="math inline">\(Z_i\)</span> to be a valid instrument in this model, it must be uncorrelated with the error term <span class="math inline">\(u_i\)</span>, conditional on <span class="math inline">\(X_i\)</span>:</p>
 <p><span class="math display">\[
 \operatorname{Cov}(Z_i,u_i\mid X_i)=0.
 \]</span></p>
-<p>This condition should not be interpreted as the exclusion restriction alone: both alternative causal channels and associations with unobserved outcome determinants can invalidate it.</p>
-<p>Unlike relevance, exclusion and exogeneity generally cannot be established from the observed data alone. Their credibility must be justified using institutional knowledge, theory, and a convincing account of how the instrument is generated.</p>
+<p>This condition reflects both the <strong>exclusion restriction</strong> and <strong>exogeneity</strong>. It may be violated if the instrument affects the outcome through channels other than treatment or if it is correlated with unobserved factors that influence the outcome.</p>
+<p>Unlike relevance, which can be assessed empirically, exclusion and exogeneity generally cannot be verified using observed data alone. Their credibility must therefore be supported by institutional knowledge, theory, and a convincing explanation of how the instrument is determined.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -698,7 +692,7 @@ Z_i \rightarrow D_i \rightarrow Y_i.
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The exclusion restriction is usually the most demanding IV assumption. A strong first stage is not enough: if the instrument affects the outcome through channels other than the treatment, the exclusion restriction is violated and the IV estimate cannot generally be given a causal interpretation.</p>
+<p>The exclusion restriction is generally the most demanding IV assumption. Even a strong relationship between the instrument and treatment does not guarantee its validity. If the instrument affects the outcome through channels other than treatment, the exclusion restriction is violated, and the IV estimate cannot generally be interpreted as a causal effect.</p>
 </div>
 </div>
 </section>
@@ -716,7 +710,18 @@ X_i'\pi
 +
 v_i.
 \]</span></p>
-<p>The coefficient <span class="math inline">\(\pi_1\)</span> captures the effect of the instrument on treatment. This is the empirical counterpart of the relevance condition. The fitted values from this regression, <span class="math inline">\(\widehat D_i,\)</span> represent the component of treatment status that is predicted by the instrument and the covariates.</p>
+<p>The coefficient <span class="math inline">\(\pi_1\)</span> measures the relationship between the instrument and treatment, after accounting for the control variables. This allows us to assess the relevance condition.</p>
+<p>The regression then provides a fitted value for each unit:</p>
+<p><span class="math display">\[
+\widehat{D}_i
+=
+\widehat{\pi}_0
++
+\widehat{\pi}_1 Z_i
++
+X_i'\widehat{\pi}.
+\]</span></p>
+<p>This is the value of treatment predicted by the model using the unit’s instrument and observed characteristics, rather than its actual treatment status. In other words, <span class="math inline">\(\widehat{D}_i\)</span> captures the part of treatment variation explained by these variables, excluding the unexplained component <span class="math inline">\(v_i\)</span>.</p>
 <p>In the second stage, the outcome is regressed on the predicted treatment and the control variables:</p>
 <p><span class="math display">\[
 Y_i =
@@ -728,8 +733,21 @@ X_i'\beta
 +
 \varepsilon_i.
 \]</span></p>
-<p>The estimated coefficient <span class="math inline">\(\widehat{\tau}_{\text{2SLS}}\)</span> is the IV estimate obtained by 2SLS. The intuition is simple: rather than relying on all observed variation in treatment, 2SLS isolates the variation associated with the instrument, after accounting for the control variables. If the instrument is valid, this variation can be interpreted as exogenous<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and used to estimate a causal effect.</p>
-<div class="no-row-height column-margin column-container"><div id="fn2"><p><sup>2</sup>&nbsp;In this context, <strong>exogenous variation</strong> means variation in treatment that is generated by the instrument rather than by factors that also affect the outcome. It can therefore be treated as unrelated to the unobserved determinants of the outcome.</p></div></div><div class="callout callout-style-simple callout-note callout-titled">
+<p>The estimated coefficient <span class="math inline">\(\widehat{\tau}_{\text{2SLS}}\)</span> is the IV estimate obtained by 2SLS. The intuition is simple: rather than relying on all observed variation in treatment, 2SLS isolates the variation associated with the instrument, after accounting for the control variables. If the instrument is valid, this variation can be interpreted as exogenous<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> and used to estimate a causal effect.</p>
+<div class="no-row-height column-margin column-container"><div id="fn3"><p><sup>3</sup>&nbsp;In this context, <strong>exogenous variation</strong> means variation in treatment that is generated by the instrument rather than by factors that also affect the outcome. It can therefore be treated as unrelated to the unobserved determinants of the outcome.</p></div></div><div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Correct estimation of the standard errors
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In practice, 2SLS should be estimated using an IV routine. It is not correct to manually run the two regressions and treat <span class="math inline">\(\widehat D_i\)</span> as if it were an ordinary observed variable, because standard errors must account for the generated regressor.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -761,19 +779,6 @@ e_i.
 <p>Here, <span class="math inline">\(\rho_1\)</span> captures the effect of the instrument on the outcome, conditional on <span class="math inline">\(X_i\)</span>. With a single instrument and a single treatment, the 2SLS estimate can equivalently be written as the ratio between the reduced-form effect and the first-stage effect:</p>
 <p><span class="math display">\[ \widehat{\tau}_{\text{2SLS}} = \frac{\widehat{\rho}_1}{\widehat{\pi}_1}. \]</span></p>
 <p>This ratio asks: how much does the outcome change relative to the amount of treatment variation induced by the instrument?</p>
-<div class="callout callout-style-simple callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Correct estimation of the standard errors
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>In practice, 2SLS should be estimated using an IV routine. It is not correct to manually run the two regressions and treat <span class="math inline">\(\widehat D_i\)</span> as if it were an ordinary observed variable, because standard errors must account for the generated regressor.</p>
-</div>
-</div>
 </section>
 <section id="example-quarter-of-birth-and-education" class="level2" data-number="8.5">
 <h2 data-number="8.5" class="anchored" data-anchor-id="example-quarter-of-birth-and-education"><span class="header-section-number">8.5</span> Example: Quarter of Birth and Education</h2>
@@ -785,26 +790,26 @@ e_i.
 <li><span class="math inline">\(D_i\)</span> is years of schooling;</li>
 <li><span class="math inline">\(Y_i\)</span> is wages.</li>
 </ul>
-<p>The relevance condition requires that quarter of birth affects years of schooling. This can be tested in the first stage. For example, individuals born in the last quarter of the year may have slightly more education than those born earlier.</p>
-<p>The exclusion restriction requires that quarter of birth affects wages only through schooling. This is a stronger assumption. It requires that quarter of birth is not related to ability, family background, health, parental characteristics, or other factors that directly affect wages.</p>
-<p>The IV estimate can be interpreted by comparing the effect of quarter of birth on wages with the effect of quarter of birth on schooling. If being born in the last quarter increases schooling by about 0.10 years and increases wages by about 0.86 percent, the implied IV estimate is approximately</p>
+<p>The relevance condition requires that quarter of birth be associated with years of schooling. This relationship can be assessed in the first-stage regression. For example, individuals born in the last quarter of the year may complete slightly more schooling than those born earlier, because school-entry and compulsory-schooling rules can make the age at which students are allowed to leave school depend on their quarter of birth.</p>
+<p>The exclusion restriction requires that quarter of birth affect wages only through schooling. Unlike relevance, which can be assessed empirically, this assumption is more difficult to justify because we cannot directly rule out other channels through which birth timing might influence wages. For example, quarter of birth could affect wages through differences in early-life health or age relative to classmates, independently of years of schooling. Separately, exogeneity requires that quarter of birth be unrelated to unobserved determinants of wages, such as family background or ability.</p>
+<p>The IV estimate can be obtained by dividing the effect of quarter of birth on wages by its effect on schooling. For example, suppose that being born in the last quarter increases schooling by 0.10 years and wages by 0.86%. The implied IV estimate is approximately</p>
 <p><span class="math display">\[
-\frac{0.0086}{0.10} \approx 0.086.
+\frac{0.86\%}{0.10}=8.6\%.
 \]</span></p>
-<p>This suggests that an additional year of schooling increases wages by about 8.6% for the students whose schooling is affected by the instrument.</p>
+<p>This suggests that an additional year of schooling increases wages by approximately 8.6% for individuals whose educational attainment is influenced by quarter of birth, provided the IV assumptions hold.</p>
 </section>
-<section id="weak-instruments" class="level2" data-number="8.6">
+<section id="weak-instruments" class="level2 page-columns page-full" data-number="8.6">
 <h2 data-number="8.6" class="anchored" data-anchor-id="weak-instruments"><span class="header-section-number">8.6</span> Weak Instruments</h2>
-<p>A major practical concern in IV estimation is the problem of <strong>weak instruments</strong>. An instrument is weak when it is only weakly correlated with the treatment.</p>
-<p>Weak instruments are problematic because 2SLS uses the variation in treatment predicted by the instrument. If the instrument barely moves the treatment, then the predicted treatment contains little useful variation. The IV estimator becomes unstable and can have poor finite-sample properties.</p>
-<p>Work by Bound, Jaeger, and Baker <span class="citation" data-cites="bound1995">(<a href="references.html#ref-bound1995" role="doc-biblioref">1995</a>)</span> showed that weak instruments can make IV estimates and standard errors misleading, even in large samples. When instruments are weak:</p>
+<p>A major practical concern in IV estimation is the problem of <strong>weak instruments</strong>. An instrument is weak when it has limited ability to explain variation in treatment, after accounting for the control variables.</p>
+<p>Weak instruments are problematic because 2SLS uses the variation in treatment predicted by the instrument. If the instrument barely influences treatment, the predicted treatment contains little useful variation. As a result, the IV estimator becomes unstable and can have poor finite-sample properties.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<div class="no-row-height column-margin column-container"><div id="fn4"><p><sup>4</sup>&nbsp;<em>Finite-sample properties</em> describe how an estimator behaves when the number of observations is limited, rather than when the sample size approaches infinity. In small samples, weak instruments can produce biased estimates, large variability, and confidence intervals that do not achieve their intended coverage probabilities.</p></div></div><p>Work by Bound, Jaeger, and Baker <span class="citation" data-cites="bound1995">(<a href="references.html#ref-bound1995" role="doc-biblioref">1995</a>)</span> showed that weak instruments can make IV estimates and standard errors misleading, even in large samples. When instruments are weak:</p>
 <ul>
-<li>2SLS estimates can be biased toward OLS in finite samples;</li>
-<li>confidence intervals may be unreliable;</li>
-<li>conventional t-tests may reject too often;</li>
-<li>small violations of the exclusion restriction can be amplified.</li>
+<li><p>2SLS estimates can be biased toward OLS in finite samples;</p></li>
+<li><p>confidence intervals may be unreliable;</p></li>
+<li><p>conventional t-tests may reject too often;<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p></li>
+<li><p>small violations of the exclusion restriction can be amplified.</p></li>
 </ul>
-<div class="callout callout-style-default callout-caution callout-titled">
+<div class="no-row-height column-margin column-container"><div id="fn5"><p><sup>5</sup>&nbsp;<em>Conventional t-tests</em> assess whether an estimated coefficient is statistically different from zero by dividing the estimate by its standard error. With weak instruments, the usual statistical approximations may be unreliable, causing these tests to reject a true null hypothesis more frequently than the chosen significance level would suggest.</p></div></div><div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -814,12 +819,11 @@ e_i.
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A valid but weak instrument is not enough.<br>
-If the instrument barely shifts treatment, IV estimates may be imprecise, biased, and misleading.</p>
+<p>Even an instrument that satisfies the exclusion and exogeneity assumptions can be problematic if it has only a weak relationship with treatment. When the instrument barely influences treatment, IV estimates may be imprecise, biased, and misleading.</p>
 </div>
 </div>
-<p>A standard diagnostic is the first-stage F-statistic. A low first-stage F-statistic is a warning sign that the instrument may be weak. However, recent work emphasizes that conventional diagnostics can be misleading if standard errors are not adjusted correctly for heteroskedasticity, clustering, or serial correlation.</p>
-</section>
+<p>A standard diagnostic is the first-stage F-statistic.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> A low first-stage F-statistic is a warning sign that the instrument may be weak. However, recent work emphasizes that conventional diagnostics can be misleading if standard errors are not adjusted correctly for heteroskedasticity, clustering, or serial correlation <span class="citation" data-cites="montielolea2013 lal2024">(<a href="references.html#ref-montielolea2013" role="doc-biblioref">Montiel Olea and Pflueger 2013</a>; <a href="references.html#ref-lal2024" role="doc-biblioref">Lal et al. 2024</a>)</span>.</p>
+<div class="no-row-height column-margin column-container"><div id="fn6"><p><sup>6</sup>&nbsp;The <em>first-stage F-statistic</em> measures how strongly the instrument (or instruments) explains variation in treatment after accounting for the control variables. It tests whether the instruments jointly contribute to explaining treatment. Higher values indicate a stronger statistical relationship between the instruments and treatment, while low values suggest that the instruments provide little additional explanatory power.</p></div></div></section>
 <section id="binary-instruments-and-late" class="level2" data-number="8.7">
 <h2 data-number="8.7" class="anchored" data-anchor-id="binary-instruments-and-late"><span class="header-section-number">8.7</span> Binary Instruments and LATE</h2>
 <p>When the instrument is binary, IV estimates are often interpreted as <strong>local average treatment effect (LATE)</strong> estimates.</p>
@@ -851,31 +855,30 @@ D_i(0),
 <td><strong>Compliers</strong></td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">1</td>
-<td>They take the treatment only when exposed to the instrument.</td>
+<td>They receive treatment when the instrument equals 1, but not when it equals 0.</td>
 </tr>
 <tr class="even">
 <td><strong>Never-takers</strong></td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">0</td>
-<td>They do not take the treatment, regardless of the instrument.</td>
+<td>They never receive treatment, regardless of the instrument’s value.</td>
 </tr>
 <tr class="odd">
 <td><strong>Always-takers</strong></td>
 <td style="text-align: center;">1</td>
 <td style="text-align: center;">1</td>
-<td>They take the treatment, regardless of the instrument.</td>
+<td>They take the treatment, regardless of the instrument’s value.</td>
 </tr>
 <tr class="even">
 <td><strong>Defiers</strong></td>
 <td style="text-align: center;">1</td>
 <td style="text-align: center;">0</td>
-<td>They move in the opposite direction of the instrument.</td>
+<td>They receive treatment when the instrument equals 0, but not when it equals 1.</td>
 </tr>
 </tbody>
 </table>
-<p>Under the “LATE assumptions”, IV identifies the causal effect for compliers. These are the units whose treatment status is actually changed by the instrument.</p>
-<p>This is important because IV does not generally identify the ATT. It identifies the effect for the subpopulation moved by the instrument.</p>
-<p>If treatment effects are heterogeneous, different valid instruments can produce different estimates because they identify effects for different complier groups.</p>
+<p>Under the <em>LATE assumptions</em> (see below), IV identifies the average causal effect for compliers: individuals who receive treatment when the instrument equals 1 but would not receive it when the instrument equals 0. This distinction matters because IV does not generally identify the ATT, which concerns all treated units, but rather the average effect for this specific subgroup.</p>
+<p>If treatment effects are heterogeneous, different instruments can produce different estimates because they identify effects for different complier groups.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -886,18 +889,17 @@ D_i(0),
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Compliers are the units whose treatment status changes because of the instrument.<br>
-Different instruments may move different groups of units, and therefore identify different LATEs.</p>
+<p>Compliers are units who receive treatment when the instrument equals 1 but would not receive it when the instrument equals 0. Different instruments may influence the treatment decisions of different groups of units and therefore identify different LATEs.</p>
 </div>
 </div>
 <section id="the-identification-assumptions-with-a-binary-instrument" class="level3" data-number="8.7.1">
 <h3 data-number="8.7.1" class="anchored" data-anchor-id="the-identification-assumptions-with-a-binary-instrument"><span class="header-section-number">8.7.1</span> The Identification Assumptions with a binary instrument</h3>
 <p>For a binary instrument and a binary treatment, the LATE interpretation requires four main assumptions.</p>
 <ol type="1">
-<li><p>The instrument must be as good as randomly assigned, possibly after conditioning on pre-treatment covariates. In other words, the instrument should not be systematically related to the units’ potential outcomes or potential treatment statuses.</p></li>
-<li><p>The instrument must satisfy the <strong>exclusion restriction</strong>: holding treatment status fixed, changing the instrument must not change the outcome. In other words, the instrument can affect the outcome only by changing the treatment received.</p></li>
-<li><p>The instrument must be relevant: even after conditioning on pre-treatment covariates, variation in the instrument must generate variation in treatment status for at least some units.</p></li>
-<li><p>The instrument must satisfy <strong>monotonicity</strong>. This means that the instrument should push treatment in the same direction for all units. In other words, there should be no defiers.</p></li>
+<li><p><strong>Exogeneity:</strong> The instrument must be as good as randomly assigned, possibly after conditioning on pre-treatment covariates. This means that it must be independent of the units’ potential outcomes and potential treatment statuses, namely whether they would receive treatment under each possible value of the instrument.</p></li>
+<li><p><strong>Exclusion restriction:</strong> The instrument must affect the outcome only through treatment. In other words, changing the instrument’s value while keeping treatment status fixed must not change the outcome.</p></li>
+<li><p><strong>Relevance:</strong> The instrument must influence the probability of receiving treatment, even after accounting for pre-treatment covariates. This means that changing the instrument’s value must affect treatment participation for at least some units.</p></li>
+<li><p><strong>Monotonicity:</strong> Increasing the instrument from 0 to 1 must not cause any unit to switch from receiving treatment to not receiving it. Some units may remain unaffected, but those whose treatment status changes must all respond in the same direction. In other words, there must be no <strong>defiers</strong>.</p></li>
 </ol>
 <p>When the instrument is as good as randomly assigned without conditioning on covariates, these assumptions identify the LATE through the unconditional Wald ratio:</p>
 <p><span class="math display">\[
@@ -912,7 +914,7 @@ E[D_i\mid Z_i=1] - E[D_i\mid Z_i=0]
 }.
 \]</span></p>
 <p>The numerator is the reduced-form effect of the instrument on the outcome. The denominator is the first-stage effect of the instrument on treatment. <strong>Intuitively, the ratio scales the change in the outcome caused by the instrument by the change in treatment participation caused by the instrument.</strong> It therefore asks how much the outcome changes for each additional unit induced into treatment by the instrument. For example, if the instrument increases the outcome by 2 units and raises the probability of treatment by 0.25, the implied LATE is <span class="math inline">\(2/0.25=8\)</span>.</p>
-<p>If the instrument is as good as randomly assigned only after conditioning on <span class="math inline">\(X_i\)</span>, the unconditional ratio above is generally not valid. The outcome and treatment comparisons must then account for those covariates. Conditional Wald ratios identify effects for compliers with given covariate values, where the first stage is nonzero; aggregating these effects requires weights that reflect the target complier population.</p>
+<p>If the instrument is as good as randomly assigned only after conditioning on pre-treatment covariates <span class="math inline">\(X_i\)</span>, the unconditional Wald ratio does not generally identify the LATE. Instead, we must compare outcomes and treatment participation between instrument groups with the same covariate values. For each covariate profile where the instrument influences treatment participation, the ratio of these conditional differences identifies the LATE for compliers with those characteristics. To obtain an overall LATE, these effects must be aggregated using weights that reflect the relative number of compliers in each covariate group.</p>
 </section>
 <section id="example-vietnam-draft-lottery" class="level3" data-number="8.7.2">
 <h3 data-number="8.7.2" class="anchored" data-anchor-id="example-vietnam-draft-lottery"><span class="header-section-number">8.7.2</span> Example: Vietnam Draft Lottery</h3>
@@ -922,15 +924,15 @@ E[D_i\mid Z_i=1] - E[D_i\mid Z_i=0]
 <figcaption><strong>A gif representation of the IV example</strong>.</figcaption>
 </figure>
 </div>
-<p>A classic example with a binary instrument is Angrist’s study of the effect of military service on later earnings <span class="citation" data-cites="angrist1990">(<a href="references.html#ref-angrist1990" role="doc-biblioref">Angrist 1990</a>)</span>. During the Vietnam War, the United States used a draft lottery to determine who was at risk of being drafted.</p>
+<p>A classic example with a binary instrument is Angrist’s study of the effect of military service on later earnings <span class="citation" data-cites="angrist1990">(<a href="references.html#ref-angrist1990" role="doc-biblioref">Angrist 1990</a>)</span>. During the Vietnam War, the United States used a draft lottery to determine the order in which young men could be called for military service. Each calendar date was randomly assigned a lottery number, and men born on that date received the corresponding number. For example, imagine that June 10 was assigned number 25 and June 11 number 275. A man born on June 10 would face a much higher probability of being drafted than someone born just one day later. The key point is that lottery numbers were assigned randomly, creating differences in draft eligibility unrelated to individual characteristics. However, receiving a low lottery number did not automatically mean serving in the military, since exemptions and other eligibility criteria also mattered.</p>
 <p>The draft lottery can be interpreted as an instrument for military service:</p>
 <ul>
 <li><span class="math inline">\(Z_i\)</span> is draft eligibility;</li>
 <li><span class="math inline">\(D_i\)</span> is military service;</li>
 <li><span class="math inline">\(Y_i\)</span> is later earnings.</li>
 </ul>
-<p>Not everyone who was draft-eligible served in the military, and some individuals who were not draft-eligible may still have served. The draft lottery therefore generated variation in military service, but did not perfectly determine it. As a result, the design includes compliers, always-takers, and never-takers.</p>
-<p>The IV estimate identifies the effect of military service for compliers: individuals whose military service status was changed by draft eligibility. In this context, Angrist finds that military service reduced later earnings by approximately 15% for white veterans. This interpretation relies on the assumptions that there are no defiers, that is, no individuals who would serve if not draft-eligible but would avoid service if draft-eligible, and that draft eligibility affects later earnings only through military service.</p>
+<p>Not everyone who was draft-eligible served in the military, while some individuals who were not draft-eligible still served, for example by volunteering. The draft lottery therefore influenced the probability of military service without fully determining it. Under the monotonicity assumption, the population can be divided into three groups: <strong>compliers</strong>, who serve only if draft-eligible; <strong>always-takers</strong>, who serve regardless of eligibility; and <strong>never-takers</strong>, who do not serve regardless of eligibility.</p>
+<p>The IV estimate identifies the average effect of military service for compliers, namely individuals whose decision to serve was influenced by their draft eligibility. Angrist finds that military service reduced subsequent earnings by approximately 15% among white veterans.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="../images/vietnam-draft-lottery-compliance-types.png" class="img-fluid figure-img"></p>
@@ -943,25 +945,26 @@ E[D_i\mid Z_i=1] - E[D_i\mid Z_i=0]
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Binary and continuous instruments: what changes?
+<span class="screen-reader-only">Note</span>Binary versus continuous instruments: what changes?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>When using proximity to college as an instrument for years of education, as in the Card <span class="citation" data-cites="card1993">(<a href="references.html#ref-card1993" role="doc-biblioref">1993</a>)</span> example, college proximity is often introduced as a binary instrument: individuals are classified as living near or far from a college. The instrument therefore defines two groups, but the treatment itself, years of schooling <span class="math inline">\(T_i\)</span>, is not binary.</p>
-<p>This distinction matters for interpretation. Proximity may induce one person to complete one additional year of schooling and another to complete several additional years. Under suitable exogeneity, exclusion, and monotonicity assumptions, IV identifies a weighted average of the effects of additional years of schooling across the educational margins shifted by the instrument. It is not simply the binary-treatment LATE defined above, nor necessarily the average return to schooling for all students.</p>
-<p>If the instrument is continuous, for example distance from the closest university measured in kilometers, the simple treated-versus-control distinction disappears. Units are no longer simply “encouraged” or “not encouraged.” Instead, each unit receives a different intensity of encouragement, depending on how far it lives from the closest university.</p>
-<p>This adds a further layer to interpretation. The individuals whose education changes when distance increases from 5 to 10 kilometers need not be the same as those affected by a change from 50 to 55 kilometers. The IV estimate may therefore combine responses across different changes in the instrument as well as different educational margins. Its interpretation depends on the instrument variation used and the assumptions governing these responses.</p>
+<p>An instrumental variable can be either <strong>binary</strong> or <strong>continuous</strong>. To understand the difference, suppose we want to estimate the causal effect of obtaining a university degree on future earnings, using proximity to a university as an instrument. The treatment is binary: individuals either obtain a degree or do not.</p>
+<p><strong>Binary instrument.</strong> Suppose proximity is measured by an indicator equal to 1 for individuals living within 20 km of a university and 0 for those living farther away. The instrument divides individuals into two groups. Under the LATE assumptions, IV identifies the average effect of obtaining a degree for <strong>compliers</strong>: individuals who would obtain a degree if they lived near a university but would not obtain one if they lived farther away.</p>
+<p><strong>Continuous instrument.</strong> Now suppose proximity is measured by the distance to the nearest university in kilometers. The instrument can take many values, rather than just 0 or 1. This allows the analysis to exploit differences in distance across individuals, but makes the interpretation of the IV estimate more complex.</p>
+<p>For example, moving from 5 to 10 kilometers away from a university may affect the decision to obtain a degree for some individuals, while moving from 30 to 35 kilometers may affect others. Consequently, the IV estimate may combine treatment effects for different groups of individuals whose educational decisions respond to different changes in distance.</p>
+<p><strong>The key difference</strong> is that a binary instrument compares two values of the instrument and identifies a LATE for the corresponding compliers. A continuous instrument exploits variation across multiple values and may identify a weighted average of effects for individuals whose treatment decisions respond to different changes in the instrument.</p>
 </div>
 </div>
 </section>
 </section>
-<section id="interpreting-iv-estimates" class="level2" data-number="8.8">
+<section id="interpreting-iv-estimates" class="level2 page-columns page-full" data-number="8.8">
 <h2 data-number="8.8" class="anchored" data-anchor-id="interpreting-iv-estimates"><span class="header-section-number">8.8</span> Interpreting IV Estimates</h2>
 <p>Interpreting IV estimates requires care. Each IV estimate depends on the instrument, because the instrument determines which units are shifted into treatment.</p>
 <p>For example, college proximity may identify the return to schooling for individuals whose education decisions are affected by geographic access to college. Quarter of birth may identify the return to schooling for individuals whose schooling is affected by compulsory schooling laws. These are not necessarily the same people.</p>
 <p>This means that IV estimates should not automatically be interpreted as average effects for everyone. They generally retrieve average causal effects only for the units affected by the instrument.</p>
-<p>A limitation of the IV interpretation is that we usually do not know exactly <strong>for whom</strong> the causal effect is being estimated. The IV estimate identifies the effect for compliers, but individual complier status is not directly observed: we do not know which specific units would change their treatment status in response to the instrument. As a result, the LATE refers to a latent subpopulation whose members cannot be precisely identified. In some applications, researchers can describe compliers on average, for example by studying whether they are more likely to come from particular socioeconomic backgrounds or locations, but this does not remove the basic limitation: the estimated causal effect applies to a group that is only indirectly observed.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
+<p>A limitation of the IV interpretation is that we usually do not know exactly <strong>for whom</strong> the causal effect is being estimated. Although IV identifies the average effect for compliers, we cannot directly observe which individuals would change their treatment status in response to the instrument. The LATE therefore refers to a <strong>latent subpopulation</strong>.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> In some applications, researchers can describe the average characteristics of compliers, such as their socioeconomic background or geographic location. However, this does not eliminate the underlying limitation: the estimated causal effect applies to a subgroup whose individual members cannot generally be identified.</p>
+<div class="no-row-height column-margin column-container"><div id="fn7"><p><sup>7</sup>&nbsp;In statistics, <strong>latent</strong> refers to something that cannot be directly observed but can be inferred indirectly from observed data and appropriate assumptions. Here, we cannot determine whether a particular individual is a complier because we observe their treatment decision under only one value of the instrument, not both.</p></div></div><div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -971,8 +974,10 @@ E[D_i\mid Z_i=1] - E[D_i\mid Z_i=0]
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Using more than one instrument can improve predictive power, but it can also make the causal parameter harder to interpret. Each instrument may shift treatment for a different group of compliers. If treatment effects are heterogeneous, the IV estimate obtained with multiple instruments may combine several local effects, each attached to a different source of treatment variation.</p>
-<p>For this reason, a stronger first stage is not the only criterion for a good IV design. Researchers should also ask which instruments are doing the identifying work, which units are likely to be moved by each instrument, and whether the resulting weighted average has a clear policy interpretation.</p>
+<p>Using more than one instrument can improve predictive power, but it also introduces additional challenges for causal identification and interpretation.</p>
+<p>First, <strong>exclusion and exogeneity must hold for every instrument</strong>. Adding instruments therefore introduces additional assumptions that researchers must justify. Even if some instruments are valid, including an instrument that affects the outcome through other channels or is correlated with unobserved outcome determinants can bias the IV estimate.</p>
+<p>Second, different instruments may influence treatment participation for different groups of compliers. When treatment effects are heterogeneous, combining multiple instruments may therefore produce an estimate that reflects different local treatment effects, with weights that are not always straightforward to interpret.</p>
+<p>For these reasons, a stronger relationship between instruments and treatment is not sufficient to justify their use. Researchers should carefully assess the credibility of each instrument, explain which sources of variation identify the causal effect, and clarify the interpretation of the resulting estimate.</p>
 </div>
 </div>
 </section>
@@ -984,7 +989,7 @@ E[D_i\mid Z_i=1] - E[D_i\mid Z_i=0]
 <li><p>Conventional t-tests based on 2SLS standard errors may understate uncertainty when instruments are weak.</p></li>
 <li><p>IV estimates are often much larger than OLS estimates, especially when the first stage is weak. This pattern can be a warning sign of weak instruments, violations of the exclusion restriction, or both.</p></li>
 </ol>
-<p>Another concern is interpretability under treatment-effect heterogeneity. Mogstad and Torgovitsky <span class="citation" data-cites="mogstad2024iv">(<a href="references.html#ref-mogstad2024iv" role="doc-biblioref">2024</a>)</span> emphasize that IV applications often face <strong>unobserved heterogeneity in treatment effects</strong>. In that case, linear IV estimators may still be useful, but their interpretation is no longer the effect of treatment for a generic unit. The estimate may instead correspond to a local or weighted average effect for the units whose treatment status is shifted by the instrument.</p>
+<p>Another concern is the interpretation of IV estimates when treatment effects are heterogeneous. Mogstad and Torgovitsky <span class="citation" data-cites="mogstad2024iv">(<a href="references.html#ref-mogstad2024iv" role="doc-biblioref">2024</a>)</span> emphasize that <strong>treatment effects may differ across individuals in ways that researchers cannot fully observe</strong>. In such settings, linear IV estimators do not generally identify the average treatment effect for the entire population. Instead, under appropriate assumptions, they identify a local or weighted average of treatment effects, giving particular importance to individuals whose treatment decisions respond to the instrument. The interpretation therefore depends on which individuals are influenced by the instrument and how their effects are weighted.</p>
 <p>These concerns do not imply that IV should not be used. Rather, they reinforce the need for careful design, transparent reporting, and sensitivity analysis. Applied IV work should report instrument strength, use inference procedures that are robust to weak instruments when needed, justify the exclusion restriction, and be explicit about the population and causal parameter to which the IV estimate refers.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -996,19 +1001,36 @@ E[D_i\mid Z_i=1] - E[D_i\mid Z_i=0]
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A common IV strategy is based on <strong>shift-share variation</strong>, also known as a <strong>Bartik instrument</strong>. The idea is to combine pre-existing local exposure shares with aggregate shocks that are plausibly external to the local unit.</p>
+<p>A common IV strategy is based on <strong>shift-share variation</strong>, also known as a <strong>Bartik instrument</strong> <span class="citation" data-cites="bartik1991 goldsmithpinkham2020">(<a href="references.html#ref-bartik1991" role="doc-biblioref">Bartik 1991</a>; <a href="references.html#ref-goldsmithpinkham2020" role="doc-biblioref">Goldsmith-Pinkham et al. 2020</a>)</span>. The idea is to combine pre-existing local exposure shares with aggregate shocks that are plausibly external to the local unit.</p>
 <p>For example, suppose we want to estimate the effect of immigration on local wages. A shift-share instrument may predict immigration inflows into a city by combining the city’s historical immigrant composition with national inflows from each origin country. Cities that historically hosted more immigrants from countries experiencing larger national inflows are predicted to receive more immigrants.</p>
 <p>The IV logic is that the predicted treatment variation comes from two components: predetermined local shares and external shocks. If the shocks are plausibly exogenous, and if the historical shares affect the outcome only through the treatment channel of interest, the shift-share variable can be used as an instrument.</p>
 <p>However, the strategy requires care. Historical shares may be related to long-run local trends, and aggregate shocks may affect outcomes through channels other than the treatment. As in any IV design, the key questions are: what generates the variation in the instrument, why is it relevant, and why should it affect the outcome only through the treatment?</p>
 </div>
 </div>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Beyond LATE: the marginal treatment effect (MTE)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <strong>marginal treatment effect (MTE)</strong> is another causal estimand that provides a more detailed view of treatment-effect heterogeneity within an IV framework <span class="citation" data-cites="heckman1999liv heckman2005mte">(<a href="references.html#ref-heckman1999liv" role="doc-biblioref">Heckman and Vytlacil 1999</a>; <a href="references.html#ref-heckman2005mte" role="doc-biblioref">Heckman and Vytlacil 2005</a>)</span>. Unlike the ATE, ATT, and LATE introduced earlier, the MTE focuses on individuals with a given level of <strong>unobserved resistance to treatment</strong>, reflecting factors such as preferences or perceived participation costs. The treatment itself remains binary.</p>
+<p>Intuitively, the MTE measures the average causal effect for individuals who would enter treatment in response to a very small increase in the probability of participation.</p>
+<p>For example, suppose a valid instrument increases the probability of attending college from 40% to 41%. The corresponding LATE measures the average effect for individuals induced to attend by this change. As the increase becomes arbitrarily small, this average approaches the MTE at that participation margin. Individuals induced to attend at other margins may experience different treatment effects.</p>
+<p>Under the standard monotone selection model, <strong>LATE can be interpreted as a weighted average of MTEs across the participation margins affected by the instrument</strong>. If the MTE can be identified across the relevant range of unobserved resistance to treatment, it can be aggregated to recover broader causal estimands, such as the ATE and ATT.</p>
+<p>However, a single binary instrument generally identifies only an average across a range of participation margins, rather than the MTE at each margin. Identifying MTEs across a wider range requires sufficiently rich variation in participation probabilities and additional strong assumptions.</p>
+</div>
+</div>
 </section>
 <section id="summary" class="level2" data-number="8.10">
 <h2 data-number="8.10" class="anchored" data-anchor-id="summary"><span class="header-section-number">8.10</span> Summary</h2>
-<p>Instrumental variables estimate causal effects by isolating variation in treatment that is induced by an external source of variation. A valid instrument must shift the treatment and affect the outcome only through that treatment.</p>
-<p>The 2SLS estimator implements this logic in two steps: first, predict treatment using the instrument; second, estimate the effect of the predicted treatment on the outcome.</p>
-<p>With a binary instrument and a binary treatment, IV identifies the LATE for compliers under the assumptions described above. With non-binary treatments, the interpretation must also account for the treatment margins shifted by the instrument. This makes IV powerful but also subtle: the estimate depends on who is moved by the instrument and how their treatment changes.</p>
-<p>Let me conclude by stressing that a valid instrument must satisfy the <strong>exclusion restriction</strong>: it must affect the outcome only through the treatment. In practice, this condition is often difficult to justify convincingly. Many variables that shift treatment status may also affect the outcome through other channels, making the IV interpretation fragile and potentially misleading.</p>
+<p>IV estimates causal effects using variation in treatment induced by an instrument that affects the outcome only through treatment and satisfies the other identifying assumptions.</p>
+<p>The <strong>2SLS estimator</strong> implements this approach by first predicting treatment using the instrument and then using these predicted values to estimate its effect on the outcome.</p>
+<p>With binary instruments and treatments, IV identifies the <strong>LATE for compliers</strong> under the appropriate assumptions. More generally, its causal interpretation depends on which units respond to the instrument and how their treatment changes.</p>
+<p>Let me conclude by stressing that a valid instrument must satisfy the <strong>exclusion restriction</strong>: it must affect the outcome only through treatment. In practice, this condition is often difficult to justify, as variables that influence treatment may also affect outcomes through other channels. Researchers should therefore carefully examine these alternative explanations and provide convincing theoretical and institutional arguments for the exclusion restriction, rather than relying solely on the instrument’s ability to predict treatment.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1053,17 +1075,32 @@ Angrist, Joshua D., Guido W. Imbens, and Donald B. Rubin. 1996. <span>“Identif
 <div id="ref-angrist1991" class="csl-entry" role="listitem">
 Angrist, Joshua D., and Alan B. Krueger. 1991. <span>“Does Compulsory School Attendance Affect Schooling and Earnings?”</span> <em>The Quarterly Journal of Economics</em> 106 (4): 979–1014. <a href="https://doi.org/10.2307/2937954">https://doi.org/10.2307/2937954</a>.
 </div>
+<div id="ref-bartik1991" class="csl-entry" role="listitem">
+Bartik, Timothy J. 1991. <em>Who Benefits from State and Local Economic Development Policies?</em> W.E. Upjohn Institute for Employment Research. <a href="https://doi.org/10.17848/9780585223940">https://doi.org/10.17848/9780585223940</a>.
+</div>
 <div id="ref-bound1995" class="csl-entry" role="listitem">
 Bound, John, David A. Jaeger, and Regina M. Baker. 1995. <span>“Problems with Instrumental Variables Estimation When the Correlation Between the Instruments and the Endogenous Explanatory Variable Is Weak.”</span> <em>Journal of the American Statistical Association</em> 90 (430): 443–50. <a href="https://doi.org/10.1080/01621459.1995.10476536">https://doi.org/10.1080/01621459.1995.10476536</a>.
 </div>
 <div id="ref-card1993" class="csl-entry" role="listitem">
 Card, David. 1993. <em>Using Geographic Variation in College Proximity to Estimate the Return to Schooling</em>. NBER Working Paper No. 4483. National Bureau of Economic Research. <a href="https://doi.org/10.3386/w4483">https://doi.org/10.3386/w4483</a>.
 </div>
+<div id="ref-goldsmithpinkham2020" class="csl-entry" role="listitem">
+Goldsmith-Pinkham, Paul, Isaac Sorkin, and Henry Swift. 2020. <span>“<span>Bartik</span> Instruments: What, When, Why, and How.”</span> <em>American Economic Review</em> 110 (8): 2586–624. <a href="https://doi.org/10.1257/aer.20181047">https://doi.org/10.1257/aer.20181047</a>.
+</div>
+<div id="ref-heckman2005mte" class="csl-entry" role="listitem">
+Heckman, James J., and Edward Vytlacil. 2005. <span>“Structural Equations, Treatment Effects, and Econometric Policy Evaluation.”</span> <em>Econometrica</em> 73 (3): 669–738. <a href="https://doi.org/10.1111/j.1468-0262.2005.00594.x">https://doi.org/10.1111/j.1468-0262.2005.00594.x</a>.
+</div>
+<div id="ref-heckman1999liv" class="csl-entry" role="listitem">
+Heckman, James J., and Edward J. Vytlacil. 1999. <span>“Local Instrumental Variables and Latent Variable Models for Identifying and Bounding Treatment Effects.”</span> <em>Proceedings of the National Academy of Sciences</em> 96 (8): 4730–34. <a href="https://doi.org/10.1073/pnas.96.8.4730">https://doi.org/10.1073/pnas.96.8.4730</a>.
+</div>
 <div id="ref-lal2024" class="csl-entry" role="listitem">
 Lal, Apoorva, Mackenzie Lockhart, Yiqing Xu, and Ziwen Zu. 2024. <span>“How Much Should We Trust Instrumental Variable Estimates in Political Science? Practical Advice Based on 67 Replicated Studies.”</span> <em>Political Analysis</em> 32 (4): 521–40. <a href="https://doi.org/10.1017/pan.2024.2">https://doi.org/10.1017/pan.2024.2</a>.
 </div>
 <div id="ref-mogstad2024iv" class="csl-entry" role="listitem">
 Mogstad, Magne, and Alexander Torgovitsky. 2024. <em>Instrumental Variables with Unobserved Heterogeneity in Treatment Effects</em>. NBER Working Paper No. 32927. National Bureau of Economic Research. <a href="https://www.nber.org/papers/w32927">https://www.nber.org/papers/w32927</a>.
+</div>
+<div id="ref-montielolea2013" class="csl-entry" role="listitem">
+Montiel Olea, José Luis, and Carolin Pflueger. 2013. <span>“A Robust Test for Weak Instruments.”</span> <em>Journal of Business &amp; Economic Statistics</em> 31 (3): 358–69. <a href="https://doi.org/10.1080/00401706.2013.806694">https://doi.org/10.1080/00401706.2013.806694</a>.
 </div>
 <div id="ref-wright1928" class="csl-entry" role="listitem">
 Wright, Philip G. 1928. <em>The Tariff on Animal and Vegetable Oils</em>. Macmillan.

@@ -1,20 +1,40 @@
-"""Create a six-second animated explanation of binary-instrument IV."""
+"""Create a 27-second binary-instrument IV animation with illustrative data."""
 
 from io import BytesIO
 from pathlib import Path
 
+import matplotlib
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle, FancyBboxPatch
 import numpy as np
 from PIL import Image
 
 
-OUTPUT = Path("images/iv-draft-lottery-animation.gif")
+ROOT = Path(__file__).resolve().parents[1]
+OUTPUT = ROOT / "images" / "iv-draft-lottery-animation.gif"
 FRAME_COUNT = 60
-FRAME_DURATION_MS = 150
-WIDTH_PX = 1200
-HEIGHT_PX = 675
-DPI = 120
+FRAME_DURATION_MS = 450
+WIDTH_PX = 1920
+HEIGHT_PX = 1080
+DPI = 192
+plt.rcParams["text.parse_math"] = False
+
+GROUP_SIZE = 24
+ALWAYS_TAKERS = 3
+COMPLIERS = 9
+SERVICE_RATE_0 = ALWAYS_TAKERS / GROUP_SIZE
+SERVICE_RATE_1 = (ALWAYS_TAKERS + COMPLIERS) / GROUP_SIZE
+FIRST_STAGE = SERVICE_RATE_1 - SERVICE_RATE_0
+LATE = -5000
+EARNINGS_0 = 44000
+REDUCED_FORM = LATE * FIRST_STAGE
+EARNINGS_1 = EARNINGS_0 + REDUCED_FORM
+assert FIRST_STAGE == 0.375
+assert REDUCED_FORM == -1875
+assert EARNINGS_1 == 42125
+assert REDUCED_FORM / FIRST_STAGE == LATE
 
 BACKGROUND = "#FBFAF7"
 INK = "#20252B"
@@ -25,6 +45,10 @@ SERVICE = "#E05A3F"
 COMPLIER = "#25834D"
 GOLD = "#D9A420"
 PANEL = "#FFFFFF"
+
+
+def dollars(value):
+    return ("-$" if value < 0 else "$") + f"{abs(value):,.0f}"
 
 
 def smoothstep(value):
@@ -149,8 +173,8 @@ def render_frame(frame):
     # Both eligibility groups contain the same principal-strata composition:
     # 3 always-takers, 9 compliers, and 12 never-takers. Eligibility changes
     # service only for the 9 compliers.
-    always = set(range(3))
-    complier = set(range(3, 12))
+    always = set(range(ALWAYS_TAKERS))
+    complier = set(range(ALWAYS_TAKERS, ALWAYS_TAKERS + COMPLIERS))
 
     for index, position in enumerate(left_positions):
         served = index in always
@@ -239,7 +263,7 @@ def render_frame(frame):
         ax.text(
             left_x + card_w / 2,
             0.385,
-            "Military service: 12.5%",
+            f"Military service: {SERVICE_RATE_0:.1%}",
             transform=ax.transAxes,
             ha="center",
             fontsize=13.2,
@@ -250,7 +274,7 @@ def render_frame(frame):
         ax.text(
             right_x + card_w / 2,
             0.385,
-            "Military service: 50.0%",
+            f"Military service: {SERVICE_RATE_1:.1%}",
             transform=ax.transAxes,
             ha="center",
             fontsize=13.2,
@@ -275,7 +299,7 @@ def render_frame(frame):
         ax.text(
             0.5,
             0.575,
-            "First stage\n+37.5 pp",
+            f"First stage\n+{100 * FIRST_STAGE:.1f} pp",
             transform=ax.transAxes,
             ha="center",
             va="center",
@@ -297,7 +321,7 @@ def render_frame(frame):
         ax.text(
             left_x + card_w / 2,
             0.335,
-            "Average earnings: $44.0k",
+            f"Average earnings: {dollars(EARNINGS_0)}",
             transform=ax.transAxes,
             ha="center",
             fontsize=12.8,
@@ -307,7 +331,7 @@ def render_frame(frame):
         ax.text(
             right_x + card_w / 2,
             0.335,
-            "Average earnings: $42.1k",
+            f"Average earnings: {dollars(EARNINGS_1)}",
             transform=ax.transAxes,
             ha="center",
             fontsize=12.8,
@@ -317,7 +341,7 @@ def render_frame(frame):
         ax.text(
             0.5,
             0.270,
-            "Reduced form: -$1.9k",
+            f"Reduced form: {dollars(REDUCED_FORM)}",
             transform=ax.transAxes,
             ha="center",
             va="center",
@@ -340,11 +364,11 @@ def render_frame(frame):
         ax.text(
             0.5,
             0.145,
-            r"Wald ratio:  $-1.9k\,/\,0.375 = -$5.0k",
+            f"Wald ratio:  {dollars(REDUCED_FORM)} / {FIRST_STAGE:.3f} = {dollars(LATE)}",
             transform=ax.transAxes,
             ha="center",
             va="center",
-            fontsize=16.5,
+            fontsize=15.0,
             fontweight="bold",
             color=COMPLIER,
             alpha=ratio_in,
@@ -386,7 +410,7 @@ def render_frame(frame):
     elif frame < 45:
         title = "Scale the earnings change by the service change"
     else:
-        title = "IV identifies the causal effect for compliers"
+        title = "IV identifies the average treatment effect for compliers"
 
     fig.suptitle(
         title,
@@ -396,11 +420,27 @@ def render_frame(frame):
         fontweight="bold",
         color=INK,
     )
+    fig.text(
+        0.5, 0.895,
+        "Stylized example: numbers are illustrative, not Angrist's estimates.",
+        ha="center", va="center", fontsize=11.2, color="#5B636A",
+    )
 
     if frame >= 45:
         ax.text(
             0.5,
-            0.035,
+            0.051,
+            "Green rings illustrate latent complier types; individual types are not observed.",
+            transform=ax.transAxes,
+            ha="center",
+            va="center",
+            fontsize=10.5,
+            color="#5B636A",
+            alpha=compliers_in,
+        )
+        ax.text(
+            0.5,
+            0.018,
             "Requires relevance, as-if random assignment, exclusion, and monotonicity",
             transform=ax.transAxes,
             ha="center",
@@ -450,6 +490,20 @@ def main():
         optimize=True,
         disposal=2,
     )
+    qa = ROOT / "private" / "iv-draft-animation-qa"
+    qa.mkdir(parents=True, exist_ok=True)
+    for index in (8, 20, 32, 44, 59):
+        frames[index].save(qa / f"after-frame-{index:02d}.png", dpi=(300, 300))
+    with Image.open(OUTPUT) as check:
+        durations = []
+        for index in range(check.n_frames):
+            check.seek(index)
+            check.load()
+            durations.append(check.info["duration"])
+        assert sum(durations) == FRAME_COUNT * FRAME_DURATION_MS
+        assert check.size == (WIDTH_PX, HEIGHT_PX)
+        print(f"Saved {OUTPUT}")
+        print(f"Verified {check.n_frames} GIF frames; duration: {sum(durations) / 1000:.1f}s")
 
 
 if __name__ == "__main__":
